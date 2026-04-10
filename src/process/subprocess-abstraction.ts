@@ -3,11 +3,13 @@
  * Provides a unified API for spawning child processes across Bun and Node.js.
  */
 
+import type { ChildProcessWrapper } from './child-process-wrapper.js';
+
 export interface SubprocessOptions {
   /** Working directory for the subprocess */
-  cwd?: string;
+  cwd?: string | URL;
   /** Environment variables for the subprocess */
-  env?: Record<string, string>;
+  env?: NodeJS.ProcessEnv;
   /** Standard input/output/error handling */
   stdio?: 'inherit' | 'pipe' | 'ignore' | Array<'inherit' | 'pipe' | 'ignore'>;
   /** Detach the subprocess from parent */
@@ -32,8 +34,8 @@ export interface SubprocessResult {
 }
 
 export interface SubprocessSpawnResult {
-  /** Child process handle */
-  process: unknown;
+  /** Child process handle (now typed as ChildProcessWrapper) */
+  process: ChildProcessWrapper;
   /** Promise that resolves when process exits */
   exitPromise: Promise<SubprocessResult>;
   /** Kill the subprocess */

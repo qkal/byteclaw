@@ -255,6 +255,54 @@ Created subprocess abstraction layer with Node and Bun implementations. The runt
 
 ---
 
+### Phase 6: Subprocess Call Migration - Extended
+
+**Status:** In Progress  
+**Started:** 2026-04-10  
+**Updated:** 2026-04-10
+
+#### Extended Work: Full ChildProcess Wrapper Implementation
+
+**Purpose:** Enable migration of remaining 91 files that require full ChildProcess API features (event listeners, streams, etc.).
+
+**Completed:**
+
+- Created ChildProcess wrapper interface (`src/process/child-process-wrapper.ts`)
+  - Full ChildProcess API compatibility
+  - EventEmitter support
+  - Stream support (stdin, stdout, stderr)
+  - Methods: kill, send, disconnect, unref, ref
+- Implemented Node ChildProcess wrapper (`src/process/child-process-wrapper-node.ts`)
+  - Delegates to actual Node ChildProcess
+  - Forwards all events and properties
+- Implemented Bun ChildProcess wrapper (`src/process/child-process-wrapper-bun.ts`)
+  - Emulates ChildProcess using Bun.spawn
+  - Stream wrappers for stdin/stdout/stderr
+  - Event emitter implementation
+- Updated subprocess abstraction to return ChildProcessWrapper instead of unknown
+- Updated Node subprocess implementation to use wrapper
+- Updated Bun subprocess implementation to use wrapper
+- Migrated `src/process/spawn-utils.ts` to use subprocess abstraction
+
+**Files Migrated:**
+
+- `src/process/spawn-utils.ts` - Now uses subprocess abstraction with ChildProcessWrapper
+
+**Remaining Work:**
+
+- 90 files still use direct child_process
+- Can now be migrated using the full ChildProcess wrapper
+- Key files to migrate next: `src/process/exec.ts`, `src/entry.ts`
+
+**Technical Notes:**
+
+- Type compatibility issues resolved by accepting NodeJS.ProcessEnv for env
+- stdio type accepts 'overlapped' for Windows compatibility
+- Wrapper provides full EventEmitter interface for event listeners
+- Stream emulation in Bun wrapper handles data events
+
+---
+
 ### Phase 6: Subprocess Call Migration
 
 **Status:** In Progress

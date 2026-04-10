@@ -4,6 +4,11 @@
  */
 
 import type {
+  ChildProcessWrapper,
+  SubprocessWrapperOptions,
+} from './child-process-wrapper.js';
+import { createBunChildProcessWrapper } from './child-process-wrapper-bun.js';
+import type {
   SubprocessAbstraction,
   SubprocessOptions,
   SubprocessResult,
@@ -61,125 +66,69 @@ export class BunSubprocessAbstraction implements SubprocessAbstraction {
     args: string[],
     options?: SubprocessOptions,
   ): SubprocessSpawnResult {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const Bun = (globalThis as any).Bun;
-
-    const proc = Bun.spawn({
-      cmd: options?.shell
-        ? ['sh', '-c', command + ' ' + args.join(' ')]
-        : [command, ...args],
-      cwd: options?.cwd,
-      env: options?.env,
-      stdout:
-        options?.stdio === 'pipe' || options?.stdio === undefined
-          ? 'pipe'
-          : 'inherit',
-      stderr:
-        options?.stdio === 'pipe' || options?.stdio === undefined
-          ? 'pipe'
-          : 'inherit',
-      stdin:
-        options?.stdio === 'pipe' || options?.stdio === undefined
-          ? 'pipe'
-          : 'inherit',
-    });
+    const wrapper = createBunChildProcessWrapper(
+      command,
+      args,
+      options as SubprocessWrapperOptions,
+    );
 
     let stdout = '';
     let stderr = '';
 
-    if (proc.stdout) {
-      const reader = proc.stdout.getReader();
-      const readStream = async () => {
-        const { done, value } = await reader.read();
-        if (!done) {
-          stdout += new TextDecoder().decode(value);
-          await readStream();
-        }
-      };
-      readStream().catch(() => {});
+    if (wrapper.stdout) {
+      wrapper.stdout.on('data', (...args: unknown[]) => {
+        const chunk = args[0] as Buffer;
+        stdout += chunk.toString();
+      });
     }
 
-    if (proc.stderr) {
-      const reader = proc.stderr.getReader();
-      const readStream = async () => {
-        const { done, value } = await reader.read();
-        if (!done) {
-          stderr += new TextDecoder().decode(value);
-          await readStream();
-        }
-      };
-      readStream().catch(() => {});
+    if (wrapper.stderr) {
+      wrapper.stderr.on('data', (...args: unknown[]) => {
+        const chunk = args[0] as Buffer;
+        stderr += chunk.toString();
+      });
     }
 
     const exitPromise = new Promise<SubprocessResult>((resolve) => {
-      proc.exited.then((exitCode: number) => {
+      wrapper.on('exit', (...args: unknown[]) => {
+        const code = args[0] as number | null;
+        const signal = args[1] as NodeJS.Signals | null;
         resolve({
-          exitCode,
+          exitCode: code ?? null,
           stdout,
           stderr,
+          signal: signal ?? undefined,
         });
       });
     });
 
-    // Event listener emulation for Bun
-    const listeners = new Map<string, Set<(...args: unknown[]) => void>>();
-
     return {
-      process: proc,
+      process: wrapper,
       exitPromise,
-      kill: (signal?: NodeJS.Signals) => {
-        const signalNum = signal
-          ? typeof signal === 'number'
-            ? signal
-            : undefined
-          : undefined;
-        proc.kill(signalNum as number | undefined);
-      },
+      kill: (signal?: NodeJS.Signals) => wrapper.kill(signal),
       writeStdin: (data: string | Buffer) => {
-        if (proc.stdin) {
-          const writer = proc.stdin.getWriter();
-          writer.write(
-            typeof data === 'string' ? new TextEncoder().encode(data) : data,
-          );
-          writer.releaseLock();
+        if (wrapper.stdin) {
+          wrapper.stdin.write(data);
         }
       },
       closeStdin: () => {
-        if (proc.stdin) {
-          proc.stdin.end();
+        if (wrapper.stdin) {
+          wrapper.stdin.end();
         }
       },
-      pid: proc.pid,
-      unref: () => {
-        // Bun doesn't have unref, this is a no-op
-      },
+      pid: wrapper.pid,
+      unref: () => wrapper.unref(),
       on: (event: string, listener: (...args: unknown[]) => void) => {
-        if (!listeners.has(event)) {
-          listeners.set(event, new Set());
-        }
-        listeners.get(event)!.add(listener);
-        return proc;
+        wrapper.on(event, listener);
+        return wrapper;
       },
       off: (event: string, listener: (...args: unknown[]) => void) => {
-        const eventListeners = listeners.get(event);
-        if (eventListeners) {
-          eventListeners.delete(listener);
-        }
-        return proc;
+        wrapper.off(event, listener);
+        return wrapper;
       },
       once: (event: string, listener: (...args: unknown[]) => void) => {
-        const wrappedListener = (...args: unknown[]) => {
-          listener(...args);
-          const eventListeners = listeners.get(event);
-          if (eventListeners) {
-            eventListeners.delete(wrappedListener);
-          }
-        };
-        if (!listeners.has(event)) {
-          listeners.set(event, new Set());
-        }
-        listeners.get(event)!.add(wrappedListener);
-        return proc;
+        wrapper.once(event, listener);
+        return wrapper;
       },
     };
   }

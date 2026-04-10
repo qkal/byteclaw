@@ -6,6 +6,11 @@
 import { exec, spawn } from 'node:child_process';
 import { promisify } from 'node:util';
 import type {
+  ChildProcessWrapper,
+  SubprocessWrapperOptions,
+} from './child-process-wrapper.js';
+import { createNodeChildProcessWrapper } from './child-process-wrapper-node.js';
+import type {
   SubprocessAbstraction,
   SubprocessOptions,
   SubprocessResult,
@@ -60,67 +65,53 @@ export class NodeSubprocessAbstraction implements SubprocessAbstraction {
     args: string[],
     options?: SubprocessOptions,
   ): SubprocessSpawnResult {
-    const child = spawn(command, args, {
-      cwd: options?.cwd,
-      env: options?.env,
-      stdio: options?.stdio ?? 'pipe',
-      detached: options?.detached ?? false,
-      shell: options?.shell ?? false,
-    });
-
-    let stdout = '';
-    let stderr = '';
-
-    if (child.stdout) {
-      child.stdout.on('data', (data) => {
-        stdout += data.toString();
-      });
-    }
-
-    if (child.stderr) {
-      child.stderr.on('data', (data) => {
-        stderr += data.toString();
-      });
-    }
+    const wrapper = createNodeChildProcessWrapper(
+      command,
+      args,
+      options as SubprocessWrapperOptions,
+    );
 
     const exitPromise = new Promise<SubprocessResult>((resolve) => {
-      child.on('exit', (code, signal) => {
-        resolve({
-          exitCode: code,
-          stdout,
-          stderr,
-          signal: signal ?? undefined,
-        });
-      });
+      wrapper.on(
+        'exit',
+        (code: number | null, signal: NodeJS.Signals | null) => {
+          resolve({
+            exitCode: code ?? null,
+            stdout: '',
+            stderr: '',
+            signal: signal ?? undefined,
+          });
+        },
+      );
     });
 
     return {
-      process: child,
+      process: wrapper,
       exitPromise,
-      kill: (signal?: NodeJS.Signals) => child.kill(signal),
+      kill: (signal?: NodeJS.Signals) => wrapper.kill(signal),
       writeStdin: (data: string | Buffer) => {
-        if (child.stdin) {
-          child.stdin.write(data);
+        if (wrapper.stdin) {
+          wrapper.stdin.write(data);
         }
       },
       closeStdin: () => {
-        if (child.stdin) {
-          child.stdin.end();
+        if (wrapper.stdin) {
+          wrapper.stdin.end();
         }
       },
-      pid: child.pid,
-      unref: () => child.unref(),
+      pid: wrapper.pid,
+      unref: () => wrapper.unref(),
       on: (event: string, listener: (...args: unknown[]) => void) => {
-        child.on(event, listener);
-        return child;
+        wrapper.on(event, listener);
+        return wrapper;
       },
       off: (event: string, listener: (...args: unknown[]) => void) => {
-        child.off(event, listener);
-        return child;
+        wrapper.off(event, listener);
+        return wrapper;
       },
       once: (event: string, listener: (...args: unknown[]) => void) => {
-        child.once(event, listener);
-        return child;
+        wrapper.once(event, listener);
+        return wrapper;
       },
     };
   }

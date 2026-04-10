@@ -1,5 +1,6 @@
 import type { ChildProcess, SpawnOptions } from 'node:child_process';
-import { spawn } from 'node:child_process';
+import type { ChildProcessWrapper } from './child-process-wrapper.js';
+import { spawn } from './subprocess.js';
 
 export interface SpawnFallback {
   label: string;
@@ -7,7 +8,7 @@ export interface SpawnFallback {
 }
 
 export interface SpawnWithFallbackResult {
-  child: ChildProcess;
+  child: ChildProcessWrapper;
   usedFallback: boolean;
   fallbackLabel?: string;
 }
@@ -69,8 +70,9 @@ async function spawnAndWaitForSpawn(
   spawnImpl: typeof spawn,
   argv: string[],
   options: SpawnOptions,
-): Promise<ChildProcess> {
-  const child = spawnImpl(argv[0], argv.slice(1), options);
+): Promise<ChildProcessWrapper> {
+  const result = spawnImpl(argv[0], argv.slice(1), options as any);
+  const child = result.process;
   return await new Promise((resolve, reject) => {
     let settled = false;
     const cleanup = () => {
