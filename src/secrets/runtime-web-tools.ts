@@ -792,7 +792,7 @@ export async function resolveRuntimeWebTools(params: {
             resolvedCredential: selectedResolution
               ? {
                   value: selectedResolution.value,
-                  source: selectedResolution.source,
+                  source: selectedResolution.source as any,
                   fallbackEnvVar: selectedResolution.fallbackEnvVar,
                 }
               : undefined,
