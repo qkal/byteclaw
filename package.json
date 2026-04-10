@@ -1398,6 +1398,7 @@
     "@types/ws": "^8.18.1",
     "@typescript/native-preview": "7.0.0-dev.20260406.1",
     "@vitest/coverage-v8": "^4.1.2",
+    "bun": "^1.1.34",
     "esbuild": "^0.24.0",
     "jscpd": "4.0.8",
     "jsdom": "^29.0.1",
