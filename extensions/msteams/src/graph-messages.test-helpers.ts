@@ -10,13 +10,13 @@ const graphMessagesMockState = vi.hoisted(() => ({
 }));
 
 vi.mock("./graph.js", () => ({
-    deleteGraphRequest: graphMessagesMockState.deleteGraphRequest,
-    escapeOData: vi.fn((value: string) => value.replaceAll("'", "''")),
-    fetchGraphJson: graphMessagesMockState.fetchGraphJson,
-    postGraphBetaJson: graphMessagesMockState.postGraphBetaJson,
-    postGraphJson: graphMessagesMockState.postGraphJson,
-    resolveGraphToken: graphMessagesMockState.resolveGraphToken,
-  }));
+  deleteGraphRequest: graphMessagesMockState.deleteGraphRequest,
+  escapeOData: vi.fn((value: string) => value.replaceAll("'", "''")),
+  fetchGraphJson: graphMessagesMockState.fetchGraphJson,
+  postGraphBetaJson: graphMessagesMockState.postGraphBetaJson,
+  postGraphJson: graphMessagesMockState.postGraphJson,
+  resolveGraphToken: graphMessagesMockState.resolveGraphToken,
+}));
 
 vi.mock("./conversation-store-fs.js", () => ({
   createMSTeamsConversationStoreFs: () => ({

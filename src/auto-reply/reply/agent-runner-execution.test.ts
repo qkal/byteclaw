@@ -1361,15 +1361,15 @@ describe("runAgentTurnWithFallback", () => {
         });
       })
       .mockImplementationOnce(async () => ({
-          meta: {
-            agentMeta: {
-              model: "gpt-5.4",
-              provider: "openai",
-              sessionId: "session",
-            },
+        meta: {
+          agentMeta: {
+            model: "gpt-5.4",
+            provider: "openai",
+            sessionId: "session",
           },
-          payloads: [{ text: "switched" }],
-        }));
+        },
+        payloads: [{ text: "switched" }],
+      }));
 
     const runAgentTurnWithFallback = await getRunAgentTurnWithFallback();
     const followupRun = createFollowupRun();
@@ -1499,15 +1499,15 @@ describe("runAgentTurnWithFallback", () => {
         });
       })
       .mockImplementationOnce(async () => ({
-          meta: {
-            agentMeta: {
-              model: "gpt-5.4",
-              provider: "openai",
-              sessionId: "session",
-            },
+        meta: {
+          agentMeta: {
+            model: "gpt-5.4",
+            provider: "openai",
+            sessionId: "session",
           },
-          payloads: [{ text: "finally ok" }],
-        }));
+        },
+        payloads: [{ text: "finally ok" }],
+      }));
 
     const runAgentTurnWithFallback = await getRunAgentTurnWithFallback();
     const followupRun = createFollowupRun();

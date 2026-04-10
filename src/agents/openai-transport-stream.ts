@@ -545,9 +545,9 @@ async function processResponsesStream(
         | undefined;
       const msg = response?.error
         ? `${response.error.code || "unknown"}: ${response.error.message || "no message"}`
-        : (response?.incomplete_details?.reason
+        : response?.incomplete_details?.reason
           ? `incomplete: ${response.incomplete_details.reason}`
-          : "Unknown error (no error details in response)");
+          : "Unknown error (no error details in response)";
       throw new Error(msg);
     }
   }
@@ -1136,9 +1136,9 @@ async function processOpenAICompletionsStream(
 }
 
 function detectCompat(model: OpenAIModeModel) {
-  const {provider} = model;
+  const { provider } = model;
   const { capabilities, defaults: compatDefaults } = detectOpenAICompletionsCompat(model);
-  const {endpointClass} = capabilities;
+  const { endpointClass } = capabilities;
   const isDefaultRoute = endpointClass === "default";
   const isGroq = endpointClass === "groq-native" || (isDefaultRoute && provider === "groq");
   const reasoningEffortMap: Record<string, string> =

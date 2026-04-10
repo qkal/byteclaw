@@ -23,9 +23,7 @@ const buildStatusMessage: typeof BuildStatusMessage = (args) =>
   });
 
 const { listPluginCommands } = vi.hoisted(() => ({
-  listPluginCommands: vi.fn(
-    (): { name: string; description: string; pluginId: string }[] => [],
-  ),
+  listPluginCommands: vi.fn((): { name: string; description: string; pluginId: string }[] => []),
 }));
 
 vi.mock("../plugins/commands.js", () => ({

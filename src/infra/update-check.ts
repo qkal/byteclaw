@@ -202,7 +202,7 @@ function resolveDepsMarker(params: { root: string; manager: PackageManager }): {
   lockfilePath: string | null;
   markerPath: string | null;
 } {
-  const {root} = params;
+  const { root } = params;
   if (params.manager === "pnpm") {
     return {
       lockfilePath: path.join(root, "pnpm-lock.yaml"),
@@ -307,7 +307,7 @@ export async function fetchNpmPackageTargetStatus(params: {
   timeoutMs?: number;
 }): Promise<NpmPackageTargetStatus> {
   const timeoutMs = params.timeoutMs ?? 3500;
-  const {target} = params;
+  const { target } = params;
   try {
     const res = await fetchWithTimeout(
       `https://registry.npmjs.org/openclaw/${encodeURIComponent(target)}`,

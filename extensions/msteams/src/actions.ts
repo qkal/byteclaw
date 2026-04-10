@@ -66,9 +66,9 @@ function resolveActionTarget(
 ): string {
   return typeof params.to === "string"
     ? params.to.trim()
-    : (typeof params.target === "string"
+    : typeof params.target === "string"
       ? params.target.trim()
-      : (currentChannelId?.trim() ?? ""));
+      : (currentChannelId?.trim() ?? "");
 }
 
 function resolveActionMessageId(params: Record<string, unknown>): string {
@@ -78,9 +78,9 @@ function resolveActionMessageId(params: Record<string, unknown>): string {
 function resolveActionPinnedMessageId(params: Record<string, unknown>): string {
   return typeof params.pinnedMessageId === "string"
     ? params.pinnedMessageId.trim()
-    : (typeof params.messageId === "string"
+    : typeof params.messageId === "string"
       ? params.messageId.trim()
-      : "");
+      : "";
 }
 
 function resolveActionQuery(params: Record<string, unknown>): string {

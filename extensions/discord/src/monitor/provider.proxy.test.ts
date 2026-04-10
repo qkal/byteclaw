@@ -251,7 +251,7 @@ describe("createDiscordGatewayPlugin", () => {
       runtime,
     });
 
-    const {createWebSocket} = (plugin as unknown as { createWebSocket: (url: string) => unknown });
+    const { createWebSocket } = plugin as unknown as { createWebSocket: (url: string) => unknown };
     createWebSocket("wss://gateway.discord.gg");
 
     expect(webSocketSpy).toHaveBeenCalledWith("wss://gateway.discord.gg", undefined);
@@ -286,7 +286,7 @@ describe("createDiscordGatewayPlugin", () => {
 
     expect(Object.getPrototypeOf(plugin)).not.toBe(GatewayPlugin.prototype);
 
-    const {createWebSocket} = (plugin as unknown as { createWebSocket: (url: string) => unknown });
+    const { createWebSocket } = plugin as unknown as { createWebSocket: (url: string) => unknown };
     createWebSocket("wss://gateway.discord.gg");
 
     expect(wsProxyAgentSpy).toHaveBeenCalledWith("http://127.0.0.1:8080");
@@ -340,7 +340,7 @@ describe("createDiscordGatewayPlugin", () => {
       runtime,
     });
 
-    const {createWebSocket} = (plugin as unknown as { createWebSocket: (url: string) => unknown });
+    const { createWebSocket } = plugin as unknown as { createWebSocket: (url: string) => unknown };
     createWebSocket("wss://gateway.discord.gg");
     await registerGatewayClientWithMetadata({ fetchMock: undiciFetchMock, plugin });
 

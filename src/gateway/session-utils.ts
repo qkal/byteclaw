@@ -337,7 +337,7 @@ function resolveTranscriptUsageFallback(params: {
   modelProvider?: string;
   model?: string;
 } | null {
-  const {entry} = params;
+  const { entry } = params;
   if (!entry?.sessionId) {
     return null;
   }
@@ -693,7 +693,15 @@ export function listAgentsForGateway(cfg: OpenClawConfig): {
   const agents = agentIds.map((id) => {
     const meta = configuredById.get(id);
     const model = resolveGatewayAgentModel(cfg, id);
-    return Object.assign({id,name:meta?.name,identity:meta?.identity,workspace:resolveAgentWorkspaceDir(cfg,id)}, model?{model}:{});
+    return Object.assign(
+      {
+        id,
+        name: meta?.name,
+        identity: meta?.identity,
+        workspace: resolveAgentWorkspaceDir(cfg, id),
+      },
+      model ? { model } : {},
+    );
   });
   return { agents, defaultId, mainKey, scope };
 }
@@ -995,8 +1003,8 @@ export function loadCombinedSessionStoreForGateway(cfg: OpenClawConfig): {
   const targets = resolveAllAgentSessionStoreTargetsSync(cfg);
   const combined: Record<string, SessionEntry> = {};
   for (const target of targets) {
-    const {agentId} = target;
-    const {storePath} = target;
+    const { agentId } = target;
+    const { storePath } = target;
     const store = loadSessionStore(storePath);
     for (const [key, entry] of Object.entries(store)) {
       const canonicalKey = canonicalizeSessionKeyForAgent(agentId, key);

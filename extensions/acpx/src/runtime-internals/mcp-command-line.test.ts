@@ -29,7 +29,10 @@ describe("mcp-command-line", () => {
 
   it("parses unquoted Windows executable paths without mangling backslashes", async () => {
     const splitCommandLine = await loadSplitCommandLine();
-    const parsed = splitCommandLine(String.raw`C:\Users\alerl\.local\bin\claude.exe --version`, "win32");
+    const parsed = splitCommandLine(
+      String.raw`C:\Users\alerl\.local\bin\claude.exe --version`,
+      "win32",
+    );
 
     expect(parsed).toEqual({
       args: ["--version"],

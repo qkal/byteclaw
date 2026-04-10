@@ -1,4 +1,6 @@
-export interface BrowserActionOk { ok: true }
+export interface BrowserActionOk {
+  ok: true;
+}
 
 export interface BrowserActionTabResult {
   ok: true;
@@ -13,4 +15,7 @@ export interface BrowserActionPathResult {
   url?: string;
 }
 
-export interface BrowserActionTargetOk { ok: true; targetId: string }
+export interface BrowserActionTargetOk {
+  ok: true;
+  targetId: string;
+}

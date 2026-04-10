@@ -303,7 +303,9 @@ export function createTlonApprovalRuntime(params: {
                 })();
               }, 2000);
             } catch (error) {
-              runtime.error?.(`[tlon] Failed to join group ${approval.groupFlag}: ${String(error)}`);
+              runtime.error?.(
+                `[tlon] Failed to join group ${approval.groupFlag}: ${String(error)}`,
+              );
             }
           }
           break;

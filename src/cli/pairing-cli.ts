@@ -121,14 +121,14 @@ export function registerPairingCli(program: Command) {
       const hasPositionalCode = code != null;
       const channelRaw = usingExplicitChannel
         ? opts.channel
-        : (hasPositionalCode
+        : hasPositionalCode
           ? codeOrChannel
-          : defaultChannel);
+          : defaultChannel;
       const resolvedCode = usingExplicitChannel
         ? codeOrChannel
-        : (hasPositionalCode
+        : hasPositionalCode
           ? code
-          : codeOrChannel);
+          : codeOrChannel;
       if (!channelRaw || !resolvedCode) {
         throw new Error(
           `Usage: ${formatCliCommand("openclaw pairing approve <channel> <code>")} (or: ${formatCliCommand("openclaw pairing approve --channel <channel> <code>")})`,

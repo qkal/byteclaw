@@ -29,9 +29,9 @@ vi.mock("../config/config.js", async () => {
   return {
     ...actual,
     loadConfig: () => ({
-        browser: browserConfig,
-        ...(mocks.gatewayAuthMode ? { gateway: { auth: { mode: mocks.gatewayAuthMode } } } : {}),
-      }),
+      browser: browserConfig,
+      ...(mocks.gatewayAuthMode ? { gateway: { auth: { mode: mocks.gatewayAuthMode } } } : {}),
+    }),
   };
 });
 

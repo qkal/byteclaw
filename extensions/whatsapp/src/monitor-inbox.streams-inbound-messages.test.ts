@@ -2,8 +2,7 @@ import fsSync from "node:fs";
 import path from "node:path";
 import "./monitor-inbox.test-harness.js";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type {
-  InboxOnMessage} from "./monitor-inbox.test-harness.js";
+import type { InboxOnMessage } from "./monitor-inbox.test-harness.js";
 import {
   type InboxMonitorOptions,
   buildNotifyMessageUpsert,

@@ -14,8 +14,8 @@ export function resolveRequestUrl(input: RequestInfo | URL): string {
 }
 
 export function installPinnedHostnameTestHooks(): void {
-  const {resolvePinnedHostname} = ssrf;
-  const {resolvePinnedHostnameWithPolicy} = ssrf;
+  const { resolvePinnedHostname } = ssrf;
+  const { resolvePinnedHostnameWithPolicy } = ssrf;
 
   const lookupMock = vi.fn();
   let resolvePinnedHostnameSpy: MockInstance | null = null;

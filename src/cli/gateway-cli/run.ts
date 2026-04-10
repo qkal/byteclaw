@@ -226,7 +226,9 @@ function resolveGatewayRunOptions(opts: GatewayRunOpts, command?: Command): Gate
 function isGatewayLockError(err: unknown): err is GatewayLockError {
   return (
     err instanceof GatewayLockError ||
-    (Boolean(err) && typeof err === "object" && (err as { name?: string }).name === "GatewayLockError")
+    (Boolean(err) &&
+      typeof err === "object" &&
+      (err as { name?: string }).name === "GatewayLockError")
   );
 }
 
@@ -256,7 +258,7 @@ async function runGatewayCommand(opts: GatewayRunOpts) {
   }
   const wsLogRaw = (opts.compact ? "compact" : opts.wsLog) as string | undefined;
   const wsLogStyle: GatewayWsLogStyle =
-    wsLogRaw === "compact" ? "compact" : (wsLogRaw === "full" ? "full" : "auto");
+    wsLogRaw === "compact" ? "compact" : wsLogRaw === "full" ? "full" : "auto";
   if (
     wsLogRaw !== undefined &&
     wsLogRaw !== "auto" &&

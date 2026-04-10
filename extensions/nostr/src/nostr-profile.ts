@@ -5,7 +5,7 @@
  * This module handles profile event creation and publishing.
  */
 
-import type { SimplePool} from "nostr-tools";
+import type { SimplePool } from "nostr-tools";
 import { type Event, finalizeEvent } from "nostr-tools";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { type NostrProfile, NostrProfileSchema } from "./config-schema.js";

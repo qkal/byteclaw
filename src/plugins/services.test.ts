@@ -107,14 +107,14 @@ function createTrackingService(
       ? () => {
           params.stopSpy?.();
         }
-      : (params.stops || params.failOnStop
+      : params.stops || params.failOnStop
         ? () => {
             if (params.failOnStop) {
               throw new Error("stop failed");
             }
             params.stops?.push(id.at(-1) ?? id);
           }
-        : undefined),
+        : undefined,
   };
 }
 

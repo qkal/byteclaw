@@ -30,7 +30,13 @@ function extractDeliveryModes(schema: SchemaLike): string[] {
 }
 
 function extractConstUnionValues(schema: SchemaLike): string[] {
-  return [...new Set((schema.anyOf ?? []).map((entry) => entry?.const).filter((value): value is string => typeof value === 'string'))];
+  return [
+    ...new Set(
+      (schema.anyOf ?? [])
+        .map((entry) => entry?.const)
+        .filter((value): value is string => typeof value === "string"),
+    ),
+  ];
 }
 
 const UI_FILES = ["ui/src/ui/types.ts", "ui/src/ui/ui-types.ts", "ui/src/ui/views/cron.ts"];

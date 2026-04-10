@@ -308,9 +308,9 @@ export async function update(state: CronServiceState, id: string, patch: CronJob
         const fallbackAnchorMs =
           patchSchedule?.kind === "every"
             ? now
-            : (typeof job.createdAtMs === "number" && Number.isFinite(job.createdAtMs)
+            : typeof job.createdAtMs === "number" && Number.isFinite(job.createdAtMs)
               ? job.createdAtMs
-              : now);
+              : now;
         job.schedule = {
           ...job.schedule,
           anchorMs: Math.max(0, Math.floor(fallbackAnchorMs)),
@@ -614,10 +614,10 @@ async function finishPreparedManualRun(
   prepared: Extract<PreparedManualRun, { ran: true }>,
   mode?: "due" | "force",
 ): Promise<void> {
-  const {executionJob} = prepared;
-  const {startedAt} = prepared;
-  const {jobId} = prepared;
-  const {taskRunId} = prepared;
+  const { executionJob } = prepared;
+  const { startedAt } = prepared;
+  const { jobId } = prepared;
+  const { taskRunId } = prepared;
 
   let coreResult: Awaited<ReturnType<typeof executeJobCoreWithTimeout>>;
   try {

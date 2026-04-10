@@ -47,7 +47,7 @@ describe("twitchMessageActions", () => {
         configured: true,
         tokenResolution: { source: "config", token: "oauth:secondary-token" },
       }));
-    const {sendText} = twitchOutbound;
+    const { sendText } = twitchOutbound;
     if (!sendText) {
       throw new Error("twitchOutbound.sendText is unavailable");
     }

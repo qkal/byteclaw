@@ -86,10 +86,7 @@ function computeReplacements(
   return replacements;
 }
 
-function applyReplacements(
-  lines: string[],
-  replacements: [number, number, string[]][],
-): string[] {
+function applyReplacements(lines: string[], replacements: [number, number, string[]][]): string[] {
   const result = [...lines];
   for (const [startIndex, oldLen, newLines] of [...replacements].toReversed()) {
     for (let i = 0; i < oldLen; i += 1) {

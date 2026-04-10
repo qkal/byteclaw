@@ -132,9 +132,9 @@ export async function runSetupWizard(
 
   const snapshot = await readConfigFileSnapshot();
   let baseConfig: OpenClawConfig = snapshot.valid
-    ? (snapshot.exists
+    ? snapshot.exists
       ? (snapshot.sourceConfig ?? snapshot.config)
-      : {})
+      : {}
     : {};
 
   if (snapshot.exists && !snapshot.valid) {
@@ -447,9 +447,9 @@ export async function runSetupWizard(
             {
               hint: !remoteUrl
                 ? "No remote URL configured yet"
-                : (remoteProbe?.ok
+                : remoteProbe?.ok
                   ? `Gateway reachable (${remoteUrl})`
-                  : `Configured but unreachable (${remoteUrl})`),
+                  : `Configured but unreachable (${remoteUrl})`,
               label: "Remote gateway (info-only)",
               value: "remote",
             },
@@ -576,7 +576,7 @@ export async function runSetupWizard(
     secretInputMode: opts.secretInputMode,
   });
   ({ nextConfig } = gateway);
-  const {settings} = gateway;
+  const { settings } = gateway;
 
   if (opts.skipChannels ?? opts.skipProviders) {
     await prompter.note("Skipping channel setup.", "Channels");

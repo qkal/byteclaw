@@ -5,7 +5,10 @@ import { resolveLsofCommandSync } from "../infra/ports-lsof.js";
 import { tryListenOnPort } from "../infra/ports-probe.js";
 import { sleep } from "../utils.js";
 
-export interface PortProcess { pid: number; command?: string }
+export interface PortProcess {
+  pid: number;
+  command?: string;
+}
 
 export interface ForceFreePortResult {
   killed: PortProcess[];
@@ -50,7 +53,7 @@ function getErrnoCode(err: unknown): string | undefined {
   if (typeof direct === "string" && direct.length > 0) {
     return direct;
   }
-  const {cause} = (err as { cause?: unknown });
+  const { cause } = err as { cause?: unknown };
   if (cause && typeof cause === "object") {
     const nested = (cause as { code?: unknown }).code;
     if (typeof nested === "string" && nested.length > 0) {
@@ -103,8 +106,8 @@ function killPortWithFuser(port: number, signal: "SIGTERM" | "SIGKILL"): PortPro
     return parseFuserPidList(stdout).map((pid) => ({ pid }));
   } catch (error: unknown) {
     const execErr = error as ExecFileError;
-    const {code} = execErr;
-    const {status} = execErr;
+    const { code } = execErr;
+    const { status } = execErr;
     const stdout = readExecOutput(execErr.stdout);
     const stderr = readExecOutput(execErr.stderr);
     const parsed = parseFuserPidList([stdout, stderr].filter(Boolean).join("\n"));
@@ -131,7 +134,7 @@ async function isPortBusy(port: number): Promise<boolean> {
     await tryListenOnPort({ exclusive: true, port });
     return false;
   } catch (error: unknown) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code === "EADDRINUSE") {
       return true;
     }
@@ -195,7 +198,7 @@ export function listPortListeners(port: number): PortProcess[] {
   } catch (error: unknown) {
     const execErr = error as ExecFileError;
     const status = execErr.status ?? undefined;
-    const {code} = execErr;
+    const { code } = execErr;
     if (code === "ENOENT") {
       throw withErrnoCode("lsof not found; required for --force", "ENOENT", error);
     }
@@ -371,7 +374,7 @@ export async function waitForPortBindable(
 ): Promise<number> {
   const timeoutMs = Math.max(opts.timeoutMs ?? 3000, 0);
   const intervalMs = Math.max(opts.intervalMs ?? 150, 1);
-  const {host} = opts;
+  const { host } = opts;
   let waited = 0;
   while (waited < timeoutMs) {
     if (await probePortFree(port, host)) {

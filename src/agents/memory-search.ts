@@ -291,7 +291,7 @@ function mergeConfig(
   );
   const deltaBytes = clampInt(sync.sessions.deltaBytes, 0, Number.MAX_SAFE_INTEGER);
   const deltaMessages = clampInt(sync.sessions.deltaMessages, 0, Number.MAX_SAFE_INTEGER);
-  const {postCompactionForce} = sync.sessions;
+  const { postCompactionForce } = sync.sessions;
   return {
     cache: {
       enabled: Boolean(cache.enabled),

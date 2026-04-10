@@ -78,13 +78,13 @@ function createMockSock(): MockSock {
 }
 
 vi.mock("./inbound/save-media.runtime.js", () => ({
-    saveMediaBuffer: vi.fn().mockResolvedValue({
-      contentType: "image/jpeg",
-      id: "mid",
-      path: "/tmp/mid",
-      size: 1,
-    }),
-  }));
+  saveMediaBuffer: vi.fn().mockResolvedValue({
+    contentType: "image/jpeg",
+    id: "mid",
+    path: "/tmp/mid",
+    size: 1,
+  }),
+}));
 
 vi.mock("./session.js", async () => {
   const actual = await vi.importActual<typeof import("./session.js")>("./session.js");

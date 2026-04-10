@@ -185,9 +185,9 @@ function formatAuditRows(findings: TaskSystemAuditFinding[], rich: boolean) {
     const status = formatTaskStatusCell(finding.status ?? "n/a", rich);
     const severityCell = !rich
       ? severity
-      : (finding.severity === "error"
+      : finding.severity === "error"
         ? theme.error(severity)
-        : theme.warn(severity));
+        : theme.warn(severity);
     const scope = finding.kind === "task" ? "Task" : "TaskFlow";
     lines.push(
       [

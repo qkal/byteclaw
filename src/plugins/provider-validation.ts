@@ -29,7 +29,14 @@ function normalizeTextList(values: string[] | undefined): string[] | undefined {
 function normalizeOnboardingScopes(
   values: ("text-inference" | "image-generation")[] | undefined,
 ): ("text-inference" | "image-generation")[] | undefined {
-  const normalized = [...new Set((values ?? []).filter((value): value is 'text-inference' | 'image-generation' => value === 'text-inference' || value === 'image-generation'))];
+  const normalized = [
+    ...new Set(
+      (values ?? []).filter(
+        (value): value is "text-inference" | "image-generation" =>
+          value === "text-inference" || value === "image-generation",
+      ),
+    ),
+  ];
   return normalized.length > 0 ? normalized : undefined;
 }
 
@@ -348,8 +355,8 @@ export function normalizeRegisteredProvider(params: {
     source: params.source,
     wizard: params.provider.wizard,
   });
-  const {catalog} = params.provider;
-  const {discovery} = params.provider;
+  const { catalog } = params.provider;
+  const { discovery } = params.provider;
   if (catalog && discovery) {
     pushProviderDiagnostic({
       level: "warn",

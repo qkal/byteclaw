@@ -477,7 +477,7 @@ export function createHooksRequestHandler(
     // Only pathname/search are used here; keep the base host fixed so bind-host
     // Representation (e.g. IPv6 wildcards) cannot break request parsing.
     const url = new URL(req.url ?? "/", "http://localhost");
-    const {basePath} = hooksConfig;
+    const { basePath } = hooksConfig;
     if (url.pathname !== basePath && !url.pathname.startsWith(`${basePath}/`)) {
       return false;
     }
@@ -533,9 +533,9 @@ export function createHooksRequestHandler(
       const status =
         body.error === "payload too large"
           ? 413
-          : (body.error === "request body timeout"
+          : body.error === "request body timeout"
             ? 408
-            : 400);
+            : 400;
       sendJson(res, status, { error: body.error, ok: false });
       return true;
     }

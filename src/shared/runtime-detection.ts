@@ -8,10 +8,7 @@
  */
 export function isBun(): boolean {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (
-    typeof (globalThis as any).Bun !== 'undefined' &&
-    !!(globalThis as any).Bun.version
-  );
+  return typeof (globalThis as any).Bun !== "undefined" && !!(globalThis as any).Bun.version;
 }
 
 /**
@@ -24,8 +21,8 @@ export function isNode(): boolean {
 /**
  * Returns the current runtime name.
  */
-export function getRuntime(): 'bun' | 'node' {
-  return isBun() ? 'bun' : 'node';
+export function getRuntime(): "bun" | "node" {
+  return isBun() ? "bun" : "node";
 }
 
 /**
@@ -58,22 +55,20 @@ export function logRuntimeInfo(): void {
  * Environment variable to force runtime selection.
  * Set OPENCLAW_RUNTIME=bun or OPENCLAW_RUNTIME=node to override detection.
  */
-export function getForcedRuntime(): 'bun' | 'node' | null {
+export function getForcedRuntime(): "bun" | "node" | null {
   const forced = process.env.OPENCLAW_RUNTIME?.toLowerCase();
-  if (forced === 'bun') return 'bun';
-  if (forced === 'node') return 'node';
+  if (forced === "bun") return "bun";
+  if (forced === "node") return "node";
   return null;
 }
 
 /**
  * Returns the effective runtime, accounting for forced override.
  */
-export function getEffectiveRuntime(): 'bun' | 'node' {
+export function getEffectiveRuntime(): "bun" | "node" {
   const forced = getForcedRuntime();
   if (forced) {
-    console.warn(
-      withRuntimeContext(`Runtime forced to ${forced} via OPENCLAW_RUNTIME`),
-    );
+    console.warn(withRuntimeContext(`Runtime forced to ${forced} via OPENCLAW_RUNTIME`));
     return forced;
   }
   return getRuntime();

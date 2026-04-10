@@ -334,9 +334,9 @@ export function loadBundleManifest(params: {
   const manifestRelativePath =
     params.bundleFormat === "codex"
       ? CODEX_BUNDLE_MANIFEST_RELATIVE_PATH
-      : (params.bundleFormat === "cursor"
+      : params.bundleFormat === "cursor"
         ? CURSOR_BUNDLE_MANIFEST_RELATIVE_PATH
-        : CLAUDE_BUNDLE_MANIFEST_RELATIVE_PATH);
+        : CLAUDE_BUNDLE_MANIFEST_RELATIVE_PATH;
   const loaded = loadBundleManifestFile({
     allowMissing: params.bundleFormat === "claude",
     manifestRelativePath,
@@ -347,7 +347,7 @@ export function loadBundleManifest(params: {
     return loaded;
   }
 
-  const {raw} = loaded;
+  const { raw } = loaded;
   const interfaceRecord = isRecord(raw.interface) ? raw.interface : undefined;
   const name = normalizeOptionalString(raw.name);
   const description =

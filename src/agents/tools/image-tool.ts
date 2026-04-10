@@ -441,7 +441,7 @@ export function createImageTool(options?: {
         })();
         const resolvedPathInfo: { resolved: string; rewrittenFrom?: string } = isDataUrl
           ? { resolved: "" }
-          : (sandboxConfig
+          : sandboxConfig
             ? await resolveSandboxedBridgeMediaPath({
                 sandbox: sandboxConfig,
                 mediaPath: resolvedImage,
@@ -451,7 +451,7 @@ export function createImageTool(options?: {
                 resolved: resolvedImage.startsWith("file://")
                   ? resolvedImage.slice("file://".length)
                   : resolvedImage,
-              });
+              };
         const resolvedPath = isDataUrl ? null : resolvedPathInfo.resolved;
         const mediaLocalRoots = resolveMediaToolLocalRoots(
           options?.workspaceDir,
@@ -463,7 +463,7 @@ export function createImageTool(options?: {
 
         const media = isDataUrl
           ? decodeDataUrl(resolvedImage, { maxBytes })
-          : (sandboxConfig
+          : sandboxConfig
             ? await loadWebMedia(resolvedPath ?? resolvedImage, {
                 maxBytes,
                 sandboxValidated: true,
@@ -472,7 +472,7 @@ export function createImageTool(options?: {
             : await loadWebMedia(resolvedPath ?? resolvedImage, {
                 maxBytes,
                 localRoots: mediaLocalRoots,
-              }));
+              });
         if (media.kind !== "image") {
           throw new Error(`Unsupported media type: ${media.kind}`);
         }
@@ -510,7 +510,12 @@ export function createImageTool(options?: {
                 : {}),
             }
           : {
-              images: loadedImages.map((img) => (Object.assign({image:img.resolvedImage}, img.rewrittenFrom?{rewrittenFrom:img.rewrittenFrom}:{}))),
+              images: loadedImages.map((img) =>
+                Object.assign(
+                  { image: img.resolvedImage },
+                  img.rewrittenFrom ? { rewrittenFrom: img.rewrittenFrom } : {},
+                ),
+              ),
             };
 
       return buildTextToolResult(result, imageDetails);

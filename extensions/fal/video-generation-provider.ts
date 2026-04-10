@@ -125,9 +125,9 @@ function buildFalVideoRequestBody(params: {
   if (input) {
     requestBody.image_url = normalizeOptionalString(input.url)
       ? normalizeOptionalString(input.url)
-      : (input.buffer
+      : input.buffer
         ? toDataUrl(input.buffer, normalizeOptionalString(input.mimeType) ?? "image/png")
-        : undefined);
+        : undefined;
   }
   // MiniMax Live on fal currently documents prompt + optional image_url only.
   // Keep the default model conservative so queue requests do not hang behind

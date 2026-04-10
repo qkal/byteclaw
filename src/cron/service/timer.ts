@@ -563,11 +563,11 @@ export function applyJobResult(
 function applyOutcomeToStoredJob(state: CronServiceState, result: TimedCronRunOutcome): void {
   clearCronJobActive(result.jobId);
   tryFinishCronTaskRun(state, result);
-  const {store} = state;
+  const { store } = state;
   if (!store) {
     return;
   }
-  const {jobs} = store;
+  const { jobs } = store;
   const job = jobs.find((entry) => entry.id === result.jobId);
   if (!job) {
     state.deps.log.warn(
@@ -814,7 +814,10 @@ export async function onTimer(state: CronServiceState) {
             sessionStorePath: storePath,
           });
         } catch (error) {
-          state.deps.log.warn({ err: String(error), storePath }, "cron: session reaper sweep failed");
+          state.deps.log.warn(
+            { err: String(error), storePath },
+            "cron: session reaper sweep failed",
+          );
         }
       }
     }
@@ -882,7 +885,7 @@ function isRunnableJob(params: {
   if (typeof previousRunAtMs !== "number" || !Number.isFinite(previousRunAtMs)) {
     return false;
   }
-  const {lastRunAtMs} = job.state;
+  const { lastRunAtMs } = job.state;
   if (typeof lastRunAtMs !== "number" || !Number.isFinite(lastRunAtMs)) {
     // Only replay a "missed slot" when there is concrete run history.
     return false;
@@ -894,7 +897,7 @@ function isErrorBackoffPending(job: CronJob, nowMs: number): boolean {
   if (job.schedule.kind === "at" || job.state.lastStatus !== "error") {
     return false;
   }
-  const {lastRunAtMs} = job.state;
+  const { lastRunAtMs } = job.state;
   if (typeof lastRunAtMs !== "number" || !Number.isFinite(lastRunAtMs)) {
     return false;
   }
@@ -1153,7 +1156,7 @@ async function executeMainSessionCronJob(
 > {
   const text = resolveJobPayloadTextForMain(job);
   if (!text) {
-    const {kind} = job.payload;
+    const { kind } = job.payload;
     return {
       error:
         kind === "systemEvent"

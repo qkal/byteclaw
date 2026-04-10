@@ -130,7 +130,7 @@ function validateMobilePairingUrl(url: string, source?: string): string | null {
     return "Resolved mobile pairing URL is invalid.";
   }
   const protocol =
-    parsed.protocol === "https:" ? "wss:" : (parsed.protocol === "http:" ? "ws:" : parsed.protocol);
+    parsed.protocol === "https:" ? "wss:" : parsed.protocol === "http:" ? "ws:" : parsed.protocol;
   if (protocol !== "ws:" || isMobilePairingCleartextAllowedHost(parsed.hostname)) {
     return null;
   }
@@ -153,7 +153,7 @@ function normalizeUrl(raw: string, schemeFallback: "ws" | "wss"): string | null 
     if (!scheme) {
       return null;
     }
-    const resolvedScheme = scheme === "http" ? "ws" : (scheme === "https" ? "wss" : scheme);
+    const resolvedScheme = scheme === "http" ? "ws" : scheme === "https" ? "wss" : scheme;
     if (resolvedScheme !== "ws" && resolvedScheme !== "wss") {
       return null;
     }

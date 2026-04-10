@@ -234,7 +234,7 @@ class RemoteShellSandboxFsBridge implements SandboxFsBridge {
     return {
       mtimeMs: Number(mtimeRaw) * 1000,
       size: Number(sizeRaw),
-      type: kindRaw === "directory" ? "directory" : (kindRaw === "regular file" ? "file" : "other"),
+      type: kindRaw === "directory" ? "directory" : kindRaw === "regular file" ? "file" : "other",
     };
   }
 
@@ -329,12 +329,12 @@ class RemoteShellSandboxFsBridge implements SandboxFsBridge {
       mountRootPath: params.mount.containerRoot,
       relativePath:
         params.mount.source === "workspace"
-          ? (relative === "."
+          ? relative === "."
             ? ""
-            : relative)
-          : (relative === "."
+            : relative
+          : relative === "."
             ? params.mount.containerRoot
-            : `${params.mount.containerRoot}/${relative}`),
+            : `${params.mount.containerRoot}/${relative}`,
       source: params.mount.source,
       writable: params.mount.writable,
     };

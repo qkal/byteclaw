@@ -95,7 +95,7 @@ export async function ensureDevGatewayConfig(opts: { reset?: boolean }) {
   }
 
   const io = createConfigIO();
-  const {configPath} = io;
+  const { configPath } = io;
   const configExists = fs.existsSync(configPath);
   if (!opts.reset && configExists) {
     return;

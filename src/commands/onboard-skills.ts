@@ -16,10 +16,7 @@ function summarizeInstallFailure(message: string): string | undefined {
   return cleaned.length > maxLen ? `${cleaned.slice(0, maxLen - 1)}…` : cleaned;
 }
 
-function formatSkillHint(skill: {
-  description?: string;
-  install: { label: string }[];
-}): string {
+function formatSkillHint(skill: { description?: string; install: { label: string }[] }): string {
   const desc = skill.description?.trim();
   const installLabel = skill.install[0]?.label?.trim();
   const combined = desc && installLabel ? `${desc} — ${installLabel}` : desc || installLabel;

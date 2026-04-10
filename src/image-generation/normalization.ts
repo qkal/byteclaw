@@ -42,12 +42,12 @@ export function resolveImageGenerationOverrides(params: {
   const modeCaps = hasInputImages
     ? params.provider.capabilities.edit
     : params.provider.capabilities.generate;
-  const {geometry} = params.provider.capabilities;
+  const { geometry } = params.provider.capabilities;
   const ignoredOverrides: ImageGenerationIgnoredOverride[] = [];
   const normalization: ImageGenerationNormalization = {};
-  let {size} = params;
-  let {aspectRatio} = params;
-  let {resolution} = params;
+  let { size } = params;
+  let { aspectRatio } = params;
+  let { resolution } = params;
 
   if (size && (geometry?.sizes?.length ?? 0) > 0 && modeCaps.supportsSize) {
     const normalizedSize = resolveClosestSize({

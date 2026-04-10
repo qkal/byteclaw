@@ -283,7 +283,7 @@ describe("subagent-orphan-recovery", () => {
 
     // UpdateSessionStore should have been called AFTER successful resume to clear the flag
     expect(sessions.updateSessionStore).toHaveBeenCalledOnce();
-    const {calls} = vi.mocked(sessions.updateSessionStore).mock;
+    const { calls } = vi.mocked(sessions.updateSessionStore).mock;
     const [storePath, updater] = calls[0];
     expect(storePath).toBe("/tmp/test-sessions.json");
 

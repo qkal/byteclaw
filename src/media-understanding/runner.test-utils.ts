@@ -57,7 +57,7 @@ export async function withAudioFixture(
   );
 }
 
-export function createSafeAudioFixtureBuffer(size?: number, fill = 0xAB): Buffer {
+export function createSafeAudioFixtureBuffer(size?: number, fill = 0xab): Buffer {
   const minSafeSize = MIN_AUDIO_FILE_BYTES + 1;
   const finalSize = Math.max(size ?? minSafeSize, minSafeSize);
   return Buffer.alloc(finalSize, fill);

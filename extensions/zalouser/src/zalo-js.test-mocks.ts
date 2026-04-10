@@ -55,20 +55,20 @@ const zaloJsMocks = vi.hoisted(
   }),
 );
 
-export const {checkZaloAuthenticatedMock} = zaloJsMocks;
-export const {getZaloUserInfoMock} = zaloJsMocks;
-export const {listZaloFriendsMock} = zaloJsMocks;
-export const {listZaloFriendsMatchingMock} = zaloJsMocks;
-export const {listZaloGroupMembersMock} = zaloJsMocks;
-export const {listZaloGroupsMock} = zaloJsMocks;
-export const {listZaloGroupsMatchingMock} = zaloJsMocks;
-export const {logoutZaloProfileMock} = zaloJsMocks;
-export const {resolveZaloAllowFromEntriesMock} = zaloJsMocks;
-export const {resolveZaloGroupContextMock} = zaloJsMocks;
-export const {resolveZaloGroupsByEntriesMock} = zaloJsMocks;
-export const {startZaloListenerMock} = zaloJsMocks;
-export const {startZaloQrLoginMock} = zaloJsMocks;
-export const {waitForZaloQrLoginMock} = zaloJsMocks;
+export const { checkZaloAuthenticatedMock } = zaloJsMocks;
+export const { getZaloUserInfoMock } = zaloJsMocks;
+export const { listZaloFriendsMock } = zaloJsMocks;
+export const { listZaloFriendsMatchingMock } = zaloJsMocks;
+export const { listZaloGroupMembersMock } = zaloJsMocks;
+export const { listZaloGroupsMock } = zaloJsMocks;
+export const { listZaloGroupsMatchingMock } = zaloJsMocks;
+export const { logoutZaloProfileMock } = zaloJsMocks;
+export const { resolveZaloAllowFromEntriesMock } = zaloJsMocks;
+export const { resolveZaloGroupContextMock } = zaloJsMocks;
+export const { resolveZaloGroupsByEntriesMock } = zaloJsMocks;
+export const { startZaloListenerMock } = zaloJsMocks;
+export const { startZaloQrLoginMock } = zaloJsMocks;
+export const { waitForZaloQrLoginMock } = zaloJsMocks;
 
 vi.mock("./zalo-js.js", () => ({
   checkZaloAuthenticated: checkZaloAuthenticatedMock,

@@ -374,12 +374,14 @@ describe("web_fetch extraction fallbacks", () => {
   });
 
   it("uses the provider fallback when direct fetch fails", async () => {
-    installMockFetch((_input: RequestInfo | URL) => Promise.resolve({
+    installMockFetch((_input: RequestInfo | URL) =>
+      Promise.resolve({
         headers: makeFetchHeaders({ "content-type": "text/html" }),
         ok: false,
         status: 403,
         text: async () => "blocked",
-      } as Response));
+      } as Response),
+    );
 
     resolveWebFetchDefinitionMock.mockReturnValue({
       definition: {

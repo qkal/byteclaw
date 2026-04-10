@@ -25,7 +25,7 @@ export async function startIrcGatewayAccount(ctx: {
     info?: (message: string) => void;
   };
 }): Promise<void> {
-  const {account} = ctx;
+  const { account } = ctx;
   const statusSink = createAccountStatusSink({
     accountId: ctx.accountId,
     setStatus: ctx.setStatus,

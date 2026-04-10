@@ -23,7 +23,7 @@ function createCountingIterable<T>(values: T[]) {
   return {
     getIterations: () => iterations,
     values: {
-      *[Symbol.iterator] () {
+      *[Symbol.iterator]() {
         iterations += 1;
         yield* values;
       },

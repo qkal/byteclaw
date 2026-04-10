@@ -83,7 +83,7 @@ export function supportsXHighThinking(provider?: string | null, model?: string |
 export function listThinkingLevels(provider?: string | null, model?: string | null): ThinkLevel[] {
   const levels = listThinkingLevelsFallback(provider, model);
   if (supportsXHighThinking(provider, model)) {
-    levels.splice(- 1, 0, "xhigh");
+    levels.splice(-1, 0, "xhigh");
   }
   return levels;
 }

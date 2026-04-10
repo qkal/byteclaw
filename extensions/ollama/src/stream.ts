@@ -173,8 +173,8 @@ function isOllamaCloudKimiModelRef(modelId: string): boolean {
 export function createConfiguredOllamaCompatStreamWrapper(
   ctx: ProviderWrapStreamFnContext,
 ): StreamFn | undefined {
-  let {streamFn} = ctx;
-  const {model} = ctx;
+  let { streamFn } = ctx;
+  const { model } = ctx;
   let injectNumCtx = false;
 
   if (model) {
@@ -386,7 +386,7 @@ function ensureArgsObject(value: unknown): Record<string, unknown> {
 }
 
 function normalizeOllamaCompatMessageToolArgs(payloadRecord: Record<string, unknown>): void {
-  const {messages} = payloadRecord;
+  const { messages } = payloadRecord;
   if (!Array.isArray(messages)) {
     return;
   }

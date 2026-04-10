@@ -552,7 +552,11 @@ describe("registerTelegramNativeCommands", () => {
   });
 
   it("treats Telegram forum #General commands as topic 1 when Telegram omits topic metadata", async () => {
-    const getChat = vi.fn(async () => ({ id: -1_001_234_567_890, is_forum: true, type: "supergroup" }));
+    const getChat = vi.fn(async () => ({
+      id: -1_001_234_567_890,
+      is_forum: true,
+      type: "supergroup",
+    }));
     const { handler } = registerPlugCommand({
       botHarness: createCommandBot({ api: { getChat } }),
     });

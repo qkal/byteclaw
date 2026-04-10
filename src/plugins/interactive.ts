@@ -16,7 +16,9 @@ interface PluginInteractiveDispatchRegistration {
   namespace: string;
 }
 
-export interface PluginInteractiveMatch<TRegistration extends PluginInteractiveDispatchRegistration> {
+export interface PluginInteractiveMatch<
+  TRegistration extends PluginInteractiveDispatchRegistration,
+> {
   registration: RegisteredInteractiveHandler & TRegistration;
   namespace: string;
   payload: string;

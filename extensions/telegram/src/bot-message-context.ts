@@ -445,13 +445,13 @@ export const buildTelegramMessageContext = async ({
 
   // When status reactions are enabled, setQueued() replaces the simple ack reaction
   const ackReactionPromise: Promise<boolean> | null = statusReactionController
-    ? (shouldAckReaction()
+    ? shouldAckReaction()
       ? Promise.resolve(statusReactionController.setQueued()).then(
           () => true,
           () => false,
         )
-      : null)
-    : (shouldAckReaction() && msg.message_id && reactionApi && ackReactionEmoji
+      : null
+    : shouldAckReaction() && msg.message_id && reactionApi && ackReactionEmoji
       ? withTelegramApiErrorLogging({
           fn: () =>
             reactionApi(chatId, msg.message_id, [{ type: "emoji", emoji: ackReactionEmoji }]),
@@ -463,7 +463,7 @@ export const buildTelegramMessageContext = async ({
             return false;
           },
         )
-      : null);
+      : null;
 
   const { ctxPayload, skillFilter } = await buildTelegramInboundContextPayload({
     allMedia,

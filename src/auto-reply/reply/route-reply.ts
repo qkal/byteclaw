@@ -103,9 +103,9 @@ export async function routeReply(params: RouteReplyParams): Promise<RouteReplyRe
         resolvedAgentId ?? resolveSessionAgentId({ config: cfg }),
         { accountId, channel: normalizedChannel },
       ).responsePrefix
-    : (cfg.messages?.responsePrefix === "auto"
+    : cfg.messages?.responsePrefix === "auto"
       ? undefined
-      : cfg.messages?.responsePrefix);
+      : cfg.messages?.responsePrefix;
   const normalized = normalizeReplyPayload(payload, {
     responsePrefix,
     transformReplyPayload: messaging?.transformReplyPayload
@@ -128,10 +128,10 @@ export async function routeReply(params: RouteReplyParams): Promise<RouteReplyRe
   const text = externalPayload.text ?? "";
   const mediaUrls = (externalPayload.mediaUrls?.filter(Boolean) ?? []).length
     ? (externalPayload.mediaUrls?.filter(Boolean) as string[])
-    : (externalPayload.mediaUrl
+    : externalPayload.mediaUrl
       ? [externalPayload.mediaUrl]
-      : []);
-  const {replyToId} = externalPayload;
+      : [];
+  const { replyToId } = externalPayload;
   const hasChannelData = messaging?.hasStructuredReplyPayload?.({
     payload: externalPayload,
   });

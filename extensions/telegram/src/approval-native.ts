@@ -28,7 +28,10 @@ import { parseTelegramThreadId } from "./outbound-params.js";
 import { normalizeTelegramChatId, parseTelegramTarget } from "./targets.js";
 
 type ApprovalRequest = ExecApprovalRequest | PluginApprovalRequest;
-interface TelegramOriginTarget { to: string; threadId?: number }
+interface TelegramOriginTarget {
+  to: string;
+  threadId?: number;
+}
 
 function resolveTurnSourceTelegramOriginTarget(
   request: ApprovalRequest,

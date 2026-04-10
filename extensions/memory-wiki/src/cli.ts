@@ -362,14 +362,14 @@ export async function runWikiSearch(params: {
   });
   const summary = params.json
     ? JSON.stringify(results, null, 2)
-    : (results.length === 0
+    : results.length === 0
       ? "No wiki or memory results."
       : results
           .map(
             (result, index) =>
               `${index + 1}. ${result.title} (${result.corpus}/${result.kind})\nPath: ${result.path}${typeof result.startLine === "number" && typeof result.endLine === "number" ? `\nLines: ${result.startLine}-${result.endLine}` : ""}${result.provenanceLabel ? `\nProvenance: ${result.provenanceLabel}` : ""}\nSnippet: ${result.snippet}`,
           )
-          .join("\n\n"));
+          .join("\n\n");
   writeOutput(summary, params.stdout);
   return results;
 }
@@ -473,9 +473,9 @@ export async function runWikiApplyMetadata(params: {
         : {}),
       ...(params.clearConfidence
         ? { confidence: null }
-        : (typeof params.confidence === "number"
+        : typeof params.confidence === "number"
           ? { confidence: params.confidence }
-          : {})),
+          : {}),
       ...(params.status?.trim() ? { status: params.status.trim() } : {}),
     },
   });

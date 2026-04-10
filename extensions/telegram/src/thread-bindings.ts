@@ -296,7 +296,7 @@ function loadBindingsFromDisk(accountId: string): TelegramThreadBindingRecord[] 
     }
     return bindings;
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code !== "ENOENT") {
       logVerbose(`telegram thread bindings load failed (${accountId}): ${String(error)}`);
     }

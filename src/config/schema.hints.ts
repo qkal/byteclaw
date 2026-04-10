@@ -244,7 +244,7 @@ export function collectMatchingSchemaPaths(
   }
 
   if (currentSchema instanceof z.ZodObject) {
-    const {shape} = currentSchema;
+    const { shape } = currentSchema;
     for (const key in shape) {
       const nextPath = path ? `${path}.${key}` : key;
       collectMatchingSchemaPaths(shape[key], nextPath, matchesPath, paths);
@@ -317,7 +317,7 @@ export function mapSensitivePaths(
   }
 
   if (currentSchema instanceof z.ZodObject) {
-    const {shape} = currentSchema;
+    const { shape } = currentSchema;
     for (const key in shape) {
       const nextPath = path ? `${path}.${key}` : key;
       next = mapSensitivePaths(shape[key], nextPath, next);

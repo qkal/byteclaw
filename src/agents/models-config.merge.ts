@@ -30,7 +30,7 @@ function getProviderModelId(model: unknown): string {
   if (!model || typeof model !== "object") {
     return "";
   }
-  const {id} = (model as { id?: unknown });
+  const { id } = model as { id?: unknown };
   return normalizeOptionalString(id) ?? "";
 }
 
@@ -161,7 +161,7 @@ function resolveModelApiSurface(entry: { models?: unknown } | undefined): string
       if (!model || typeof model !== "object") {
         return [];
       }
-      const {api} = (model as { api?: unknown });
+      const { api } = model as { api?: unknown };
       const normalized = normalizeOptionalString(api);
       return normalized ? [normalized] : [];
     })

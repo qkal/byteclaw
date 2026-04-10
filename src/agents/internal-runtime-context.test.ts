@@ -48,7 +48,7 @@ describe("internal runtime context codec", () => {
   });
 
   it("fuzzes delimiter injection and nested marker handling deterministically", () => {
-    const rng = createDeterministicRng(0xC0_FF_EE_42);
+    const rng = createDeterministicRng(0xc0_ff_ee_42);
     const tokenPool = [
       "plain output line",
       "status: ok",

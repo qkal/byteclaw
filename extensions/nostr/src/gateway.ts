@@ -77,7 +77,7 @@ async function resolveNostrDirectAccess(params: {
 }
 
 export const startNostrGatewayAccount: NostrGatewayStart = async (ctx) => {
-  const {account} = ctx;
+  const { account } = ctx;
   ctx.setStatus({
     accountId: account.accountId,
     publicKey: account.publicKey,

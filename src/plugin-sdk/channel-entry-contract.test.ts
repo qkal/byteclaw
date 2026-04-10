@@ -38,7 +38,7 @@ describe("loadBundledEntryExportSync", () => {
     }
 
     expect(thrown).toBeInstanceOf(Error);
-    const {message} = (thrown as Error);
+    const { message } = thrown as Error;
     expect(message).toContain('bundled plugin entry "./src/secret-contract.js" failed to open');
     expect(message).toContain(`from "${importerPath}"`);
     expect(message).toContain(`resolved "${path.join(pluginRoot, "src", "secret-contract.js")}"`);

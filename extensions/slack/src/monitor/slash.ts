@@ -30,7 +30,10 @@ import { escapeSlackMrkdwn } from "./mrkdwn.js";
 import { isSlackChannelAllowedByPolicy } from "./policy.js";
 import { resolveSlackRoomContextHints } from "./room-context.js";
 
-interface SlackBlock { type: string; [key: string]: unknown }
+interface SlackBlock {
+  type: string;
+  [key: string]: unknown;
+}
 
 const SLACK_COMMAND_ARG_ACTION_ID = "openclaw_cmdarg";
 const SLACK_COMMAND_ARG_VALUE_PREFIX = "cmdarg";
@@ -279,8 +282,8 @@ export async function registerSlackMonitorSlashCommands(params: {
   account: ResolvedSlackAccount;
 }): Promise<void> {
   const { ctx, account } = params;
-  const {cfg} = ctx;
-  const {runtime} = ctx;
+  const { cfg } = ctx;
+  const { runtime } = ctx;
 
   const supportsInteractiveArgMenus =
     typeof (ctx.app as { action?: unknown }).action === "function";
@@ -529,7 +532,7 @@ export async function registerSlackMonitorSlashCommands(params: {
         channel: "slack",
         peer: {
           id: isDirectMessage ? command.user_id : command.channel_id,
-          kind: isDirectMessage ? "direct" : (isRoom ? "channel" : "group"),
+          kind: isDirectMessage ? "direct" : isRoom ? "channel" : "group",
         },
         teamId: ctx.teamId || undefined,
       });
@@ -570,9 +573,9 @@ export async function registerSlackMonitorSlashCommands(params: {
           }) ?? (isDirectMessage ? senderName : roomLabel),
         From: isDirectMessage
           ? `slack:${command.user_id}`
-          : (isRoom
+          : isRoom
             ? `slack:channel:${command.channel_id}`
-            : `slack:group:${command.channel_id}`),
+            : `slack:group:${command.channel_id}`,
         GroupSubject: isRoomish ? roomLabel : undefined,
         GroupSystemPrompt: groupSystemPrompt,
         MessageSid: command.trigger_id,
@@ -687,14 +690,14 @@ export async function registerSlackMonitorSlashCommands(params: {
           const rawText = cmd.text?.trim() ?? "";
           const commandArgs = commandDefinition
             ? slashCommandsRuntime.parseCommandArgs(commandDefinition, rawText)
-            : (rawText
+            : rawText
               ? ({ raw: rawText } satisfies CommandArgs)
-              : undefined);
+              : undefined;
           const prompt = commandDefinition
             ? slashCommandsRuntime.buildCommandTextFromArgs(commandDefinition, commandArgs)
-            : (rawText
+            : rawText
               ? `/${command.name} ${rawText}`
-              : `/${command.name}`);
+              : `/${command.name}`;
           await handleSlashCommand({
             ack,
             body,
@@ -844,13 +847,13 @@ export async function registerSlackMonitorSlashCommands(params: {
       const prompt = commandDefinition
         ? buildCommandTextFromArgs(commandDefinition, commandArgs)
         : `/${parsed.command} ${parsed.value}`;
-      const {user} = body;
+      const { user } = body;
       const userName =
         user && "name" in user && user.name
           ? user.name
-          : (user && "username" in user && user.username
+          : user && "username" in user && user.username
             ? user.username
-            : (user?.id ?? ""));
+            : (user?.id ?? "");
       const triggerId = "trigger_id" in body ? body.trigger_id : undefined;
       const commandPayload = {
         channel_id: body.channel?.id ?? "",

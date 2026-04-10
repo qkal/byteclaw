@@ -79,7 +79,8 @@ describe("Ghost reminder bug (issue #13317)", () => {
     result: Awaited<ReturnType<typeof runHeartbeatOnce>>;
     sendTelegram: ReturnType<typeof vi.fn>;
     calledCtx: { Provider?: string; Body?: string; ForceSenderIsOwnerFalse?: boolean } | null;
-  }> => runHeartbeatCase({
+  }> =>
+    runHeartbeatCase({
       enqueue,
       reason: "cron:reminder-job",
       replyText: "Relay this reminder now",
@@ -97,7 +98,8 @@ describe("Ghost reminder bug (issue #13317)", () => {
     sendTelegram: ReturnType<typeof vi.fn>;
     calledCtx: { Provider?: string; Body?: string; ForceSenderIsOwnerFalse?: boolean } | null;
     replyCallCount: number;
-  }> => withTempHeartbeatSandbox(
+  }> =>
+    withTempHeartbeatSandbox(
       async ({ tmpDir, storePath }) => {
         const { sendTelegram, getReplySpy } = createHeartbeatDeps(params.replyText);
         const { cfg, sessionKey } = await createConfig({

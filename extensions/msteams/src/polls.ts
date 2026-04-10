@@ -112,9 +112,9 @@ export function extractMSTeamsPollVote(
   const selections =
     directSelections.length > 0
       ? directSelections
-      : (nestedSelections.length > 0
+      : nestedSelections.length > 0
         ? nestedSelections
-        : dataSelections);
+        : dataSelections;
 
   if (selections.length === 0) {
     return null;

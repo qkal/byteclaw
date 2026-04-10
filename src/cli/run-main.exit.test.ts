@@ -163,7 +163,7 @@ describe("runCli exit behavior", () => {
   });
 
   it("propagates a handled container-target exit code", async () => {
-    const {exitCode} = process;
+    const { exitCode } = process;
     maybeRunCliInContainerMock.mockReturnValueOnce({ exitCode: 7, handled: true });
 
     await runCli(["node", "openclaw", "--container", "demo", "status"]);
@@ -173,7 +173,7 @@ describe("runCli exit behavior", () => {
   });
 
   it("swallows Commander parse exits after recording the exit code", async () => {
-    const {exitCode} = process;
+    const { exitCode } = process;
     buildProgramMock.mockReturnValueOnce({
       commands: [{ name: () => "status" }],
       parseAsync: vi

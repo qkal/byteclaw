@@ -9,8 +9,15 @@ import {
   resolveStorePath,
 } from "./heartbeat-recipients.runtime.js";
 
-interface HeartbeatRecipientsResult { recipients: string[]; source: string }
-interface HeartbeatRecipientsOpts { to?: string; all?: boolean; accountId?: string }
+interface HeartbeatRecipientsResult {
+  recipients: string[];
+  source: string;
+}
+interface HeartbeatRecipientsOpts {
+  to?: string;
+  all?: boolean;
+  accountId?: string;
+}
 
 function getSessionRecipients(cfg: OpenClawConfig) {
   const sessionCfg = cfg.session;

@@ -27,7 +27,7 @@ function resolveNormalizedBindingMatch(binding: AgentRouteBinding): {
   if (!binding || typeof binding !== "object") {
     return null;
   }
-  const {match} = binding;
+  const { match } = binding;
   if (!match || typeof match !== "object") {
     return null;
   }

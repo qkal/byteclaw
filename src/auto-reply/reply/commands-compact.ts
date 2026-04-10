@@ -87,7 +87,7 @@ export const handleCompactCommand: CommandHandler = async (params) => {
     };
   }
   const runtime = await import("./commands-compact.runtime.js");
-  const {sessionId} = params.sessionEntry;
+  const { sessionId } = params.sessionEntry;
   if (runtime.isEmbeddedPiRunActive(sessionId)) {
     runtime.abortEmbeddedPiRun(sessionId);
     await runtime.waitForEmbeddedPiRunEnd(sessionId, 15_000);

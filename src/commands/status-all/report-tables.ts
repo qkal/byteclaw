@@ -43,9 +43,9 @@ export function buildStatusAgentTableRows(params: {
     BootstrapFile:
       agent.bootstrapPending === true
         ? params.warn("PRESENT")
-        : (agent.bootstrapPending === false
+        : agent.bootstrapPending === false
           ? params.ok("ABSENT")
-          : "unknown"),
+          : "unknown",
     Sessions: String(agent.sessionsCount),
     Store: agent.sessionsPath,
   }));
@@ -71,9 +71,9 @@ export function buildStatusChannelDetailSections(params: {
       ...row,
       ...(row.Status === "OK"
         ? { Status: params.ok("OK") }
-        : (row.Status === "WARN"
+        : row.Status === "WARN"
           ? { Status: params.warn("WARN") }
-          : {})),
+          : {}),
     })),
     title: detail.title,
     width: params.width,

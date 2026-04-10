@@ -270,7 +270,7 @@ async function processMessage(
   }
   const commandBody = message.commandContent?.trim() || rawBody;
 
-  const {isGroup} = message;
+  const { isGroup } = message;
   const chatId = message.threadId;
   const senderId = message.senderId?.trim();
   if (!senderId) {
@@ -301,7 +301,11 @@ async function processMessage(
         profile: account.profile,
       });
     } catch (error) {
-      logVerbose(core, runtime, `zalouser: delivery/seen ack failed for ${chatId}: ${String(error)}`);
+      logVerbose(
+        core,
+        runtime,
+        `zalouser: delivery/seen ack failed for ${chatId}: ${String(error)}`,
+      );
     }
   }
 
@@ -781,7 +785,7 @@ export async function monitorZalouserProvider(
   const groupHistories = new Map<string, HistoryEntry[]>();
 
   try {
-    const {profile} = account;
+    const { profile } = account;
     const allowFromEntries = (account.config.allowFrom ?? [])
       .map((entry) => normalizeZalouserEntry(String(entry)))
       .filter((entry) => entry && entry !== "*");

@@ -314,7 +314,7 @@ function isGenericSystemctlIsEnabledFailure(detail: string): boolean {
 }
 
 export function isNonFatalSystemdInstallProbeError(error: unknown): boolean {
-  const detail = error instanceof Error ? error.message : (typeof error === "string" ? error : "");
+  const detail = error instanceof Error ? error.message : typeof error === "string" ? error : "";
   if (!detail) {
     return false;
   }
@@ -645,7 +645,7 @@ export async function readSystemdServiceRuntime(
   }
   const parsed = parseSystemdShow(res.stdout || "");
   const activeState = normalizeLowercaseStringOrEmpty(parsed.activeState);
-  const status = activeState === "active" ? "running" : (activeState ? "stopped" : "unknown");
+  const status = activeState === "active" ? "running" : activeState ? "stopped" : "unknown";
   return {
     lastExitReason: parsed.execMainCode,
     lastExitStatus: parsed.execMainStatus,

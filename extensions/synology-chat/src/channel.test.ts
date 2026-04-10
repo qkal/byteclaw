@@ -194,7 +194,7 @@ describe("createSynologyChatPlugin", () => {
       const plugin = createSynologyChatPlugin();
       expect(plugin.pairing.idLabel).toBe("synologyChatUserId");
       const normalize = plugin.pairing.normalizeAllowEntry;
-      const {notifyApproval} = plugin.pairing;
+      const { notifyApproval } = plugin.pairing;
       if (!normalize || !notifyApproval) {
         throw new Error("synology-chat pairing helpers unavailable");
       }

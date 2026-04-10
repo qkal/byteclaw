@@ -30,9 +30,9 @@ export function createDiscordDraftStream(params: {
 }): DiscordDraftStream {
   const maxChars = Math.min(params.maxChars ?? DISCORD_STREAM_MAX_CHARS, DISCORD_STREAM_MAX_CHARS);
   const throttleMs = Math.max(250, params.throttleMs ?? DEFAULT_THROTTLE_MS);
-  const {minInitialChars} = params;
-  const {channelId} = params;
-  const {rest} = params;
+  const { minInitialChars } = params;
+  const { channelId } = params;
+  const { rest } = params;
   const resolveReplyToMessageId = () =>
     typeof params.replyToMessageId === "function"
       ? params.replyToMessageId()

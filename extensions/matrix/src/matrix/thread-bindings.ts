@@ -307,7 +307,8 @@ export async function createMatrixThreadBindingManager(params: {
       listBindingsForAccount(params.accountId).filter(
         (entry) => entry.targetSessionKey === targetSessionKey.trim(),
       ),
-    setIdleTimeoutBySessionKey: ({ targetSessionKey, idleTimeoutMs }) => updateBindingsBySessionKey({
+    setIdleTimeoutBySessionKey: ({ targetSessionKey, idleTimeoutMs }) =>
+      updateBindingsBySessionKey({
         targetSessionKey,
         persistReason: "idle-timeout-update",
         update: (entry, now) => ({
@@ -316,7 +317,8 @@ export async function createMatrixThreadBindingManager(params: {
           lastActivityAt: now,
         }),
       }),
-    setMaxAgeBySessionKey: ({ targetSessionKey, maxAgeMs }) => updateBindingsBySessionKey({
+    setMaxAgeBySessionKey: ({ targetSessionKey, maxAgeMs }) =>
+      updateBindingsBySessionKey({
         targetSessionKey,
         persistReason: "max-age-update",
         update: (entry, now) => ({

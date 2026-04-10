@@ -138,7 +138,7 @@ async function resolveAvailableHookInstallTarget(params: {
   if (!targetDirResult.ok) {
     return targetDirResult;
   }
-  const {targetDir} = targetDirResult;
+  const { targetDir } = targetDirResult;
   const availability = await runtime.ensureInstallTargetAvailable({
     alreadyExistsError: params.alreadyExistsError(targetDir),
     mode: params.mode,
@@ -255,7 +255,7 @@ async function installHookPackageFromDir(
   if (!target.ok) {
     return target;
   }
-  const {targetDir} = target;
+  const { targetDir } = target;
 
   const resolvedHooks = [] as string[];
   for (const entry of hookEntries) {
@@ -348,7 +348,7 @@ async function installHookFromDir(params: {
   if (!target.ok) {
     return target;
   }
-  const {targetDir} = target;
+  const { targetDir } = target;
 
   if (dryRun) {
     return { hookPackId: hookName, hooks: [hookName], ok: true, targetDir };
@@ -420,8 +420,8 @@ export async function installHooksFromNpmSpec(params: {
     params,
     defaultLogger,
   );
-  const {expectedHookPackId} = params;
-  const {spec} = params;
+  const { expectedHookPackId } = params;
+  const { spec } = params;
 
   logger.info?.(`Downloading ${spec.trim()}…`);
   return await runtime.installFromValidatedNpmSpecArchive({

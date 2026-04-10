@@ -183,18 +183,28 @@ export async function inspectGatewayRestart(params: {
       // Best-effort probe
     }
   }
-  const staleGatewayPids = [...new Set([...gatewayListeners.filter((listener) => Number.isFinite(listener.pid)).filter((listener) => {
-	if (!running) {
-		return true;
-	}
-	if (runtimePid == null) {
-		return false;
-	}
-	return !listenerOwnedByRuntimePid({
-		listener,
-		runtimePid
-	});
-}).map((listener) => listener.pid as number), ...fallbackListenerPids.filter((pid) => runtime.pid == null || pid !== runtime.pid || !running)])];
+  const staleGatewayPids = [
+    ...new Set([
+      ...gatewayListeners
+        .filter((listener) => Number.isFinite(listener.pid))
+        .filter((listener) => {
+          if (!running) {
+            return true;
+          }
+          if (runtimePid == null) {
+            return false;
+          }
+          return !listenerOwnedByRuntimePid({
+            listener,
+            runtimePid,
+          });
+        })
+        .map((listener) => listener.pid as number),
+      ...fallbackListenerPids.filter(
+        (pid) => runtime.pid == null || pid !== runtime.pid || !running,
+      ),
+    ]),
+  ];
 
   return {
     healthy,
@@ -344,7 +354,9 @@ export function renderGatewayPortHealthDiagnostics(snapshot: GatewayPortHealthSn
 }
 
 export async function terminateStaleGatewayPids(pids: number[]): Promise<number[]> {
-  const targets = [...new Set(pids.filter((pid): pid is number => Number.isFinite(pid) && pid > 0))];
+  const targets = [
+    ...new Set(pids.filter((pid): pid is number => Number.isFinite(pid) && pid > 0)),
+  ];
   for (const pid of targets) {
     killProcessTree(pid, { graceMs: 300 });
   }

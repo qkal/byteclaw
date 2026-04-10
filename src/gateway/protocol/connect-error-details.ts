@@ -136,7 +136,7 @@ export function readConnectErrorDetailCode(details: unknown): string | null {
   if (!details || typeof details !== "object" || Array.isArray(details)) {
     return null;
   }
-  const {code} = (details as { code?: unknown });
+  const { code } = details as { code?: unknown };
   return typeof code === "string" && code.trim().length > 0 ? code : null;
 }
 

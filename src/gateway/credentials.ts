@@ -178,7 +178,7 @@ function resolveRemoteGatewayCredentials(params: {
   const token =
     params.remoteTokenFallback === "remote-only"
       ? params.plan.remoteToken.value
-      : (params.remoteTokenPrecedence === "env-first"
+      : params.remoteTokenPrecedence === "env-first"
         ? firstDefined([
             params.plan.envToken,
             params.plan.remoteToken.value,
@@ -188,11 +188,11 @@ function resolveRemoteGatewayCredentials(params: {
             params.plan.remoteToken.value,
             params.plan.envToken,
             params.plan.localToken.value,
-          ]));
+          ]);
   const password =
     params.remotePasswordFallback === "remote-only" // Pragma: allowlist secret
       ? params.plan.remotePassword.value
-      : (params.remotePasswordPrecedence === "env-first" // Pragma: allowlist secret
+      : params.remotePasswordPrecedence === "env-first" // Pragma: allowlist secret
         ? firstDefined([
             params.plan.envPassword,
             params.plan.remotePassword.value,
@@ -202,7 +202,7 @@ function resolveRemoteGatewayCredentials(params: {
             params.plan.remotePassword.value,
             params.plan.envPassword,
             params.plan.localPassword.value,
-          ]));
+          ]);
   const localTokenFallbackEnabled = params.remoteTokenFallback !== "remote-only";
   const localTokenFallback =
     params.remoteTokenFallback === "remote-only" ? undefined : params.plan.localToken.value;

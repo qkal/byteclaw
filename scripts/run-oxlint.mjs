@@ -14,7 +14,8 @@ const fixFlag = args.includes('--fix') ? '--fix' : '';
 try {
   // Run oxlint with security-focused rules and only on source files
   // Enable security categories while keeping TypeScript plugin disabled to avoid parsing errors
-  const command = `npx oxlint ${fixFlag} --disable-typescript-plugin -D suspicious -D correctness src extensions/*/src packages/*/src --quiet`;
+  // Disable noisy code quality rules that don't affect production stability
+  const command = `npx oxlint ${fixFlag} --disable-typescript-plugin -D suspicious -D correctness -D no-shadow -D unicorn/consistent-function-scoping -D unicorn/no-useless-spread src extensions/*/src packages/*/src --quiet`;
   console.log(`Running: ${command}`);
   execSync(command, {
     cwd: rootDir,

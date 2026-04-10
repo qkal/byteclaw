@@ -138,17 +138,15 @@ function buildLineWebhookReplayKey(
     return null;
   }
 
-  const {source} = (
-    event as {
-      source?: { type?: string; userId?: string; groupId?: string; roomId?: string };
-    }
-  );
+  const { source } = event as {
+    source?: { type?: string; userId?: string; groupId?: string; roomId?: string };
+  };
   const sourceId =
     source?.type === "group"
       ? `group:${source.groupId ?? ""}`
-      : (source?.type === "room"
+      : source?.type === "room"
         ? `room:${source.roomId ?? ""}`
-        : `user:${source?.userId ?? ""}`);
+        : `user:${source?.userId ?? ""}`;
   return { eventId: `event:${eventId}`, key: `${accountId}|${event.type}|${sourceId}|${eventId}` };
 }
 
@@ -476,7 +474,7 @@ function resolveLineCommandAuthorized(params: {
 
 async function handleMessageEvent(event: MessageEvent, context: LineHandlerContext): Promise<void> {
   const { cfg, account, runtime, mediaMaxBytes, processMessage } = context;
-  const {message} = event;
+  const { message } = event;
 
   const decision = await shouldProcessLineEvent(event, context);
   if (!decision.allowed) {
@@ -611,7 +609,7 @@ async function handlePostbackEvent(
   event: PostbackEvent,
   context: LineHandlerContext,
 ): Promise<void> {
-  const {data} = event.postback;
+  const { data } = event.postback;
   logVerbose(`line: received postback: ${data}`);
 
   const decision = await shouldProcessLineEvent(event, context);
@@ -645,7 +643,9 @@ export async function handleLineWebhookEvents(
         try {
           await replaySkip.inFlightResult;
         } catch (error) {
-          context.runtime.error?.(danger(`line: replayed in-flight event failed: ${String(error)}`));
+          context.runtime.error?.(
+            danger(`line: replayed in-flight event failed: ${String(error)}`),
+          );
           firstError ??= error;
         }
       }

@@ -160,14 +160,14 @@ export function getToolResultTextLength(msg: AgentMessage): number {
   if (!msg || (msg as { role?: string }).role !== "toolResult") {
     return 0;
   }
-  const {content} = (msg as { content?: unknown });
+  const { content } = msg as { content?: unknown };
   if (!Array.isArray(content)) {
     return 0;
   }
   let totalLength = 0;
   for (const block of content) {
     if (block && typeof block === "object" && (block as { type?: string }).type === "text") {
-      const {text} = (block as TextContent);
+      const { text } = block as TextContent;
       if (typeof text === "string") {
         totalLength += text.length;
       }
@@ -187,7 +187,7 @@ export function truncateToolResultMessage(
 ): AgentMessage {
   const suffixFactory = resolveSuffixFactory(options.suffix);
   const minKeepChars = options.minKeepChars ?? MIN_KEEP_CHARS;
-  const {content} = (msg as { content?: unknown });
+  const { content } = msg as { content?: unknown };
   if (!Array.isArray(content)) {
     return msg;
   }

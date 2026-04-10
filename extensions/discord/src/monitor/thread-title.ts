@@ -64,7 +64,9 @@ export async function generateThreadTitle(params: {
     const generated = normalizeGeneratedThreadTitle(extractAssistantText(response));
     return generated || null;
   } catch (error) {
-    logVerbose(`thread-title: title generation failed for agent ${params.agentId}: ${String(error)}`);
+    logVerbose(
+      `thread-title: title generation failed for agent ${params.agentId}: ${String(error)}`,
+    );
     return null;
   }
 }

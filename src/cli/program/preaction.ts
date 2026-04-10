@@ -57,14 +57,14 @@ function getCliLogLevel(actionCommand: Command): LogLevel | undefined {
   if (root.getOptionValueSource("logLevel") !== "cli") {
     return undefined;
   }
-  const {logLevel} = root.opts<Record<string, unknown>>();
+  const { logLevel } = root.opts<Record<string, unknown>>();
   return typeof logLevel === "string" ? (logLevel as LogLevel) : undefined;
 }
 
 export function registerPreActionHooks(program: Command, programVersion: string) {
   program.hook("preAction", async (_thisCommand, actionCommand) => {
     setProcessTitleForCommand(actionCommand);
-    const {argv} = process;
+    const { argv } = process;
     if (hasHelpOrVersion(argv)) {
       return;
     }

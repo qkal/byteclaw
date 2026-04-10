@@ -12,7 +12,7 @@ function createBaseConfig(provider: "telnyx" | "twilio" | "plivo" | "mock"): Voi
 }
 
 function requireElevenLabsTtsConfig(config: Pick<VoiceCallConfig, "tts">) {
-  const {tts} = config;
+  const { tts } = config;
   const elevenlabs = tts?.providers?.elevenlabs;
   if (!elevenlabs || typeof elevenlabs !== "object") {
     throw new Error("voice-call config did not preserve nested elevenlabs TTS config");

@@ -15,7 +15,10 @@ describe("gateway request scope", () => {
     run: (runtimeScope: Awaited<ReturnType<typeof importGatewayRequestScopeModule>>) => Promise<T>,
   ) {
     const runtimeScope = await importGatewayRequestScopeModule();
-    return await runtimeScope.withPluginRuntimeGatewayRequestScope(TEST_SCOPE, async () => await run(runtimeScope));
+    return await runtimeScope.withPluginRuntimeGatewayRequestScope(
+      TEST_SCOPE,
+      async () => await run(runtimeScope),
+    );
   }
 
   function expectGatewayScope(

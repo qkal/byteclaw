@@ -10,7 +10,10 @@ import {
 } from "./report-sections.js";
 import { appendStatusReportSections, appendStatusSectionHeading } from "./text-report.js";
 
-interface OverviewRow { Item: string; Value: string }
+interface OverviewRow {
+  Item: string;
+  Value: string;
+}
 
 interface ChannelsTable {
   rows: {

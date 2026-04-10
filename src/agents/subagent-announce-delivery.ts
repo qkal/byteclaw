@@ -270,7 +270,7 @@ async function sendAnnounce(item: AnnounceQueueItem) {
   const cfg = subagentAnnounceDeliveryDeps.loadConfig();
   const announceTimeoutMs = resolveSubagentAnnounceTimeoutMs(cfg);
   const requesterIsSubagent = isInternalAnnounceRequesterSession(item.sessionKey);
-  const {origin} = item;
+  const { origin } = item;
   const threadId =
     origin?.threadId != null && origin.threadId !== "" ? String(origin.threadId) : undefined;
   const idempotencyKey = buildAnnounceIdempotencyKey(

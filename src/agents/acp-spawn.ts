@@ -831,7 +831,7 @@ async function bindPreparedAcpThread(params: {
     );
   }
 
-  let {sessionEntry} = params.initializedRuntime;
+  let { sessionEntry } = params.initializedRuntime;
   if (params.initializedRuntime.sessionId && params.preparedBinding.placement === "child") {
     const boundThreadId = normalizeOptionalString(String(binding.conversation.conversationId));
     if (boundThreadId) {

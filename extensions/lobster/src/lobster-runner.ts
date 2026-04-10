@@ -407,7 +407,7 @@ function createFallbackEmbeddedToolRuntime(deps: ToolRuntimeDeps): EmbeddedToolR
   });
 
   const streamFromItems = (items: unknown[]) =>
-    (async function*  streamFromItems() {
+    (async function* streamFromItems() {
       for (const item of items) {
         yield item;
       }

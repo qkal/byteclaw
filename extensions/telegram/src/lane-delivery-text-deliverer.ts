@@ -152,7 +152,7 @@ function shouldSkipRegressivePreviewUpdate(args: {
   skipRegressive: RegressiveSkipMode;
   hadPreviewMessage: boolean;
 }): boolean {
-  const {currentPreviewText} = args;
+  const { currentPreviewText } = args;
   if (currentPreviewText === undefined) {
     return false;
   }
@@ -203,7 +203,7 @@ export function createLaneTextDeliverer(params: CreateLaneTextDelivererParams) {
     laneName: LaneName;
     text: string;
   }): Promise<number | undefined> => {
-    const {stream} = args.lane;
+    const { stream } = args.lane;
     if (!stream || !isDraftPreviewLane(args.lane)) {
       return undefined;
     }
@@ -483,7 +483,7 @@ export function createLaneTextDeliverer(params: CreateLaneTextDelivererParams) {
   }: DeliverLaneTextParams): Promise<LaneDeliveryResult> => {
     const lane = params.lanes[laneName];
     const reply = resolveSendableOutboundReplyParts(payload, { text });
-    const {hasMedia} = reply;
+    const { hasMedia } = reply;
     const canEditViaPreview =
       !hasMedia && text.length > 0 && text.length <= params.draftMaxChars && !payload.isError;
 

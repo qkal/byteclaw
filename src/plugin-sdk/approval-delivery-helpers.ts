@@ -7,7 +7,10 @@ import { normalizeMessageChannel } from "./routing.js";
 type ApprovalKind = "exec" | "plugin";
 type NativeApprovalDeliveryMode = "dm" | "channel" | "both";
 type NativeApprovalRequest = ExecApprovalRequest | PluginApprovalRequest;
-interface NativeApprovalTarget { to: string; threadId?: string | number | null }
+interface NativeApprovalTarget {
+  to: string;
+  threadId?: string | number | null;
+}
 type NativeApprovalSurface = "origin" | "approver-dm";
 type ChannelApprovalCapabilitySurfaces = Pick<
   ChannelApprovalCapability,
@@ -67,7 +70,7 @@ function buildApproverRestrictedNativeApprovalCapability(
   const normalizePreferredSurface = (
     mode: NativeApprovalDeliveryMode,
   ): NativeApprovalSurface | "both" =>
-    mode === "channel" ? "origin" : (mode === "dm" ? "approver-dm" : "both");
+    mode === "channel" ? "origin" : mode === "dm" ? "approver-dm" : "both";
   const hasConfiguredApprovers = ({
     cfg,
     accountId,

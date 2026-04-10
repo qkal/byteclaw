@@ -291,7 +291,7 @@ export function loadBundledCapabilityRuntimeRegistry(params: {
     }
 
     const resolved = resolvePluginModuleExport(mod);
-    const {register} = resolved;
+    const { register } = resolved;
     if (typeof register !== "function") {
       record.status = "disabled";
       record.error = "plugin export missing register(api)";

@@ -19,10 +19,12 @@ const runtimeLog = runtime.log;
 const runtimeError = runtime.error;
 const runtimeExit = runtime.exit;
 
-vi.mock("../runtime.js", async () => mockRuntimeModule(
+vi.mock("../runtime.js", async () =>
+  mockRuntimeModule(
     () => vi.importActual<typeof import("../runtime.js")>("../runtime.js"),
     runtime,
-  ));
+  ),
+);
 vi.mock("../config/config.js", () => ({ loadConfig: mocks.loadConfig }));
 vi.mock("../process/exec.js", () => ({ runCommandWithTimeout: mocks.runCommandWithTimeout }));
 vi.mock("./command-secret-gateway.js", () => ({
@@ -40,10 +42,10 @@ vi.mock("qrcode-terminal", () => ({
   },
 }));
 
-const {loadConfig} = mocks;
-const {runCommandWithTimeout} = mocks;
-const {resolveCommandSecretRefsViaGateway} = mocks;
-const {qrGenerate} = mocks;
+const { loadConfig } = mocks;
+const { runCommandWithTimeout } = mocks;
+const { resolveCommandSecretRefsViaGateway } = mocks;
+const { qrGenerate } = mocks;
 
 const { registerQrCli } = await import("./qr-cli.js");
 

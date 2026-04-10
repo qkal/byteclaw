@@ -323,7 +323,7 @@ export function resolveHookSessionKey(params: {
     return { ok: true, value: requested };
   }
 
-  const {defaultSessionKey} = params.hooksConfig.sessionPolicy;
+  const { defaultSessionKey } = params.hooksConfig.sessionPolicy;
   if (defaultSessionKey) {
     return { ok: true, value: defaultSessionKey };
   }

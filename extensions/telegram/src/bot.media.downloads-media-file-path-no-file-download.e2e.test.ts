@@ -96,7 +96,7 @@ describe("telegram inbound media", () => {
       const runtimeError = vi.fn();
       const { handler, replySpy } = await createBotHandlerWithOptions({ runtimeError });
       const fetchSpy = mockTelegramFileDownload({
-        bytes: new Uint8Array([0xFF, 0xD8, 0xFF, 0x00]),
+        bytes: new Uint8Array([0xff, 0xd8, 0xff, 0x00]),
         contentType: "image/jpeg",
       });
       const inboundPath = "/tmp/media/inbound/file_1095---f00a04a2-99a0-4d98-99b0-dfe61c5a4198.jpg";
@@ -138,7 +138,7 @@ describe("telegram inbound media", () => {
       throw new Error("global fetch should not be called");
     });
     const proxyFetch = vi.fn().mockResolvedValueOnce({
-      arrayBuffer: async () => new Uint8Array([0xFF, 0xD8, 0xFF]).buffer,
+      arrayBuffer: async () => new Uint8Array([0xff, 0xd8, 0xff]).buffer,
       headers: { get: () => "image/jpeg" },
       ok: true,
       status: 200,

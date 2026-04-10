@@ -208,9 +208,9 @@ async function requestFeishuOpenApi<T>(params: {
       message:
         typeof error.message === "string"
           ? error.message
-          : (typeof error === "string"
+          : typeof error === "string"
             ? error
-            : JSON.stringify(error)),
+            : JSON.stringify(error),
       method: readString(isRecord(error.config) ? error.config.method : undefined),
       url: readString(isRecord(error.config) ? error.config.url : undefined),
     };

@@ -174,9 +174,9 @@ export async function runEmbeddedPiAgent(
   const resolvedToolResultFormat =
     params.toolResultFormat ??
     (channelHint
-      ? (isMarkdownCapableMessageChannel(channelHint)
+      ? isMarkdownCapableMessageChannel(channelHint)
         ? "markdown"
-        : "plain")
+        : "plain"
       : "markdown");
   const isProbeSession = params.sessionId?.startsWith("probe-") ?? false;
 
@@ -184,7 +184,7 @@ export async function runEmbeddedPiAgent(
     if (!params.abortSignal?.aborted) {
       return;
     }
-    const {reason} = params.abortSignal;
+    const { reason } = params.abortSignal;
     if (reason instanceof Error) {
       throw reason;
     }
@@ -258,7 +258,7 @@ export async function runEmbeddedPiAgent(
       });
       ({ provider } = hookSelection);
       ({ modelId } = hookSelection);
-      const {legacyBeforeAgentStartResult} = hookSelection;
+      const { legacyBeforeAgentStartResult } = hookSelection;
 
       const { model, error, authStorage, modelRegistry } = await resolveModelAsync(
         provider,
@@ -281,8 +281,8 @@ export async function runEmbeddedPiAgent(
         provider,
         runtimeModel,
       });
-      const {ctxInfo} = resolvedRuntimeModel;
-      let {effectiveModel} = resolvedRuntimeModel;
+      const { ctxInfo } = resolvedRuntimeModel;
+      let { effectiveModel } = resolvedRuntimeModel;
 
       const authStore = ensureAuthProfileStore(agentDir, {
         allowKeychainPrompt: false,
@@ -319,9 +319,9 @@ export async function runEmbeddedPiAgent(
           });
       const profileCandidates = lockedProfileId
         ? [lockedProfileId]
-        : (profileOrder.length > 0
+        : profileOrder.length > 0
           ? profileOrder
-          : [undefined]);
+          : [undefined];
       let profileIndex = 0;
 
       const initialThinkLevel = params.thinkLevel ?? "off";
@@ -700,7 +700,12 @@ export async function runEmbeddedPiAgent(
           bootstrapPromptWarningSignaturesSeen =
             attempt.bootstrapPromptWarningSignaturesSeen ??
             (attempt.bootstrapPromptWarningSignature
-              ? [...new Set([...bootstrapPromptWarningSignaturesSeen, attempt.bootstrapPromptWarningSignature])]
+              ? [
+                  ...new Set([
+                    ...bootstrapPromptWarningSignaturesSeen,
+                    attempt.bootstrapPromptWarningSignature,
+                  ]),
+                ]
               : bootstrapPromptWarningSignaturesSeen);
           const lastAssistantUsage = normalizeUsage(lastAssistant?.usage as UsageLike);
           const attemptUsage = attempt.attemptUsage ?? lastAssistantUsage;
@@ -1146,7 +1151,7 @@ export async function runEmbeddedPiAgent(
             // Handle image size errors with a user-friendly message (no retry needed)
             const imageSizeError = parseImageSizeError(errorText);
             if (imageSizeError) {
-              const {maxMb} = imageSizeError;
+              const { maxMb } = imageSizeError;
               const maxMbLabel =
                 typeof maxMb === "number" && Number.isFinite(maxMb) ? `${maxMb}` : null;
               const maxBytesHint = maxMbLabel ? ` (max ${maxMbLabel}MB)` : "";
@@ -1297,7 +1302,7 @@ export async function runEmbeddedPiAgent(
           );
           const assistantProfileFailureReason =
             resolveAuthProfileFailureReason(assistantFailoverReason);
-          const {cloudCodeAssistFormatError} = attempt;
+          const { cloudCodeAssistFormatError } = attempt;
           const imageDimensionError = parseImageDimensionError(lastAssistant?.errorMessage ?? "");
           // Capture the failing profile before auth-profile rotation mutates `lastProfileId`.
           const failedAssistantProfileId = lastProfileId;
@@ -1597,9 +1602,9 @@ export async function runEmbeddedPiAgent(
               // ACP bridge) can distinguish end_turn from max_tokens.
               stopReason: attempt.clientToolCall
                 ? "tool_calls"
-                : (attempt.yieldDetected
+                : attempt.yieldDetected
                   ? "end_turn"
-                  : (lastAssistant?.stopReason as string | undefined)),
+                  : (lastAssistant?.stopReason as string | undefined),
               pendingToolCalls: attempt.clientToolCall
                 ? [
                     {

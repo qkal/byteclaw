@@ -16,9 +16,9 @@ vi.mock("./runtime-api.js", () => ({
     BodyForCommands:
       typeof ctx.CommandBody === "string"
         ? ctx.CommandBody
-        : (typeof ctx.BodyForAgent === "string"
+        : typeof ctx.BodyForAgent === "string"
           ? ctx.BodyForAgent
-          : ""),
+          : "",
   }),
   getAgentScopedMediaLocalRoots: () => [],
   jidToE164: (value: string) => {

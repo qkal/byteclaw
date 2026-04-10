@@ -315,7 +315,7 @@ function statusDotClass(status: ScenarioOutcome["status"] | "pending"): string {
 }
 
 function badgeHtml(status: string): string {
-  const tone = status === "failed" ? "fail" : (status === "completed" ? "pass" : status);
+  const tone = status === "failed" ? "fail" : status === "completed" ? "pass" : status;
   return `<span class="badge badge-${esc(tone)}">${esc(status)}</span>`;
 }
 
@@ -425,9 +425,9 @@ function renderSidebar(state: UiState): string {
             ? `<div class="config-hint">${esc(
                 state.bootstrap?.runnerCatalog.status === "loading"
                   ? "Loading model catalog\u2026"
-                  : (state.bootstrap?.runnerCatalog.status === "failed"
+                  : state.bootstrap?.runnerCatalog.status === "failed"
                     ? "Catalog unavailable; using manual input."
-                    : `${realModels.length} models available`),
+                    : `${realModels.length} models available`,
               )}</div>`
             : ""
         }
@@ -893,9 +893,9 @@ function renderEventsView(state: UiState): string {
                   const detail =
                     "thread" in e
                       ? `${e.thread.conversationId}/${e.thread.id}`
-                      : (e.message
+                      : e.message
                         ? `${e.message.senderId}: ${e.message.text}`
-                        : "");
+                        : "";
                   return `
                     <div class="event-row">
                       <span class="event-kind">${esc(e.kind)}</span>

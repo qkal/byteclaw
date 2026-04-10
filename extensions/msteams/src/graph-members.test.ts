@@ -8,9 +8,9 @@ const mockState = vi.hoisted(() => ({
 }));
 
 vi.mock("./graph.js", () => ({
-    fetchGraphJson: mockState.fetchGraphJson,
-    resolveGraphToken: mockState.resolveGraphToken,
-  }));
+  fetchGraphJson: mockState.fetchGraphJson,
+  resolveGraphToken: mockState.resolveGraphToken,
+}));
 
 const TOKEN = "test-graph-token";
 

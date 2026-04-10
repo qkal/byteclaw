@@ -62,7 +62,10 @@ function looksLikeEnvRef(value: string): boolean {
   return v.startsWith("${") && v.endsWith("}");
 }
 
-interface ModelRef { id: string; source: string }
+interface ModelRef {
+  id: string;
+  source: string;
+}
 
 function addModel(models: ModelRef[], raw: unknown, source: string) {
   if (typeof raw !== "string") {
@@ -101,12 +104,12 @@ function collectModels(cfg: OpenClawConfig): ModelRef[] {
     }
     const id =
       typeof (agent as { id?: unknown }).id === "string" ? (agent as { id: string }).id : "";
-    const {model} = (agent as { model?: unknown });
+    const { model } = agent as { model?: unknown };
     if (typeof model === "string") {
       addModel(out, model, `agents.list.${id}.model`);
     } else if (model && typeof model === "object") {
       addModel(out, (model as { primary?: unknown }).primary, `agents.list.${id}.model.primary`);
-      const {fallbacks} = (model as { fallbacks?: unknown });
+      const { fallbacks } = model as { fallbacks?: unknown };
       if (Array.isArray(fallbacks)) {
         for (const fallback of fallbacks) {
           addModel(out, fallback, `agents.list.${id}.model.fallbacks`);
@@ -279,9 +282,7 @@ function suggestKnownNodeCommands(unknown: string, known: Set<string>): string[]
 
   // Fast path: prefix-ish suggestions.
   const prefix = needle.includes(".") ? needle.split(".").slice(0, 2).join(".") : needle;
-  const prefixHits = [...known]
-    .filter((cmd) => cmd.startsWith(prefix))
-    .slice(0, 3);
+  const prefixHits = [...known].filter((cmd) => cmd.startsWith(prefix)).slice(0, 3);
   if (prefixHits.length > 0) {
     return prefixHits;
   }
@@ -313,7 +314,7 @@ function listGroupPolicyOpen(cfg: OpenClawConfig): string[] {
     if (section.groupPolicy === "open") {
       out.push(`channels.${channelId}.groupPolicy`);
     }
-    const {accounts} = section;
+    const { accounts } = section;
     if (accounts && typeof accounts === "object") {
       for (const [accountId, accountVal] of Object.entries(accounts)) {
         if (!accountVal || typeof accountVal !== "object") {
@@ -367,7 +368,7 @@ function listPotentialMultiUserSignals(cfg: OpenClawConfig): string[] {
       out.add(`${basePath}.groupAllowFrom includes "*"`);
     }
 
-    const {dm} = section;
+    const { dm } = section;
     if (dm && typeof dm === "object") {
       const dmSection = dm as Record<string, unknown>;
       const dmLegacyPolicy = typeof dmSection.policy === "string" ? dmSection.policy : null;
@@ -387,7 +388,7 @@ function listPotentialMultiUserSignals(cfg: OpenClawConfig): string[] {
     }
     const section = value as Record<string, unknown>;
     inspectSection(section, `channels.${channelId}`);
-    const {accounts} = section;
+    const { accounts } = section;
     if (!accounts || typeof accounts !== "object") {
       continue;
     }
@@ -543,9 +544,9 @@ export function collectHooksHardeningFindings(
     typeof gatewayAuth.token === "string" &&
     gatewayAuth.token.trim()
       ? gatewayAuth.token.trim()
-      : (openclawGatewayToken
+      : openclawGatewayToken
         ? openclawGatewayToken
-        : null);
+        : null;
   if (token && gatewayToken && token === gatewayToken) {
     findings.push({
       checkId: "hooks.token_reuse_gateway_token",
@@ -858,7 +859,7 @@ export function collectSandboxDangerousConfigFindings(cfg: OpenClawConfig): Secu
     if (!entry || typeof entry !== "object" || typeof entry.id !== "string") {
       continue;
     }
-    const {browser} = resolveSandboxConfigForAgent(cfg, entry.id);
+    const { browser } = resolveSandboxConfigForAgent(cfg, entry.id);
     if (!browser.enabled) {
       continue;
     }
@@ -988,13 +989,15 @@ export function collectMinimalProfileOverrideFindings(cfg: OpenClawConfig): Secu
   }
 
   const overrides = (cfg.agents?.list ?? [])
-    .filter((entry): entry is { id: string; tools?: AgentToolsConfig } => Boolean(
+    .filter((entry): entry is { id: string; tools?: AgentToolsConfig } =>
+      Boolean(
         entry &&
         typeof entry === "object" &&
         typeof entry.id === "string" &&
         entry.tools?.profile &&
         entry.tools.profile !== "minimal",
-      ))
+      ),
+    )
     .map((entry) => `${entry.id}=${entry.tools?.profile}`);
 
   if (overrides.length === 0) {

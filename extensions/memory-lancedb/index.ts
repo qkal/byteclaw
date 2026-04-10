@@ -580,12 +580,12 @@ export default definePluginEntry({
             const msgObj = msg as Record<string, unknown>;
 
             // Only process user messages to avoid self-poisoning from model output
-            const {role} = msgObj;
+            const { role } = msgObj;
             if (role !== "user") {
               continue;
             }
 
-            const {content} = msgObj;
+            const { content } = msgObj;
 
             // Handle string content directly
             if (typeof content === "string") {

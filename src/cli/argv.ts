@@ -229,7 +229,7 @@ export function getCommandPositionalsWithRootOptions(
   options: CommandPositionalsParseOptions,
 ): string[] | null {
   const args = argv.slice(2);
-  const {commandPath} = options;
+  const { commandPath } = options;
   const booleanFlags = new Set(options.booleanFlags ?? []);
   const valueFlags = new Set(options.valueFlags ?? []);
   const positionals: string[] = [];
@@ -281,16 +281,16 @@ export function buildParseArgv(params: {
   const baseArgv =
     params.rawArgs && params.rawArgs.length > 0
       ? params.rawArgs
-      : (params.fallbackArgv && params.fallbackArgv.length > 0
+      : params.fallbackArgv && params.fallbackArgv.length > 0
         ? params.fallbackArgv
-        : process.argv);
+        : process.argv;
   const programName = params.programName ?? "";
   const normalizedArgv =
     programName && baseArgv[0] === programName
       ? baseArgv.slice(1)
-      : (baseArgv[0]?.endsWith("openclaw")
+      : baseArgv[0]?.endsWith("openclaw")
         ? baseArgv.slice(1)
-        : baseArgv);
+        : baseArgv;
   const looksLikeNode =
     normalizedArgv.length >= 2 &&
     (isNodeRuntime(normalizedArgv[0] ?? "") || isBunRuntime(normalizedArgv[0] ?? ""));

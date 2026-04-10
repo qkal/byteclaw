@@ -27,7 +27,7 @@ import { buildDiscordInteractiveComponents } from "./shared-interactive.js";
 export const DISCORD_TEXT_CHUNK_LIMIT = 2000;
 
 function hasApprovalChannelData(payload: { channelData?: unknown }): boolean {
-  const {channelData} = payload;
+  const { channelData } = payload;
   if (!channelData || typeof channelData !== "object" || Array.isArray(channelData)) {
     return false;
   }
@@ -135,12 +135,12 @@ export const discordOutbound: ChannelOutboundAdapter = {
     const rawComponentSpec =
       discordData?.components ?? buildDiscordInteractiveComponents(payload.interactive);
     const componentSpec = rawComponentSpec
-      ? (rawComponentSpec.text
+      ? rawComponentSpec.text
         ? rawComponentSpec
         : {
             ...rawComponentSpec,
             text: payload.text?.trim() ? payload.text : undefined,
-          })
+          }
       : undefined;
     if (!componentSpec) {
       return await sendTextMediaPayload({

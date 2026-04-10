@@ -13,7 +13,10 @@ import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../defaults.js";
 import { resolveEnvApiKey } from "../model-auth.js";
 import { resolveConfiguredModelRef } from "../model-selection.js";
 
-export interface ToolModelConfig { primary?: string; fallbacks?: string[] }
+export interface ToolModelConfig {
+  primary?: string;
+  fallbacks?: string[];
+}
 
 export function hasToolModelConfig(model: ToolModelConfig | undefined): boolean {
   return Boolean(

@@ -33,7 +33,7 @@ function resolveJsonSchemaProperty(
     if (!cursor || typeof cursor !== "object") {
       return undefined;
     }
-    const {properties} = (cursor as Record<string, unknown>);
+    const { properties } = cursor as Record<string, unknown>;
     if (!properties || typeof properties !== "object") {
       return undefined;
     }
@@ -325,7 +325,7 @@ export async function setupPluginConfig(params: {
     ],
   });
 
-  let {config} = params;
+  let { config } = params;
   for (const pluginId of selected.filter((value) => value !== "__skip__")) {
     const plugin = unconfigured.find((p) => p.id === pluginId);
     if (!plugin) {

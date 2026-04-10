@@ -75,7 +75,7 @@ function renameJsonFileWithFallback(tmpPath: string, pathname: string) {
     fs.renameSync(tmpPath, pathname);
     return;
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     // Windows does not reliably support rename-based overwrite for existing files.
     if (code === "EPERM" || code === "EEXIST") {
       fs.copyFileSync(tmpPath, pathname);

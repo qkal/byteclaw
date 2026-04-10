@@ -14,7 +14,7 @@ import {
 } from "./isolated-agent.test-harness.js";
 
 function lastEmbeddedLane(): string | undefined {
-  const {calls} = vi.mocked(runEmbeddedPiAgent).mock;
+  const { calls } = vi.mocked(runEmbeddedPiAgent).mock;
   expect(calls.length).toBeGreaterThan(0);
   return (calls.at(-1)?.[0] as { lane?: string } | undefined)?.lane;
 }

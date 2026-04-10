@@ -40,7 +40,7 @@ vi.mock("../plugins/provider-runtime.js", async () => {
       if (params.provider !== "ollama" && params.provider !== "demo-local") {
         return undefined;
       }
-      const {providerConfig} = params.context;
+      const { providerConfig } = params.context;
       const hasMeaningfulOllamaConfig =
         params.provider !== "ollama"
           ? Boolean(providerConfig?.api?.trim()) ||
@@ -68,9 +68,9 @@ vi.mock("../plugins/provider-runtime.js", async () => {
       const expectedMarker =
         params.provider === "ollama"
           ? "ollama-local"
-          : (params.provider === "demo-local"
+          : params.provider === "demo-local"
             ? "demo-local"
-            : undefined);
+            : undefined;
       return Boolean(expectedMarker && params.context.resolvedApiKey?.trim() === expectedMarker);
     },
   };

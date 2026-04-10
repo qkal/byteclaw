@@ -56,7 +56,7 @@ async function readResponsePrefix(
   },
 ): Promise<ReadResponsePrefixResult> {
   const chunkTimeoutMs = opts?.chunkTimeoutMs;
-  const {body} = res;
+  const { body } = res;
   if (!body || typeof body.getReader !== "function") {
     const fallback = Buffer.from(await res.arrayBuffer());
     if (fallback.length > maxBytes) {

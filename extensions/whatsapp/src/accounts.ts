@@ -121,7 +121,7 @@ export function resolveWhatsAppAccount(params: {
     accountId: params.accountId?.trim() || resolveDefaultWhatsAppAccountId(params.cfg),
     cfg: params.cfg,
   });
-  const {accountId} = merged;
+  const { accountId } = merged;
   const enabled = merged.enabled !== false;
   const { authDir, isLegacy } = resolveWhatsAppAuthDir({
     accountId,

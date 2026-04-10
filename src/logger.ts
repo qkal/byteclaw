@@ -35,9 +35,9 @@ function logWithSubsystem(params: {
   getLogger()[params.loggerMethod](params.message);
 }
 
-const {info} = theme;
-const {warn} = theme;
-const {success} = theme;
+const { info } = theme;
+const { warn } = theme;
+const { success } = theme;
 const danger = theme.error;
 
 export function logInfo(message: string, runtime: RuntimeEnv = defaultRuntime) {

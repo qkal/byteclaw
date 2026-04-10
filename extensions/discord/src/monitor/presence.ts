@@ -15,7 +15,7 @@ export function resolveDiscordPresenceUpdate(
 ): UpdatePresenceData | null {
   const activityText = normalizeOptionalString(config.activity) ?? "";
   const status = normalizeOptionalString(config.status) ?? "";
-  const {activityType} = config;
+  const { activityType } = config;
   const activityUrl = normalizeOptionalString(config.activityUrl) ?? "";
 
   const hasActivity = Boolean(activityText);

@@ -132,7 +132,7 @@ function parseRawConfigOrRespond(
 function sanitizeLookupPathForLog(path: string): string {
   const sanitized = Array.from(path, (char) => {
     const code = char.charCodeAt(0);
-    return code < 0x20 || code === 0x7F ? "?" : char;
+    return code < 0x20 || code === 0x7f ? "?" : char;
   }).join("");
   return sanitized.length > 120 ? `${sanitized.slice(0, 117)}...` : sanitized;
 }
@@ -351,7 +351,7 @@ function buildConfigRestartSentinelPayload(params: {
   threadId: ReturnType<typeof extractDeliveryInfo>["threadId"];
   note: string | undefined;
 }): RestartSentinelPayload {
-  const {configPath} = createConfigIO();
+  const { configPath } = createConfigIO();
   return {
     deliveryContext: params.deliveryContext,
     doctorHint: formatDoctorNonInteractiveHint(),
@@ -472,7 +472,7 @@ export const configHandlers: GatewayRequestHandlers = {
     if (!assertValidParams(params, validateConfigGetParams, "config.openFile", respond)) {
       return;
     }
-    const {configPath} = createConfigIO();
+    const { configPath } = createConfigIO();
     try {
       await execConfigOpenCommand(resolveConfigOpenCommand(configPath));
       respond(true, { ok: true, path: configPath }, undefined);
@@ -657,7 +657,7 @@ export const configHandlers: GatewayRequestHandlers = {
     ) {
       return;
     }
-    const {path} = (params as { path: string });
+    const { path } = params as { path: string };
     const schema = loadSchemaWithPlugins();
     const result = lookupConfigSchema(schema, path);
     if (!result) {

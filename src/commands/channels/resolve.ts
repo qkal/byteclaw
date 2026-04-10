@@ -216,7 +216,7 @@ export async function channelsResolveCommand(opts: ChannelsResolveOptions, runti
     } else {
       runtime.error(
         danger(
-          `${result.input} -> unresolved${result.error ? ` (${result.error})` : (result.note ? ` (${result.note})` : "")}`,
+          `${result.input} -> unresolved${result.error ? ` (${result.error})` : result.note ? ` (${result.note})` : ""}`,
         ),
       );
     }

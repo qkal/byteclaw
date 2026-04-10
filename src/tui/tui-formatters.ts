@@ -22,8 +22,8 @@ const RTL_ISOLATE_END = "\u2069";
 function hasControlChars(text: string): boolean {
   for (const char of text) {
     const code = char.charCodeAt(0);
-    const isAsciiControl = code <= 0x1F && code !== 0x09 && code !== 0x0A && code !== 0x0D;
-    const isC1Control = code >= 0x7F && code <= 0x9F;
+    const isAsciiControl = code <= 0x1f && code !== 0x09 && code !== 0x0a && code !== 0x0d;
+    const isC1Control = code >= 0x7f && code <= 0x9f;
     if (isAsciiControl || isC1Control) {
       return true;
     }
@@ -38,8 +38,8 @@ function stripControlChars(text: string): string {
   let sanitized = "";
   for (const char of text) {
     const code = char.charCodeAt(0);
-    const isAsciiControl = code <= 0x1F && code !== 0x09 && code !== 0x0A && code !== 0x0D;
-    const isC1Control = code >= 0x7F && code <= 0x9F;
+    const isAsciiControl = code <= 0x1f && code !== 0x09 && code !== 0x0a && code !== 0x0d;
+    const isC1Control = code >= 0x7f && code <= 0x9f;
     if (!isAsciiControl && !isC1Control) {
       sanitized += char;
     }

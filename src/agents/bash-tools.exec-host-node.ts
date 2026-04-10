@@ -133,7 +133,7 @@ export async function executeNodeHostCommand(
     safeBins: new Set(),
     trustedSafeBinDirs: params.trustedSafeBinDirs,
   });
-  let {analysisOk} = baseAllowlistEval;
+  let { analysisOk } = baseAllowlistEval;
   let allowlistSatisfied = false;
   let durableApprovalSatisfied = false;
   const inlineEvalHit =

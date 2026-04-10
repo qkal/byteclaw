@@ -262,7 +262,8 @@ describe("media store", () => {
       name: "retries buffer writes when cleanup prunes the target directory",
       run: async () => {
         await expectRetryAfterPrunedWriteCase({
-          run: async (store) => await store.saveMediaBuffer(Buffer.from("hello"), "text/plain", "race-buffer"),
+          run: async (store) =>
+            await store.saveMediaBuffer(Buffer.from("hello"), "text/plain", "race-buffer"),
           segment: "race-buffer",
         });
       },
@@ -326,7 +327,8 @@ describe("media store", () => {
       name: "saves text buffers with the expected size and extension",
     },
     {
-      bufferFactory: async () => await sharp({
+      bufferFactory: async () =>
+        await sharp({
           create: { width: 2, height: 2, channels: 3, background: "#123456" },
         })
           .jpeg({ quality: 80 })
@@ -486,7 +488,8 @@ describe("media store", () => {
         const buf = await fs.readFile(saved.path);
         expect(buf.equals(contents)).toBe(true);
       },
-      contentsFactory: async () => await sharp({
+      contentsFactory: async () =>
+        await sharp({
           create: { width: 2, height: 2, channels: 3, background: "#00ff00" },
         })
           .png()

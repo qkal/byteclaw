@@ -388,9 +388,9 @@ export function resolveToolVerbAndDetail(params: {
   const fallbackVerb =
     params.toolKey === "web_search"
       ? "search"
-      : (params.toolKey === "web_fetch"
+      : params.toolKey === "web_fetch"
         ? "fetch"
-        : params.toolKey.replace(/_/g, " ").replace(/\./g, " "));
+        : params.toolKey.replace(/_/g, " ").replace(/\./g, " ");
   const verb = normalizeVerb(actionSpec?.label ?? params.action ?? fallbackVerb);
 
   let detail: string | undefined;

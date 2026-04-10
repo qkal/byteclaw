@@ -34,9 +34,7 @@ describe("ensureSkillsWatcher", () => {
     refreshModule.ensureSkillsWatcher({ workspaceDir: "/tmp/workspace" });
 
     expect(watchMock).toHaveBeenCalledTimes(1);
-    const firstCall = (
-      watchMock.mock.calls as unknown as [string[], { ignored?: unknown }][]
-    )[0];
+    const firstCall = (watchMock.mock.calls as unknown as [string[], { ignored?: unknown }][])[0];
     const targets = firstCall?.[0] ?? [];
     const opts = firstCall?.[1] ?? {};
 

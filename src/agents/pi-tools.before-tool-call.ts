@@ -133,7 +133,7 @@ export async function runBeforeToolCallHook(args: {
   signal?: AbortSignal;
 }): Promise<HookOutcome> {
   const toolName = normalizeToolName(args.toolName || "tool");
-  const {params} = args;
+  const { params } = args;
 
   if (args.ctx?.sessionKey) {
     const { getDiagnosticSessionState, logToolLoopAction, detectToolCallLoop, recordToolCall } =
@@ -220,7 +220,7 @@ export async function runBeforeToolCallHook(args: {
     if (hookResult?.requireApproval) {
       const approval = hookResult.requireApproval;
       const safeOnResolution = (resolution: PluginApprovalResolution): void => {
-        const {onResolution} = approval;
+        const { onResolution } = approval;
         if (typeof onResolution !== "function") {
           return;
         }
@@ -264,10 +264,7 @@ export async function runBeforeToolCallHook(args: {
             reason: approval.description || "Plugin approval request failed",
           };
         }
-        const hasImmediateDecision = Object.hasOwn(
-          requestResult ?? {},
-          "decision",
-        );
+        const hasImmediateDecision = Object.hasOwn(requestResult ?? {}, "decision");
         let decision: string | null | undefined;
         if (hasImmediateDecision) {
           decision = requestResult?.decision;
@@ -381,7 +378,7 @@ export function wrapToolWithBeforeToolCallHook(
   tool: AnyAgentTool,
   ctx?: HookContext,
 ): AnyAgentTool {
-  const {execute} = tool;
+  const { execute } = tool;
   if (!execute) {
     return tool;
   }

@@ -48,7 +48,7 @@ function resolveDiscordChannelEntry<TEntry extends SenderScopedToolsEntry>(
   if (!channelEntries || Object.keys(channelEntries).length === 0) {
     return undefined;
   }
-  const {groupChannel} = params;
+  const { groupChannel } = params;
   const channelSlug = normalizeDiscordSlug(groupChannel);
   return (
     (params.groupId ? channelEntries[params.groupId] : undefined) ??

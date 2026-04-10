@@ -344,9 +344,9 @@ function resolveTelegramInboundConversation(params: {
   const threadId =
     parsedTarget.messageThreadId != null
       ? String(parsedTarget.messageThreadId)
-      : (params.threadId != null
+      : params.threadId != null
         ? normalizeOptionalString(String(params.threadId))
-        : undefined);
+        : undefined;
   if (threadId) {
     const parsedTopic = parseTelegramTopicConversation({
       conversationId: threadId,
@@ -488,9 +488,9 @@ function resolveTelegramOutboundSessionRoute(params: {
     chatType: isGroup ? ("group" as const) : ("direct" as const),
     from: isGroup
       ? `telegram:group:${peerId}`
-      : (resolvedThreadId
+      : resolvedThreadId
         ? `telegram:${chatId}:topic:${resolvedThreadId}`
-        : `telegram:${chatId}`),
+        : `telegram:${chatId}`,
     peer,
     sessionKey: threadKeys?.sessionKey ?? baseSessionKey,
     threadId: resolvedThreadId,
@@ -753,7 +753,7 @@ export const telegramPlugin = createChatChannelPlugin({
         return { cleared, envToken: Boolean(envToken), loggedOut };
       },
       startAccount: async (ctx) => {
-        const {account} = ctx;
+        const { account } = ctx;
         const ownerAccountId = findTelegramTokenOwnerAccountId({
           accountId: account.accountId,
           cfg: ctx.cfg,
@@ -1046,9 +1046,9 @@ export const telegramPlugin = createChatChannelPlugin({
         const threadId =
           typeof target.threadId === "number"
             ? target.threadId
-            : (typeof target.threadId === "string"
+            : typeof target.threadId === "string"
               ? Number.parseInt(target.threadId, 10)
-              : undefined);
+              : undefined;
         const { sendTypingTelegram } = await loadTelegramSendModule();
         await sendTypingTelegram(target.to, {
           accountId: target.accountId ?? undefined,

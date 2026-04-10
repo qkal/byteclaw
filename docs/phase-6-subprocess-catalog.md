@@ -23,7 +23,7 @@
 
 ## Low Priority Files (Tests and E2E)
 
-- All test files (*.test.ts)
+- All test files (\*.test.ts)
 - E2E test files
 - Integration tests
 

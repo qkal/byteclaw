@@ -87,9 +87,9 @@ function createTelegramAddTestPlugin(): ChannelPlugin {
       enabled:
         typeof scoped?.enabled === "boolean"
           ? scoped.enabled
-          : (typeof telegram?.enabled === "boolean"
+          : typeof telegram?.enabled === "boolean"
             ? telegram.enabled
-            : true),
+            : true,
       token: String(scoped?.botToken ?? telegram?.botToken ?? ""),
     };
   };

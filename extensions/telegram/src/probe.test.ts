@@ -125,16 +125,19 @@ describe("probeTelegram retry logic", () => {
   });
 
   it("respects timeout budget across retries", async () => {
-    const fetchMock = vi.fn((_input: RequestInfo | URL, init?: RequestInit) => new Promise<Response>((_resolve, reject) => {
-        const signal = init?.signal;
-        if (signal?.aborted) {
-          reject(new Error("Request aborted"));
-          return;
-        }
-        signal?.addEventListener("abort", () => reject(new Error("Request aborted")), {
-          once: true,
-        });
-      }));
+    const fetchMock = vi.fn(
+      (_input: RequestInfo | URL, init?: RequestInit) =>
+        new Promise<Response>((_resolve, reject) => {
+          const signal = init?.signal;
+          if (signal?.aborted) {
+            reject(new Error("Request aborted"));
+            return;
+          }
+          signal?.addEventListener("abort", () => reject(new Error("Request aborted")), {
+            once: true,
+          });
+        }),
+    );
     global.fetch = withFetchPreconnect(fetchMock as unknown as typeof fetch);
     resolveTelegramFetch.mockImplementation((proxyFetch?: typeof fetch) => proxyFetch ?? fetch);
     makeProxyFetch.mockImplementation(() => fetchMock as unknown as typeof fetch);

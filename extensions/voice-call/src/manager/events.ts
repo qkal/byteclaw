@@ -110,7 +110,7 @@ export function processEvent(ctx: EventContext, event: NormalizedEvent): void {
     providerCallIdMap: ctx.providerCallIdMap,
   });
 
-  const {providerCallId} = event;
+  const { providerCallId } = event;
   const eventDirection =
     event.direction === "inbound" || event.direction === "outbound" ? event.direction : undefined;
 

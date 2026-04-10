@@ -45,9 +45,9 @@ describe("bonjour-discovery", () => {
         const host =
           instance === studioInstance
             ? "studio.local"
-            : (instance === "Laptop Gateway"
+            : instance === "Laptop Gateway"
               ? "laptop.local"
-              : "tailnet.local");
+              : "tailnet.local";
         const tailnetDns = instance === "Tailnet Gateway" ? "studio.tailnet.ts.net" : "";
         const displayName =
           instance === studioInstance

@@ -404,7 +404,7 @@ export abstract class MemoryManagerSyncOps {
       if (this.closed) {
         return;
       }
-      const {sessionFile} = update;
+      const { sessionFile } = update;
       if (!this.isSessionFileForAgent(sessionFile)) {
         return;
       }
@@ -479,7 +479,7 @@ export abstract class MemoryManagerSyncOps {
     } catch {
       return null;
     }
-    const {size} = stat;
+    const { size } = stat;
     let state = this.sessionDeltas.get(sessionFile);
     if (!state) {
       state = { lastSize: 0, pendingBytes: 0, pendingMessages: 0 };

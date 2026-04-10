@@ -28,7 +28,7 @@ export async function cookiesSetViaPlaywright(opts: {
 }): Promise<void> {
   const page = await getPageForTargetId(opts);
   ensurePageState(page);
-  const {cookie} = opts;
+  const { cookie } = opts;
   if (!cookie.name || cookie.value === undefined) {
     throw new Error("cookie name and value are required");
   }
@@ -63,7 +63,7 @@ export async function storageGetViaPlaywright(opts: {
 }): Promise<{ values: Record<string, string> }> {
   const page = await getPageForTargetId(opts);
   ensurePageState(page);
-  const {kind} = opts;
+  const { kind } = opts;
   const key = readStringValue(opts.key);
   const values = await page.evaluate(
     ({ kind: kind2, key: key2 }) => {

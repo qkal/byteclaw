@@ -28,7 +28,7 @@ beforeEach(() => {
 
 describe("generatePairingToken", () => {
   it("uses the configured byte count and returns a base64url token", () => {
-    randomBytesMock.mockReturnValueOnce(Buffer.from([0xFB, 0xFF, 0x00]));
+    randomBytesMock.mockReturnValueOnce(Buffer.from([0xfb, 0xff, 0x00]));
 
     expect(generatePairingToken()).toBe("-_8A");
     expect(randomBytesMock).toHaveBeenCalledWith(PAIRING_TOKEN_BYTES);

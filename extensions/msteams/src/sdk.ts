@@ -354,7 +354,7 @@ async function deleteActivityViaRest(params: {
 export function createMSTeamsAdapter(app: MSTeamsApp, sdk: MSTeamsTeamsSdk): MSTeamsAdapter {
   return {
     async continueConversation(_appId, reference, logic) {
-      const {serviceUrl} = reference;
+      const { serviceUrl } = reference;
       if (!serviceUrl) {
         throw new Error("Missing serviceUrl in conversation reference");
       }

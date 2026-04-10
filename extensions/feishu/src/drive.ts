@@ -279,9 +279,9 @@ function formatDriveApiError(error: unknown): string {
     message:
       typeof error.message === "string"
         ? error.message
-        : (typeof error === "string"
+        : typeof error === "string"
           ? error
-          : JSON.stringify(error)),
+          : JSON.stringify(error),
     method: readString(isRecord(error.config) ? error.config.method : undefined),
     params: isRecord(error.config) ? error.config.params : undefined,
     url: readString(isRecord(error.config) ? error.config.url : undefined),
@@ -309,9 +309,9 @@ function extractDriveApiErrorMeta(error: unknown): {
     message:
       typeof error.message === "string"
         ? error.message
-        : (typeof error === "string"
+        : typeof error === "string"
           ? error
-          : JSON.stringify(error)),
+          : JSON.stringify(error),
   };
 }
 

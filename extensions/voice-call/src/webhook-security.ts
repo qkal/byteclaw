@@ -104,7 +104,7 @@ export function validateTwilioSignature(
 function buildTwilioDataToSign(url: string, params: URLSearchParams): string {
   let dataToSign = url;
   const sortedParams = [...params.entries()].toSorted((a, b) =>
-    a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0),
+    a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0,
   );
   for (const [key, value] of sortedParams) {
     dataToSign += key + value;
@@ -114,7 +114,7 @@ function buildTwilioDataToSign(url: string, params: URLSearchParams): string {
 
 function buildCanonicalTwilioParamString(params: URLSearchParams): string {
   return [...params.entries()]
-    .toSorted((a, b) => (a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0)))
+    .toSorted((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0))
     .map(([key, value]) => `${key}=${value}`)
     .join("&");
 }

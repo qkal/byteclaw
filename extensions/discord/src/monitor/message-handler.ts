@@ -93,7 +93,7 @@ export function createDiscordMessageHandler(
     abortSignal?: AbortSignal;
   }>({
     buildKey: (entry) => {
-      const {message} = entry.data;
+      const { message } = entry.data;
       const authorId = entry.data.author?.id;
       if (!message || !authorId) {
         return null;
@@ -117,7 +117,7 @@ export function createDiscordMessageHandler(
       if (!last) {
         return;
       }
-      const {abortSignal} = last;
+      const { abortSignal } = last;
       if (abortSignal?.aborted) {
         return;
       }
@@ -183,7 +183,7 @@ export function createDiscordMessageHandler(
       inboundWorker.enqueue(buildDiscordInboundJob(ctx));
     },
     shouldDebounce: (entry) => {
-      const {message} = entry.data;
+      const { message } = entry.data;
       if (!message) {
         return false;
       }

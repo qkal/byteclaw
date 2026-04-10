@@ -73,7 +73,7 @@ export const qaChannelMessageActions: ChannelMessageActionAdapter = {
   handleAction: async (context) => {
     const { action, cfg, accountId, params } = context;
     const account = resolveQaChannelAccount({ accountId, cfg: cfg as CoreConfig });
-    const {baseUrl} = account;
+    const { baseUrl } = account;
 
     switch (action) {
       case "thread-create": {

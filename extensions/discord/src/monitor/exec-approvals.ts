@@ -78,7 +78,7 @@ export class ExecApprovalButton extends Button {
     }
 
     const approvers = this.ctx.getApprovers();
-    const {userId} = interaction;
+    const { userId } = interaction;
     if (!approvers.some((id) => String(id) === userId)) {
       try {
         await interaction.reply({
@@ -92,9 +92,9 @@ export class ExecApprovalButton extends Button {
     const decisionLabel =
       parsed.action === "allow-once"
         ? "Allowed (once)"
-        : (parsed.action === "allow-always"
+        : parsed.action === "allow-always"
           ? "Allowed (always)"
-          : "Denied");
+          : "Denied";
 
     try {
       await interaction.acknowledge();

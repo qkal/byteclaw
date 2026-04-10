@@ -39,7 +39,7 @@ function enableSlackAccount(cfg: OpenClawConfig, accountId: string): OpenClawCon
 }
 
 function hasSlackInteractiveRepliesConfig(cfg: OpenClawConfig, accountId: string): boolean {
-  const {capabilities} = resolveSlackAccount({ accountId, cfg }).config;
+  const { capabilities } = resolveSlackAccount({ accountId, cfg }).config;
   if (Array.isArray(capabilities)) {
     return capabilities.some(
       (entry) => normalizeLowercaseStringOrEmpty(String(entry)) === "interactivereplies",
@@ -56,13 +56,13 @@ function setSlackInteractiveReplies(
   accountId: string,
   interactiveReplies: boolean,
 ): OpenClawConfig {
-  const {capabilities} = resolveSlackAccount({ accountId, cfg }).config;
+  const { capabilities } = resolveSlackAccount({ accountId, cfg }).config;
   const nextCapabilities = Array.isArray(capabilities)
-    ? (interactiveReplies
+    ? interactiveReplies
       ? [...new Set([...capabilities, "interactiveReplies"])]
       : capabilities.filter(
           (entry) => normalizeLowercaseStringOrEmpty(String(entry)) !== "interactivereplies",
-        ))
+        )
     : {
         ...((capabilities && typeof capabilities === "object" ? capabilities : {}) as Record<
           string,

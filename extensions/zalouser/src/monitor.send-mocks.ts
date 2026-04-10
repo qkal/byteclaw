@@ -7,10 +7,10 @@ const sendMocks = vi.hoisted(() => ({
   sendTypingZalouserMock: vi.fn(async () => {}),
 }));
 
-export const {sendMessageZalouserMock} = sendMocks;
-export const {sendTypingZalouserMock} = sendMocks;
-export const {sendDeliveredZalouserMock} = sendMocks;
-export const {sendSeenZalouserMock} = sendMocks;
+export const { sendMessageZalouserMock } = sendMocks;
+export const { sendTypingZalouserMock } = sendMocks;
+export const { sendDeliveredZalouserMock } = sendMocks;
+export const { sendSeenZalouserMock } = sendMocks;
 
 vi.mock("./send.js", () => ({
   sendDeliveredZalouser: sendDeliveredZalouserMock,

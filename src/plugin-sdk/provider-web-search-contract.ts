@@ -51,7 +51,7 @@ export function createWebSearchProviderContractFields(
       "applySelectionConfig" | "getConfiguredCredentialValue" | "setConfiguredCredentialValue"
     >
   > {
-  const {selectionPluginId} = options;
+  const { selectionPluginId } = options;
 
   return {
     ...createBaseWebSearchProviderContractFields(options),

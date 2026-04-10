@@ -434,7 +434,7 @@ export async function resolveVisibleSessionReference(params: {
   visibilitySessionKey: string;
 }): Promise<VisibleSessionReferenceResolution> {
   const resolvedKey = params.resolvedSession.key;
-  const {displayKey} = params.resolvedSession;
+  const { displayKey } = params.resolvedSession;
   const visible = await isResolvedSessionVisibleToRequester({
     requesterSessionKey: params.requesterSessionKey,
     resolvedViaSessionId: params.resolvedSession.resolvedViaSessionId,

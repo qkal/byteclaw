@@ -61,7 +61,7 @@ export function createCliProgress(options: ProgressOptions): ProgressReporter {
   const allowLine = isTty && options.fallback === "line";
 
   let started = false;
-  let {label} = options;
+  let { label } = options;
   const total = options.total ?? null;
   let completed = 0;
   let percent = 0;

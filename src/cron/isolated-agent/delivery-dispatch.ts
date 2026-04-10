@@ -356,10 +356,10 @@ export async function dispatchCronDelivery(
   params: DispatchCronDeliveryParams,
 ): Promise<DispatchCronDeliveryState> {
   const skipMessagingToolDelivery = params.skipMessagingToolDelivery === true;
-  let {summary} = params;
-  let {outputText} = params;
-  let {synthesizedText} = params;
-  let {deliveryPayloads} = params;
+  let { summary } = params;
+  let { outputText } = params;
+  let { synthesizedText } = params;
+  let { deliveryPayloads } = params;
 
   // Shared callers can treat a matching message-tool send as the completed
   // Delivery path. Cron-owned callers keep this false so direct cron delivery
@@ -427,9 +427,9 @@ export async function dispatchCronDelivery(
       const rawPayloads =
         deliveryPayloads.length > 0
           ? deliveryPayloads
-          : (synthesizedText
+          : synthesizedText
             ? [{ text: synthesizedText }]
-            : []);
+            : [];
       // Suppress NO_REPLY sentinel so it never leaks to external channels.
       const payloadsForDelivery = rawPayloads.filter(
         (p) => !isSilentReplyText(p.text, SILENT_REPLY_TOKEN),
@@ -557,7 +557,9 @@ export async function dispatchCronDelivery(
           ...params.telemetry,
         });
       }
-      logError(`[cron:${params.job.id}] delivery failed (bestEffort): ${formatErrorMessage(error)}`);
+      logError(
+        `[cron:${params.job.id}] delivery failed (bestEffort): ${formatErrorMessage(error)}`,
+      );
       return null;
     }
   };

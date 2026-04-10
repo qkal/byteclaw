@@ -127,8 +127,14 @@ function toPendingNodePairingEntry(pending: NodePairingPendingRequest): NodePair
   };
 }
 
-interface ApprovedNodePairingResult { requestId: string; node: NodePairingPairedNode }
-interface ForbiddenNodePairingResult { status: "forbidden"; missingScope: string }
+interface ApprovedNodePairingResult {
+  requestId: string;
+  node: NodePairingPairedNode;
+}
+interface ForbiddenNodePairingResult {
+  status: "forbidden";
+  missingScope: string;
+}
 type ApproveNodePairingResult = ApprovedNodePairingResult | ForbiddenNodePairingResult | null;
 
 async function loadState(baseDir?: string): Promise<NodePairingStateFile> {
@@ -272,17 +278,16 @@ export async function rejectNodePairing(
   requestId: string,
   baseDir?: string,
 ): Promise<{ requestId: string; nodeId: string } | null> {
-  return await withLock(async () => await rejectPendingPairingRequest<
-      NodePairingPendingRequest,
-      NodePairingStateFile,
-      "nodeId"
-    >({
-      getId: (pending: NodePairingPendingRequest) => pending.nodeId,
-      idKey: "nodeId",
-      loadState: () => loadState(baseDir),
-      persistState: (state) => persistState(state, baseDir),
-      requestId,
-    }));
+  return await withLock(
+    async () =>
+      await rejectPendingPairingRequest<NodePairingPendingRequest, NodePairingStateFile, "nodeId">({
+        getId: (pending: NodePairingPendingRequest) => pending.nodeId,
+        idKey: "nodeId",
+        loadState: () => loadState(baseDir),
+        persistState: (state) => persistState(state, baseDir),
+        requestId,
+      }),
+  );
 }
 
 export async function verifyNodeToken(

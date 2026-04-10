@@ -31,7 +31,7 @@ function applyGroupAllowFromFromStore(params: {
 
   maybeApply("channels.whatsapp.", section);
 
-  const {accounts} = section;
+  const { accounts } = section;
   if (accounts && typeof accounts === "object") {
     for (const [accountId, accountValue] of Object.entries(accounts)) {
       if (!accountValue || typeof accountValue !== "object") {
@@ -56,9 +56,7 @@ export async function applyWhatsAppSecurityConfigFixes(params: {
     params.env,
     DEFAULT_ACCOUNT_ID,
   ).catch(() => []);
-  const normalized = [...new Set(fromStore.map((entry) => String(entry).trim()))].filter(
-    Boolean,
-  );
+  const normalized = [...new Set(fromStore.map((entry) => String(entry).trim()))].filter(Boolean);
   if (normalized.length === 0) {
     return { changes: [], config: params.cfg };
   }

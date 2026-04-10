@@ -50,7 +50,7 @@ export function collectPluginConfigAssignments(params: {
         workspaceDir,
       }).entries(),
     ].flatMap(([pluginId, metadata]) => {
-      const {secretInputs} = metadata.configContracts;
+      const { secretInputs } = metadata.configContracts;
       if (!secretInputs?.paths.length) {
         return [];
       }

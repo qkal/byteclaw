@@ -80,7 +80,7 @@ async function promptDiscordAllowFrom(params: {
         resolved: entry.resolved,
       })),
     resolveExisting: (account) => {
-      const {config} = account;
+      const { config } = account;
       return config.allowFrom ?? config.dm?.allowFrom ?? [];
     },
     resolveToken: (account) =>

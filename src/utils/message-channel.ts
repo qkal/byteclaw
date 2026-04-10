@@ -76,8 +76,9 @@ const listPluginChannelIds = (): string[] => listRegisteredChannelPluginIds();
 
 const listPluginChannelAliases = (): string[] => listRegisteredChannelPluginAliases();
 
-export const listDeliverableMessageChannels = (): ChannelId[] =>
-  [...new Set([...CHANNEL_IDS, ...listPluginChannelIds()])];
+export const listDeliverableMessageChannels = (): ChannelId[] => [
+  ...new Set([...CHANNEL_IDS, ...listPluginChannelIds()]),
+];
 
 export type DeliverableMessageChannel = ChannelId;
 
@@ -88,17 +89,15 @@ export const listGatewayMessageChannels = (): GatewayMessageChannel[] => [
   INTERNAL_MESSAGE_CHANNEL,
 ];
 
-export const listGatewayAgentChannelAliases = (): string[] =>
-  [...new Set([...listChatChannelAliases(), ...listPluginChannelAliases()])];
+export const listGatewayAgentChannelAliases = (): string[] => [
+  ...new Set([...listChatChannelAliases(), ...listPluginChannelAliases()]),
+];
 
 export type GatewayAgentChannelHint = GatewayMessageChannel;
 
-export const listGatewayAgentChannelValues = (): string[] =>
-  [...new Set([
-	...listGatewayMessageChannels(),
-	'last',
-	...listGatewayAgentChannelAliases()
-])];
+export const listGatewayAgentChannelValues = (): string[] => [
+  ...new Set([...listGatewayMessageChannels(), "last", ...listGatewayAgentChannelAliases()]),
+];
 
 export function isGatewayMessageChannel(value: string): value is GatewayMessageChannel {
   return listGatewayMessageChannels().includes(value as GatewayMessageChannel);

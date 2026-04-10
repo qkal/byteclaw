@@ -10,7 +10,9 @@ import { createFeishuClient } from "./client.js";
 import { resolveToolsConfig } from "./tools-config.js";
 import type { FeishuToolsConfig, ResolvedFeishuAccount } from "./types.js";
 
-interface AccountAwareParams { accountId?: string }
+interface AccountAwareParams {
+  accountId?: string;
+}
 
 function resolveImplicitToolAccountId(params: {
   api: Pick<OpenClawPluginApi, "config">;

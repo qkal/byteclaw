@@ -43,7 +43,7 @@ function resolveChunkLimitForProvider(
     return undefined;
   }
   const normalizedAccountId = normalizeAccountId(accountId);
-  const {accounts} = cfgSection;
+  const { accounts } = cfgSection;
   if (accounts && typeof accounts === "object") {
     const direct = resolveAccountEntry(accounts, normalizedAccountId);
     if (typeof direct?.textChunkLimit === "number") {
@@ -86,7 +86,7 @@ function resolveChunkModeForProvider(
     return undefined;
   }
   const normalizedAccountId = normalizeAccountId(accountId);
-  const {accounts} = cfgSection;
+  const { accounts } = cfgSection;
   if (accounts && typeof accounts === "object") {
     const direct = resolveAccountEntry(accounts, normalizedAccountId);
     const directMode = resolveChannelStreamingChunkMode(direct);

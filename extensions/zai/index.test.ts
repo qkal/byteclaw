@@ -124,7 +124,7 @@ describe("zai provider plugin", () => {
         modelId: "glm-5-turbo",
         modelRegistry: {
           find: (_provider: string, modelId: string) =>
-            modelId === "glm-5-turbo" ? registered : (modelId === "glm-4.7" ? template : null),
+            modelId === "glm-5-turbo" ? registered : modelId === "glm-4.7" ? template : null,
         },
         provider: "zai",
       } as never),

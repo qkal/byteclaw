@@ -57,9 +57,9 @@ export async function prepareFoundryRuntimeAuth(ctx: ProviderPrepareRuntimeAuthC
     const configuredApi =
       typeof metadata?.api === "string" && isFoundryProviderApi(metadata.api)
         ? metadata.api
-        : (isFoundryProviderApi(ctx.model.api)
+        : isFoundryProviderApi(ctx.model.api)
           ? ctx.model.api
-          : undefined);
+          : undefined;
     const endpoint =
       normalizeOptionalString(metadata?.endpoint) ??
       extractFoundryEndpoint(ctx.model.baseUrl ?? "");

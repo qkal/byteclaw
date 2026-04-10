@@ -35,9 +35,7 @@ export function isAbortError(error: unknown): boolean {
   return "name" in error && String((error as { name?: unknown }).name) === "AbortError";
 }
 
-export function mergeAbortSignals(
-  signals: (AbortSignal | undefined)[],
-): AbortSignal | undefined {
+export function mergeAbortSignals(signals: (AbortSignal | undefined)[]): AbortSignal | undefined {
   const activeSignals = signals.filter((signal): signal is AbortSignal => Boolean(signal));
   if (activeSignals.length === 0) {
     return undefined;

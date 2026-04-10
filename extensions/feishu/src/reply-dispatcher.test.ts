@@ -66,23 +66,23 @@ vi.mock("./typing.js", () => ({
   removeTypingIndicator: removeTypingIndicatorMock,
 }));
 vi.mock("./streaming-card.js", () => ({
-    FeishuStreamingSession: class {
-      active = false;
-      start = vi.fn(async () => {
-        this.active = true;
-      });
-      update = vi.fn(async () => {});
-      close = vi.fn(async () => {
-        this.active = false;
-      });
-      isActive = vi.fn(() => this.active);
+  FeishuStreamingSession: class {
+    active = false;
+    start = vi.fn(async () => {
+      this.active = true;
+    });
+    update = vi.fn(async () => {});
+    close = vi.fn(async () => {
+      this.active = false;
+    });
+    isActive = vi.fn(() => this.active);
 
-      constructor() {
-        streamingInstances.push(this);
-      }
-    },
-    mergeStreamingText,
-  }));
+    constructor() {
+      streamingInstances.push(this);
+    }
+  },
+  mergeStreamingText,
+}));
 
 import { createFeishuReplyDispatcher } from "./reply-dispatcher.js";
 

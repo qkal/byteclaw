@@ -16,7 +16,7 @@ const {
   const replyMessageMock = vi.fn();
   const showLoadingAnimationMock = vi.fn();
   const getProfileMock = vi.fn();
-  const MessagingApiClientMock = vi.fn(function  MessagingApiClientMock() {
+  const MessagingApiClientMock = vi.fn(function MessagingApiClientMock() {
     return {
       getProfile: getProfileMock,
       pushMessage: pushMessageMock,

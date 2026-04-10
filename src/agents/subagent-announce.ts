@@ -201,7 +201,7 @@ function hasUsableSessionEntry(entry: unknown): boolean {
   if (!entry || typeof entry !== "object") {
     return false;
   }
-  const {sessionId} = (entry as { sessionId?: unknown });
+  const { sessionId } = entry as { sessionId?: unknown };
   return typeof sessionId !== "string" || sessionId.trim() !== "";
 }
 
@@ -341,7 +341,7 @@ export async function runSubagentAnnounceFlow(params: {
     })();
     const settleTimeoutMs = Math.min(Math.max(params.timeoutMs, 1), 120_000);
     let reply = params.roundOneReply;
-    let {outcome} = params;
+    let { outcome } = params;
     if (childSessionId && isEmbeddedPiRunActive(childSessionId)) {
       const settled = await waitForEmbeddedPiRunEnd(childSessionId, settleTimeoutMs);
       if (!settled && isEmbeddedPiRunActive(childSessionId)) {

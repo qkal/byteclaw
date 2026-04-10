@@ -136,7 +136,7 @@ export function applyGroupGating(params: ApplyGroupGatingParams) {
     },
     "group mention debug",
   );
-  const {wasMentioned} = mentionDebug;
+  const { wasMentioned } = mentionDebug;
   const activation = resolveGroupActivationFor({
     agentId: params.agentId,
     cfg: params.cfg,

@@ -249,7 +249,7 @@ function countMatchingSnippets(snippets: SectionSnippet[], pattern: RegExp): num
 }
 
 function scoreSection(section: ParsedMarkdownSection, snippets: SectionSnippet[]) {
-  const {title} = section;
+  const { title } = section;
   const titleBonus = (pattern: RegExp) => (pattern.test(title) ? 1 : 0);
   const preference =
     countMatchingSnippets(snippets, REM_MEMORY_SIGNAL_RE) + titleBonus(REM_MEMORY_SIGNAL_RE);
@@ -782,9 +782,9 @@ function previewGroundedRemForFile(params: {
   const effectiveMemoryImplications =
     durableImplications.length > 0
       ? durableImplications
-      : (candidateDrivenImplications.length > 0
+      : candidateDrivenImplications.length > 0
         ? candidateDrivenImplications
-        : memoryImplications);
+        : memoryImplications;
 
   const facts: GroundedRemPreviewItem[] = [];
   const usedFactTexts = new Set<string>();
@@ -970,9 +970,9 @@ function previewGroundedRemForFile(params: {
   const reflectionLimit =
     facts.length === 0
       ? 1
-      : (facts.length === 1
+      : facts.length === 1
         ? 2
-        : Math.min(REM_SUMMARY_REFLECTION_LIMIT, facts.length + 1));
+        : Math.min(REM_SUMMARY_REFLECTION_LIMIT, facts.length + 1);
   const visibleReflections = reflections.slice(0, reflectionLimit);
 
   const renderedLines: string[] = [];

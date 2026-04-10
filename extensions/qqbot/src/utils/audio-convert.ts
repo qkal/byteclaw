@@ -595,9 +595,9 @@ export async function audioFileToSilkBase64(
 
   const installHint = isWindows()
     ? "Install ffmpeg with choco install ffmpeg, scoop install ffmpeg, or from https://ffmpeg.org"
-    : (process.platform === "darwin"
+    : process.platform === "darwin"
       ? "Install ffmpeg with brew install ffmpeg"
-      : "Install ffmpeg with sudo apt install ffmpeg or sudo yum install ffmpeg");
+      : "Install ffmpeg with sudo apt install ffmpeg or sudo yum install ffmpeg";
   debugError(`[audio-convert] unsupported format: ${ext} (no ffmpeg available). ${installHint}`);
   return null;
 }
@@ -862,7 +862,11 @@ function parseWavFallback(buf: Buffer): Buffer | null {
           for (let ch = 0; ch < channels; ch++) {
             sum += inV.getInt16((i * channels + ch) * 2, true);
           }
-          outV.setInt16(i * 2, Math.max(-32_768, Math.min(32_767, Math.round(sum / channels))), true);
+          outV.setInt16(
+            i * 2,
+            Math.max(-32_768, Math.min(32_767, Math.round(sum / channels))),
+            true,
+          );
         }
         pcm = mono;
       }

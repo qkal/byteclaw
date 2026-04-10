@@ -84,9 +84,9 @@ function buildChannelCandidates(
   const groupConversationKind =
     normalizeChatType(params.groupChatType ?? undefined) === "channel"
       ? "channel"
-      : (sessionConversation?.kind === "channel"
+      : sessionConversation?.kind === "channel"
         ? "channel"
-        : "group");
+        : "group";
   const groupConversation = resolveSessionConversation({
     channel: normalizedChannel ?? "",
     kind: groupConversationKind,

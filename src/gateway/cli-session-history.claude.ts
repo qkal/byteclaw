@@ -153,7 +153,7 @@ function getMessageBlocks(message: unknown): ToolContentBlock[] | null {
   if (!message || typeof message !== "object") {
     return null;
   }
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   return Array.isArray(content) ? (content as ToolContentBlock[]) : null;
 }
 
@@ -161,7 +161,7 @@ function isAssistantToolCallMessage(message: unknown): boolean {
   if (!message || typeof message !== "object") {
     return false;
   }
-  const {role} = (message as { role?: unknown });
+  const { role } = message as { role?: unknown };
   if (role !== "assistant") {
     return false;
   }
@@ -173,7 +173,7 @@ function isUserToolResultMessage(message: unknown): boolean {
   if (!message || typeof message !== "object") {
     return false;
   }
-  const {role} = (message as { role?: unknown });
+  const { role } = message as { role?: unknown };
   if (role !== "user") {
     return false;
   }

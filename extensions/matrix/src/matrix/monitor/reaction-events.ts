@@ -126,12 +126,14 @@ export async function handleInboundMatrixReaction(params: {
     return;
   }
 
-  const targetEvent = await params.client.getEvent(params.roomId, reaction.eventId).catch((error) => {
-    params.logVerboseMessage(
-      `matrix: failed resolving reaction target room=${params.roomId} id=${reaction.eventId}: ${String(error)}`,
-    );
-    return null;
-  });
+  const targetEvent = await params.client
+    .getEvent(params.roomId, reaction.eventId)
+    .catch((error) => {
+      params.logVerboseMessage(
+        `matrix: failed resolving reaction target room=${params.roomId} id=${reaction.eventId}: ${String(error)}`,
+      );
+      return null;
+    });
   const targetSender =
     targetEvent && typeof targetEvent.sender === "string" ? targetEvent.sender.trim() : "";
   if (!targetSender) {

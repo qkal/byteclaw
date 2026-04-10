@@ -25,7 +25,7 @@ function parsePngSize(buffer: Buffer): ImageSize | null {
   if (buffer.length < 24) {
     return null;
   }
-  if (buffer[0] !== 0x89 || buffer[1] !== 0x50 || buffer[2] !== 0x4E || buffer[3] !== 0x47) {
+  if (buffer[0] !== 0x89 || buffer[1] !== 0x50 || buffer[2] !== 0x4e || buffer[3] !== 0x47) {
     return null;
   }
   // The IHDR chunk begins at byte 8, with width/height at 16..23.
@@ -40,20 +40,20 @@ function parseJpegSize(buffer: Buffer): ImageSize | null {
   if (buffer.length < 4) {
     return null;
   }
-  if (buffer[0] !== 0xFF || buffer[1] !== 0xD8) {
+  if (buffer[0] !== 0xff || buffer[1] !== 0xd8) {
     return null;
   }
 
   let offset = 2;
   while (offset < buffer.length - 9) {
-    if (buffer[offset] !== 0xFF) {
+    if (buffer[offset] !== 0xff) {
       offset++;
       continue;
     }
 
     const marker = buffer[offset + 1];
     // SOF0 (0xC0) and SOF2 (0xC2) contain dimensions.
-    if (marker === 0xC0 || marker === 0xC2) {
+    if (marker === 0xc0 || marker === 0xc2) {
       // Layout: FF C0 length(2) precision(1) height(2) width(2)
       if (offset + 9 <= buffer.length) {
         const height = buffer.readUInt16BE(offset + 5);
@@ -106,9 +106,9 @@ function parseWebpSize(buffer: Buffer): ImageSize | null {
   // VP8 (lossy)
   if (chunkType === "VP8 ") {
     // The VP8 frame header starts at byte 23 and uses the 9D 01 2A signature.
-    if (buffer.length >= 30 && buffer[23] === 0x9D && buffer[24] === 0x01 && buffer[25] === 0x2A) {
-      const width = buffer.readUInt16LE(26) & 0x3F_FF;
-      const height = buffer.readUInt16LE(28) & 0x3F_FF;
+    if (buffer.length >= 30 && buffer[23] === 0x9d && buffer[24] === 0x01 && buffer[25] === 0x2a) {
+      const width = buffer.readUInt16LE(26) & 0x3f_ff;
+      const height = buffer.readUInt16LE(28) & 0x3f_ff;
       return { height, width };
     }
   }
@@ -116,10 +116,10 @@ function parseWebpSize(buffer: Buffer): ImageSize | null {
   // VP8L (lossless)
   if (chunkType === "VP8L") {
     // VP8L signature: 0x2F
-    if (buffer.length >= 25 && buffer[20] === 0x2F) {
+    if (buffer.length >= 25 && buffer[20] === 0x2f) {
       const bits = buffer.readUInt32LE(21);
-      const width = (bits & 0x3F_FF) + 1;
-      const height = ((bits >> 14) & 0x3F_FF) + 1;
+      const width = (bits & 0x3f_ff) + 1;
+      const height = ((bits >> 14) & 0x3f_ff) + 1;
       return { height, width };
     }
   }

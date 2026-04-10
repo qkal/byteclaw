@@ -498,7 +498,7 @@ export async function occupyPort(): Promise<{
     const server = createServer();
     server.once("error", reject);
     server.listen(0, "127.0.0.1", () => {
-      const {port} = (server.address() as AddressInfo);
+      const { port } = server.address() as AddressInfo;
       resolve({ port, server });
     });
   });
@@ -611,7 +611,7 @@ export async function startGatewayServerWithRetries(params: {
   port: number;
   opts?: GatewayServerOptions;
 }): Promise<{ port: number; server: Awaited<ReturnType<typeof startGatewayServer>> }> {
-  let {port} = params;
+  let { port } = params;
   for (let attempt = 0; attempt < 10; attempt++) {
     try {
       return {
@@ -701,7 +701,8 @@ export async function createGatewaySuiteHarness(opts?: {
     close: async () => {
       await started.server.close();
     },
-    openWs: async (headers?: Record<string, string>) => await openTrackedWebSocket({
+    openWs: async (headers?: Record<string, string>) =>
+      await openTrackedWebSocket({
         port: started.port,
         headers,
       }),
@@ -742,7 +743,7 @@ export async function startServerWithClient(
 
   const started = await startGatewayServerWithRetries({ opts: resolvedGatewayOpts, port });
   ({ port } = started);
-  const {server} = started;
+  const { server } = started;
 
   const ws = await openTrackedWebSocket({ headers: wsHeaders, port });
   return { envSnapshot, port, prevToken: prev, server, ws };
@@ -873,15 +874,15 @@ export async function connectReq(
   const defaultToken =
     opts?.skipDefaultAuth === true
       ? undefined
-      : (typeof (testState.gatewayAuth as { token?: unknown } | undefined)?.token === "string"
+      : typeof (testState.gatewayAuth as { token?: unknown } | undefined)?.token === "string"
         ? ((testState.gatewayAuth as { token?: string }).token ?? undefined)
-        : process.env.OPENCLAW_GATEWAY_TOKEN);
+        : process.env.OPENCLAW_GATEWAY_TOKEN;
   const defaultPassword =
     opts?.skipDefaultAuth === true
       ? undefined
-      : (typeof (testState.gatewayAuth as { password?: unknown } | undefined)?.password === "string"
+      : typeof (testState.gatewayAuth as { password?: unknown } | undefined)?.password === "string"
         ? ((testState.gatewayAuth as { password?: string }).password ?? undefined)
-        : process.env.OPENCLAW_GATEWAY_PASSWORD);
+        : process.env.OPENCLAW_GATEWAY_PASSWORD;
   const token = opts?.token ?? defaultToken;
   const bootstrapToken = normalizeOptionalString(opts?.bootstrapToken);
   const deviceToken = normalizeOptionalString(opts?.deviceToken);
@@ -893,9 +894,9 @@ export async function connectReq(
   });
   const requestedScopes = Array.isArray(opts?.scopes)
     ? opts.scopes
-    : (role === "operator"
+    : role === "operator"
       ? ["operator.admin"]
-      : []);
+      : [];
   if (opts?.skipConnectChallengeNonce && opts?.device === undefined) {
     throw new Error("skipConnectChallengeNonce requires an explicit device override");
   }

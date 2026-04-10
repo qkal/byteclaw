@@ -69,7 +69,10 @@ describe("compaction hook wiring", () => {
   }
 
   function getBeforeCompactionCall() {
-    const beforeCalls = hookMocks.runner.runBeforeCompaction.mock.calls as unknown as [unknown, unknown][];
+    const beforeCalls = hookMocks.runner.runBeforeCompaction.mock.calls as unknown as [
+      unknown,
+      unknown,
+    ][];
     return {
       event: beforeCalls[0]?.[0] as
         | { messageCount?: number; messages?: unknown[]; sessionFile?: string }
@@ -79,7 +82,10 @@ describe("compaction hook wiring", () => {
   }
 
   function getAfterCompactionCall() {
-    const afterCalls = hookMocks.runner.runAfterCompaction.mock.calls as unknown as [unknown, unknown][];
+    const afterCalls = hookMocks.runner.runAfterCompaction.mock.calls as unknown as [
+      unknown,
+      unknown,
+    ][];
     return {
       event: afterCalls[0]?.[0] as
         | { messageCount?: number; compactedCount?: number; sessionFile?: string }

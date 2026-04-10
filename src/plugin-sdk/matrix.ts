@@ -189,9 +189,9 @@ export {
 } from "./matrix-surface.js";
 export { setMatrixRuntime } from "./matrix-runtime-surface.js";
 
-export const {singleAccountKeysToMove} = loadMatrixFacadeModule();
+export const { singleAccountKeysToMove } = loadMatrixFacadeModule();
 
-export const {namedAccountPromotionKeys} = loadMatrixFacadeModule();
+export const { namedAccountPromotionKeys } = loadMatrixFacadeModule();
 
 export const resolveSingleAccountPromotionTarget: MatrixFacadeModule["resolveSingleAccountPromotionTarget"] =
   ((...args) =>

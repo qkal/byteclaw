@@ -864,14 +864,14 @@ export async function createContextEngineAttemptRunner(params: {
   const maintain =
     typeof rawMaintain === "function"
       ? rawMaintain
-      : (rawMaintain
+      : rawMaintain
         ? async () => ({
             bytesFreed: 0,
             changed: false,
             reason: "test maintenance",
             rewrittenEntries: 0,
           })
-        : undefined);
+        : undefined;
 
   hoisted.sessionManager.buildSessionContext
     .mockReset()

@@ -97,12 +97,12 @@ function createMockResponse(): ServerResponse & {
     _getStatusCode: () => statusCode,
   });
 
-  res.write = function  write(chunk: unknown) {
+  res.write = function write(chunk: unknown) {
     data += String(chunk);
     return true;
   };
 
-  res.end = function  end(chunk?: unknown) {
+  res.end = function end(chunk?: unknown) {
     if (chunk) {
       data += String(chunk);
     }

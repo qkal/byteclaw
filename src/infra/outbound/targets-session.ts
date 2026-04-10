@@ -98,19 +98,19 @@ export function resolveSessionDeliveryTarget(params: {
       }));
   const lastThreadId = hasTurnSourceThreadId
     ? parsedTurnSourceTarget?.threadId
-    : (hasTurnSourceChannel &&
+    : hasTurnSourceChannel &&
         (params.turnSourceChannel !== sessionLastChannel || !turnToMatchesSession)
       ? undefined
-      : parsedSessionTarget?.threadId);
+      : parsedSessionTarget?.threadId;
 
   const rawRequested = params.requestedChannel ?? "last";
   const requested = rawRequested === "last" ? "last" : normalizeMessageChannel(rawRequested);
   const requestedChannel =
     requested === "last"
       ? "last"
-      : (requested && isDeliverableMessageChannel(requested)
+      : requested && isDeliverableMessageChannel(requested)
         ? requested
-        : undefined);
+        : undefined;
 
   const rawExplicitTo =
     typeof params.explicitTo === "string" && params.explicitTo.trim()

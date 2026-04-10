@@ -94,7 +94,9 @@ export const resolveAgentTransportOverrideMock: Mock<(params?: unknown) => strin
 
 export function resetCompactSessionStateMocks(): void {
   sanitizeSessionHistoryMock.mockReset();
-  sanitizeSessionHistoryMock.mockImplementation(async (params: { messages: unknown[] }) => params.messages);
+  sanitizeSessionHistoryMock.mockImplementation(
+    async (params: { messages: unknown[] }) => params.messages,
+  );
 
   getMemorySearchManagerMock.mockReset();
   getMemorySearchManagerMock.mockResolvedValue({

@@ -31,7 +31,7 @@ export function logVerboseConsole(message: string) {
 
 type ThemeFormatter = (value: string) => string;
 
-export const {success} = theme;
-export const {warn} = theme;
-export const {info} = theme;
+export const { success } = theme;
+export const { warn } = theme;
+export const { info } = theme;
 export const danger: ThemeFormatter = theme.error;

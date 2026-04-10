@@ -1,7 +1,9 @@
 import { expect, it, vi } from "vitest";
 import type { MockFn } from "../../test-utils/vitest-mock-fn.js";
 
-interface MockedPulse { mock: { calls: unknown[] } }
+interface MockedPulse {
+  mock: { calls: unknown[] };
+}
 
 function asMockedPulse(pulse: unknown): MockedPulse {
   return pulse as MockedPulse;

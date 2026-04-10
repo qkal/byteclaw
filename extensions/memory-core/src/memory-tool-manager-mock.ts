@@ -1,8 +1,15 @@
 import { vi } from "vitest";
 
 export type SearchImpl = () => Promise<unknown[]>;
-export interface MemoryReadParams { relPath: string; from?: number; lines?: number }
-export interface MemoryReadResult { text: string; path: string }
+export interface MemoryReadParams {
+  relPath: string;
+  from?: number;
+  lines?: number;
+}
+export interface MemoryReadResult {
+  text: string;
+  path: string;
+}
 type MemoryBackend = "builtin" | "qmd";
 
 let backend: MemoryBackend = "builtin";

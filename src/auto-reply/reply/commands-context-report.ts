@@ -120,7 +120,7 @@ export async function buildContextReply(params: HandleCommandsParams): Promise<R
   }
 
   const fileLines = report.injectedWorkspaceFiles.map((f) => {
-    const status = f.missing ? "MISSING" : (f.truncated ? "TRUNCATED" : "OK");
+    const status = f.missing ? "MISSING" : f.truncated ? "TRUNCATED" : "OK";
     const raw = f.missing ? "0" : formatCharsAndTokens(f.rawChars);
     const injected = f.missing ? "0" : formatCharsAndTokens(f.injectedChars);
     return `- ${f.name}: ${status} | raw ${raw} | injected ${injected}`;
@@ -247,9 +247,9 @@ export async function buildContextReply(params: HandleCommandsParams): Promise<R
     const overheadLine =
       overheadTokens == null
         ? null
-        : (overheadTokens > 0
+        : overheadTokens > 0
           ? `Untracked provider/runtime overhead: ~${formatInt(overheadTokens)} tok`
-          : "Untracked provider/runtime overhead: not observed in cached usage");
+          : "Untracked provider/runtime overhead: not observed in cached usage";
 
     return {
       text: [

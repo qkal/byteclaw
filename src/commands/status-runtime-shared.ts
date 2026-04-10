@@ -127,7 +127,7 @@ export async function resolveStatusRuntimeDetails(params: {
   const resolveGatewayHealthSummary = params.resolveHealth ?? resolveStatusGatewayHealth;
   const usage = params.usage ? await resolveUsageSummary(params.timeoutMs) : undefined;
   const health = params.deep
-    ? (params.suppressHealthErrors
+    ? params.suppressHealthErrors
       ? await resolveGatewayHealthSummary({
           config: params.config,
           timeoutMs: params.timeoutMs,
@@ -135,7 +135,7 @@ export async function resolveStatusRuntimeDetails(params: {
       : await resolveGatewayHealthSummary({
           config: params.config,
           timeoutMs: params.timeoutMs,
-        }))
+        })
     : undefined;
   const lastHeartbeat = params.deep
     ? await resolveStatusLastHeartbeat({

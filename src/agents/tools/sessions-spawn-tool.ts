@@ -172,9 +172,9 @@ export function createSessionsSpawnTool(
       const timeoutSecondsCandidate =
         typeof params.runTimeoutSeconds === "number"
           ? params.runTimeoutSeconds
-          : (typeof params.timeoutSeconds === "number"
+          : typeof params.timeoutSeconds === "number"
             ? params.timeoutSeconds
-            : undefined);
+            : undefined;
       const runTimeoutSeconds =
         typeof timeoutSecondsCandidate === "number" && Number.isFinite(timeoutSecondsCandidate)
           ? Math.max(0, Math.floor(timeoutSecondsCandidate))

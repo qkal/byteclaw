@@ -237,7 +237,7 @@ export const FeishuConfigSchema = z
     const defaultAccount = value.defaultAccount?.trim();
     if (defaultAccount && value.accounts && Object.keys(value.accounts).length > 0) {
       const normalizedDefaultAccount = normalizeAccountId(defaultAccount);
-      if (! Object.hasOwn(value.accounts, normalizedDefaultAccount)) {
+      if (!Object.hasOwn(value.accounts, normalizedDefaultAccount)) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: `channels.feishu.defaultAccount="${defaultAccount}" does not match a configured account key`,

@@ -214,7 +214,10 @@ describe("createCacheTrace", () => {
     });
 
     const optionsImages = (
-      ((event.options as { images?: unknown[] } | undefined)?.images ?? []) as Record<string, unknown>[]
+      ((event.options as { images?: unknown[] } | undefined)?.images ?? []) as Record<
+        string,
+        unknown
+      >[]
     )[0];
     expect(optionsImages?.data).toBe("<redacted>");
     expect(optionsImages?.bytes).toBe(4);

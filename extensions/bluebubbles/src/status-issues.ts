@@ -75,9 +75,9 @@ export function collectBlueBubblesStatusIssues(accounts: ChannelAccountSnapshot[
       if (probe && probe.ok === false) {
         const errorDetail = probe.error
           ? `: ${probe.error}`
-          : (probe.status
+          : probe.status
             ? ` (HTTP ${probe.status})`
-            : "");
+            : "";
         issues.push({
           accountId,
           channel: "bluebubbles",

@@ -176,7 +176,7 @@ function extractReplyMetadata(message: Record<string, unknown>): {
 }
 
 function readFirstChatRecord(message: Record<string, unknown>): Record<string, unknown> | null {
-  const {chats} = message;
+  const { chats } = message;
   if (!Array.isArray(chats) || chats.length === 0) {
     return null;
   }
@@ -188,15 +188,15 @@ function readParticipantEntries(record: Record<string, unknown> | null): unknown
   if (!record) {
     return undefined;
   }
-  const {participants} = record;
+  const { participants } = record;
   if (Array.isArray(participants)) {
     return participants;
   }
-  const {handles} = record;
+  const { handles } = record;
   if (Array.isArray(handles)) {
     return handles;
   }
-  const {participantHandles} = record;
+  const { participantHandles } = record;
   if (Array.isArray(participantHandles)) {
     return participantHandles;
   }
@@ -438,7 +438,7 @@ export function formatGroupAllowlistEntry(params: {
   if (guid) {
     return `chat_guid:${guid}`;
   }
-  const {chatId} = params;
+  const { chatId } = params;
   if (typeof chatId === "number" && Number.isFinite(chatId)) {
     return `chat_id:${chatId}`;
   }
@@ -737,9 +737,9 @@ export function normalizeWebhookMessage(
     readNumber(message, "timestamp");
   const timestamp =
     typeof timestampRaw === "number"
-      ? (timestampRaw > 1_000_000_000_000
+      ? timestampRaw > 1_000_000_000_000
         ? timestampRaw
-        : timestampRaw * 1000)
+        : timestampRaw * 1000
       : undefined;
 
   // BlueBubbles may omit `handle` in webhook payloads; for DM chat GUIDs we can still infer sender.
@@ -815,9 +815,9 @@ export function normalizeWebhookReaction(
     readNumberLike(message, "timestamp");
   const timestamp =
     typeof timestampRaw === "number"
-      ? (timestampRaw > 1_000_000_000_000
+      ? timestampRaw > 1_000_000_000_000
         ? timestampRaw
-        : timestampRaw * 1000)
+        : timestampRaw * 1000
       : undefined;
 
   const senderFallbackFromChatGuid =

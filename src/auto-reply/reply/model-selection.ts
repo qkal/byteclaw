@@ -155,7 +155,7 @@ function scoreFuzzyMatch(params: {
   key: string;
 } {
   const provider = normalizeProviderId(params.provider);
-  const {model} = params;
+  const { model } = params;
   const fragment = normalizeLowercaseStringOrEmpty(params.fragment);
   const providerLower = normalizeLowercaseStringOrEmpty(provider);
   const modelLower = normalizeLowercaseStringOrEmpty(model);
@@ -287,8 +287,8 @@ export async function createModelSelectionState(params: {
     defaultModel,
   } = params;
 
-  let {provider} = params;
-  let {model} = params;
+  let { provider } = params;
+  let { model } = params;
 
   const hasAllowlist = agentCfg?.models && Object.keys(agentCfg.models).length > 0;
   const configuredModelCatalog = buildConfiguredModelCatalog({ cfg });
@@ -544,7 +544,7 @@ export function resolveModelDirectiveSelection(params: {
           model: candidate.model,
           provider: candidate.provider,
         });
-        return Object.assign({candidate}, details);
+        return Object.assign({ candidate }, details);
       })
       .toSorted((a, b) => {
         if (b.score !== a.score) {

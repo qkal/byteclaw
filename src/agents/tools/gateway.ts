@@ -55,7 +55,7 @@ function canonicalizeToolGatewayWsUrl(raw: string): { origin: string; key: strin
     throw new Error("invalid gatewayUrl: path not allowed");
   }
 
-  const {origin} = url;
+  const { origin } = url;
   // Key: protocol + host only, lowercased. (host includes IPv6 brackets + port when present)
   const key = `${url.protocol}//${normalizeLowercaseStringOrEmpty(url.host)}`;
   return { key, origin };

@@ -34,14 +34,18 @@ vi.mock("../infra/system-events.js", () => ({
   enqueueSystemEvent,
 }));
 
-vi.mock("../infra/heartbeat-wake.js", async () => await mergeMockedModule(
-    await vi.importActual<typeof import("../infra/heartbeat-wake.js")>(
-      "../infra/heartbeat-wake.js",
+vi.mock(
+  "../infra/heartbeat-wake.js",
+  async () =>
+    await mergeMockedModule(
+      await vi.importActual<typeof import("../infra/heartbeat-wake.js")>(
+        "../infra/heartbeat-wake.js",
+      ),
+      () => ({
+        requestHeartbeatNow,
+      }),
     ),
-    () => ({
-      requestHeartbeatNow,
-    }),
-  ));
+);
 
 vi.mock("../config/config.js", async () => {
   const actual = await vi.importActual<typeof import("../config/config.js")>("../config/config.js");

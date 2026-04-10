@@ -21,7 +21,7 @@ export function collectUnsupportedSecretRefConfigCandidates(
   }
 
   const candidates: UnsupportedSecretRefConfigCandidate[] = [];
-  const {discord} = raw.channels;
+  const { discord } = raw.channels;
   const threadBindings = isRecord(discord.threadBindings) ? discord.threadBindings : null;
   if (threadBindings) {
     candidates.push({

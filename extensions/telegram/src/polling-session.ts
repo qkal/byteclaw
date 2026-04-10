@@ -304,7 +304,8 @@ export class TelegramPollingSession {
         });
       return stopPromise;
     };
-    const stopBot = () => Promise.resolve(bot.stop())
+    const stopBot = () =>
+      Promise.resolve(bot.stop())
         .then(() => undefined)
         .catch(() => {
           // Bot may already be stopped by runner stop/abort paths.
@@ -379,9 +380,9 @@ export class TelegramPollingSession {
       }
       const reason = stalledRestart
         ? "polling stall detected"
-        : (this.#forceRestarted
+        : this.#forceRestarted
           ? "unhandled network error"
-          : "runner stopped (maxRetryTime exceeded or graceful stop)");
+          : "runner stopped (maxRetryTime exceeded or graceful stop)";
       this.#forceRestarted = false;
       this.opts.log(
         `[telegram][diag] polling cycle finished reason=${reason} inFlight=${inFlightGetUpdates} outcome=${lastGetUpdatesOutcome} startedAt=${lastGetUpdatesStartedAt ?? "n/a"} finishedAt=${lastGetUpdatesFinishedAt ?? "n/a"} durationMs=${lastGetUpdatesDurationMs ?? "n/a"} offset=${lastGetUpdatesOffset ?? "n/a"}${lastGetUpdatesError ? ` error=${String(lastGetUpdatesError)}` : ""}`,

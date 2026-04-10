@@ -80,9 +80,9 @@ export function loadSubagentRegistryFromDisk(): Map<string, SubagentRunRecord> {
     const cleanupHandled =
       typeof typed.cleanupHandled === "boolean"
         ? typed.cleanupHandled
-        : (isLegacy
+        : isLegacy
           ? Boolean(typed.announceHandled ?? cleanupCompletedAt)
-          : undefined);
+          : undefined;
     const requesterOrigin = normalizeDeliveryContext(
       typed.requesterOrigin ?? {
         accountId: readStringValue(typed.requesterAccountId),

@@ -465,13 +465,16 @@ export async function getHealthSnapshot(params?: {
       boundAccounts,
       defaultAccountId,
     });
-    const boundAccountIdsAll = [...new Set([...channelBindings.get(plugin.id)?.values() ?? []].flatMap((ids) => ids))];
-    const accountIdsToProbe = [...new Set([
-	preferredAccountId,
-	defaultAccountId,
-	...accountIds,
-	...boundAccountIdsAll
-].filter((value) => value && value.trim()))];
+    const boundAccountIdsAll = [
+      ...new Set([...(channelBindings.get(plugin.id)?.values() ?? [])].flatMap((ids) => ids)),
+    ];
+    const accountIdsToProbe = [
+      ...new Set(
+        [preferredAccountId, defaultAccountId, ...accountIds, ...boundAccountIdsAll].filter(
+          (value) => value && value.trim(),
+        ),
+      ),
+    ];
     debugHealth("channel", {
       accountIds,
       accountIdsToProbe,

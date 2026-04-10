@@ -214,14 +214,18 @@ describe("mattermostPlugin", () => {
         postId: "POST1",
       });
 
-      return await withMockedGlobalFetch(fetchImpl, async () => await mattermostPlugin.actions?.handleAction?.(
-          createMattermostActionContext({
-            accountId: "default",
-            action: "react",
-            cfg,
-            params,
-          }),
-        ));
+      return await withMockedGlobalFetch(
+        fetchImpl,
+        async () =>
+          await mattermostPlugin.actions?.handleAction?.(
+            createMattermostActionContext({
+              accountId: "default",
+              action: "react",
+              cfg,
+              params,
+            }),
+          ),
+      );
     };
 
     it("exposes react when mattermost is configured", () => {

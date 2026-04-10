@@ -226,9 +226,9 @@ function buildBlockedInstallResult(params: {
     ok: false,
     ...(params.blocked.code === "security_scan_failed"
       ? { code: PLUGIN_INSTALL_ERROR_CODE.SECURITY_SCAN_FAILED }
-      : (params.blocked.code === "security_scan_blocked"
+      : params.blocked.code === "security_scan_blocked"
         ? { code: PLUGIN_INSTALL_ERROR_CODE.SECURITY_SCAN_BLOCKED }
-        : {})),
+        : {}),
   };
 }
 
@@ -362,7 +362,7 @@ async function installPluginDirectoryIntoExtensions(params: {
   nameEncoder?: (pluginId: string) => string;
 }): Promise<InstallPluginResult> {
   const runtime = await loadPluginInstallRuntime();
-  let {targetDir} = params;
+  let { targetDir } = params;
   if (!targetDir) {
     const targetDirResult = await resolvePluginInstallTarget({
       extensionsDir: params.extensionsDir,
@@ -928,7 +928,7 @@ export async function installPluginFromNpmSpec(
     params,
     defaultLogger,
   );
-  const {expectedPluginId} = params;
+  const { expectedPluginId } = params;
   const spec = params.spec.trim();
   const specError = runtime.validateRegistryNpmSpec(spec);
   if (specError) {

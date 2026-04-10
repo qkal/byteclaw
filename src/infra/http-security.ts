@@ -23,48 +23,48 @@ export interface RequestSizeLimitConfig {
 class RateLimiter {
   private requests = new Map<string, number[]>();
   private config: RateLimitConfig;
-  
+
   constructor(config: RateLimitConfig) {
     this.config = config;
   }
-  
+
   /**
    * Check if request should be rate limited
    */
   isRateLimited(identifier: string): boolean {
     const now = Date.now();
     const windowStart = now - this.config.windowMs;
-    
+
     let timestamps = this.requests.get(identifier) || [];
-    
+
     // Clean up old timestamps outside the window
     timestamps = timestamps.filter((ts) => ts > windowStart);
-    
+
     // Check if limit exceeded
     if (timestamps.length >= this.config.maxRequests) {
       return true;
     }
-    
+
     // Add current request timestamp
     timestamps.push(now);
     this.requests.set(identifier, timestamps);
-    
+
     return false;
   }
-  
+
   /**
    * Get remaining requests for identifier
    */
   getRemainingRequests(identifier: string): number {
     const now = Date.now();
     const windowStart = now - this.config.windowMs;
-    
+
     const timestamps = this.requests.get(identifier) || [];
     const recentTimestamps = timestamps.filter((ts) => ts > windowStart);
-    
+
     return Math.max(0, this.config.maxRequests - recentTimestamps.length);
   }
-  
+
   /**
    * Reset rate limit for identifier
    */
@@ -78,11 +78,11 @@ class RateLimiter {
  */
 class RequestSizeLimiter {
   private config: RequestSizeLimitConfig;
-  
+
   constructor(config: RequestSizeLimitConfig) {
     this.config = config;
   }
-  
+
   /**
    * Check if request size exceeds limit
    */
@@ -90,19 +90,19 @@ class RequestSizeLimiter {
     if (!contentLength) {
       return false;
     }
-    
+
     if (contentType?.includes("application/json")) {
       return contentLength > this.config.maxJsonSize;
     }
-    
+
     if (contentType?.includes("application/x-www-form-urlencoded")) {
       return contentLength > this.config.maxUrlEncodedSize;
     }
-    
+
     if (contentType?.includes("text/")) {
       return contentLength > this.config.maxTextSize;
     }
-    
+
     return contentLength > this.config.maxRawSize;
   }
 }
@@ -137,7 +137,9 @@ export function createRateLimiter(config?: Partial<RateLimitConfig>): RateLimite
 /**
  * Create request size limiter instance
  */
-export function createRequestSizeLimiter(config?: Partial<RequestSizeLimitConfig>): RequestSizeLimiter {
+export function createRequestSizeLimiter(
+  config?: Partial<RequestSizeLimitConfig>,
+): RequestSizeLimiter {
   return new RequestSizeLimiter({ ...DEFAULT_REQUEST_SIZE_LIMIT_CONFIG, ...config });
 }
 
@@ -167,7 +169,7 @@ export function applySecurityHeaders(headers: Record<string, string>): void {
 export class RateLimitError extends Error {
   constructor(
     public retryAfter: number,
-    message = "Too many requests"
+    message = "Too many requests",
   ) {
     super(message);
     this.name = "RateLimitError";
@@ -181,7 +183,7 @@ export class RequestSizeLimitError extends Error {
   constructor(
     public maxSize: number,
     public actualSize: number,
-    message = "Request size limit exceeded"
+    message = "Request size limit exceeded",
   ) {
     super(message);
     this.name = "RequestSizeLimitError";

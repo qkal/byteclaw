@@ -116,20 +116,20 @@ export function registerNodesCameraCommands(nodes: Command) {
       .action(async (opts: NodesRpcOpts) => {
         await runNodesCommand("camera snap", async () => {
           const node = await resolveNode(opts, normalizeOptionalString(opts.node) ?? "");
-          const {nodeId} = node;
+          const { nodeId } = node;
           const facingOpt = normalizeLowercaseStringOrEmpty(
             normalizeOptionalString(opts.facing) ?? "both",
           );
           const facings: CameraFacing[] =
             facingOpt === "both"
               ? ["front", "back"]
-              : (facingOpt === "front" || facingOpt === "back"
+              : facingOpt === "front" || facingOpt === "back"
                 ? [facingOpt]
                 : (() => {
                     throw new Error(
                       `invalid facing: ${String(opts.facing)} (expected front|back|both)`,
                     );
-                  })());
+                  })();
 
           const maxWidth = opts.maxWidth ? Number.parseInt(String(opts.maxWidth), 10) : undefined;
           const quality = opts.quality ? Number.parseFloat(String(opts.quality)) : undefined;
@@ -212,7 +212,7 @@ export function registerNodesCameraCommands(nodes: Command) {
       .action(async (opts: NodesRpcOpts & { audio?: boolean }) => {
         await runNodesCommand("camera clip", async () => {
           const node = await resolveNode(opts, normalizeOptionalString(opts.node) ?? "");
-          const {nodeId} = node;
+          const { nodeId } = node;
           const facing = parseFacing(String(opts.facing ?? "front"));
           const durationMs = parseDurationMs(String(opts.duration ?? "3000"));
           const includeAudio = opts.audio !== false;

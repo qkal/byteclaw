@@ -274,10 +274,9 @@ export async function buildProbeTargets(params: {
     });
 
     const profileIds = listProfilesForProvider(store, providerKey);
-    const explicitOrder = (() => (
-        findNormalizedProviderValue(store.order, providerKey) ??
-        findNormalizedProviderValue(cfg?.auth?.order, providerKey)
-      ))();
+    const explicitOrder = (() =>
+      findNormalizedProviderValue(store.order, providerKey) ??
+      findNormalizedProviderValue(cfg?.auth?.order, providerKey))();
     const allowedProfiles =
       explicitOrder && explicitOrder.length > 0
         ? new Set(resolveAuthProfileOrder({ cfg, provider: providerKey, store }))
@@ -435,7 +434,7 @@ async function probeTarget(params: {
       status: "no_model",
     };
   }
-  const {model} = target;
+  const { model } = target;
 
   const sessionId = `probe-${target.provider}-${crypto.randomUUID()}`;
   const sessionFile = resolveSessionTranscriptPath(sessionId, agentId);

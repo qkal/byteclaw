@@ -1,4 +1,7 @@
-export interface EmbeddedContextFile { path: string; content: string }
+export interface EmbeddedContextFile {
+  path: string;
+  content: string;
+}
 
 export type FailoverReason =
   | "auth"

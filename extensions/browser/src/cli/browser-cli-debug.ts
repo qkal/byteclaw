@@ -165,7 +165,7 @@ export function registerBrowserDebugCommands(
           result.requests
             .map((r) => {
               const status = typeof r.status === "number" ? ` ${r.status}` : "";
-              const ok = r.ok === true ? " ok" : (r.ok === false ? " fail" : "");
+              const ok = r.ok === true ? " ok" : r.ok === false ? " fail" : "";
               const fail = r.failureText ? ` (${r.failureText})` : "";
               return `${r.timestamp} ${r.method}${status}${ok} ${r.url}${fail}`;
             })

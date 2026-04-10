@@ -11,7 +11,10 @@ const SLACK_EXTERNAL_ARG_MENU_TTL_MS = 10 * 60 * 1000;
 
 export const SLACK_EXTERNAL_ARG_MENU_PREFIX = "openclaw_cmdarg_ext:";
 
-export interface SlackExternalArgMenuChoice { label: string; value: string }
+export interface SlackExternalArgMenuChoice {
+  label: string;
+  value: string;
+}
 export interface SlackExternalArgMenuEntry {
   choices: SlackExternalArgMenuChoice[];
   userId: string;

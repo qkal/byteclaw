@@ -626,14 +626,14 @@ function mergeDreamingStoreStats(stats: DreamingStoreStats[]): DreamingStoreStat
     ...(lastPromotedAt ? { lastPromotedAt } : {}),
     ...(storeErrors.length === 1
       ? { storeError: storeErrors[0] }
-      : (storeErrors.length > 1
+      : storeErrors.length > 1
         ? { storeError: `${storeErrors.length} dreaming stores had read errors.` }
-        : {})),
+        : {}),
     ...(phaseSignalErrors.length === 1
       ? { phaseSignalError: phaseSignalErrors[0] }
-      : (phaseSignalErrors.length > 1
+      : phaseSignalErrors.length > 1
         ? { phaseSignalError: `${phaseSignalErrors.length} phase signal stores had read errors.` }
-        : {})),
+        : {}),
   };
 }
 
@@ -896,7 +896,7 @@ export const doctorHandlers: GatewayRequestHandlers = {
         (entry) => entry.workspaceDir,
       );
       const allWorkspaces =
-        configuredWorkspaces.length > 0 ? configuredWorkspaces : (workspaceDir ? [workspaceDir] : []);
+        configuredWorkspaces.length > 0 ? configuredWorkspaces : workspaceDir ? [workspaceDir] : [];
       const storeStats =
         allWorkspaces.length > 0
           ? mergeDreamingStoreStats(

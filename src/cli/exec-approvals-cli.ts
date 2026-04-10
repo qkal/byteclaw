@@ -129,7 +129,7 @@ async function loadWritableSnapshotTarget(opts: ExecApprovalsCliOpts): Promise<{
   if (source === "local") {
     defaultRuntime.log(theme.muted("Writing local approvals."));
   }
-  const targetLabel = source === "local" ? "local" : (nodeId ? `node:${nodeId}` : "gateway");
+  const targetLabel = source === "local" ? "local" : nodeId ? `node:${nodeId}` : "gateway";
   const baseHash = snapshot.hash;
   if (!baseHash) {
     exitWithError("Exec approvals hash missing; reload and retry.");
@@ -273,8 +273,7 @@ function renderApprovalsSnapshot(snapshot: ExecApprovalsSnapshot, targetLabel: s
       : null,
   ].filter(Boolean) as string[];
   const agents = file.agents ?? {};
-  const allowlistRows: { Target: string; Agent: string; Pattern: string; LastUsed: string }[] =
-    [];
+  const allowlistRows: { Target: string; Agent: string; Pattern: string; LastUsed: string }[] = [];
   const now = Date.now();
   for (const [agentId, agent] of Object.entries(agents)) {
     const allowlist = Array.isArray(agent.allowlist) ? agent.allowlist : [];
@@ -490,7 +489,7 @@ export function registerExecApprovalsCli(program: Command) {
           defaultRuntime.log(muted("Showing local approvals."));
           defaultRuntime.log("");
         }
-        const targetLabel = source === "local" ? "local" : (nodeId ? `node:${nodeId}` : "gateway");
+        const targetLabel = source === "local" ? "local" : nodeId ? `node:${nodeId}` : "gateway";
         renderApprovalsSnapshot(snapshot, targetLabel);
         renderEffectivePolicy({ report: effectivePolicy });
       } catch (error) {

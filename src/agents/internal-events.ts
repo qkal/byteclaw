@@ -1,5 +1,4 @@
-import type {
-  AGENT_INTERNAL_EVENT_TYPE_TASK_COMPLETION} from "./internal-event-contract.js";
+import type { AGENT_INTERNAL_EVENT_TYPE_TASK_COMPLETION } from "./internal-event-contract.js";
 import type {
   AgentInternalEventSource,
   AgentInternalEventStatus,

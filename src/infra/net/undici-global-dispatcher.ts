@@ -65,7 +65,7 @@ function resolveDispatcherKey(params: {
   autoSelectFamily: boolean | undefined;
 }): string {
   const autoSelectToken =
-    params.autoSelectFamily === undefined ? "na" : (params.autoSelectFamily ? "on" : "off");
+    params.autoSelectFamily === undefined ? "na" : params.autoSelectFamily ? "on" : "off";
   return `${params.kind}:${params.timeoutMs}:${autoSelectToken}`;
 }
 

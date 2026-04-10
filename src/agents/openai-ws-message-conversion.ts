@@ -23,13 +23,18 @@ import { normalizeUsage } from "./usage.js";
 
 type AnyMessage = Message & { role: string; content: unknown };
 type AssistantMessageWithPhase = AssistantMessage & { phase?: OpenAIResponsesAssistantPhase };
-export interface ReplayModelInfo { input?: readonly string[] }
+export interface ReplayModelInfo {
+  input?: readonly string[];
+}
 type ReplayableReasoningItem = Extract<InputItem, { type: "reasoning" }>;
 interface ReplayableReasoningSignature {
   type: "reasoning" | `reasoning.${string}`;
   id?: string;
 }
-interface ToolCallReplayId { callId: string; itemId?: string }
+interface ToolCallReplayId {
+  callId: string;
+  itemId?: string;
+}
 export interface PlannedTurnInput {
   inputItems: InputItem[];
   previousResponseId?: string;
@@ -252,15 +257,15 @@ export function convertTools(
   }
   const strict = resolveOpenAIStrictToolFlagForInventory(tools, options?.strict);
   return tools.map((tool) => ({
-      description: typeof tool.description === "string" ? tool.description : undefined,
-      name: tool.name,
-      parameters: normalizeOpenAIStrictToolParameters(
-        tool.parameters ?? {},
-        strict === true,
-      ) as Record<string, unknown>,
-      type: "function" as const,
-      ...(strict === undefined ? {} : { strict }),
-    }));
+    description: typeof tool.description === "string" ? tool.description : undefined,
+    name: tool.name,
+    parameters: normalizeOpenAIStrictToolParameters(
+      tool.parameters ?? {},
+      strict === true,
+    ) as Record<string, unknown>,
+    type: "function" as const,
+    ...(strict === undefined ? {} : { strict }),
+  }));
 }
 
 export function planTurnInput(params: {
@@ -323,7 +328,7 @@ export function convertMessagesToInputItems(
     }
 
     if (m.role === "assistant") {
-      const {content} = m;
+      const { content } = m;
       const assistantMessagePhase = normalizeAssistantPhase(m.phase);
       if (Array.isArray(content)) {
         const textParts: string[] = [];
@@ -366,9 +371,9 @@ export function convertMessagesToInputItems(
               parsedSignature?.phase ??
               (parsedSignature?.id
                 ? assistantMessagePhase
-                : (hasExplicitBlockPhase
+                : hasExplicitBlockPhase
                   ? undefined
-                  : assistantMessagePhase));
+                  : assistantMessagePhase);
             if (textParts.length > 0 && blockPhase !== currentTextPhase) {
               pushAssistantText(currentTextPhase);
             }
@@ -491,9 +496,9 @@ export function buildAssistantMessageFromResponse(
         if (part.type === "output_text" && part.text) {
           const shouldIncludeText = hasFinalAnswerText
             ? itemPhase === "final_answer"
-            : (hasExplicitPhasedAssistantText
+            : hasExplicitPhasedAssistantText
               ? itemPhase === undefined
-              : true);
+              : true;
           if (!shouldIncludeText) {
             continue;
           }

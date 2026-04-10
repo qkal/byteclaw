@@ -6,37 +6,37 @@ let createBrowserRouteDispatcher: typeof import("./dispatcher.js").createBrowser
 describe("browser route dispatcher (abort)", () => {
   beforeAll(async () => {
     vi.doMock("./index.js", () => ({
-        registerBrowserRoutes(app: { get: (path: string, handler: unknown) => void }) {
-          app.get(
-            "/slow",
-            async (req: { signal?: AbortSignal }, res: { json: (body: unknown) => void }) => {
-              const {signal} = req;
-              await new Promise<void>((resolve, reject) => {
-                if (signal?.aborted) {
-                  reject(signal.reason ?? new Error("aborted"));
-                  return;
-                }
-                const onAbort = () => reject(signal?.reason ?? new Error("aborted"));
-                signal?.addEventListener("abort", onAbort, { once: true });
-                queueMicrotask(() => {
-                  signal?.removeEventListener("abort", onAbort);
-                  resolve();
-                });
+      registerBrowserRoutes(app: { get: (path: string, handler: unknown) => void }) {
+        app.get(
+          "/slow",
+          async (req: { signal?: AbortSignal }, res: { json: (body: unknown) => void }) => {
+            const { signal } = req;
+            await new Promise<void>((resolve, reject) => {
+              if (signal?.aborted) {
+                reject(signal.reason ?? new Error("aborted"));
+                return;
+              }
+              const onAbort = () => reject(signal?.reason ?? new Error("aborted"));
+              signal?.addEventListener("abort", onAbort, { once: true });
+              queueMicrotask(() => {
+                signal?.removeEventListener("abort", onAbort);
+                resolve();
               });
-              res.json({ ok: true });
-            },
-          );
-          app.get(
-            "/echo/:id",
-            async (
-              req: { params?: Record<string, string> },
-              res: { json: (body: unknown) => void },
-            ) => {
-              res.json({ id: req.params?.id ?? null });
-            },
-          );
-        },
-      }));
+            });
+            res.json({ ok: true });
+          },
+        );
+        app.get(
+          "/echo/:id",
+          async (
+            req: { params?: Record<string, string> },
+            res: { json: (body: unknown) => void },
+          ) => {
+            res.json({ id: req.params?.id ?? null });
+          },
+        );
+      },
+    }));
     ({ createBrowserRouteDispatcher } = await import("./dispatcher.js"));
   });
 

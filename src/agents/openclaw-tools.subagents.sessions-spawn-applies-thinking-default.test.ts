@@ -14,9 +14,7 @@ function applyThinkingDefault(thinking: ThinkingLevel) {
   });
 }
 
-function findSubagentThinking(
-  calls: { method?: string; params?: unknown }[],
-): string | undefined {
+function findSubagentThinking(calls: { method?: string; params?: unknown }[]): string | undefined {
   for (const call of calls) {
     if (call.method !== "agent") {
       continue;
@@ -29,9 +27,7 @@ function findSubagentThinking(
   return undefined;
 }
 
-function findPatchedThinking(
-  calls: { method?: string; params?: unknown }[],
-): string | undefined {
+function findPatchedThinking(calls: { method?: string; params?: unknown }[]): string | undefined {
   for (let index = calls.length - 1; index >= 0; index -= 1) {
     const entry = calls[index];
     if (!entry || entry.method !== "sessions.patch") {

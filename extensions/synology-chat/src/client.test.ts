@@ -158,9 +158,7 @@ describe("sendFileUrl", () => {
 });
 
 // Helper to mock the user_list API response for fetchChatUsers / resolveLegacyWebhookNameToChatUserId
-function mockUserListResponse(
-  users: { user_id: number; username: string; nickname: string }[],
-) {
+function mockUserListResponse(users: { user_id: number; username: string; nickname: string }[]) {
   mockUserListResponseImpl(users, false);
 }
 

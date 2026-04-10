@@ -79,7 +79,7 @@ export function resolveOpenAICompletionsCompatDefaults(
     supportsStrictMode: !isZai && !usesConfiguredNonOpenAIEndpoint,
     supportsUsageInStreaming:
       !isNonStandard && (!usesConfiguredNonOpenAIEndpoint || supportsNativeStreamingUsageCompat),
-    thinkingFormat: isZai ? "zai" : (isOpenRouterLike ? "openrouter" : "openai"),
+    thinkingFormat: isZai ? "zai" : isOpenRouterLike ? "openrouter" : "openai",
   };
 }
 

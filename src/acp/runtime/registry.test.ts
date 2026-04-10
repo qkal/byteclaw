@@ -18,7 +18,7 @@ function createRuntimeStub(): AcpRuntime {
       runtimeSessionName: `${input.sessionKey}:runtime`,
       sessionKey: input.sessionKey,
     })),
-    runTurn: vi.fn(async function*  runTurn() {
+    runTurn: vi.fn(async function* runTurn() {
       // No-op stream
     }),
   };

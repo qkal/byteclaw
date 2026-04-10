@@ -1197,7 +1197,7 @@ describe("createTelegramBot", () => {
 
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockImplementation(
       async () =>
-        new Response(new Uint8Array([0x89, 0x50, 0x4E, 0x47]), {
+        new Response(new Uint8Array([0x89, 0x50, 0x4e, 0x47]), {
           headers: { "content-type": "image/png" },
           status: 200,
         }),
@@ -1299,7 +1299,7 @@ describe("createTelegramBot", () => {
 
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockImplementation(
       async () =>
-        new Response(new Uint8Array([0x89, 0x50, 0x4E, 0x47]), {
+        new Response(new Uint8Array([0x89, 0x50, 0x4e, 0x47]), {
           headers: { "content-type": "image/png" },
           status: 200,
         }),

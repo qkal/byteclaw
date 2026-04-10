@@ -315,9 +315,9 @@ export async function monitorWebInbox(options: {
       return null;
     }
     const senderE164 = group
-      ? (participantJid
+      ? participantJid
         ? await resolveInboundJid(participantJid)
-        : null)
+        : null
       : from;
 
     let groupSubject: string | undefined;

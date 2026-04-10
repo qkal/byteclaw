@@ -109,11 +109,11 @@ export async function buildReplyPayloads(params: {
   accountId?: string;
   normalizeMediaPaths?: (payload: ReplyPayload) => Promise<ReplyPayload>;
 }): Promise<{ replyPayloads: ReplyPayload[]; didLogHeartbeatStrip: boolean }> {
-  let {didLogHeartbeatStrip} = params;
+  let { didLogHeartbeatStrip } = params;
   const sanitizedPayloads = params.isHeartbeat
     ? params.payloads
     : params.payloads.flatMap((payload) => {
-        let {text} = payload;
+        let { text } = payload;
 
         if (payload.isError && text && isBunFetchSocketError(text)) {
           text = formatBunFetchSocketError(text);
@@ -127,7 +127,7 @@ export async function buildReplyPayloads(params: {
           didLogHeartbeatStrip = true;
           logVerbose("Stripped stray HEARTBEAT_OK token from reply");
         }
-        const {hasMedia} = resolveSendableOutboundReplyParts(payload);
+        const { hasMedia } = resolveSendableOutboundReplyParts(payload);
         if (stripped.shouldSkip && !hasMedia) {
           return [];
         }

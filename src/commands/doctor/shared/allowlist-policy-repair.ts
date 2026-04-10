@@ -12,7 +12,7 @@ export async function maybeRepairAllowlistPolicyAllowFrom(cfg: OpenClawConfig): 
   config: OpenClawConfig;
   changes: string[];
 }> {
-  const {channels} = cfg;
+  const { channels } = cfg;
   if (!channels || typeof channels !== "object") {
     return { changes: [], config: cfg };
   }

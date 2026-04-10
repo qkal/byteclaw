@@ -493,8 +493,7 @@ export async function configureOllamaNonInteractive(params: {
     }
 
     defaultModelId =
-      allModelNames.find((name) => availableModelNames.has(name)) ??
-      [...availableModelNames][0];
+      allModelNames.find((name) => availableModelNames.has(name)) ?? [...availableModelNames][0];
     params.runtime.log(
       `Ollama model ${requestedDefaultModelId} was not available; using ${defaultModelId} instead.`,
     );

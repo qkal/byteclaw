@@ -137,7 +137,7 @@ function resolveOllamaEmbeddingClient(
   const rawBaseUrl = options.remote?.baseUrl?.trim() || providerConfig?.baseUrl?.trim();
   const baseUrl = resolveOllamaApiBase(rawBaseUrl);
   const model = normalizeEmbeddingModel(options.model);
-  const headerOverrides = { ...providerConfig?.headers, ...options.remote?.headers};
+  const headerOverrides = { ...providerConfig?.headers, ...options.remote?.headers };
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     ...headerOverrides,

@@ -13,7 +13,7 @@ function parseSignalVersion(value: unknown): string | null {
     return value.trim();
   }
   if (typeof value === "object" && value !== null) {
-    const {version} = (value as { version?: unknown });
+    const { version } = value as { version?: unknown };
     if (typeof version === "string" && version.trim()) {
       return version.trim();
     }

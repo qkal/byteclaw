@@ -56,7 +56,7 @@ export async function resetCommand(runtime: RuntimeEnv, opts: ResetOptions) {
     return;
   }
 
-  let {scope} = opts;
+  let { scope } = opts;
   if (!scope) {
     if (!interactive) {
       runtime.error("Non-interactive mode requires --scope.");

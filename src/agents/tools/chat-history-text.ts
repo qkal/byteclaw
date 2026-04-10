@@ -7,7 +7,7 @@ export function stripToolMessages(messages: unknown[]): unknown[] {
     if (!msg || typeof msg !== "object") {
       return true;
     }
-    const {role} = (msg as { role?: unknown });
+    const { role } = msg as { role?: unknown };
     return role !== "toolResult" && role !== "tool";
   });
 }
@@ -27,7 +27,7 @@ export function hasAssistantPhaseMetadata(message: unknown): boolean {
   if ((message as { role?: unknown }).role !== "assistant") {
     return false;
   }
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (!Array.isArray(content)) {
     return false;
   }
@@ -55,7 +55,7 @@ export function extractAssistantText(message: unknown): string | undefined {
       joinWith: "",
       sanitizeText: sanitizeTextContent,
     });
-  const {stopReason} = (message as { stopReason?: unknown });
+  const { stopReason } = message as { stopReason?: unknown };
   // Gate on stopReason only — a non-error response with a stale/background errorMessage
   // Should not have its content rewritten with error templates (#13935).
   const errorContext = stopReason === "error";

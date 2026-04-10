@@ -884,7 +884,7 @@ describe("marketplace plugins", () => {
       let hasControlChars = false;
       for (const char of result.error) {
         const codePoint = char.codePointAt(0);
-        if (codePoint != null && (codePoint < 0x20 || codePoint === 0x7F)) {
+        if (codePoint != null && (codePoint < 0x20 || codePoint === 0x7f)) {
           hasControlChars = true;
           break;
         }

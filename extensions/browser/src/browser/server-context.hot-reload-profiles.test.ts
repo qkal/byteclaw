@@ -1,7 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { BrowserServerState } from "./server-context.types.js";
 
-interface TestProfileConfig { cdpPort?: number; cdpUrl?: string; color?: string }
+interface TestProfileConfig {
+  cdpPort?: number;
+  cdpUrl?: string;
+  color?: string;
+}
 interface TestConfig {
   browser: {
     enabled: true;

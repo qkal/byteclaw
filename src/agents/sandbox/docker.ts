@@ -151,7 +151,7 @@ export function execDockerRaw(
       resolve({ code: exitCode, stderr, stdout });
     });
 
-    const {stdin} = child;
+    const { stdin } = child;
     if (stdin) {
       if (opts?.input !== undefined) {
         stdin.end(opts.input);
@@ -510,7 +510,7 @@ export async function ensureSandboxContainer(params: {
   const now = Date.now();
   const state = await dockerContainerState(containerName);
   let hasContainer = state.exists;
-  let {running} = state;
+  let { running } = state;
   let currentHash: string | null = null;
   let hashMismatch = false;
   let registryEntry:

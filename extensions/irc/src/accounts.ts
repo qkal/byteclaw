@@ -138,9 +138,9 @@ export function resolveIrcAccount(params: {
     const tls =
       typeof merged.tls === "boolean"
         ? merged.tls
-        : (accountId === DEFAULT_ACCOUNT_ID && process.env.IRC_TLS
+        : accountId === DEFAULT_ACCOUNT_ID && process.env.IRC_TLS
           ? parseTruthy(process.env.IRC_TLS)
-          : true);
+          : true;
 
     const envPort =
       accountId === DEFAULT_ACCOUNT_ID ? parseIntEnv(process.env.IRC_PORT) : undefined;

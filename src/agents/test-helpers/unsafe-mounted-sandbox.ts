@@ -24,9 +24,9 @@ export function createUnsafeMountedBridge(params: {
             agentHostRoot,
             filePath === "/agent" || filePath === "/agent/" ? "" : filePath.slice("/agent/".length),
           )
-        : (path.isAbsolute(filePath)
+        : path.isAbsolute(filePath)
           ? filePath
-          : path.resolve(cwd ?? root, filePath));
+          : path.resolve(cwd ?? root, filePath);
 
     const relFromRoot = path.relative(root, hostPath);
     const relativePath =
@@ -36,9 +36,9 @@ export function createUnsafeMountedBridge(params: {
 
     const containerPath = filePath.startsWith("/")
       ? filePath.replace(/\\/g, "/")
-      : (relativePath
+      : relativePath
         ? path.posix.join(workspaceContainerRoot, relativePath)
-        : workspaceContainerRoot);
+        : workspaceContainerRoot;
 
     return { containerPath, hostPath, relativePath };
   };

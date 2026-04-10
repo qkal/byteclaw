@@ -51,9 +51,9 @@ describe("models-config write serialization", () => {
         const targetPath =
           typeof targetArg === "string"
             ? targetArg
-            : (targetArg instanceof URL
+            : targetArg instanceof URL
               ? targetArg.pathname
-              : undefined);
+              : undefined;
         const isModelsTempWrite =
           typeof targetPath === "string" &&
           path.basename(targetPath).startsWith("models.json.") &&

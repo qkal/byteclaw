@@ -17,12 +17,12 @@ const hoisted = vi.hoisted(() => ({
 }));
 
 vi.mock("./monitor.js", () => ({
-    monitorZaloProvider: hoisted.monitorZaloProvider,
-  }));
+  monitorZaloProvider: hoisted.monitorZaloProvider,
+}));
 
 vi.mock("./probe.js", () => ({
-    probeZalo: hoisted.probeZalo,
-  }));
+  probeZalo: hoisted.probeZalo,
+}));
 
 vi.mock("./channel.runtime.js", () => ({
   probeZaloAccount: hoisted.probeZalo,

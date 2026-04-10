@@ -1,6 +1,10 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-interface DiscoveredModel { id: string; contextWindow?: number; contextTokens?: number }
+interface DiscoveredModel {
+  id: string;
+  contextWindow?: number;
+  contextTokens?: number;
+}
 type ContextModule = typeof import("./context.js");
 
 const contextTestState = vi.hoisted(() => {

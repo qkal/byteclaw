@@ -29,8 +29,8 @@ const actualRename = fs.rename.bind(fs);
 const renameMock = vi.spyOn(fs, "rename");
 
 vi.mock("./send.js", () => ({
-    sendMessageMatrix: sendMessageMatrixMock,
-  }));
+  sendMessageMatrix: sendMessageMatrixMock,
+}));
 
 describe("matrix thread bindings", () => {
   let stateDir: string;

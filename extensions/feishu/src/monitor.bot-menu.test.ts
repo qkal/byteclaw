@@ -44,14 +44,14 @@ vi.mock("./monitor.transport.js", () => ({
 }));
 
 vi.mock("./bot.js", () => ({
-    handleFeishuMessage: handleFeishuMessageMock,
-    parseFeishuMessageEvent: parseFeishuMessageEventMock,
-  }));
+  handleFeishuMessage: handleFeishuMessageMock,
+  parseFeishuMessageEvent: parseFeishuMessageEventMock,
+}));
 
 vi.mock("./send.js", () => ({
-    getMessageFeishu: getMessageFeishuMock,
-    sendCardFeishu: sendCardFeishuMock,
-  }));
+  getMessageFeishu: getMessageFeishuMock,
+  sendCardFeishu: sendCardFeishuMock,
+}));
 
 vi.mock("./thread-bindings.js", () => ({
   createFeishuThreadBindingManager: createFeishuThreadBindingManagerMock,

@@ -39,7 +39,7 @@ export async function getRecentSessionContent(
             content?: unknown;
             provenance?: unknown;
           };
-          const {role} = msg;
+          const { role } = msg;
           if ((role === "user" || role === "assistant") && "content" in msg && msg.content) {
             if (role === "user" && hasInterSessionUserProvenance(msg)) {
               continue;

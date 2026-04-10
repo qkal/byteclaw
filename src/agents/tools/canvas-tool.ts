@@ -193,9 +193,9 @@ export function createCanvasTool(options?: { config?: OpenClawConfig }): AnyAgen
           const jsonl =
             typeof params.jsonl === "string" && params.jsonl.trim()
               ? params.jsonl
-              : (typeof params.jsonlPath === "string" && params.jsonlPath.trim()
+              : typeof params.jsonlPath === "string" && params.jsonlPath.trim()
                 ? await readJsonlFromPath(params.jsonlPath)
-                : "");
+                : "";
           if (!jsonl.trim()) {
             throw new Error("jsonl or jsonlPath required");
           }

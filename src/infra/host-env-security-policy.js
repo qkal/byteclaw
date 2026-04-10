@@ -2,9 +2,7 @@ import HOST_ENV_SECURITY_POLICY_JSON from "./host-env-security-policy.json" with
 
 function sortUniqueUppercase(values) {
   return Object.freeze(
-    [...new Set(values.map((value) => value.toUpperCase()))].toSorted((a, b) =>
-      a.localeCompare(b),
-    ),
+    [...new Set(values.map((value) => value.toUpperCase()))].toSorted((a, b) => a.localeCompare(b)),
   );
 }
 

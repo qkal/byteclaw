@@ -141,7 +141,7 @@ describe("media server", () => {
     if (!boundServer) {
       return;
     }
-    ({ port } = (boundServer.address() as AddressInfo));
+    ({ port } = boundServer.address() as AddressInfo);
   });
 
   afterAll(async () => {

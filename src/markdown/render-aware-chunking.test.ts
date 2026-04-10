@@ -63,9 +63,9 @@ describe("renderMarkdownIRChunksWithinLimit", () => {
       renderChunk: (chunk) =>
         chunk.text === "README.md"
           ? "fits-here"
-          : (chunk.text.startsWith("README.md")
+          : chunk.text.startsWith("README.md")
             ? "this-rendering-is-too-long"
-            : chunk.text),
+            : chunk.text,
     });
 
     expect(chunks.map((chunk) => chunk.source.text)).toEqual(["README.md", "<"]);

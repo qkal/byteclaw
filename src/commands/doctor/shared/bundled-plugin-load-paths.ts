@@ -19,7 +19,7 @@ function resolveBundledWorkspaceDir(cfg: OpenClawConfig): string | undefined {
 
 function normalizeBundledLookupPath(targetPath: string): string {
   const normalized = path.normalize(targetPath);
-  const {root} = path.parse(normalized);
+  const { root } = path.parse(normalized);
   let trimmed = normalized;
   while (trimmed.length > root.length && (trimmed.endsWith(path.sep) || trimmed.endsWith("/"))) {
     trimmed = trimmed.slice(0, -1);

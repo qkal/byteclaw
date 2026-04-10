@@ -214,9 +214,9 @@ export function emitDiagnosticEvent(event: DiagnosticEventInput) {
       const errorMessage =
         error instanceof Error
           ? (error.stack ?? error.message)
-          : (typeof error === "string"
+          : typeof error === "string"
             ? error
-            : String(error));
+            : String(error);
       console.error(
         `[diagnostic-events] listener error type=${enriched.type} seq=${enriched.seq}: ${errorMessage}`,
       );

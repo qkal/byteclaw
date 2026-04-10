@@ -101,7 +101,7 @@ function collectBrowserProxyPaths(payload: unknown): string[] {
   if (typeof obj.imagePath === "string" && obj.imagePath.trim()) {
     paths.add(obj.imagePath.trim());
   }
-  const {download} = obj;
+  const { download } = obj;
   if (download && typeof download === "object") {
     const dlPath = (download as Record<string, unknown>).path;
     if (typeof dlPath === "string" && dlPath.trim()) {
@@ -234,7 +234,7 @@ export async function runBrowserProxyCommand(paramsJSON?: string | null): Promis
   const resolved = resolveBrowserConfig(cfg.browser, cfg);
   const method = typeof params.method === "string" ? params.method.toUpperCase() : "GET";
   const path = normalizeBrowserRequestPath(pathValue);
-  const {body} = params;
+  const { body } = params;
   const requestedProfile =
     resolveRequestedBrowserProfile({
       body,
@@ -278,7 +278,7 @@ export async function runBrowserProxyCommand(paramsJSON?: string | null): Promis
       (signal) =>
         dispatcher.dispatch({
           body,
-          method: method === "DELETE" ? "DELETE" : (method === "POST" ? "POST" : "GET"),
+          method: method === "DELETE" ? "DELETE" : method === "POST" ? "POST" : "GET",
           path,
           query,
           signal,
@@ -324,7 +324,7 @@ export async function runBrowserProxyCommand(paramsJSON?: string | null): Promis
       if (!entry || typeof entry !== "object") {
         return false;
       }
-      const {name} = (entry as Record<string, unknown>);
+      const { name } = entry as Record<string, unknown>;
       return typeof name === "string" && allowedProfiles.includes(name);
     });
   }

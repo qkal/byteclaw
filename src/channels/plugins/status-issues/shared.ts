@@ -14,9 +14,9 @@ export function formatMatchMetadata(params: {
   const matchKey =
     typeof params.matchKey === "string"
       ? params.matchKey
-      : (typeof params.matchKey === "number"
+      : typeof params.matchKey === "number"
         ? String(params.matchKey)
-        : undefined);
+        : undefined;
   const matchSource = asString(params.matchSource);
   const parts = [
     matchKey ? `matchKey=${matchKey}` : null,

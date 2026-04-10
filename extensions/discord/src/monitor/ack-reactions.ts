@@ -1,10 +1,6 @@
 import type { RequestClient } from "@buape/carbon";
-import type {
-  createStatusReactionController} from "openclaw/plugin-sdk/channel-feedback";
-import {
-  type StatusReactionAdapter,
-  logAckFailure,
-} from "openclaw/plugin-sdk/channel-feedback";
+import type { createStatusReactionController } from "openclaw/plugin-sdk/channel-feedback";
+import { type StatusReactionAdapter, logAckFailure } from "openclaw/plugin-sdk/channel-feedback";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-runtime";
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";
 import { createDiscordRuntimeAccountContext } from "../client.js";

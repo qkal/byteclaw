@@ -16,12 +16,12 @@ export const formatResponseUsageLine = (params: {
     cacheWrite: number;
   };
 }): string | null => {
-  const {usage} = params;
+  const { usage } = params;
   if (!usage) {
     return null;
   }
-  const {input} = usage;
-  const {output} = usage;
+  const { input } = usage;
+  const { output } = usage;
   if (typeof input !== "number" && typeof output !== "number") {
     return null;
   }

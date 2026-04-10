@@ -59,12 +59,12 @@ function readPngMetadata(buffer: Buffer): ImageMetadata | null {
   if (
     buffer[0] !== 0x89 ||
     buffer[1] !== 0x50 ||
-    buffer[2] !== 0x4E ||
+    buffer[2] !== 0x4e ||
     buffer[3] !== 0x47 ||
-    buffer[4] !== 0x0D ||
-    buffer[5] !== 0x0A ||
-    buffer[6] !== 0x1A ||
-    buffer[7] !== 0x0A ||
+    buffer[4] !== 0x0d ||
+    buffer[5] !== 0x0a ||
+    buffer[6] !== 0x1a ||
+    buffer[7] !== 0x0a ||
     buffer.toString("ascii", 12, 16) !== "IHDR"
   ) {
     return null;
@@ -102,26 +102,26 @@ function readWebpMetadata(buffer: Buffer): ImageMetadata | null {
     if (buffer.length < 30) {
       return null;
     }
-    return buildImageMetadata(buffer.readUInt16LE(26) & 0x3F_FF, buffer.readUInt16LE(28) & 0x3F_FF);
+    return buildImageMetadata(buffer.readUInt16LE(26) & 0x3f_ff, buffer.readUInt16LE(28) & 0x3f_ff);
   }
   if (chunkType === "VP8L") {
-    if (buffer.length < 25 || buffer[20] !== 0x2F) {
+    if (buffer.length < 25 || buffer[20] !== 0x2f) {
       return null;
     }
     const bits = buffer[21] | (buffer[22] << 8) | (buffer[23] << 16) | (buffer[24] << 24);
-    return buildImageMetadata((bits & 0x3F_FF) + 1, ((bits >> 14) & 0x3F_FF) + 1);
+    return buildImageMetadata((bits & 0x3f_ff) + 1, ((bits >> 14) & 0x3f_ff) + 1);
   }
   return null;
 }
 
 function readJpegMetadata(buffer: Buffer): ImageMetadata | null {
-  if (buffer.length < 4 || buffer[0] !== 0xFF || buffer[1] !== 0xD8) {
+  if (buffer.length < 4 || buffer[0] !== 0xff || buffer[1] !== 0xd8) {
     return null;
   }
 
   let offset = 2;
   while (offset + 8 < buffer.length) {
-    while (offset < buffer.length && buffer[offset] === 0xFF) {
+    while (offset < buffer.length && buffer[offset] === 0xff) {
       offset++;
     }
     if (offset >= buffer.length) {
@@ -130,10 +130,10 @@ function readJpegMetadata(buffer: Buffer): ImageMetadata | null {
 
     const marker = buffer[offset];
     offset++;
-    if (marker === 0xD8 || marker === 0xD9) {
+    if (marker === 0xd8 || marker === 0xd9) {
       continue;
     }
-    if (marker === 0x01 || (marker >= 0xD0 && marker <= 0xD7)) {
+    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) {
       continue;
     }
     if (offset + 1 >= buffer.length) {
@@ -146,7 +146,7 @@ function readJpegMetadata(buffer: Buffer): ImageMetadata | null {
     }
 
     const isStartOfFrame =
-      marker >= 0xC0 && marker <= 0xCF && marker !== 0xC4 && marker !== 0xC8 && marker !== 0xCC;
+      marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
     if (isStartOfFrame) {
       if (segmentLength < 7 || offset + 6 >= buffer.length) {
         return null;
@@ -221,27 +221,27 @@ async function assertImagePixelLimit(buffer: Buffer): Promise<void> {
  */
 function readJpegExifOrientation(buffer: Buffer): number | null {
   // Check JPEG magic bytes
-  if (buffer.length < 2 || buffer[0] !== 0xFF || buffer[1] !== 0xD8) {
+  if (buffer.length < 2 || buffer[0] !== 0xff || buffer[1] !== 0xd8) {
     return null;
   }
 
   let offset = 2;
   while (offset < buffer.length - 4) {
     // Look for marker
-    if (buffer[offset] !== 0xFF) {
+    if (buffer[offset] !== 0xff) {
       offset++;
       continue;
     }
 
     const marker = buffer[offset + 1];
     // Skip padding FF bytes
-    if (marker === 0xFF) {
+    if (marker === 0xff) {
       offset++;
       continue;
     }
 
     // APP1 marker (EXIF)
-    if (marker === 0xE1) {
+    if (marker === 0xe1) {
       const exifStart = offset + 4;
 
       // Check for "Exif\0\0" header
@@ -291,14 +291,14 @@ function readJpegExifOrientation(buffer: Buffer): number | null {
     }
 
     // Skip other segments
-    if (marker >= 0xE0 && marker <= 0xEF) {
+    if (marker >= 0xe0 && marker <= 0xef) {
       const segmentLength = buffer.readUInt16BE(offset + 2);
       offset += 2 + segmentLength;
       continue;
     }
 
     // SOF, SOS, or other marker - stop searching
-    if (marker === 0xC0 || marker === 0xDA) {
+    if (marker === 0xc0 || marker === 0xda) {
       break;
     }
 
@@ -428,31 +428,38 @@ async function sipsApplyOrientation(buffer: Buffer, orientation: number): Promis
   // Sips -r rotates clockwise, -f flips (horizontal/vertical)
   const ops: string[] = [];
   switch (orientation) {
-    case 2: { // Flip horizontal
+    case 2: {
+      // Flip horizontal
       ops.push("-f", "horizontal");
       break;
     }
-    case 3: { // Rotate 180
+    case 3: {
+      // Rotate 180
       ops.push("-r", "180");
       break;
     }
-    case 4: { // Flip vertical
+    case 4: {
+      // Flip vertical
       ops.push("-f", "vertical");
       break;
     }
-    case 5: { // Rotate 270 CW + flip horizontal
+    case 5: {
+      // Rotate 270 CW + flip horizontal
       ops.push("-r", "270", "-f", "horizontal");
       break;
     }
-    case 6: { // Rotate 90 CW
+    case 6: {
+      // Rotate 90 CW
       ops.push("-r", "90");
       break;
     }
-    case 7: { // Rotate 90 CW + flip horizontal
+    case 7: {
+      // Rotate 90 CW + flip horizontal
       ops.push("-r", "90", "-f", "horizontal");
       break;
     }
-    case 8: { // Rotate 270 CW
+    case 8: {
+      // Rotate 270 CW
       ops.push("-r", "270");
       break;
     }

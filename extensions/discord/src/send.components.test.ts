@@ -241,7 +241,7 @@ describe("sendDiscordComponentMessage classic message downgrade", () => {
       "channel:chan-1",
       {
         container: {
-          accentColor: 0x00FF00,
+          accentColor: 0x00ff00,
         },
         text: "report",
       },

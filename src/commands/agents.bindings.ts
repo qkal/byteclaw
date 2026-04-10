@@ -50,7 +50,7 @@ function canUpgradeBindingAccountScope(params: {
 }
 
 export function describeBinding(binding: AgentRouteBinding) {
-  const {match} = binding;
+  const { match } = binding;
   const parts = [match.channel];
   if (match.accountId) {
     parts.push(`accountId=${match.accountId}`);

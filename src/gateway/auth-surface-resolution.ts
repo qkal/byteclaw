@@ -92,9 +92,9 @@ export async function resolveGatewayProbeSurfaceAuth(params: {
     });
     return token.value
       ? withDiagnostics({ diagnostics, result: { token: token.value } })
-      : (envToken
+      : envToken
         ? { token: envToken }
-        : withDiagnostics({ diagnostics, result: {} }));
+        : withDiagnostics({ diagnostics, result: {} });
   }
 
   if (authMode === "password") {
@@ -107,9 +107,9 @@ export async function resolveGatewayProbeSurfaceAuth(params: {
     });
     return password.value
       ? withDiagnostics({ diagnostics, result: { password: password.value } })
-      : (envPassword
+      : envPassword
         ? { password: envPassword }
-        : withDiagnostics({ diagnostics, result: {} }));
+        : withDiagnostics({ diagnostics, result: {} });
   }
 
   const token = await resolveGatewayCredential({

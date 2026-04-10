@@ -101,11 +101,7 @@ export function createEmbeddedPiSessionEventHandler(ctx: EmbeddedPiSubscribeCont
         return;
       }
       case "tool_execution_end": {
-        scheduleEvent(
-          evt,
-          () => handleToolExecutionEnd(ctx, evt as never),
-          { detach: true },
-        );
+        scheduleEvent(evt, () => handleToolExecutionEnd(ctx, evt as never), { detach: true });
         return;
       }
       case "agent_start": {

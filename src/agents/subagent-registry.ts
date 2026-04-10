@@ -123,7 +123,7 @@ async function ensureSubagentRegistryPluginRuntimeLoaded(params: {
   workspaceDir?: string;
   allowGatewaySubagentBinding?: boolean;
 }) {
-  const {ensureRuntimePluginsLoaded} = subagentRegistryDeps;
+  const { ensureRuntimePluginsLoaded } = subagentRegistryDeps;
   if (ensureRuntimePluginsLoaded) {
     ensureRuntimePluginsLoaded(params);
     return;

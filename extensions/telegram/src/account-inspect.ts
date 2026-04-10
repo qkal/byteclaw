@@ -60,7 +60,7 @@ function canResolveEnvSecretRefInReadOnlyPath(params: {
   if (providerConfig.source !== "env") {
     return false;
   }
-  const {allowlist} = providerConfig;
+  const { allowlist } = providerConfig;
   return !allowlist || allowlist.includes(params.id);
 }
 

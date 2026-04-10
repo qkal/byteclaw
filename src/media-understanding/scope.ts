@@ -25,7 +25,7 @@ export function resolveMediaUnderstandingScope(params: {
   channel?: string;
   chatType?: string;
 }): MediaUnderstandingScopeDecision {
-  const {scope} = params;
+  const { scope } = params;
   if (!scope) {
     return "allow";
   }

@@ -301,7 +301,19 @@ export function buildFoundryProviderConfig(
         deployment.modelName,
         deployment.api,
       );
-      return Object.assign({id:deployment.name,name:capabilities.modelName,api:capabilities.api,reasoning:false,input:capabilities.input,cost:{input:0,output:0,cacheRead:0,cacheWrite:0},contextWindow:128e3,maxTokens:16384}, capabilities.compat?{compat:capabilities.compat}:{});
+      return Object.assign(
+        {
+          id: deployment.name,
+          name: capabilities.modelName,
+          api: capabilities.api,
+          reasoning: false,
+          input: capabilities.input,
+          cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+          contextWindow: 128e3,
+          maxTokens: 16384,
+        },
+        capabilities.compat ? { compat: capabilities.compat } : {},
+      );
     }),
   };
 }
@@ -467,7 +479,9 @@ export function applyFoundryProviderConfig(
 
 export function resolveFoundryTargetProfileId(config: FoundryConfigShape): string | undefined {
   const configuredProfiles = config.auth?.profiles ?? {};
-  const configuredProfileEntries = Object.entries(configuredProfiles).filter(([, profile]) => profile.provider === PROVIDER_ID);
+  const configuredProfileEntries = Object.entries(configuredProfiles).filter(
+    ([, profile]) => profile.provider === PROVIDER_ID,
+  );
   if (configuredProfileEntries.length === 0) {
     return undefined;
   }

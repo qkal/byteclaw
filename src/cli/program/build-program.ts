@@ -17,7 +17,7 @@ export function buildProgram() {
     throw err;
   });
   const ctx = createProgramContext();
-  const {argv} = process;
+  const { argv } = process;
 
   setProgramContext(program, ctx);
   configureProgramHelp(program, ctx);

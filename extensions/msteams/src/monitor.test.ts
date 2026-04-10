@@ -109,7 +109,7 @@ describe("msteams monitor webhook hardening", () => {
         requestTimeoutMs: 1500,
       });
 
-      const {port} = (server.address() as AddressInfo);
+      const { port } = server.address() as AddressInfo;
       const closedMs = await waitForSlowBodySocketClose(port, 3000);
       expect(closedMs).toBeLessThan(2500);
     } finally {

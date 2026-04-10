@@ -93,7 +93,7 @@ export function activateSlashCommands(params: {
   log?: (msg: string) => void;
 }) {
   const { account, commandTokens, registeredCommands, triggerMap, api, log } = params;
-  const {accountId} = account;
+  const { accountId } = account;
 
   const tokenSet = new Set(commandTokens);
 

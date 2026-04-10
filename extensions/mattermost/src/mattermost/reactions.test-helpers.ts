@@ -23,7 +23,7 @@ export function createMattermostReactionFetchMock(params: {
   body?: unknown;
 }) {
   const userId = params.userId ?? "BOT123";
-  const {mode} = params;
+  const { mode } = params;
   const allowAdd = mode === "add" || mode === "both";
   const allowRemove = mode === "remove" || mode === "both";
   const addStatus = params.status ?? 201;

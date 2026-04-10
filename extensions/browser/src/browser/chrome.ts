@@ -452,7 +452,7 @@ export async function stopOpenClawChrome(
   running: RunningChrome,
   timeoutMs = CHROME_STOP_TIMEOUT_MS,
 ) {
-  const {proc} = running;
+  const { proc } = running;
   if (proc.killed) {
     return;
   }

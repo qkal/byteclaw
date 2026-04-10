@@ -115,9 +115,9 @@ export async function handleDiscordMessagingAction(
         accountId: accountId ?? resolveDefaultDiscordAccountId(cfg),
         cfg,
       })
-    : (accountId
+    : accountId
       ? { accountId }
-      : undefined);
+      : undefined;
   const withReactionRuntimeOptions = <T extends Record<string, unknown>>(extra?: T) => ({
     ...(reactionRuntimeOptions ?? cfgOptions),
     ...extra,
@@ -606,7 +606,7 @@ export async function handleDiscordMessagingAction(
         return jsonResult({ ok: true, results });
       }
       const resultsRecord = results as Record<string, unknown>;
-      const {messages} = resultsRecord;
+      const { messages } = resultsRecord;
       const normalizedMessages = Array.isArray(messages)
         ? messages.map((group) =>
             Array.isArray(group) ? group.map((msg) => normalizeMessage(msg)) : group,

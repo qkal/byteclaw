@@ -77,7 +77,7 @@ export function readWindowsListeningPidsResultSync(
     windowsHide: true,
   });
   if (netstat.error) {
-    const {code} = (netstat.error as NodeJS.ErrnoException);
+    const { code } = netstat.error as NodeJS.ErrnoException;
     return { ok: false, permanent: code === "ENOENT" || code === "EACCES" || code === "EPERM" };
   }
   if (netstat.status !== 0) {

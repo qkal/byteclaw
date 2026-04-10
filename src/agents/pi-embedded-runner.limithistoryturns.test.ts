@@ -53,7 +53,7 @@ describe("limitHistoryTurns", () => {
     if (!("content" in message)) {
       return undefined;
     }
-    const {content} = message;
+    const { content } = message;
     if (typeof content === "string") {
       return content;
     }

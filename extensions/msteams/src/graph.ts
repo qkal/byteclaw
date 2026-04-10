@@ -24,7 +24,9 @@ export interface GraphChannel {
   displayName?: string;
 }
 
-export interface GraphResponse<T> { value?: T[] }
+export interface GraphResponse<T> {
+  value?: T[];
+}
 
 export function normalizeQuery(value?: string | null): string {
   return value?.trim() ?? "";

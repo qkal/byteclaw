@@ -11,7 +11,7 @@ export function resolveControlUiLinks(params: {
   customBindHost?: string;
   basePath?: string;
 }): { httpUrl: string; wsUrl: string } {
-  const {port} = params;
+  const { port } = params;
   const bind = params.bind ?? "loopback";
   const customBindHost = params.customBindHost?.trim();
   const { tailnetIPv4 } = inspectBestEffortPrimaryTailnetIPv4();

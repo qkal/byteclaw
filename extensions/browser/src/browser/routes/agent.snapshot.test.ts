@@ -1,7 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveTargetIdAfterNavigate } from "./agent.snapshot.js";
 
-interface Tab { targetId: string; url: string }
+interface Tab {
+  targetId: string;
+  url: string;
+}
 
 function staticListTabs(tabs: Tab[]): () => Promise<Tab[]> {
   return async () => tabs;

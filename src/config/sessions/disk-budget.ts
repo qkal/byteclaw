@@ -76,7 +76,7 @@ function getEntryUpdatedAt(entry?: SessionEntry): number {
   if (!entry) {
     return 0;
   }
-  const {updatedAt} = entry;
+  const { updatedAt } = entry;
   return Number.isFinite(updatedAt) ? updatedAt : 0;
 }
 
@@ -199,7 +199,7 @@ export async function enforceSessionDiskBudget(params: {
   log?: SessionDiskBudgetLogger;
 }): Promise<SessionDiskBudgetSweepResult | null> {
   const maxBytes = params.maintenance.maxDiskBytes;
-  const {highWaterBytes} = params.maintenance;
+  const { highWaterBytes } = params.maintenance;
   if (maxBytes == null || highWaterBytes == null) {
     return null;
   }
@@ -314,7 +314,7 @@ export async function enforceSessionDiskBudget(params: {
       total += projectedStoreBytes - previousProjectedBytes;
       removedEntries += 1;
 
-      const {sessionId} = entry;
+      const { sessionId } = entry;
       if (!sessionId) {
         continue;
       }

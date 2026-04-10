@@ -430,10 +430,10 @@ export async function processDiscordMessage(
     replyToMode,
     threadChannel,
   });
-  const {deliverTarget} = replyPlan;
-  const {replyTarget} = replyPlan;
-  const {replyReference} = replyPlan;
-  const {autoThreadContext} = replyPlan;
+  const { deliverTarget } = replyPlan;
+  const { replyTarget } = replyPlan;
+  const { replyReference } = replyPlan;
+  const { autoThreadContext } = replyPlan;
 
   const effectiveFrom = isDirectMessage
     ? `discord:${author.id}`
@@ -737,7 +737,7 @@ export async function processDiscordMessage(
         if (draftStream && isFinal) {
           await flushDraft();
           const reply = resolveSendableOutboundReplyParts(payload);
-          const {hasMedia} = reply;
+          const { hasMedia } = reply;
           const finalText = payload.text;
           const previewFinalText = resolvePreviewFinalText(finalText);
           const hasExplicitReplyDirective =

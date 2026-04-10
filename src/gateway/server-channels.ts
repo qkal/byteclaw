@@ -62,7 +62,7 @@ function isAccountEnabled(account: unknown): boolean {
   if (!account || typeof account !== "object") {
     return true;
   }
-  const {enabled} = (account as { enabled?: boolean });
+  const { enabled } = account as { enabled?: boolean };
   return enabled !== false;
 }
 
@@ -255,7 +255,8 @@ export function createChannelManager(opts: ChannelManagerOptions): ChannelManage
     return next;
   };
 
-  const getChannelRuntime = (): PluginRuntime["channel"] | undefined => channelRuntime ?? resolveChannelRuntime?.();
+  const getChannelRuntime = (): PluginRuntime["channel"] | undefined =>
+    channelRuntime ?? resolveChannelRuntime?.();
 
   const startChannelInternal = async (
     channelId: ChannelId,
@@ -636,7 +637,8 @@ export function createChannelManager(opts: ChannelManagerOptions): ChannelManage
     return { channelAccounts, channels };
   };
 
-  const isManuallyStopped_ = (channelId: ChannelId, accountId: string): boolean => manuallyStopped.has(restartKey(channelId, accountId));
+  const isManuallyStopped_ = (channelId: ChannelId, accountId: string): boolean =>
+    manuallyStopped.has(restartKey(channelId, accountId));
 
   const resetRestartAttempts_ = (channelId: ChannelId, accountId: string): void => {
     restartAttempts.delete(restartKey(channelId, accountId));

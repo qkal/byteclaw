@@ -37,16 +37,16 @@ const runtimeMocks = vi.hoisted(
   }),
 );
 
-export const {readAllowFromStoreMock} = runtimeMocks;
-export const {dispatchPluginInteractiveHandlerMock} = runtimeMocks;
-export const {dispatchReplyMock} = runtimeMocks;
-export const {enqueueSystemEventMock} = runtimeMocks;
-export const {upsertPairingRequestMock} = runtimeMocks;
-export const {recordInboundSessionMock} = runtimeMocks;
-export const {readSessionUpdatedAtMock} = runtimeMocks;
-export const {resolveStorePathMock} = runtimeMocks;
-export const {resolvePluginConversationBindingApprovalMock} = runtimeMocks;
-export const {buildPluginBindingResolvedTextMock} = runtimeMocks;
+export const { readAllowFromStoreMock } = runtimeMocks;
+export const { dispatchPluginInteractiveHandlerMock } = runtimeMocks;
+export const { dispatchReplyMock } = runtimeMocks;
+export const { enqueueSystemEventMock } = runtimeMocks;
+export const { upsertPairingRequestMock } = runtimeMocks;
+export const { recordInboundSessionMock } = runtimeMocks;
+export const { readSessionUpdatedAtMock } = runtimeMocks;
+export const { resolveStorePathMock } = runtimeMocks;
+export const { resolvePluginConversationBindingApprovalMock } = runtimeMocks;
+export const { buildPluginBindingResolvedTextMock } = runtimeMocks;
 
 async function readStoreAllowFromForDmPolicy(params: {
   provider: string;
@@ -61,67 +61,67 @@ async function readStoreAllowFromForDmPolicy(params: {
 }
 
 vi.mock("../monitor/agent-components-helpers.runtime.js", () => ({
-    readStoreAllowFromForDmPolicy,
-    resolvePinnedMainDmOwnerFromAllowlist,
-    upsertChannelPairingRequest: (...args: unknown[]) => upsertPairingRequestMock(...args),
-  }));
+  readStoreAllowFromForDmPolicy,
+  resolvePinnedMainDmOwnerFromAllowlist,
+  upsertChannelPairingRequest: (...args: unknown[]) => upsertPairingRequestMock(...args),
+}));
 
 vi.mock("../monitor/agent-components.runtime.js", () => ({
-    buildPluginBindingResolvedText: (...args: unknown[]) =>
-      buildPluginBindingResolvedTextMock(...args),
-    createReplyReferencePlanner: vi.fn(
-      (params: {
-        existingId?: string;
-        hasReplied?: boolean;
-        replyToMode?: "off" | "first" | "all" | "batched";
-        startId?: string;
-      }) => {
-        let hasReplied = params.hasReplied ?? false;
-        let nextId = params.existingId ?? params.startId;
-        return {
-          hasReplied() {
-            return hasReplied;
-          },
-          markSent() {
-            hasReplied = true;
-          },
-          use() {
-            if (params.replyToMode === "off") {
-              return undefined;
-            }
-            if (isSingleUseReplyToMode(params.replyToMode ?? "off") && hasReplied) {
-              return undefined;
-            }
-            const value = nextId;
-            hasReplied = true;
-            nextId = undefined;
-            return value;
-          },
-        };
-      },
-    ),
-    dispatchPluginInteractiveHandler: (...args: unknown[]) =>
-      dispatchPluginInteractiveHandlerMock(...args),
-    dispatchReplyWithBufferedBlockDispatcher: dispatchReplyMock,
-    finalizeInboundContext: vi.fn((ctx) => ctx),
-    parsePluginBindingApprovalCustomId,
-    recordInboundSession: (...args: unknown[]) => recordInboundSessionMock(...args),
-    resolveChunkMode: vi.fn(() => "sentences"),
-    resolvePluginConversationBindingApproval: (...args: unknown[]) =>
-      resolvePluginConversationBindingApprovalMock(...args),
-    resolveTextChunkLimit: vi.fn(() => 2000),
-  }));
+  buildPluginBindingResolvedText: (...args: unknown[]) =>
+    buildPluginBindingResolvedTextMock(...args),
+  createReplyReferencePlanner: vi.fn(
+    (params: {
+      existingId?: string;
+      hasReplied?: boolean;
+      replyToMode?: "off" | "first" | "all" | "batched";
+      startId?: string;
+    }) => {
+      let hasReplied = params.hasReplied ?? false;
+      let nextId = params.existingId ?? params.startId;
+      return {
+        hasReplied() {
+          return hasReplied;
+        },
+        markSent() {
+          hasReplied = true;
+        },
+        use() {
+          if (params.replyToMode === "off") {
+            return undefined;
+          }
+          if (isSingleUseReplyToMode(params.replyToMode ?? "off") && hasReplied) {
+            return undefined;
+          }
+          const value = nextId;
+          hasReplied = true;
+          nextId = undefined;
+          return value;
+        },
+      };
+    },
+  ),
+  dispatchPluginInteractiveHandler: (...args: unknown[]) =>
+    dispatchPluginInteractiveHandlerMock(...args),
+  dispatchReplyWithBufferedBlockDispatcher: dispatchReplyMock,
+  finalizeInboundContext: vi.fn((ctx) => ctx),
+  parsePluginBindingApprovalCustomId,
+  recordInboundSession: (...args: unknown[]) => recordInboundSessionMock(...args),
+  resolveChunkMode: vi.fn(() => "sentences"),
+  resolvePluginConversationBindingApproval: (...args: unknown[]) =>
+    resolvePluginConversationBindingApprovalMock(...args),
+  resolveTextChunkLimit: vi.fn(() => 2000),
+}));
 
 vi.mock("../interactive-dispatch.js", () => ({
-    dispatchDiscordPluginInteractiveHandler: (...args: unknown[]) =>
-      dispatchPluginInteractiveHandlerMock(...args),
-  }));
+  dispatchDiscordPluginInteractiveHandler: (...args: unknown[]) =>
+    dispatchPluginInteractiveHandlerMock(...args),
+}));
 
 vi.mock("../monitor/agent-components.deps.runtime.js", () => ({
-    enqueueSystemEvent: (...args: unknown[]) => enqueueSystemEventMock(...args),
-    readSessionUpdatedAt: (...args: unknown[]) => readSessionUpdatedAtMock(...args),
-    resolveStorePath: (...args: unknown[]) => resolveStorePathMock(...args),
-  }));
+  enqueueSystemEvent: (...args: unknown[]) => enqueueSystemEventMock(...args),
+  readSessionUpdatedAt: (...args: unknown[]) => readSessionUpdatedAtMock(...args),
+  resolveStorePath: (...args: unknown[]) => resolveStorePathMock(...args),
+}));
 
 vi.mock("../interactive-dispatch.js", async () => {
   const actual = await vi.importActual<typeof import("../interactive-dispatch.js")>(

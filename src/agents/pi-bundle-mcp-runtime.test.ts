@@ -22,9 +22,7 @@ afterEach(async () => {
 
 describe("session MCP runtime", () => {
   it("keeps colliding sanitized tool definitions stable across catalog order changes", async () => {
-    function makeRuntime(
-      tools: { toolName: string; description: string }[],
-    ): SessionMcpRuntime {
+    function makeRuntime(tools: { toolName: string; description: string }[]): SessionMcpRuntime {
       return {
         callTool: async (_serverName, toolName) => ({
           content: [{ text: String(toolName), type: "text" }],

@@ -185,7 +185,7 @@ function encodeKeyToken(
   }
 
   const parsed = parseModifiers(token);
-  const {base} = parsed;
+  const { base } = parsed;
   const baseLower = normalizeLowercaseStringOrEmpty(base);
 
   if (baseLower === "tab" && parsed.mods.shift) {
@@ -283,7 +283,7 @@ function toCtrlChar(char: string): string | null {
   }
   const code = char.toUpperCase().charCodeAt(0);
   if (code >= 64 && code <= 95) {
-    return String.fromCharCode(code & 0x1F);
+    return String.fromCharCode(code & 0x1f);
   }
   return null;
 }
@@ -331,7 +331,7 @@ function parseHexByte(raw: string): number | null {
     return null;
   }
   const value = Number.parseInt(normalized, 16);
-  if (Number.isNaN(value) || value < 0 || value > 0xFF) {
+  if (Number.isNaN(value) || value < 0 || value > 0xff) {
     return null;
   }
   return value;

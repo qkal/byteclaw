@@ -82,7 +82,7 @@ class ConnectionPool<T> {
       await this.waitForAvailableConnection();
       pooled = this.availableConnections.pop();
       if (!pooled) {
-        throw new Error('Connection pool exhausted');
+        throw new Error("Connection pool exhausted");
       }
     }
 
@@ -125,9 +125,7 @@ class ConnectionPool<T> {
     await this.destroyConnection(pooled.connection);
     this.pool.splice(index, 1);
 
-    const availIndex = this.availableConnections.findIndex(
-      (p) => p.connection === connection,
-    );
+    const availIndex = this.availableConnections.findIndex((p) => p.connection === connection);
     if (availIndex > -1) {
       this.availableConnections.splice(availIndex, 1);
     }
@@ -152,9 +150,7 @@ class ConnectionPool<T> {
    * Shutdown the pool and destroy all connections
    */
   async shutdown(): Promise<void> {
-    await Promise.all(
-      this.pool.map((p) => this.destroyConnection(p.connection)),
-    );
+    await Promise.all(this.pool.map((p) => this.destroyConnection(p.connection)));
     this.pool = [];
     this.availableConnections = [];
   }
@@ -230,7 +226,7 @@ export class HttpConnectionPool {
   async getAgent() {
     if (!this.agent) {
       // Dynamically import http/https agent
-      const https = await import('https');
+      const https = await import("https");
 
       this.agent = new https.Agent({
         maxSockets: this.options.maxSockets,

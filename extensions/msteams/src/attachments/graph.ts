@@ -133,7 +133,7 @@ async function fetchGraphCollection<T>(params: {
     url: params.url,
   });
   try {
-    const {status} = response;
+    const { status } = response;
     if (!response.ok) {
       return { items: [], status };
     }
@@ -149,7 +149,7 @@ async function fetchGraphCollection<T>(params: {
 }
 
 function normalizeGraphAttachment(att: GraphAttachment): MSTeamsAttachmentLike {
-  let {content} = att;
+  let { content } = att;
   if (typeof content === "string") {
     try {
       content = JSON.parse(content);
@@ -280,7 +280,7 @@ export async function downloadMSTeamsGraphMedia(params: {
     authAllowHosts: params.authAllowHosts,
   });
   const ssrfPolicy = resolveMediaSsrfPolicy(policy.allowHosts);
-  const {messageUrl} = params;
+  const { messageUrl } = params;
   let accessToken: string;
   try {
     accessToken = await params.tokenProvider.getAccessToken("https://graph.microsoft.com");

@@ -99,6 +99,6 @@ export function collectMemoryStatusAggregate(params: {
   return {
     chunks,
     files,
-    sourceCounts: sources.map((source) => (Object.assign({source}, bySource.get(source)! ))),
+    sourceCounts: sources.map((source) => Object.assign({ source }, bySource.get(source)!)),
   };
 }

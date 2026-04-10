@@ -109,7 +109,7 @@ function mergeBackendConfig(base: CliBackendConfig, override?: CliBackendConfig)
     ...base,
     ...override,
     args: override.args ?? base.args,
-    clearEnv: [...new Set([...base.clearEnv ?? [], ...override.clearEnv ?? []])],
+    clearEnv: [...new Set([...(base.clearEnv ?? []), ...(override.clearEnv ?? [])])],
     env: { ...base.env, ...override.env },
     modelAliases: { ...base.modelAliases, ...override.modelAliases },
     reliability: {

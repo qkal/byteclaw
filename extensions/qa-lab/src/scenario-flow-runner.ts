@@ -27,7 +27,7 @@ type QaFlowApi = Record<string, unknown> & {
 
 type QaFlowVars = Record<string, unknown>;
 
-const AsyncFunction = Object.getPrototypeOf(async function  AsyncFunction() {}).constructor as new (
+const AsyncFunction = Object.getPrototypeOf(async function AsyncFunction() {}).constructor as new (
   ...args: string[]
 ) => (...fnArgs: unknown[]) => Promise<unknown>;
 

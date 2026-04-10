@@ -195,7 +195,7 @@ function readExportStatements(path: string): string[] {
       return [statement.getText(sourceFile).replaceAll(/\s+/g, " ").trim()];
     }
 
-    const {moduleSpecifier} = statement;
+    const { moduleSpecifier } = statement;
     if (!moduleSpecifier || !ts.isStringLiteral(moduleSpecifier)) {
       return [statement.getText(sourceFile).replaceAll(/\s+/g, " ").trim()];
     }

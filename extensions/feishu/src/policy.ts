@@ -144,8 +144,8 @@ export function resolveFeishuReplyPolicy(params: {
     requireMention:
       typeof groupRequireMention === "boolean"
         ? groupRequireMention
-        : (typeof resolvedCfg.requireMention === "boolean"
+        : typeof resolvedCfg.requireMention === "boolean"
           ? resolvedCfg.requireMention
-          : params.groupPolicy !== "open"),
+          : params.groupPolicy !== "open",
   };
 }

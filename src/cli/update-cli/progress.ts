@@ -171,7 +171,7 @@ export function printResult(result: UpdateRunResult, opts: PrintResultOptions): 
   }
 
   const statusColor =
-    result.status === "ok" ? theme.success : (result.status === "skipped" ? theme.warn : theme.error);
+    result.status === "ok" ? theme.success : result.status === "skipped" ? theme.warn : theme.error;
 
   defaultRuntime.log("");
   defaultRuntime.log(

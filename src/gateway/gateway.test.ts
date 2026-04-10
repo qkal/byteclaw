@@ -384,14 +384,14 @@ module.exports = {
           };
           error?: string;
         }>("wizard.start", { mode: "local" });
-        const {sessionId} = start;
+        const { sessionId } = start;
         expect(typeof sessionId).toBe("string");
 
         let next = start;
         let didSendToken = false;
         const seenSteps: string[] = [];
         while (!next.done) {
-          const {step} = next;
+          const { step } = next;
           if (!step) {
             throw new Error("wizard missing step");
           }

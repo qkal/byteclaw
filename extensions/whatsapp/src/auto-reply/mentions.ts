@@ -105,9 +105,9 @@ export function debugMention(
 }
 
 export function resolveOwnerList(mentionCfg: MentionConfig, selfE164?: string | null) {
-  const {allowFrom} = mentionCfg;
+  const { allowFrom } = mentionCfg;
   const raw =
-    Array.isArray(allowFrom) && allowFrom.length > 0 ? allowFrom : (selfE164 ? [selfE164] : []);
+    Array.isArray(allowFrom) && allowFrom.length > 0 ? allowFrom : selfE164 ? [selfE164] : [];
   return raw
     .filter((entry): entry is string => Boolean(entry && entry !== "*"))
     .map((entry) => normalizeE164(entry))

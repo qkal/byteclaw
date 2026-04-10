@@ -95,7 +95,9 @@ export async function responseBodyViaPlaywright(opts: {
       bodyText = new TextDecoder("utf-8").decode(buf);
     }
   } catch (error) {
-    throw new Error(`Failed to read response body for "${url}": ${String(error)}`, { cause: error });
+    throw new Error(`Failed to read response body for "${url}": ${String(error)}`, {
+      cause: error,
+    });
   }
 
   const trimmed = bodyText.length > maxChars ? bodyText.slice(0, maxChars) : bodyText;

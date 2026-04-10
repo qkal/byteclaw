@@ -30,7 +30,7 @@ async function listenServer(
       server.listen(port, resolve);
     });
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code === "EPERM" || code === "EACCES") {
       return null;
     }
@@ -60,7 +60,7 @@ describe("ports helpers", () => {
     if (!address) {
       return;
     }
-    const {port} = address;
+    const { port } = address;
     await expect(ensurePortAvailable(port)).rejects.toBeInstanceOf(PortInUseError);
     await new Promise<void>((resolve) => server.close(() => resolve()));
   });
@@ -107,7 +107,7 @@ describeUnix("inspectPortUsage", () => {
     if (!address) {
       return;
     }
-    const {port} = address;
+    const { port } = address;
 
     runCommandWithTimeoutMock.mockRejectedValueOnce(
       Object.assign(new Error("spawn lsof ENOENT"), { code: "ENOENT" }),
@@ -128,7 +128,7 @@ describeUnix("inspectPortUsage", () => {
     if (!address) {
       return;
     }
-    const {port} = address;
+    const { port } = address;
 
     runCommandWithTimeoutMock.mockImplementation(async (argv: string[]) => {
       const command = argv[0];

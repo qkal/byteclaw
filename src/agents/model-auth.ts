@@ -370,7 +370,7 @@ export async function resolveApiKeyForProvider(params: {
     const mode = store.profiles[profileId]?.type;
     const result: ResolvedProviderAuth = {
       apiKey: resolved.apiKey,
-      mode: mode === "oauth" ? "oauth" : (mode === "token" ? "token" : "api-key"),
+      mode: mode === "oauth" ? "oauth" : mode === "token" ? "token" : "api-key",
       profileId,
       source: `profile:${profileId}`,
     };
@@ -446,7 +446,7 @@ export async function resolveApiKeyForProvider(params: {
       if (resolved) {
         const mode = store.profiles[candidate]?.type;
         const resolvedMode: ResolvedProviderAuth["mode"] =
-          mode === "oauth" ? "oauth" : (mode === "token" ? "token" : "api-key");
+          mode === "oauth" ? "oauth" : mode === "token" ? "token" : "api-key";
         const result: ResolvedProviderAuth = {
           apiKey: resolved.apiKey,
           mode: resolvedMode,
@@ -466,7 +466,9 @@ export async function resolveApiKeyForProvider(params: {
         return result;
       }
     } catch (error) {
-      log.debug?.(`auth profile "${candidate}" failed for provider "${provider}": ${String(error)}`);
+      log.debug?.(
+        `auth profile "${candidate}" failed for provider "${provider}": ${String(error)}`,
+      );
     }
   }
 
@@ -640,7 +642,9 @@ export async function hasAvailableAuthForProvider(params: {
         return true;
       }
     } catch (error) {
-      log.debug?.(`auth profile "${candidate}" failed for provider "${provider}": ${String(error)}`);
+      log.debug?.(
+        `auth profile "${candidate}" failed for provider "${provider}": ${String(error)}`,
+      );
     }
   }
   return false;

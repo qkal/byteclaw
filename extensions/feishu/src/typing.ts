@@ -58,7 +58,7 @@ export function isFeishuBackoffError(err: unknown): boolean {
   }
 
   // AxiosError shape: err.response.status / err.response.data.code
-  const {response} = (err as { response?: { status?: number; data?: { code?: number } } });
+  const { response } = err as { response?: { status?: number; data?: { code?: number } } };
   if (response) {
     if (response.status === 429) {
       return true;
@@ -69,7 +69,7 @@ export function isFeishuBackoffError(err: unknown): boolean {
   }
 
   // Feishu SDK error shape: err.code
-  const {code} = (err as { code?: number });
+  const { code } = err as { code?: number };
   if (typeof code === "number" && FEISHU_BACKOFF_CODES.has(code)) {
     return true;
   }
@@ -88,7 +88,7 @@ export function getBackoffCodeFromResponse(response: unknown): number | undefine
   if (typeof response !== "object" || response === null) {
     return undefined;
   }
-  const {code} = (response as { code?: number });
+  const { code } = response as { code?: number };
   if (typeof code === "number" && FEISHU_BACKOFF_CODES.has(code)) {
     return code;
   }

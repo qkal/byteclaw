@@ -2396,7 +2396,7 @@ describe("createForumTopicTelegram", () => {
       expectedCall: [
         "-1001234567890",
         "Roadmap",
-        { icon_color: 0x6FB9F0, icon_custom_emoji_id: "1234567890" },
+        { icon_color: 0x6fb9f0, icon_custom_emoji_id: "1234567890" },
       ] as const,
       expectedResult: {
         chatId: "-1001234567890",
@@ -2405,7 +2405,7 @@ describe("createForumTopicTelegram", () => {
       },
       name: "forwards optional icon fields",
       options: {
-        iconColor: 0x6FB9F0,
+        iconColor: 0x6fb9f0,
         iconCustomEmojiId: "  1234567890  ",
       },
       response: { message_thread_id: 300, name: "Roadmap" },

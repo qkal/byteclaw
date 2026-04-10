@@ -36,8 +36,13 @@ export interface PlivoProviderOptions {
   webhookSecurity?: WebhookSecurityConfig;
 }
 
-interface PendingSpeak { text: string; locale?: string }
-interface PendingListen { language?: string }
+interface PendingSpeak {
+  text: string;
+  locale?: string;
+}
+interface PendingListen {
+  language?: string;
+}
 
 function createPlivoRequestDedupeKey(ctx: WebhookContext): string {
   const nonceV3 = getHeader(ctx.headers, "x-plivo-signature-v3-nonce");
@@ -235,9 +240,9 @@ export class PlivoProvider implements VoiceCallProvider {
       direction:
         direction === "inbound"
           ? ("inbound" as const)
-          : (direction === "outbound"
+          : direction === "outbound"
             ? ("outbound" as const)
-            : undefined),
+            : undefined,
       from,
       id: crypto.randomUUID(),
       providerCallId: callUuid || requestUuid || undefined,

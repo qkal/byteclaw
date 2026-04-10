@@ -55,9 +55,9 @@ export function applyCloudflareAiGatewayProviderConfig(
           accountId: params.accountId,
           gatewayId: params.gatewayId,
         })
-      : (typeof existingProvider?.baseUrl === "string"
+      : typeof existingProvider?.baseUrl === "string"
         ? existingProvider.baseUrl
-        : undefined);
+        : undefined;
   if (!baseUrl) {
     return {
       ...cfg,

@@ -106,9 +106,9 @@ function resolveConfiguredProviderContextTokens(
       const contextTokens =
         typeof entry?.contextTokens === "number"
           ? entry.contextTokens
-          : (typeof entry?.contextWindow === "number"
+          : typeof entry?.contextWindow === "number"
             ? entry.contextWindow
-            : undefined);
+            : undefined;
       if (
         typeof entry?.id === "string" &&
         entry.id === model &&

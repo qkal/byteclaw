@@ -482,9 +482,9 @@ function hasRetryableNetworkCode(err: unknown): boolean {
     const code =
       typeof candidate.code === "string"
         ? candidate.code
-        : (typeof candidate.errno === "string"
+        : typeof candidate.errno === "string"
           ? candidate.errno
-          : undefined);
+          : undefined;
     if (code && VENICE_DISCOVERY_RETRYABLE_NETWORK_CODES.has(code)) {
       return true;
     }

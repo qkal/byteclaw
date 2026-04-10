@@ -286,7 +286,7 @@ export async function connectIrcClient(options: IrcClientOptions): Promise<IrcCl
 
       if (line.command === "PING") {
         const payload =
-          line.trailing != null ? line.trailing : (line.params[0] != null ? line.params[0] : "");
+          line.trailing != null ? line.trailing : line.params[0] != null ? line.params[0] : "";
         sendRaw(`PONG :${payload}`);
         continue;
       }
@@ -297,9 +297,9 @@ export async function connectIrcClient(options: IrcClientOptions): Promise<IrcCl
           const next =
             line.trailing != null
               ? line.trailing
-              : (line.params[0] != null
+              : line.params[0] != null
                 ? line.params[0]
-                : currentNick);
+                : currentNick;
           currentNick = String(next).trim();
         }
         continue;

@@ -192,23 +192,39 @@ vi.mock("../config/config.js", async () => {
   return createGatewayConfigModuleMock(actual);
 });
 
-vi.mock("../agents/pi-embedded.js", async () => await importEmbeddedRunMockModule<typeof import("../agents/pi-embedded.js")>(
-    "../agents/pi-embedded.js",
-  ));
+vi.mock(
+  "../agents/pi-embedded.js",
+  async () =>
+    await importEmbeddedRunMockModule<typeof import("../agents/pi-embedded.js")>(
+      "../agents/pi-embedded.js",
+    ),
+);
 
-vi.mock("/src/agents/pi-embedded.js", async () => await importEmbeddedRunMockModule<typeof import("../agents/pi-embedded.js")>(
-    "../agents/pi-embedded.js",
-  ));
+vi.mock(
+  "/src/agents/pi-embedded.js",
+  async () =>
+    await importEmbeddedRunMockModule<typeof import("../agents/pi-embedded.js")>(
+      "../agents/pi-embedded.js",
+    ),
+);
 
-vi.mock("../agents/pi-embedded-runner/runs.js", async () => await importEmbeddedRunMockModule<typeof import("../agents/pi-embedded-runner/runs.js")>(
-    "../agents/pi-embedded-runner/runs.js",
-    { includeActiveCount: true },
-  ));
+vi.mock(
+  "../agents/pi-embedded-runner/runs.js",
+  async () =>
+    await importEmbeddedRunMockModule<typeof import("../agents/pi-embedded-runner/runs.js")>(
+      "../agents/pi-embedded-runner/runs.js",
+      { includeActiveCount: true },
+    ),
+);
 
-vi.mock("/src/agents/pi-embedded-runner/runs.js", async () => await importEmbeddedRunMockModule<typeof import("../agents/pi-embedded-runner/runs.js")>(
-    "../agents/pi-embedded-runner/runs.js",
-    { includeActiveCount: true },
-  ));
+vi.mock(
+  "/src/agents/pi-embedded-runner/runs.js",
+  async () =>
+    await importEmbeddedRunMockModule<typeof import("../agents/pi-embedded-runner/runs.js")>(
+      "../agents/pi-embedded-runner/runs.js",
+      { includeActiveCount: true },
+    ),
+);
 
 vi.mock("../commands/health.js", () => ({
   getHealthSnapshot: vi.fn().mockResolvedValue({ ok: true, stub: true }),

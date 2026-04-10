@@ -62,7 +62,7 @@ export async function prepareRestartScript(
 ): Promise<string | null> {
   const tmpDir = os.tmpdir();
   const timestamp = Date.now();
-  const {platform} = process;
+  const { platform } = process;
 
   let scriptContent = "";
   let filename = "";

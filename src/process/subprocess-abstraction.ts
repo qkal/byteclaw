@@ -3,7 +3,7 @@
  * Provides a unified API for spawning child processes across Bun and Node.js.
  */
 
-import type { ChildProcessWrapper } from './child-process-wrapper.js';
+import type { ChildProcessWrapper } from "./child-process-wrapper.js";
 
 export interface SubprocessOptions {
   /** Working directory for the subprocess */
@@ -11,7 +11,7 @@ export interface SubprocessOptions {
   /** Environment variables for the subprocess */
   env?: NodeJS.ProcessEnv;
   /** Standard input/output/error handling */
-  stdio?: 'inherit' | 'pipe' | 'ignore' | Array<'inherit' | 'pipe' | 'ignore'>;
+  stdio?: "inherit" | "pipe" | "ignore" | Array<"inherit" | "pipe" | "ignore">;
   /** Detach the subprocess from parent */
   detached?: boolean;
   /** Shell mode - run command through shell */
@@ -60,20 +60,12 @@ export interface SubprocessAbstraction {
   /**
    * Execute a command and wait for completion.
    */
-  exec(
-    command: string,
-    args: string[],
-    options?: SubprocessOptions,
-  ): Promise<SubprocessResult>;
+  exec(command: string, args: string[], options?: SubprocessOptions): Promise<SubprocessResult>;
 
   /**
    * Spawn a command and return a handle for interaction.
    */
-  spawn(
-    command: string,
-    args: string[],
-    options?: SubprocessOptions,
-  ): SubprocessSpawnResult;
+  spawn(command: string, args: string[], options?: SubprocessOptions): SubprocessSpawnResult;
 
   /**
    * Check if this abstraction is available for the current runtime.

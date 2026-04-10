@@ -60,35 +60,34 @@ vi.mock("../../agents/model-auth.js", () => ({
 }));
 
 vi.mock("../../agents/pi-embedded.js", () => ({
-    abortEmbeddedPiRun: (sessionId: string) => {
-      abortEmbeddedPiRunMock(sessionId);
-      return abortEmbeddedPiRun(sessionId);
-    },
-    compactEmbeddedPiSession: (params: unknown) =>
-      compactState.compactEmbeddedPiSessionMock(params),
-    isEmbeddedPiRunActive: (sessionId: string) => isEmbeddedPiRunActive(sessionId),
-    queueEmbeddedPiMessage: vi.fn().mockReturnValue(false),
-    runEmbeddedPiAgent: (params: unknown) => runEmbeddedPiAgentMock(params),
-  }));
+  abortEmbeddedPiRun: (sessionId: string) => {
+    abortEmbeddedPiRunMock(sessionId);
+    return abortEmbeddedPiRun(sessionId);
+  },
+  compactEmbeddedPiSession: (params: unknown) => compactState.compactEmbeddedPiSessionMock(params),
+  isEmbeddedPiRunActive: (sessionId: string) => isEmbeddedPiRunActive(sessionId),
+  queueEmbeddedPiMessage: vi.fn().mockReturnValue(false),
+  runEmbeddedPiAgent: (params: unknown) => runEmbeddedPiAgentMock(params),
+}));
 
 vi.mock("../../agents/cli-runner.js", () => ({
   runCliAgent: (...args: unknown[]) => runCliAgentMock(...args),
 }));
 
 vi.mock("../../runtime.js", () => ({
-    defaultRuntime: {
-      error: (...args: unknown[]) => runtimeErrorMock(...args),
-      exit: vi.fn(),
-      log: vi.fn(),
-    },
-  }));
+  defaultRuntime: {
+    error: (...args: unknown[]) => runtimeErrorMock(...args),
+    exit: vi.fn(),
+    log: vi.fn(),
+  },
+}));
 
 vi.mock("./queue.js", () => ({
-    clearSessionQueues: (...args: unknown[]) => clearSessionQueuesMock(...args),
-    enqueueFollowupRun: vi.fn(),
-    refreshQueuedFollowupSession: (...args: unknown[]) => refreshQueuedFollowupSessionMock(...args),
-    scheduleFollowupDrain: vi.fn(),
-  }));
+  clearSessionQueues: (...args: unknown[]) => clearSessionQueuesMock(...args),
+  enqueueFollowupRun: vi.fn(),
+  refreshQueuedFollowupSession: (...args: unknown[]) => refreshQueuedFollowupSessionMock(...args),
+  scheduleFollowupDrain: vi.fn(),
+}));
 
 vi.mock("../../cli/command-secret-gateway.js", () => ({
   resolveCommandSecretRefsViaGateway: async ({ config }: { config: unknown }) => ({
@@ -104,9 +103,9 @@ vi.mock("../../utils/provider-utils.js", () => ({
 
 const loadCronStoreMock = vi.fn();
 vi.mock("../../cron/store.js", () => ({
-    loadCronStore: (...args: unknown[]) => loadCronStoreMock(...args),
-    resolveCronStorePath: (storePath?: string) => storePath ?? "/tmp/openclaw-cron-store.json",
-  }));
+  loadCronStore: (...args: unknown[]) => loadCronStoreMock(...args),
+  resolveCronStorePath: (storePath?: string) => storePath ?? "/tmp/openclaw-cron-store.json",
+}));
 
 vi.mock("../../acp/control-plane/manager.js", () => ({
   getAcpSessionManager: () => ({
@@ -375,16 +374,19 @@ describe("runReplyAgent block streaming", () => {
     vi.useFakeTimers();
     let sawAbort = false;
 
-    const onBlockReply = vi.fn((_payload, context) => new Promise<void>((resolve) => {
-        context?.abortSignal?.addEventListener(
-          "abort",
-          () => {
-            sawAbort = true;
-            resolve();
-          },
-          { once: true },
-        );
-      }));
+    const onBlockReply = vi.fn(
+      (_payload, context) =>
+        new Promise<void>((resolve) => {
+          context?.abortSignal?.addEventListener(
+            "abort",
+            () => {
+              sawAbort = true;
+              resolve();
+            },
+            { once: true },
+          );
+        }),
+    );
 
     runEmbeddedPiAgentMock.mockImplementationOnce(async (params) => {
       const block = params.onBlockReply as ((payload: { text?: string }) => void) | undefined;

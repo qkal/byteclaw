@@ -540,7 +540,7 @@ function isSemanticDispatchWrapperUsage(
   if (!spec?.unwrap) {
     return true;
   }
-  const {transparentUsage} = spec;
+  const { transparentUsage } = spec;
   if (typeof transparentUsage === "function") {
     return !transparentUsage(argv, platform);
   }

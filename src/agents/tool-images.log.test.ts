@@ -27,7 +27,7 @@ import { sanitizeContentBlocksImages } from "./tool-images.js";
 async function createLargePng(): Promise<Buffer> {
   const width = 2400;
   const height = 680;
-  const raw = Buffer.alloc(width * height * 3, 0x7F);
+  const raw = Buffer.alloc(width * height * 3, 0x7f);
   return await sharp(raw, {
     raw: { channels: 3, height, width },
   })

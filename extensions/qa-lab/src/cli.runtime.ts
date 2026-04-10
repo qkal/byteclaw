@@ -31,9 +31,9 @@ function resolveQaManualLaneModels(opts: {
     alternateModel:
       alternateModel && alternateModel.length > 0
         ? alternateModel
-        : (opts.primaryModel?.trim()
+        : opts.primaryModel?.trim()
           ? primaryModel
-          : defaultQaModelForMode(opts.providerMode, true)),
+          : defaultQaModelForMode(opts.providerMode, true),
     primaryModel,
   };
 }

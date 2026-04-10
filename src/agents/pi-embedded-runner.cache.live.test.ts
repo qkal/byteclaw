@@ -208,9 +208,9 @@ function normalizeLiveUsage(
   const totalTokens =
     "totalTokens" in usage && typeof usage.totalTokens === "number"
       ? usage.totalTokens
-      : ("total" in usage && typeof usage.total === "number"
+      : "total" in usage && typeof usage.total === "number"
         ? usage.total
-        : input + output);
+        : input + output;
   const cost =
     "cost" in usage && usage.cost
       ? usage.cost
@@ -231,7 +231,7 @@ function buildEmbeddedRunnerConfig(
     transport?: "sse" | "websocket";
   },
 ): OpenClawConfig {
-  const {provider} = params.model;
+  const { provider } = params.model;
   const modelKey = `${provider}/${params.model.id}`;
   const providerBaseUrl =
     resolveProviderBaseUrl(params.model) ?? resolveDefaultProviderBaseUrl(params.model);

@@ -138,7 +138,7 @@ function readDirectErrorCode(err: unknown): string | undefined {
     const trimmed = directCode.trim();
     return trimmed ? trimmed : undefined;
   }
-  const {status} = (err as { status?: unknown });
+  const { status } = err as { status?: unknown };
   if (typeof status !== "string" || /^\d+$/.test(status)) {
     return undefined;
   }
@@ -154,7 +154,7 @@ function readDirectProvider(err: unknown): string | undefined {
   if (!err || typeof err !== "object") {
     return undefined;
   }
-  const {provider} = (err as { provider?: unknown });
+  const { provider } = err as { provider?: unknown };
   if (typeof provider !== "string") {
     return undefined;
   }
@@ -180,7 +180,7 @@ function readDirectErrorMessage(err: unknown): string | undefined {
     return err.description ?? undefined;
   }
   if (err && typeof err === "object") {
-    const {message} = (err as { message?: unknown });
+    const { message } = err as { message?: unknown };
     if (typeof message === "string") {
       return message || undefined;
     }
@@ -325,7 +325,7 @@ export function coerceToFailoverError(
   const signal = normalizeErrorSignal(err);
   const message = signal.message ?? String(err);
   const status = signal.status ?? resolveFailoverStatus(reason);
-  const {code} = signal;
+  const { code } = signal;
 
   return new FailoverError(message, {
     cause: err instanceof Error ? err : undefined,

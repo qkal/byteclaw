@@ -1,6 +1,10 @@
 import { type ExecFileOptionsWithStringEncoding, execFile } from "node:child_process";
 
-export interface ExecResult { stdout: string; stderr: string; code: number }
+export interface ExecResult {
+  stdout: string;
+  stderr: string;
+  code: number;
+}
 
 export async function execFileUtf8(
   command: string,
@@ -24,7 +28,7 @@ export async function execFileUtf8(
         code: typeof e.code === "number" ? e.code : 1,
         stderr:
           stderrText ||
-          (typeof e.message === "string" ? e.message : (typeof error === "string" ? error : "")),
+          (typeof e.message === "string" ? e.message : typeof error === "string" ? error : ""),
         stdout: String(stdout ?? ""),
       });
     });

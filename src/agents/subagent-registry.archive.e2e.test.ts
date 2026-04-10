@@ -11,7 +11,7 @@ const loadConfigMock = vi.fn(() => currentConfig);
 
 vi.mock("../gateway/call.js", () => ({
   callGateway: vi.fn(async (request: unknown) => {
-    const {method} = (request as { method?: string });
+    const { method } = request as { method?: string };
     if (method === "agent.wait") {
       // Keep lifecycle unsettled so register/replace assertions can inspect stored state.
       return { status: "pending" };

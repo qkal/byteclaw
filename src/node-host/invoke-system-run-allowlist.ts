@@ -1,5 +1,4 @@
-import type {
-  resolveExecApprovals} from "../infra/exec-approvals.js";
+import type { resolveExecApprovals } from "../infra/exec-approvals.js";
 import {
   type ExecAllowlistEntry,
   type ExecCommandSegment,

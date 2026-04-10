@@ -405,7 +405,7 @@ export class MediaStreamHandler {
       };
     }
 
-    const {readyState} = session.ws;
+    const { readyState } = session.ws;
     const bufferedBeforeBytes = session.ws.bufferedAmount;
     if (readyState !== WebSocket.OPEN) {
       return {

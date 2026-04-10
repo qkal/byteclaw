@@ -75,9 +75,9 @@ export async function deliverMatrixReplies(params: {
     const rawText = reply.text ?? "";
     const mediaList = reply.mediaUrls?.length
       ? reply.mediaUrls
-      : (reply.mediaUrl
+      : reply.mediaUrl
         ? [reply.mediaUrl]
-        : []);
+        : [];
 
     const shouldIncludeReply = (id?: string) =>
       Boolean(id) && (params.replyToMode === "all" || !hasReplied);

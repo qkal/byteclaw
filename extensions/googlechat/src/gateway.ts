@@ -23,7 +23,7 @@ export async function startGoogleChatGatewayAccount(ctx: {
     info?: (message: string) => void;
   };
 }): Promise<void> {
-  const {account} = ctx;
+  const { account } = ctx;
   const statusSink = createAccountStatusSink({
     accountId: account.accountId,
     setStatus: ctx.setStatus,

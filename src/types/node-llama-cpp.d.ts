@@ -3,7 +3,9 @@ declare module "node-llama-cpp" {
     error = 0,
   }
 
-  export interface LlamaEmbedding { vector: Float32Array | number[] }
+  export interface LlamaEmbedding {
+    vector: Float32Array | number[];
+  }
 
   export interface LlamaEmbeddingContext {
     getEmbeddingFor: (text: string) => Promise<LlamaEmbedding>;

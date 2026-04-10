@@ -108,11 +108,7 @@ function normalizeAllowedTargetIds(targetIds?: Iterable<string>): Set<string> | 
   if (targetIds === undefined) {
     return null;
   }
-  return new Set(
-    [...targetIds]
-      .map((entry) => entry.trim())
-      .filter((entry) => entry.length > 0),
-  );
+  return new Set([...targetIds].map((entry) => entry.trim()).filter((entry) => entry.length > 0));
 }
 
 function resolveDiscoveryEntries(params: {
@@ -123,9 +119,7 @@ function resolveDiscoveryEntries(params: {
   if (params.allowedTargetIds === null) {
     return params.defaultEntries;
   }
-  return [...params.allowedTargetIds].flatMap(
-    (targetId) => params.entriesById.get(targetId) ?? [],
-  );
+  return [...params.allowedTargetIds].flatMap((targetId) => params.entriesById.get(targetId) ?? []);
 }
 
 function discoverSecretTargetsFromEntries(
@@ -200,7 +194,29 @@ function toResolvedPlanTarget(
 }
 
 export function listSecretTargetRegistryEntries(): SecretTargetRegistryEntry[] {
-  return getCompiledSecretTargetRegistryState().compiledSecretTargetRegistry.map((entry) => ((Object.assign({id:entry.id,targetType:entry.targetType}, entry.targetTypeAliases?{targetTypeAliases:[...entry.targetTypeAliases]}:{}, {configFile:entry.configFile,pathPattern:entry.pathPattern}, entry.refPathPattern?{refPathPattern:entry.refPathPattern}:{}, {secretShape:entry.secretShape,expectedResolvedValue:entry.expectedResolvedValue,includeInPlan:entry.includeInPlan,includeInConfigure:entry.includeInConfigure,includeInAudit:entry.includeInAudit}, entry.providerIdPathSegmentIndex!==undefined?{providerIdPathSegmentIndex:entry.providerIdPathSegmentIndex}:{}, entry.accountIdPathSegmentIndex!==undefined?{accountIdPathSegmentIndex:entry.accountIdPathSegmentIndex}:{}, entry.authProfileType?{authProfileType:entry.authProfileType}:{}, entry.trackProviderShadowing?{trackProviderShadowing:true}:{}))));
+  return getCompiledSecretTargetRegistryState().compiledSecretTargetRegistry.map((entry) =>
+    Object.assign(
+      { id: entry.id, targetType: entry.targetType },
+      entry.targetTypeAliases ? { targetTypeAliases: [...entry.targetTypeAliases] } : {},
+      { configFile: entry.configFile, pathPattern: entry.pathPattern },
+      entry.refPathPattern ? { refPathPattern: entry.refPathPattern } : {},
+      {
+        secretShape: entry.secretShape,
+        expectedResolvedValue: entry.expectedResolvedValue,
+        includeInPlan: entry.includeInPlan,
+        includeInConfigure: entry.includeInConfigure,
+        includeInAudit: entry.includeInAudit,
+      },
+      entry.providerIdPathSegmentIndex !== undefined
+        ? { providerIdPathSegmentIndex: entry.providerIdPathSegmentIndex }
+        : {},
+      entry.accountIdPathSegmentIndex !== undefined
+        ? { accountIdPathSegmentIndex: entry.accountIdPathSegmentIndex }
+        : {},
+      entry.authProfileType ? { authProfileType: entry.authProfileType } : {},
+      entry.trackProviderShadowing ? { trackProviderShadowing: true } : {},
+    ),
+  );
 }
 
 export function isKnownSecretTargetType(value: unknown): value is string {

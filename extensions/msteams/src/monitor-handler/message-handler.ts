@@ -47,7 +47,7 @@ function extractTextFromHtmlAttachments(attachments: MSTeamsAttachmentLike[]): s
     if (attachment.contentType !== "text/html") {
       continue;
     }
-    const {content} = attachment;
+    const { content } = attachment;
     const raw =
       typeof content === "string"
         ? content
@@ -98,8 +98,8 @@ function buildStoredConversationReference(params: {
   threadId?: string;
 }): StoredConversationReference {
   const { activity, conversationId, conversationType, teamId, threadId } = params;
-  const {from} = activity;
-  const {conversation} = activity;
+  const { from } = activity;
+  const { conversation } = activity;
   const agent = activity.recipient;
   const clientInfo = activity.entities?.find((e) => e.type === "clientInfo") as
     | { timezone?: string }
@@ -169,11 +169,11 @@ export function createMSTeamsMessageHandler(deps: MSTeamsMessageHandlerDeps) {
   }
 
   const handleTeamsMessageNow = async (params: MSTeamsDebounceEntry) => {
-    const {context} = params;
-    const {activity} = context;
-    const {rawText} = params;
-    const {text} = params;
-    const {attachments} = params;
+    const { context } = params;
+    const { activity } = context;
+    const { rawText } = params;
+    const { text } = params;
+    const { attachments } = params;
     const attachmentPlaceholder = buildMSTeamsAttachmentPlaceholder(attachments, {
       maxInlineBytes: mediaMaxBytes,
       maxInlineTotalBytes: mediaMaxBytes,
@@ -182,8 +182,8 @@ export function createMSTeamsMessageHandler(deps: MSTeamsMessageHandlerDeps) {
     const quoteInfo = extractMSTeamsQuoteInfo(attachments);
     let quoteSenderId: string | undefined;
     let quoteSenderName: string | undefined;
-    const {from} = activity;
-    const {conversation} = activity;
+    const { from } = activity;
+    const { conversation } = activity;
 
     const attachmentTypes = attachments
       .map((att) => (typeof att.contentType === "string" ? att.contentType : undefined))
@@ -440,9 +440,9 @@ export function createMSTeamsMessageHandler(deps: MSTeamsMessageHandlerDeps) {
 
     const teamsFrom = isDirectMessage
       ? `msteams:${senderId}`
-      : (isChannel
+      : isChannel
         ? `msteams:channel:${conversationId}`
-        : `msteams:group:${conversationId}`);
+        : `msteams:group:${conversationId}`;
     const teamsTo = isDirectMessage ? `user:${senderId}` : `conversation:${conversationId}`;
 
     const route = core.channel.routing.resolveAgentRoute({
@@ -450,7 +450,7 @@ export function createMSTeamsMessageHandler(deps: MSTeamsMessageHandlerDeps) {
       channel: "msteams",
       peer: {
         id: isDirectMessage ? senderId : conversationId,
-        kind: isDirectMessage ? "direct" : (isChannel ? "channel" : "group"),
+        kind: isDirectMessage ? "direct" : isChannel ? "channel" : "group",
       },
       teamId,
     });
@@ -673,14 +673,14 @@ export function createMSTeamsMessageHandler(deps: MSTeamsMessageHandlerDeps) {
     const commandBody = text.trim();
     const quoteSenderAllowed =
       quoteInfo && quoteInfo.sender
-        ? (!isChannel || groupPolicy !== "allowlist"
+        ? !isChannel || groupPolicy !== "allowlist"
           ? true
           : resolveMSTeamsAllowlistMatch({
               allowFrom: effectiveGroupAllowFrom,
               allowNameMatching,
               senderId: quoteSenderId ?? "",
               senderName: quoteSenderName,
-            }).allowed)
+            }).allowed
         : true;
     const includeQuoteContext =
       quoteInfo &&
@@ -700,7 +700,7 @@ export function createMSTeamsMessageHandler(deps: MSTeamsMessageHandlerDeps) {
       Body: combinedBody,
       BodyForAgent: bodyForAgent,
       BodyForCommands: commandBody,
-      ChatType: isDirectMessage ? "direct" : (isChannel ? "channel" : "group"),
+      ChatType: isDirectMessage ? "direct" : isChannel ? "channel" : "group",
       CommandAuthorized: commandAuthorized,
       CommandBody: commandBody,
       ConversationLabel: envelopeFrom,
@@ -880,7 +880,7 @@ export function createMSTeamsMessageHandler(deps: MSTeamsMessageHandlerDeps) {
   });
 
   return async function handleTeamsMessage(context: MSTeamsTurnContext) {
-    const {activity} = context;
+    const { activity } = context;
     const attachments = Array.isArray(activity.attachments)
       ? (activity.attachments as unknown as MSTeamsAttachmentLike[])
       : [];

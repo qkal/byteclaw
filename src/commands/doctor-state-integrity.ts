@@ -123,7 +123,7 @@ function countJsonlLines(filePath: string): number {
 function findOtherStateDirs(stateDir: string): string[] {
   const resolvedState = path.resolve(stateDir);
   const roots =
-    process.platform === "darwin" ? ["/Users"] : (process.platform === "linux" ? ["/home"] : []);
+    process.platform === "darwin" ? ["/Users"] : process.platform === "linux" ? ["/home"] : [];
   const found: string[] = [];
   for (const root of roots) {
     let entries: fs.Dirent[] = [];
@@ -496,7 +496,7 @@ export async function noteStateIntegrity(
   const warnings: string[] = [];
   const changes: string[] = [];
   const noteFn = prompter.note ?? note;
-  const {env} = process;
+  const { env } = process;
   const homedir = () => resolveRequiredHomeDir(env, os.homedir);
   const stateDir = resolveStateDir(env, homedir);
   const defaultStateDir = path.join(homedir(), ".openclaw");
@@ -731,7 +731,7 @@ export async function noteStateIntegrity(
       .slice(0, 5);
     const recentTranscriptCandidates = recent.filter(([key]) => !isSlashRoutingSessionKey(key));
     const missing = recentTranscriptCandidates.filter(([, entry]) => {
-      const {sessionId} = entry;
+      const { sessionId } = entry;
       if (!sessionId) {
         return false;
       }

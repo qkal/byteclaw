@@ -44,9 +44,9 @@ function extractStatusCode(err: unknown): number | null {
     }
   }
 
-  const {response} = err;
+  const { response } = err;
   if (isRecord(response)) {
-    const {status} = response;
+    const { status } = response;
     if (typeof status === "number" && Number.isFinite(status)) {
       return status;
     }
@@ -71,14 +71,14 @@ function extractErrorCode(err: unknown): string | null {
     return direct;
   }
 
-  const {response} = err;
+  const { response } = err;
   if (!isRecord(response)) {
     return null;
   }
 
-  const {body} = response;
+  const { body } = response;
   if (isRecord(body)) {
-    const {error} = body;
+    const { error } = body;
     if (isRecord(error) && typeof error.code === "string" && error.code.trim()) {
       return error.code;
     }
@@ -108,12 +108,12 @@ function extractRetryAfterMs(err: unknown): number | null {
     }
   }
 
-  const {response} = err;
+  const { response } = err;
   if (!isRecord(response)) {
     return null;
   }
 
-  const {headers} = response;
+  const { headers } = response;
   if (!headers) {
     return null;
   }

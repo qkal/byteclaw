@@ -6,21 +6,21 @@ const {
   createMattermostClientMock,
   fetchMattermostMeMock,
 } = vi.hoisted(() => ({
-    createMattermostClientMock: vi.fn(),
-    fetchMattermostMeMock: vi.fn(),
-    listMattermostAccountIdsMock: vi.fn(),
-    resolveMattermostAccountMock: vi.fn(),
-  }));
+  createMattermostClientMock: vi.fn(),
+  fetchMattermostMeMock: vi.fn(),
+  listMattermostAccountIdsMock: vi.fn(),
+  resolveMattermostAccountMock: vi.fn(),
+}));
 
 vi.mock("./accounts.js", () => ({
-    listMattermostAccountIds: listMattermostAccountIdsMock,
-    resolveMattermostAccount: resolveMattermostAccountMock,
-  }));
+  listMattermostAccountIds: listMattermostAccountIdsMock,
+  resolveMattermostAccount: resolveMattermostAccountMock,
+}));
 
 vi.mock("./client.js", () => ({
-    createMattermostClient: createMattermostClientMock,
-    fetchMattermostMe: fetchMattermostMeMock,
-  }));
+  createMattermostClient: createMattermostClientMock,
+  fetchMattermostMe: fetchMattermostMeMock,
+}));
 
 let listMattermostDirectoryGroups: typeof import("./directory.js").listMattermostDirectoryGroups;
 let listMattermostDirectoryPeers: typeof import("./directory.js").listMattermostDirectoryPeers;

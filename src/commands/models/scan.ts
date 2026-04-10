@@ -85,9 +85,9 @@ function buildScanHint(result: ModelScanResult): string {
   const toolLabel = result.tool.ok ? `tool ${formatMs(result.tool.latencyMs)}` : "tool fail";
   const imageLabel = result.image.skipped
     ? "img skip"
-    : (result.image.ok
+    : result.image.ok
       ? `img ${formatMs(result.image.latencyMs)}`
-      : "img fail");
+      : "img fail";
   const ctxLabel = result.contextLength ? `ctx ${formatTokenK(result.contextLength)}` : "ctx ?";
   const paramLabel = result.inferredParamB ? `${result.inferredParamB}b` : null;
   return [toolLabel, imageLabel, ctxLabel, paramLabel].filter(Boolean).join(" | ");
@@ -118,7 +118,7 @@ function printScanTable(results: ModelScanResult[], runtime: RuntimeEnv) {
     const modelLabel = pad(truncate(entry.modelRef, MODEL_PAD), MODEL_PAD);
     const toolLabel = pad(entry.tool.ok ? formatMs(entry.tool.latencyMs) : "fail", 10);
     const imageLabel = pad(
-      entry.image.ok ? formatMs(entry.image.latencyMs) : (entry.image.skipped ? "skip" : "fail"),
+      entry.image.ok ? formatMs(entry.image.latencyMs) : entry.image.skipped ? "skip" : "fail",
       10,
     );
     const ctxLabel = pad(formatTokenK(entry.contextLength), CTX_PAD);

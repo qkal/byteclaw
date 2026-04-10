@@ -706,7 +706,7 @@ export class QmdMemoryManager implements MemorySearchManager {
           if (!entry || typeof entry !== "object") {
             continue;
           }
-          const {name} = (entry as { name?: unknown });
+          const { name } = entry as { name?: unknown };
           if (typeof name !== "string") {
             continue;
           }
@@ -718,9 +718,9 @@ export class QmdMemoryManager implements MemorySearchManager {
             pattern:
               typeof listedPattern === "string"
                 ? listedPattern
-                : (typeof listedMask === "string"
+                : typeof listedMask === "string"
                   ? listedMask
-                  : undefined),
+                  : undefined,
           });
         }
         return listed;
@@ -1385,7 +1385,7 @@ export class QmdMemoryManager implements MemorySearchManager {
     if (this.embedBackoffUntil !== null && now < this.embedBackoffUntil) {
       return false;
     }
-    const {embedIntervalMs} = this.qmd.update;
+    const { embedIntervalMs } = this.qmd.update;
     return (
       Boolean(force) ||
       this.lastEmbedAt === null ||
@@ -1394,7 +1394,7 @@ export class QmdMemoryManager implements MemorySearchManager {
   }
 
   private shouldScheduleEmbedTimer(): boolean {
-    const {embedIntervalMs} = this.qmd.update;
+    const { embedIntervalMs } = this.qmd.update;
     if (embedIntervalMs <= 0) {
       return false;
     }
@@ -1523,7 +1523,7 @@ export class QmdMemoryManager implements MemorySearchManager {
       try {
         await fs.symlink(defaultModelsDir, targetModelsDir, "dir");
       } catch (error: unknown) {
-        const {code} = (error as NodeJS.ErrnoException);
+        const { code } = error as NodeJS.ErrnoException;
         if (process.platform === "win32" && (code === "EPERM" || code === "ENOTSUP")) {
           await fs.symlink(defaultModelsDir, targetModelsDir, "junction");
         } else {
@@ -1575,9 +1575,9 @@ export class QmdMemoryManager implements MemorySearchManager {
     if (this.qmdMcpToolVersion === "v1") {
       return searchCommand === "search"
         ? "search"
-        : (searchCommand === "vsearch"
+        : searchCommand === "vsearch"
           ? "vector_search"
-          : "deep_search");
+          : "deep_search";
     }
     // Not yet probed — default to v2 (current QMD).
     // If the call fails with "not found", markQmdV1Fallback() will retry with v1 names.
@@ -1783,9 +1783,9 @@ export class QmdMemoryManager implements MemorySearchManager {
     const results: unknown[] =
       structuredRecord && Array.isArray(structuredRecord.results)
         ? (structuredRecord.results as unknown[])
-        : (Array.isArray(structured)
+        : Array.isArray(structured)
           ? structured
-          : []);
+          : [];
 
     const out: QmdQueryResult[] = [];
     for (const item of results) {
@@ -2523,7 +2523,7 @@ export class QmdMemoryManager implements MemorySearchManager {
     if (force) {
       return false;
     }
-    const {debounceMs} = this.qmd.update;
+    const { debounceMs } = this.qmd.update;
     if (debounceMs <= 0) {
       return false;
     }

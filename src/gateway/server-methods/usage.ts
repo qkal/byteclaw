@@ -49,7 +49,10 @@ import type { GatewayRequestHandlers, RespondFn } from "./types.js";
 const COST_USAGE_CACHE_TTL_MS = 30_000;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-interface DateRange { startMs: number; endMs: number }
+interface DateRange {
+  startMs: number;
+  endMs: number;
+}
 type DateInterpretation =
   | { mode: "utc" | "gateway" }
   | { mode: "specific"; utcOffsetMinutes: number };
@@ -283,7 +286,7 @@ async function discoverAllSessionsForUsage(params: {
   startMs: number;
   endMs: number;
 }): Promise<DiscoveredSessionWithAgent[]> {
-  const {agents} = listAgentsForGateway(params.config);
+  const { agents } = listAgentsForGateway(params.config);
   const results = await Promise.all(
     agents.map(async (agent) => {
       const sessions = await discoverAllSessions({

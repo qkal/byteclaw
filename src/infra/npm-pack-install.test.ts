@@ -14,7 +14,10 @@ vi.mock("./install-source-utils.js", async () => {
   return {
     ...actual,
     packNpmSpecToArchive: vi.fn(),
-    withTempDir: vi.fn(async (_prefix: string, fn: (tmpDir: string) => Promise<unknown>) => await fn("/tmp/openclaw-npm-pack-install-test")),
+    withTempDir: vi.fn(
+      async (_prefix: string, fn: (tmpDir: string) => Promise<unknown>) =>
+        await fn("/tmp/openclaw-npm-pack-install-test"),
+    ),
   };
 });
 

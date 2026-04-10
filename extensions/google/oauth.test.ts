@@ -554,7 +554,7 @@ describe("loginGeminiCliOAuth", () => {
   } as const;
 
   function getRequestUrl(input: string | URL | Request): string {
-    return typeof input === "string" ? input : (input instanceof URL ? input.toString() : input.url);
+    return typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
   }
 
   function getHeaderValue(headers: HeadersInit | undefined, name: string): string | undefined {

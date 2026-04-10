@@ -64,7 +64,7 @@ const LOOKUP_SCHEMA_BOOLEAN_KEYS = new Set([
 const MAX_LOOKUP_PATH_SEGMENTS = 32;
 
 function isObjectSchema(schema: JsonSchemaObject): boolean {
-  const {type} = schema;
+  const { type } = schema;
   if (type === "object") {
     return true;
   }
@@ -443,7 +443,12 @@ function setMergedSchemaCache(key: string, value: ConfigSchemaResponse): void {
 
 function getBundledChannelSchemaMetadata(): ChannelUiMetadata[] {
   return GENERATED_BUNDLED_CHANNEL_CONFIG_METADATA.map((entry) => {
-    const metadata: ChannelUiMetadata = Object.assign({id:entry.channelId}, entry.label?{label:entry.label}:{}, entry.description?{description:entry.description}:{}, {configSchema:entry.schema});
+    const metadata: ChannelUiMetadata = Object.assign(
+      { id: entry.channelId },
+      entry.label ? { label: entry.label } : {},
+      entry.description ? { description: entry.description } : {},
+      { configSchema: entry.schema },
+    );
     if ("uiHints" in entry) {
       metadata.configUiHints = entry.uiHints as ChannelUiMetadata["configUiHints"];
     }
@@ -565,7 +570,7 @@ function resolveLookupChildSchema(
     return null;
   }
 
-  const {properties} = schema;
+  const { properties } = schema;
   if (properties && Object.hasOwn(properties, segment)) {
     return asJsonSchemaObject(properties[segment]);
   }

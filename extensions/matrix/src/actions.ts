@@ -167,9 +167,9 @@ export const matrixMessageActions: ChannelMessageActionAdapter = {
       const audioAsVoice =
         typeof params.asVoice === "boolean"
           ? params.asVoice
-          : (typeof params.audioAsVoice === "boolean"
+          : typeof params.audioAsVoice === "boolean"
             ? params.audioAsVoice
-            : undefined);
+            : undefined;
       return await dispatch({
         action: "sendMessage",
         audioAsVoice,

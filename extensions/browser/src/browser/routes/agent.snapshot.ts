@@ -559,7 +559,8 @@ export function registerBrowserAgentSnapshotRoutes(
         profile: profileCtx.profile,
         wsUrl: tab.wsUrl,
       })
-        ? (() => requirePwAi(res, "aria snapshot").then(async (pw) => {
+        ? (() =>
+            requirePwAi(res, "aria snapshot").then(async (pw) => {
               if (!pw) {
                 return null;
               }

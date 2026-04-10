@@ -1,6 +1,6 @@
-import type { ChildProcess, SpawnOptions } from 'node:child_process';
-import type { ChildProcessWrapper } from './child-process-wrapper.js';
-import { spawn } from './subprocess.js';
+import type { ChildProcess, SpawnOptions } from "node:child_process";
+import type { ChildProcessWrapper } from "./child-process-wrapper.js";
+import { spawn } from "./subprocess.js";
 
 export interface SpawnFallback {
   label: string;
@@ -22,18 +22,14 @@ interface SpawnWithFallbackParams {
   onFallback?: (err: unknown, fallback: SpawnFallback) => void;
 }
 
-const DEFAULT_RETRY_CODES = ['EBADF'];
+const DEFAULT_RETRY_CODES = ["EBADF"];
 
 export function resolveCommandStdio(params: {
   hasInput: boolean;
   preferInherit: boolean;
-}): ['pipe' | 'inherit' | 'ignore', 'pipe', 'pipe'] {
-  const stdin = params.hasInput
-    ? 'pipe'
-    : params.preferInherit
-      ? 'inherit'
-      : 'pipe';
-  return [stdin, 'pipe', 'pipe'];
+}): ["pipe" | "inherit" | "ignore", "pipe", "pipe"] {
+  const stdin = params.hasInput ? "pipe" : params.preferInherit ? "inherit" : "pipe";
+  return [stdin, "pipe", "pipe"];
 }
 
 export function formatSpawnError(err: unknown): string {
@@ -52,17 +48,15 @@ export function formatSpawnError(err: unknown): string {
   if (details.syscall) {
     parts.push(`syscall=${details.syscall}`);
   }
-  if (typeof details.errno === 'number') {
+  if (typeof details.errno === "number") {
     parts.push(`errno=${details.errno}`);
   }
-  return parts.join(' ');
+  return parts.join(" ");
 }
 
 function shouldRetry(err: unknown, codes: string[]): boolean {
   const code =
-    err && typeof err === 'object' && 'code' in err
-      ? String((err as { code?: unknown }).code)
-      : '';
+    err && typeof err === "object" && "code" in err ? String((err as { code?: unknown }).code) : "";
   return code.length > 0 && codes.includes(code);
 }
 
@@ -76,8 +70,8 @@ async function spawnAndWaitForSpawn(
   return await new Promise((resolve, reject) => {
     let settled = false;
     const cleanup = () => {
-      child.removeListener('error', onError);
-      child.removeListener('spawn', onSpawn);
+      child.removeListener("error", onError);
+      child.removeListener("spawn", onSpawn);
     };
     const finishResolve = () => {
       if (settled) {
@@ -98,11 +92,11 @@ async function spawnAndWaitForSpawn(
     const onSpawn = () => {
       finishResolve();
     };
-    child.once('error', onError);
-    child.once('spawn', onSpawn);
+    child.once("error", onError);
+    child.once("spawn", onSpawn);
     // Ensure mocked spawns that never emit "spawn" don't stall.
     process.nextTick(() => {
-      if (typeof child.pid === 'number') {
+      if (typeof child.pid === "number") {
         finishResolve();
       }
     });
@@ -128,11 +122,7 @@ export async function spawnWithFallback(
   for (let index = 0; index < attempts.length; index += 1) {
     const attempt = attempts[index];
     try {
-      const child = await spawnAndWaitForSpawn(
-        spawnImpl,
-        params.argv,
-        attempt.options,
-      );
+      const child = await spawnAndWaitForSpawn(spawnImpl, params.argv, attempt.options);
       return {
         child,
         fallbackLabel: attempt.label,

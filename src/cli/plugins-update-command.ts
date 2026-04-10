@@ -29,7 +29,9 @@ function resolvePluginUpdateSelection(params: {
     return { pluginIds: [params.rawId] };
   }
 
-  const matches = Object.entries(params.installs).filter(([, install]) => extractInstalledNpmPackageName(install) === parsedSpec.name);
+  const matches = Object.entries(params.installs).filter(
+    ([, install]) => extractInstalledNpmPackageName(install) === parsedSpec.name,
+  );
   if (matches.length !== 1) {
     return { pluginIds: [params.rawId] };
   }
@@ -66,7 +68,9 @@ function resolveHookPackUpdateSelection(params: {
     return { hookIds: [] };
   }
 
-  const matches = Object.entries(params.installs).filter(([, install]) => extractInstalledNpmHookPackageName(install) === parsedSpec.name);
+  const matches = Object.entries(params.installs).filter(
+    ([, install]) => extractInstalledNpmHookPackageName(install) === parsedSpec.name,
+  );
   if (matches.length !== 1) {
     return { hookIds: [] };
   }

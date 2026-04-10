@@ -33,7 +33,9 @@ function extractInputTypes(input: unknown[]) {
 function extractInputMessages(input: unknown[]) {
   return input.filter(
     (item): item is Record<string, unknown> =>
-      Boolean(item) && typeof item === "object" && (item as Record<string, unknown>).type === "message",
+      Boolean(item) &&
+      typeof item === "object" &&
+      (item as Record<string, unknown>).type === "message",
   );
 }
 
@@ -75,7 +77,11 @@ function buildAssistantMessage(params: {
 }
 
 async function runAbortedOpenAIResponsesStream(params: {
-  messages: (AssistantMessage | ToolResultMessage | { role: "user"; content: string; timestamp: number })[];
+  messages: (
+    | AssistantMessage
+    | ToolResultMessage
+    | { role: "user"; content: string; timestamp: number }
+  )[];
   tools?: {
     name: string;
     description: string;

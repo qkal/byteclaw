@@ -6,7 +6,11 @@ import { normalizeCompatibilityConfig as normalizeDiscordCompatibilityConfig } f
 import { DISCORD_LEGACY_CONFIG_RULES } from "./doctor-shared.js";
 import { isDiscordMutableAllowEntry } from "./security-doctor.js";
 
-interface DiscordNumericIdHit { path: string; entry: number; safe: boolean }
+interface DiscordNumericIdHit {
+  path: string;
+  entry: number;
+  safe: boolean;
+}
 
 interface DiscordIdListRef {
   pathLabel: string;

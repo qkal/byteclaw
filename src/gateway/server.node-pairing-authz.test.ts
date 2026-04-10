@@ -2,8 +2,7 @@ import { describe, expect, test } from "vitest";
 import type { WebSocket } from "ws";
 import { approveNodePairing, listNodePairing, requestNodePairing } from "../infra/node-pairing.js";
 import { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";
-import type {
-  loadDeviceIdentity} from "./device-authz.test-helpers.js";
+import type { loadDeviceIdentity } from "./device-authz.test-helpers.js";
 import {
   issueOperatorToken,
   openTrackedWs,

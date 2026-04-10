@@ -598,7 +598,7 @@ function isProcessLikelyAlive(pid: number): boolean {
     process.kill(pid, 0);
     return true;
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code === "ESRCH") {
       return false;
     }
@@ -653,9 +653,7 @@ async function withShortTermLock<T>(workspaceDir: string, task: () => Promise<T>
     while (true) {
       try {
         const lockHandle = await fs.open(lockPath, "wx");
-        await lockHandle
-          .writeFile(`${process.pid}:${Date.now()}\n`, "utf8")
-          .catch(() => undefined);
+        await lockHandle.writeFile(`${process.pid}:${Date.now()}\n`, "utf8").catch(() => undefined);
         try {
           return await task();
         } finally {
@@ -1647,7 +1645,7 @@ export async function auditShortTermPromotionArtifacts(params: {
       }
     }
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code !== "ENOENT") {
       issues.push({
         code: "recall-store-unreadable",
@@ -1670,7 +1668,7 @@ export async function auditShortTermPromotionArtifacts(params: {
       });
     }
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code !== "ENOENT") {
       issues.push({
         code: "recall-lock-unreadable",
@@ -1709,7 +1707,7 @@ export async function auditShortTermPromotionArtifacts(params: {
           });
         }
       } catch (error) {
-        const {code} = (error as NodeJS.ErrnoException);
+        const { code } = error as NodeJS.ErrnoException;
         if (code === "ENOENT") {
           issues.push({
             code: "qmd-index-missing",

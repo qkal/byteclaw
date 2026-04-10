@@ -86,7 +86,7 @@ export function resolveSessionResetPolicy(params: {
   resetType: SessionResetType;
   resetOverride?: SessionResetConfig;
 }): SessionResetPolicy {
-  const {sessionCfg} = params;
+  const { sessionCfg } = params;
   const baseReset = params.resetOverride ?? sessionCfg?.reset;
   // Backward compat: accept legacy "dm" key as alias for "direct"
   const typeReset = params.resetOverride

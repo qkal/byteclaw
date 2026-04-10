@@ -140,7 +140,7 @@ describe("mattermost setup", () => {
   });
 
   it("validates env and explicit credential requirements", () => {
-    const {validateInput} = mattermostSetupAdapter;
+    const { validateInput } = mattermostSetupAdapter;
     expect(validateInput).toBeTypeOf("function");
 
     expect(
@@ -169,7 +169,7 @@ describe("mattermost setup", () => {
 
   it("applies normalized config for default and named accounts", () => {
     normalizeMattermostBaseUrl.mockReturnValue("https://chat.example.com");
-    const {applyAccountConfig} = mattermostSetupAdapter;
+    const { applyAccountConfig } = mattermostSetupAdapter;
     expect(applyAccountConfig).toBeTypeOf("function");
 
     expect(

@@ -163,7 +163,7 @@ export async function handleSlackMessageAction(params: {
     return await invoke(
       {
         accountId,
-        action: action === "pin" ? "pinMessage" : (action === "unpin" ? "unpinMessage" : "listPins"),
+        action: action === "pin" ? "pinMessage" : action === "unpin" ? "unpinMessage" : "listPins",
         channelId: resolveChannelId(),
         messageId,
       },

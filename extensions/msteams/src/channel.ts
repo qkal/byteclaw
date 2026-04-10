@@ -187,7 +187,11 @@ export const msteamsPlugin: ChannelPlugin<ResolvedMSTeamsAccount, ProbeMSTeamsRe
             resolved: false,
           }));
           type ResolveTargetResultEntry = (typeof results)[number];
-          interface PendingTargetEntry { input: string; query: string; index: number }
+          interface PendingTargetEntry {
+            input: string;
+            query: string;
+            index: number;
+          }
 
           const stripPrefix = (value: string) => normalizeMSTeamsUserInput(value);
           const markPendingLookupFailed = (pending: PendingTargetEntry[]) => {

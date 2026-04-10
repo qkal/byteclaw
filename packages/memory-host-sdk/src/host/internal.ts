@@ -411,7 +411,7 @@ export function chunkMarkdown(
             // Avoid splitting inside a UTF-16 surrogate pair (CJK Extension B+).
             if (end < coarse.length) {
               const code = coarse.charCodeAt(end - 1);
-              if (code >= 0xD8_00 && code <= 0xDB_FF) {
+              if (code >= 0xd8_00 && code <= 0xdb_ff) {
                 end += 1; // Include the low surrogate
               }
             }

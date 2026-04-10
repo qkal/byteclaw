@@ -32,7 +32,7 @@ function parseCopilotTokenResponse(value: unknown): {
     throw new Error("Unexpected response from GitHub Copilot token endpoint");
   }
   const asRecord = value as Record<string, unknown>;
-  const {token} = asRecord;
+  const { token } = asRecord;
   const expiresAt = asRecord.expires_at;
   if (typeof token !== "string" || token.trim().length === 0) {
     throw new Error("Copilot token response missing token");

@@ -1177,7 +1177,10 @@ export async function promptSingleChannelSecretInput(params: {
   };
 }
 
-interface ParsedAllowFromResult { entries: string[]; error?: string }
+interface ParsedAllowFromResult {
+  entries: string[];
+  error?: string;
+}
 
 export async function promptParsedAllowFromForAccount<TConfig extends OpenClawConfig>(params: {
   cfg: TConfig;
@@ -1279,10 +1282,7 @@ export async function promptParsedAllowFromForScopedChannel(params: {
   message: string;
   placeholder: string;
   parseEntries: (raw: string) => ParsedAllowFromResult;
-  getExistingAllowFrom: (params: {
-    cfg: OpenClawConfig;
-    accountId: string;
-  }) => (string | number)[];
+  getExistingAllowFrom: (params: { cfg: OpenClawConfig; accountId: string }) => (string | number)[];
 }): Promise<OpenClawConfig> {
   return await promptParsedAllowFromForAccount({
     accountId: params.accountId,
@@ -1344,7 +1344,7 @@ export function createTopLevelChannelParsedAllowFromPrompt(params: {
     });
   }
 
-  const {defaultAccountId} = params;
+  const { defaultAccountId } = params;
   return createPromptParsedAllowFromForAccount({
     defaultAccountId,
     ...sharedParams,
@@ -1369,7 +1369,7 @@ export function createNestedChannelParsedAllowFromPrompt(params: {
     section: params.section,
     ...(params.enabled ? { enabled: true } : {}),
   });
-  const {defaultAccountId} = params;
+  const { defaultAccountId } = params;
   const sharedParams = {
     ...(params.noteTitle ? { noteTitle: params.noteTitle } : {}),
     ...(params.noteLines ? { noteLines: params.noteLines } : {}),

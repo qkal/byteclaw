@@ -56,7 +56,7 @@ async function authorizeVoiceCommand(
   if (!interaction.guild) {
     return { message: "Voice commands are only available in guilds.", ok: false };
   }
-  const {user} = interaction;
+  const { user } = interaction;
   if (!user) {
     return { message: "Unable to resolve command user.", ok: false };
   }

@@ -166,7 +166,7 @@ export function applyTestPluginDefaults(
   if (!env.VITEST) {
     return cfg;
   }
-  const {plugins} = cfg;
+  const { plugins } = cfg;
   const explicitConfig = hasExplicitPluginConfig(plugins);
   if (explicitConfig) {
     if (hasExplicitMemorySlot(plugins) || hasExplicitMemoryEntry(plugins)) {
@@ -204,7 +204,7 @@ export function isTestDefaultMemorySlotDisabled(
   if (!env.VITEST) {
     return false;
   }
-  const {plugins} = cfg;
+  const { plugins } = cfg;
   if (hasExplicitMemorySlot(plugins) || hasExplicitMemoryEntry(plugins)) {
     return false;
   }

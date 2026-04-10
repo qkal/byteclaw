@@ -1,7 +1,14 @@
 import fs from "node:fs/promises";
 
-interface SessionHeaderEntry { type: "session"; id?: string; cwd?: string }
-interface SessionMessageEntry { type: "message"; message?: { role?: string } }
+interface SessionHeaderEntry {
+  type: "session";
+  id?: string;
+  cwd?: string;
+}
+interface SessionMessageEntry {
+  type: "message";
+  message?: { role?: string };
+}
 
 /**
  * Pi-coding-agent SessionManager persistence quirk:

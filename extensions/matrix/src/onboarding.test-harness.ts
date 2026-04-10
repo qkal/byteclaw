@@ -73,14 +73,23 @@ export function createMatrixWizardPrompter(params: {
   };
 
   return {
-    confirm: vi.fn(async ({ message }: { message: string }) => await resolvePromptValue("confirm", message, params.confirm, params.onConfirm)),
+    confirm: vi.fn(
+      async ({ message }: { message: string }) =>
+        await resolvePromptValue("confirm", message, params.confirm, params.onConfirm),
+    ),
     note: vi.fn(async (message: unknown) => {
       const text = String(message);
       params.notes?.push(text);
       await params.onNote?.(text);
     }),
-    select: vi.fn(async ({ message }: { message: string }) => await resolvePromptValue("select", message, params.select, params.onSelect)),
-    text: vi.fn(async ({ message }: { message: string }) => await resolvePromptValue("text", message, params.text, params.onText)),
+    select: vi.fn(
+      async ({ message }: { message: string }) =>
+        await resolvePromptValue("select", message, params.select, params.onSelect),
+    ),
+    text: vi.fn(
+      async ({ message }: { message: string }) =>
+        await resolvePromptValue("text", message, params.text, params.onText),
+    ),
   } as unknown as WizardPrompter;
 }
 

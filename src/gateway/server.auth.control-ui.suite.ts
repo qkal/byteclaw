@@ -1,7 +1,6 @@
 import { expect, test, vi } from "vitest";
 import { WebSocket } from "ws";
-import type {
-  startGatewayServer} from "./server.auth.shared.js";
+import type { startGatewayServer } from "./server.auth.shared.js";
 import {
   BACKEND_GATEWAY_CLIENT,
   CONTROL_UI_CLIENT,
@@ -145,14 +144,16 @@ export function registerControlUiAndPairingSuite(): void {
       port: number;
       server: Awaited<ReturnType<typeof startGatewayServer>>;
     }) => Promise<T>,
-  ): Promise<T> => await withGatewayServer(fn, {
+  ): Promise<T> =>
+    await withGatewayServer(fn, {
       serverOptions: { controlUiEnabled: true },
     });
 
   const startControlUiServerWithClient = async (
     token?: string,
     opts?: Parameters<typeof startServerWithClient>[1],
-  ) => await startServerWithClient(token, {
+  ) =>
+    await startServerWithClient(token, {
       ...opts,
       controlUiEnabled: true,
     });
@@ -1179,7 +1180,7 @@ export function registerControlUiAndPairingSuite(): void {
     const { identityPath, identity } = await createOperatorIdentityFixture(
       "openclaw-device-legacy-meta-",
     );
-    const {deviceId} = identity;
+    const { deviceId } = identity;
     const publicKey = publicKeyRawBase64UrlFromPem(identity.publicKeyPem);
     const pending = await requestDevicePairing({
       clientId: TEST_OPERATOR_CLIENT.id,

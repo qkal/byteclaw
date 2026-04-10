@@ -103,7 +103,7 @@ export function downgradeOpenAIFunctionCallReasoningPairs(
       continue;
     }
 
-    const {role} = (msg as { role?: unknown });
+    const { role } = msg as { role?: unknown };
     if (role === "assistant") {
       const assistantMsg = msg as Extract<AgentMessage, { role: "assistant" }>;
       if (!Array.isArray(assistantMsg.content)) {
@@ -215,7 +215,7 @@ export function downgradeOpenAIReasoningBlocks(messages: AgentMessage[]): AgentM
       continue;
     }
 
-    const {role} = (msg as { role?: unknown });
+    const { role } = msg as { role?: unknown };
     if (role !== "assistant") {
       out.push(msg);
       continue;

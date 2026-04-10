@@ -1,4 +1,7 @@
-export interface PendingToolCall { id: string; name?: string }
+export interface PendingToolCall {
+  id: string;
+  name?: string;
+}
 
 export interface PendingToolCallState {
   size: () => number;

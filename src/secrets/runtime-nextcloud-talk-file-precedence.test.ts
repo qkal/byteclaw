@@ -11,21 +11,21 @@ if (!nextcloudTalkSecrets?.collectRuntimeConfigAssignments) {
 }
 
 vi.mock("../channels/plugins/bootstrap-registry.js", () => ({
-    getBootstrapChannelPlugin: (id: string) =>
-      id === "nextcloud-talk"
-        ? {
-            secrets: {
-              collectRuntimeConfigAssignments: nextcloudTalkSecrets.collectRuntimeConfigAssignments,
-            },
-          }
-        : undefined,
-    getBootstrapChannelSecrets: (id: string) =>
-      id === "nextcloud-talk"
-        ? {
+  getBootstrapChannelPlugin: (id: string) =>
+    id === "nextcloud-talk"
+      ? {
+          secrets: {
             collectRuntimeConfigAssignments: nextcloudTalkSecrets.collectRuntimeConfigAssignments,
-          }
-        : undefined,
-  }));
+          },
+        }
+      : undefined,
+  getBootstrapChannelSecrets: (id: string) =>
+    id === "nextcloud-talk"
+      ? {
+          collectRuntimeConfigAssignments: nextcloudTalkSecrets.collectRuntimeConfigAssignments,
+        }
+      : undefined,
+}));
 
 function asConfig(value: unknown): OpenClawConfig {
   return value as OpenClawConfig;

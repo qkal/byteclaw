@@ -239,9 +239,9 @@ function summarizeKnownExec(words: string[]): string {
     const inline =
       bin === "node"
         ? optionValue(words, ["-e", "--eval"])
-        : (bin === "python" || bin === "python3"
+        : bin === "python" || bin === "python3"
           ? optionValue(words, ["-c"])
-          : undefined);
+          : undefined;
     if (inline !== undefined) {
       return `run ${bin} inline script`;
     }
@@ -403,9 +403,9 @@ export function resolveExecDetail(args: unknown): string | undefined {
   const cwdRaw =
     typeof record.workdir === "string"
       ? record.workdir
-      : (typeof record.cwd === "string"
+      : typeof record.cwd === "string"
         ? record.cwd
-        : undefined);
+        : undefined;
   const cwd = cwdRaw?.trim() || result?.chdirPath || undefined;
 
   const compact = compactRawCommand(unwrapped);

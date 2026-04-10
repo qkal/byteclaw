@@ -129,8 +129,8 @@ describe("plugin approval forwarding", () => {
       await flushPendingDelivery();
       expect(deliver).toHaveBeenCalled();
       const text =
-        (deliver.mock.calls[0]?.[0] as { payloads?: { text?: string }[] })?.payloads?.[0]
-          ?.text ?? "";
+        (deliver.mock.calls[0]?.[0] as { payloads?: { text?: string }[] })?.payloads?.[0]?.text ??
+        "";
       expect(text).toMatch(/🚨/);
     });
 
@@ -295,8 +295,8 @@ describe("plugin approval forwarding", () => {
       await forwarder.handlePluginApprovalResolved!(resolved);
       expect(deliver).toHaveBeenCalled();
       const text =
-        (deliver.mock.calls[0]?.[0] as { payloads?: { text?: string }[] })?.payloads?.[0]
-          ?.text ?? "";
+        (deliver.mock.calls[0]?.[0] as { payloads?: { text?: string }[] })?.payloads?.[0]?.text ??
+        "";
       expect(text).toContain("Plugin approval");
       expect(text).toContain("allowed once");
     });
@@ -323,8 +323,8 @@ describe("plugin approval forwarding", () => {
 
       expect(deliver).toHaveBeenCalled();
       const text =
-        (deliver.mock.calls[0]?.[0] as { payloads?: { text?: string }[] })?.payloads?.[0]
-          ?.text ?? "";
+        (deliver.mock.calls[0]?.[0] as { payloads?: { text?: string }[] })?.payloads?.[0]?.text ??
+        "";
       expect(text).toContain("Plugin approval");
       expect(text).toContain("denied");
     });

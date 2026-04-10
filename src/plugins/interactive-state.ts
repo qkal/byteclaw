@@ -1,4 +1,4 @@
-import type { createDedupeCache} from "../infra/dedupe.js";
+import type { createDedupeCache } from "../infra/dedupe.js";
 import { resolveGlobalDedupeCache } from "../infra/dedupe.js";
 import { resolveGlobalSingleton } from "../shared/global-singleton.js";
 import type { PluginInteractiveHandlerRegistration } from "./types.js";

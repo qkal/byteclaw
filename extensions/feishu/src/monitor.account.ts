@@ -179,8 +179,8 @@ function parseFeishuMessageEventPayload(value: unknown): FeishuMessageEvent | nu
   if (!isRecord(value)) {
     return null;
   }
-  const {sender} = value;
-  const {message} = value;
+  const { sender } = value;
+  const { message } = value;
   if (!isRecord(sender) || !isRecord(message)) {
     return null;
   }
@@ -217,7 +217,7 @@ function parseFeishuBotMenuEvent(value: unknown): FeishuBotMenuEvent | null {
   if (!isRecord(value)) {
     return null;
   }
-  const {operator} = value;
+  const { operator } = value;
   if (operator !== undefined && !isRecord(operator)) {
     return null;
   }
@@ -243,9 +243,9 @@ function parseFeishuCardActionEventPayload(value: unknown): FeishuCardActionEven
   if (!isRecord(value)) {
     return null;
   }
-  const {operator} = value;
-  const {action} = value;
-  const {context} = value;
+  const { operator } = value;
+  const { action } = value;
+  const { context } = value;
   if (!isRecord(operator) || !isRecord(action) || !isRecord(context)) {
     return null;
   }
@@ -457,7 +457,8 @@ function registerEventHandlers(
       }
     }
   };
-  const isMessageAlreadyProcessed = async (entry: FeishuMessageEvent): Promise<boolean> => await hasProcessedFeishuMessage(entry.message.message_id, accountId, log);
+  const isMessageAlreadyProcessed = async (entry: FeishuMessageEvent): Promise<boolean> =>
+    await hasProcessedFeishuMessage(entry.message.message_id, accountId, log);
   const inboundDebouncer = core.channel.debounce.createInboundDebouncer<FeishuMessageEvent>({
     buildKey: (event) => {
       const chatId = event.message.chat_id?.trim();

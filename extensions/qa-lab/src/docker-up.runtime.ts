@@ -268,9 +268,7 @@ export async function runQaDockerUp(
   );
   const qaLabPort = await resolveHostPortImpl(params.qaLabPort ?? 43_124, params.qaLabPort != null);
   const runCommand = deps?.runCommand ?? execCommand;
-  const fetchImpl =
-    deps?.fetchImpl ??
-    (async (input: string) => await fetch(input));
+  const fetchImpl = deps?.fetchImpl ?? (async (input: string) => await fetch(input));
   const sleepImpl = deps?.sleepImpl ?? sleep;
 
   if (!params.skipUiBuild) {

@@ -312,7 +312,10 @@ function resolveDefaultCommandContext(cfg?: OpenClawConfig): {
   };
 }
 
-export interface ResolvedCommandArgChoice { value: string; label: string }
+export interface ResolvedCommandArgChoice {
+  value: string;
+  label: string;
+}
 
 export function resolveCommandArgChoices(params: {
   command: ChatCommandDefinition;

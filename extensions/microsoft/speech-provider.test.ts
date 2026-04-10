@@ -93,7 +93,7 @@ describe("buildMicrosoftSpeechProvider", () => {
   it("switches to a Chinese voice for CJK text when no explicit voice override is set", async () => {
     const provider = buildMicrosoftSpeechProvider();
     const edgeSpy = vi.spyOn(ttsModule, "edgeTTS").mockImplementation(async ({ outputPath }) => {
-      writeFileSync(outputPath, Buffer.from([0xFF, 0xFB, 0x90, 0x00]));
+      writeFileSync(outputPath, Buffer.from([0xff, 0xfb, 0x90, 0x00]));
     });
 
     await provider.synthesize({
@@ -125,7 +125,7 @@ describe("buildMicrosoftSpeechProvider", () => {
   it("preserves an explicitly configured English voice for CJK text", async () => {
     const provider = buildMicrosoftSpeechProvider();
     const edgeSpy = vi.spyOn(ttsModule, "edgeTTS").mockImplementation(async ({ outputPath }) => {
-      writeFileSync(outputPath, Buffer.from([0xFF, 0xFB, 0x90, 0x00]));
+      writeFileSync(outputPath, Buffer.from([0xff, 0xfb, 0x90, 0x00]));
     });
 
     await provider.synthesize({

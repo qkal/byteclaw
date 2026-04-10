@@ -36,7 +36,7 @@ export async function reconcileManagerRuntimeSessionIdentifiers(params: {
   meta: SessionAcpMeta;
   runtimeStatus?: AcpRuntimeStatus;
 }> {
-  let {runtimeStatus} = params;
+  let { runtimeStatus } = params;
   if (!runtimeStatus && params.runtime.getStatus) {
     try {
       runtimeStatus = await withAcpRuntimeErrorBoundary({

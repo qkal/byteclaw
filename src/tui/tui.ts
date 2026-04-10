@@ -470,7 +470,8 @@ export async function runTui(opts: TuiOptions) {
     return name ? `${id} (${name})` : id;
   };
 
-  const resolveSessionKey = (raw?: string) => resolveTuiSessionKey({
+  const resolveSessionKey = (raw?: string) =>
+    resolveTuiSessionKey({
       currentAgentId,
       raw,
       sessionMainKey,
@@ -660,9 +661,9 @@ export async function runTui(opts: TuiOptions) {
       : sessionKeyLabel;
     const agentLabel = formatAgentLabel(currentAgentId);
     const modelLabel = sessionInfo.model
-      ? (sessionInfo.modelProvider
+      ? sessionInfo.modelProvider
         ? `${sessionInfo.modelProvider}/${sessionInfo.model}`
-        : sessionInfo.model)
+        : sessionInfo.model
       : "unknown";
     const tokens = formatTokens(sessionInfo.totalTokens ?? null, sessionInfo.contextTokens ?? null);
     const think = sessionInfo.thinkingLevel ?? "off";
@@ -670,7 +671,7 @@ export async function runTui(opts: TuiOptions) {
     const verbose = sessionInfo.verboseLevel ?? "off";
     const reasoning = sessionInfo.reasoningLevel ?? "off";
     const reasoningLabel =
-      reasoning === "on" ? "reasoning" : (reasoning === "stream" ? "reasoning:stream" : null);
+      reasoning === "on" ? "reasoning" : reasoning === "stream" ? "reasoning:stream" : null;
     const footerParts = [
       `agent ${agentLabel}`,
       `session ${sessionLabel}`,

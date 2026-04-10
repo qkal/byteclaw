@@ -1,35 +1,35 @@
-import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
-import { resolveSessionAgentId } from "../../agents/agent-scope.js";
-import { normalizeChannelId } from "../../channels/plugins/index.js";
-import { createOutboundSendDeps } from "../../cli/deps.js";
-import { loadConfig } from "../../config/config.js";
-import { applyPluginAutoEnable } from "../../config/plugin-auto-enable.js";
-import { resolveOutboundChannelPlugin } from "../../infra/outbound/channel-resolution.js";
-import { resolveMessageChannelSelection } from "../../infra/outbound/channel-selection.js";
-import { deliverOutboundPayloads } from "../../infra/outbound/deliver.js";
+import { resolveSendableOutboundReplyParts } from 'openclaw/plugin-sdk/reply-payload';
+import { resolveSessionAgentId } from '../../agents/agent-scope.js';
+import { normalizeChannelId } from '../../channels/plugins/index.js';
+import { createOutboundSendDeps } from '../../cli/deps.js';
+import { loadConfig } from '../../config/config.js';
+import { applyPluginAutoEnable } from '../../config/plugin-auto-enable.js';
+import { resolveOutboundChannelPlugin } from '../../infra/outbound/channel-resolution.js';
+import { resolveMessageChannelSelection } from '../../infra/outbound/channel-selection.js';
+import { deliverOutboundPayloads } from '../../infra/outbound/deliver.js';
 import {
   ensureOutboundSessionEntry,
   resolveOutboundSessionRoute,
-} from "../../infra/outbound/outbound-session.js";
-import { normalizeReplyPayloadsForDelivery } from "../../infra/outbound/payloads.js";
-import { buildOutboundSessionContext } from "../../infra/outbound/session-context.js";
-import { maybeResolveIdLikeTarget } from "../../infra/outbound/target-resolver.js";
-import { resolveOutboundTarget } from "../../infra/outbound/targets.js";
-import { normalizePollInput } from "../../polls.js";
+} from '../../infra/outbound/outbound-session.js';
+import { normalizeReplyPayloadsForDelivery } from '../../infra/outbound/payloads.js';
+import { buildOutboundSessionContext } from '../../infra/outbound/session-context.js';
+import { maybeResolveIdLikeTarget } from '../../infra/outbound/target-resolver.js';
+import { resolveOutboundTarget } from '../../infra/outbound/targets.js';
+import { normalizePollInput } from '../../polls.js';
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
   readStringValue,
-} from "../../shared/string-coerce.js";
+} from '../../shared/string-coerce.js';
 import {
   ErrorCodes,
   errorShape,
   formatValidationErrors,
   validatePollParams,
   validateSendParams,
-} from "../protocol/index.js";
-import { formatForLog } from "../ws-log.js";
-import type { GatewayRequestContext, GatewayRequestHandlers } from "./types.js";
+} from '../protocol/index.js';
+import { formatForLog } from '../ws-log.js';
+import type { GatewayRequestContext, GatewayRequestHandlers } from './types.js';
 
 interface InflightResult {
   ok: boolean;
@@ -66,19 +66,25 @@ async function resolveRequestedChannel(params: {
     }
 > {
   const channelInput = readStringValue(params.requestChannel);
-  const normalizedChannel = channelInput ? normalizeChannelId(channelInput) : null;
+  const normalizedChannel = channelInput
+    ? normalizeChannelId(channelInput)
+    : null;
   if (channelInput && !normalizedChannel) {
-    const normalizedInput = normalizeOptionalLowercaseString(channelInput) ?? "";
-    if (params.rejectWebchatAsInternalOnly && normalizedInput === "webchat") {
+    const normalizedInput =
+      normalizeOptionalLowercaseString(channelInput) ?? '';
+    if (params.rejectWebchatAsInternalOnly && normalizedInput === 'webchat') {
       return {
         error: errorShape(
           ErrorCodes.INVALID_REQUEST,
-          "unsupported channel: webchat (internal-only). Use `chat.send` for WebChat UI messages or choose a deliverable channel.",
+          'unsupported channel: webchat (internal-only). Use `chat.send` for WebChat UI messages or choose a deliverable channel.',
         ),
       };
     }
     return {
-      error: errorShape(ErrorCodes.INVALID_REQUEST, params.unsupportedMessage(channelInput)),
+      error: errorShape(
+        ErrorCodes.INVALID_REQUEST,
+        params.unsupportedMessage(channelInput),
+      ),
     };
   }
   const cfg = applyPluginAutoEnable({
@@ -88,7 +94,7 @@ async function resolveRequestedChannel(params: {
   let channel = normalizedChannel;
   if (!channel) {
     try {
-      ({ channel } = (await resolveMessageChannelSelection({ cfg })));
+      ({ channel } = await resolveMessageChannelSelection({ cfg }));
     } catch (error) {
       return { error: errorShape(ErrorCodes.INVALID_REQUEST, String(error)) };
     }
@@ -114,7 +120,7 @@ function resolveGatewayOutboundTarget(params: {
     accountId: params.accountId,
     cfg: params.cfg,
     channel: params.channel,
-    mode: "explicit",
+    mode: 'explicit',
     to: params.to,
   });
   if (!resolved.ok) {
@@ -136,19 +142,19 @@ function buildGatewayDeliveryPayload(params: {
     messageId: params.result.messageId,
     runId: params.runId,
   };
-  if ("chatId" in params.result) {
+  if ('chatId' in params.result) {
     payload.chatId = params.result.chatId;
   }
-  if ("channelId" in params.result) {
+  if ('channelId' in params.result) {
     payload.channelId = params.result.channelId;
   }
-  if ("toJid" in params.result) {
+  if ('toJid' in params.result) {
     payload.toJid = params.result.toJid;
   }
-  if ("conversationId" in params.result) {
+  if ('conversationId' in params.result) {
     payload.conversationId = params.result.conversationId;
   }
-  if ("pollId" in params.result) {
+  if ('pollId' in params.result) {
     payload.pollId = params.result.pollId;
   }
   return payload;
@@ -219,7 +225,7 @@ export const sendHandlers: GatewayRequestHandlers = {
       requestChannel: request.channel,
       unsupportedMessage: (input) => `unsupported poll channel: ${input}`,
     });
-    if ("error" in resolvedChannel) {
+    if ('error' in resolvedChannel) {
       respond(false, undefined, resolvedChannel.error);
       return;
     }
@@ -227,7 +233,7 @@ export const sendHandlers: GatewayRequestHandlers = {
     const plugin = resolveOutboundChannelPlugin({ cfg, channel });
     const outbound = plugin?.outbound;
     if (
-      typeof request.durationSeconds === "number" &&
+      typeof request.durationSeconds === 'number' &&
       outbound?.supportsPollDurationSeconds !== true
     ) {
       respond(
@@ -240,11 +246,17 @@ export const sendHandlers: GatewayRequestHandlers = {
       );
       return;
     }
-    if (typeof request.isAnonymous === "boolean" && outbound?.supportsAnonymousPolls !== true) {
+    if (
+      typeof request.isAnonymous === 'boolean' &&
+      outbound?.supportsAnonymousPolls !== true
+    ) {
       respond(
         false,
         undefined,
-        errorShape(ErrorCodes.INVALID_REQUEST, `isAnonymous is not supported for ${channel} polls`),
+        errorShape(
+          ErrorCodes.INVALID_REQUEST,
+          `isAnonymous is not supported for ${channel} polls`,
+        ),
       );
       return;
     }
@@ -262,7 +274,10 @@ export const sendHandlers: GatewayRequestHandlers = {
         respond(
           false,
           undefined,
-          errorShape(ErrorCodes.INVALID_REQUEST, `unsupported poll channel: ${channel}`),
+          errorShape(
+            ErrorCodes.INVALID_REQUEST,
+            `unsupported poll channel: ${channel}`,
+          ),
         );
         return;
       }
@@ -289,7 +304,11 @@ export const sendHandlers: GatewayRequestHandlers = {
         threadId,
         to: resolvedTarget.to,
       });
-      const payload = buildGatewayDeliveryPayload({ channel, result, runId: idem });
+      const payload = buildGatewayDeliveryPayload({
+        channel,
+        result,
+        runId: idem,
+      });
       cacheGatewayDedupeSuccess({
         context,
         dedupeKey: `poll:${idem}`,
@@ -297,13 +316,13 @@ export const sendHandlers: GatewayRequestHandlers = {
       });
       respond(true, payload, undefined, { channel });
     } catch (error) {
-      const error = errorShape(ErrorCodes.UNAVAILABLE, String(error));
+      const errorResponse = errorShape(ErrorCodes.UNAVAILABLE, String(error));
       cacheGatewayDedupeFailure({
         context,
         dedupeKey: `poll:${idem}`,
-        error,
+        error: errorResponse,
       });
-      respond(false, undefined, error, {
+      respond(false, undefined, errorResponse, {
         channel,
         error: formatForLog(error),
       });
@@ -348,12 +367,14 @@ export const sendHandlers: GatewayRequestHandlers = {
     const inflight = inflightMap.get(dedupeKey);
     if (inflight) {
       const result = await inflight;
-      const meta = result.meta ? { ...result.meta, cached: true } : { cached: true };
+      const meta = result.meta
+        ? { ...result.meta, cached: true }
+        : { cached: true };
       respond(result.ok, result.payload, result.error, meta);
       return;
     }
-    const to = normalizeOptionalString(request.to) ?? "";
-    const message = normalizeOptionalString(request.message) ?? "";
+    const to = normalizeOptionalString(request.to) ?? '';
+    const message = normalizeOptionalString(request.message) ?? '';
     const mediaUrl = normalizeOptionalString(request.mediaUrl);
     const mediaUrls = Array.isArray(request.mediaUrls)
       ? request.mediaUrls
@@ -364,7 +385,10 @@ export const sendHandlers: GatewayRequestHandlers = {
       respond(
         false,
         undefined,
-        errorShape(ErrorCodes.INVALID_REQUEST, "invalid send params: text or media is required"),
+        errorShape(
+          ErrorCodes.INVALID_REQUEST,
+          'invalid send params: text or media is required',
+        ),
       );
       return;
     }
@@ -373,7 +397,7 @@ export const sendHandlers: GatewayRequestHandlers = {
       requestChannel: request.channel,
       unsupportedMessage: (input) => `unsupported channel: ${input}`,
     });
-    if ("error" in resolvedChannel) {
+    if ('error' in resolvedChannel) {
       respond(false, undefined, resolvedChannel.error);
       return;
     }
@@ -386,7 +410,10 @@ export const sendHandlers: GatewayRequestHandlers = {
       respond(
         false,
         undefined,
-        errorShape(ErrorCodes.INVALID_REQUEST, `unsupported channel: ${channel}`),
+        errorShape(
+          ErrorCodes.INVALID_REQUEST,
+          `unsupported channel: ${channel}`,
+        ),
       );
       return;
     }
@@ -413,24 +440,32 @@ export const sendHandlers: GatewayRequestHandlers = {
           input: resolvedTarget.to,
         });
         const deliveryTarget = idLikeTarget?.to ?? resolvedTarget.to;
-        const outboundDeps = context.deps ? createOutboundSendDeps(context.deps) : undefined;
+        const outboundDeps = context.deps
+          ? createOutboundSendDeps(context.deps)
+          : undefined;
         const mirrorPayloads = normalizeReplyPayloadsForDelivery([
           { mediaUrl, mediaUrls, text: message },
         ]);
         const mirrorText = mirrorPayloads
           .map((payload) => payload.text)
           .filter(Boolean)
-          .join("\n");
+          .join('\n');
         const mirrorMediaUrls = mirrorPayloads.flatMap(
           (payload) => resolveSendableOutboundReplyParts(payload).mediaUrls,
         );
-        const providedSessionKey = normalizeOptionalLowercaseString(request.sessionKey);
+        const providedSessionKey = normalizeOptionalLowercaseString(
+          request.sessionKey,
+        );
         const explicitAgentId = normalizeOptionalString(request.agentId);
         const sessionAgentId = providedSessionKey
-          ? resolveSessionAgentId({ config: cfg, sessionKey: providedSessionKey })
+          ? resolveSessionAgentId({
+              config: cfg,
+              sessionKey: providedSessionKey,
+            })
           : undefined;
         const defaultAgentId = resolveSessionAgentId({ config: cfg });
-        const effectiveAgentId = explicitAgentId ?? sessionAgentId ?? defaultAgentId;
+        const effectiveAgentId =
+          explicitAgentId ?? sessionAgentId ?? defaultAgentId;
         const derivedRoute = await resolveOutboundSessionRoute({
           accountId,
           agentId: effectiveAgentId,
@@ -442,13 +477,13 @@ export const sendHandlers: GatewayRequestHandlers = {
           threadId,
         });
         const outboundRoute = derivedRoute
-          ? (providedSessionKey
+          ? providedSessionKey
             ? {
                 ...derivedRoute,
                 sessionKey: providedSessionKey,
                 baseSessionKey: providedSessionKey,
               }
-            : derivedRoute)
+            : derivedRoute
           : null;
         if (outboundRoute) {
           await ensureOutboundSessionEntry({
@@ -458,7 +493,8 @@ export const sendHandlers: GatewayRequestHandlers = {
             route: outboundRoute,
           });
         }
-        const outboundSessionKey = outboundRoute?.sessionKey ?? providedSessionKey;
+        const outboundSessionKey =
+          outboundRoute?.sessionKey ?? providedSessionKey;
         const outboundSession = buildOutboundSessionContext({
           agentId: effectiveAgentId,
           cfg,
@@ -476,7 +512,8 @@ export const sendHandlers: GatewayRequestHandlers = {
                 sessionKey: outboundSessionKey,
                 agentId: effectiveAgentId,
                 text: mirrorText || message,
-                mediaUrls: mirrorMediaUrls.length > 0 ? mirrorMediaUrls : undefined,
+                mediaUrls:
+                  mirrorMediaUrls.length > 0 ? mirrorMediaUrls : undefined,
                 idempotencyKey: idem,
               }
             : undefined,
@@ -488,9 +525,13 @@ export const sendHandlers: GatewayRequestHandlers = {
 
         const result = results.at(-1);
         if (!result) {
-          throw new Error("No delivery result");
+          throw new Error('No delivery result');
         }
-        const payload = buildGatewayDeliveryPayload({ channel, result, runId: idem });
+        const payload = buildGatewayDeliveryPayload({
+          channel,
+          result,
+          runId: idem,
+        });
         cacheGatewayDedupeSuccess({ context, dedupeKey, payload });
         return {
           meta: { channel },
@@ -498,9 +539,13 @@ export const sendHandlers: GatewayRequestHandlers = {
           payload,
         };
       } catch (error) {
-        const error = errorShape(ErrorCodes.UNAVAILABLE, String(error));
-        cacheGatewayDedupeFailure({ context, dedupeKey, error });
-        return { ok: false, error, meta: { channel, error: formatForLog(error) } };
+        const errorResponse = errorShape(ErrorCodes.UNAVAILABLE, String(error));
+        cacheGatewayDedupeFailure({ context, dedupeKey, error: errorResponse });
+        return {
+          ok: false,
+          error: errorResponse,
+          meta: { channel, error: formatForLog(error) },
+        };
       }
     })();
 

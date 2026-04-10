@@ -34,7 +34,7 @@ export function resolveGatewayDiscoveryEndpoint(
   beacon: GatewayBonjourBeacon,
 ): GatewayDiscoveryResolvedEndpoint | null {
   const host = beacon.host?.trim();
-  const {port} = beacon;
+  const { port } = beacon;
   if (!host || typeof port !== "number" || !Number.isFinite(port) || port <= 0) {
     return null;
   }
@@ -127,7 +127,10 @@ function parseDigTxt(stdout: string): string[] {
     }
     const matches = Array.from(line.matchAll(/"([^"]*)"/g), (m) => m[1] ?? "");
     for (const m of matches) {
-      const unescaped = m.replaceAll(String.raw`\\`, "\\").replaceAll(String.raw`\"`, '"').replaceAll(String.raw`\n`, "\n");
+      const unescaped = m
+        .replaceAll(String.raw`\\`, "\\")
+        .replaceAll(String.raw`\"`, '"')
+        .replaceAll(String.raw`\n`, "\n");
       tokens.push(unescaped);
     }
   }

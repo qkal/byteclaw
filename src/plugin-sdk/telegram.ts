@@ -16,7 +16,7 @@ export const parseTelegramTopicConversation: FacadeModule["parseTelegramTopicCon
     ...args,
   )) as FacadeModule["parseTelegramTopicConversation"];
 
-export const {singleAccountKeysToMove} = loadFacadeModule();
+export const { singleAccountKeysToMove } = loadFacadeModule();
 
 export const collectTelegramSecurityAuditFindings: FacadeModule["collectTelegramSecurityAuditFindings"] =
   ((...args) =>

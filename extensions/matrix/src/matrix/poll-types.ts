@@ -308,7 +308,14 @@ export function buildPollResultsSummary(params: {
       continue;
     }
     const rawAnswers = parsePollResponseAnswerIds(event.content) ?? [];
-    const normalizedAnswers = [...new Set(rawAnswers.map((answerId) => normalizeOptionalString(answerId) ?? '').filter((answerId) => answerIds.has(answerId)).slice(0, parsed.maxSelections))];
+    const normalizedAnswers = [
+      ...new Set(
+        rawAnswers
+          .map((answerId) => normalizeOptionalString(answerId) ?? "")
+          .filter((answerId) => answerIds.has(answerId))
+          .slice(0, parsed.maxSelections),
+      ),
+    ];
     latestVoteBySender.set(senderId, {
       answerIds: normalizedAnswers,
       eventId: typeof event.event_id === "string" ? event.event_id : "",

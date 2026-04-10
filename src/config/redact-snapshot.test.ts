@@ -176,7 +176,7 @@ describe("redactConfigSnapshot", () => {
     });
 
     const result = redactConfigSnapshot(snapshot, hints);
-    const {servers} = (result.config.mcp as { servers: Record<string, Record<string, unknown>> });
+    const { servers } = result.config.mcp as { servers: Record<string, Record<string, unknown>> };
     expect((servers.remote.headers as Record<string, string>).Authorization).toBe(
       REDACTED_SENTINEL,
     );
@@ -448,7 +448,7 @@ describe("redactConfigSnapshot", () => {
 
     const result = redactConfigSnapshot(snapshot);
     const channels = result.config.channels as Record<string, Record<string, unknown>>;
-    const {irc} = channels;
+    const { irc } = channels;
     const nickserv = irc.nickserv as Record<string, unknown>;
 
     expect(irc.passwordFile).toBe("/etc/openclaw/irc-password.txt");

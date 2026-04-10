@@ -53,7 +53,7 @@ describe("matrixMessageActions", () => {
   });
 
   it("exposes poll create but only handles poll votes inside the plugin", () => {
-    const {describeMessageTool} = matrixMessageActions;
+    const { describeMessageTool } = matrixMessageActions;
     const supportsAction = matrixMessageActions.supportsAction ?? (() => false);
 
     expect(describeMessageTool).toBeTypeOf("function");
@@ -65,7 +65,7 @@ describe("matrixMessageActions", () => {
     if (!discovery) {
       throw new Error("describeMessageTool returned null");
     }
-    const {actions} = discovery;
+    const { actions } = discovery;
     expect(actions).toContain("poll");
     expect(actions).toContain("poll-vote");
     expect(supportsAction({ action: "poll" } as never)).toBe(false);
@@ -73,7 +73,7 @@ describe("matrixMessageActions", () => {
   });
 
   it("exposes and describes self-profile updates", () => {
-    const {describeMessageTool} = matrixMessageActions;
+    const { describeMessageTool } = matrixMessageActions;
     const supportsAction = matrixMessageActions.supportsAction ?? (() => false);
 
     const discovery = describeMessageTool({
@@ -82,8 +82,8 @@ describe("matrixMessageActions", () => {
     if (!discovery) {
       throw new Error("describeMessageTool returned null");
     }
-    const {actions} = discovery;
-    const {schema} = discovery;
+    const { actions } = discovery;
+    const { schema } = discovery;
     if (!schema) {
       throw new Error("matrix schema missing");
     }
@@ -135,7 +135,7 @@ describe("matrixMessageActions", () => {
     if (!discovery) {
       throw new Error("describeMessageTool returned null");
     }
-    const {actions} = discovery;
+    const { actions } = discovery;
 
     expect(actions).toEqual(["poll", "poll-vote"]);
   });
@@ -162,7 +162,7 @@ describe("matrixMessageActions", () => {
     if (!discovery) {
       throw new Error("describeMessageTool returned null");
     }
-    const {actions} = discovery;
+    const { actions } = discovery;
 
     expect(actions).toEqual([]);
   });
@@ -196,7 +196,7 @@ describe("matrixMessageActions", () => {
       },
     } as CoreConfig;
 
-    const {describeMessageTool} = matrixMessageActions;
+    const { describeMessageTool } = matrixMessageActions;
     if (!describeMessageTool) {
       throw new Error("matrix message action discovery is unavailable");
     }

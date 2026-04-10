@@ -15,7 +15,7 @@ async function getFreePort(): Promise<number> {
   return await new Promise((resolve, reject) => {
     const server = createServer();
     server.listen(0, "127.0.0.1", () => {
-      const {port} = (server.address() as { port: number });
+      const { port } = server.address() as { port: number };
       server.close((err) => (err ? reject(err) : resolve(port)));
     });
   });

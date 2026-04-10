@@ -230,7 +230,7 @@ export function resolveDiffsPluginDefaults(config: unknown): DiffToolDefaults {
     return { ...DEFAULT_DIFFS_TOOL_DEFAULTS };
   }
 
-  const {defaults} = (config as DiffsPluginConfig);
+  const { defaults } = config as DiffsPluginConfig;
   if (!defaults || typeof defaults !== "object" || Array.isArray(defaults)) {
     return { ...DEFAULT_DIFFS_TOOL_DEFAULTS };
   }
@@ -280,7 +280,7 @@ export function resolveDiffsPluginSecurity(config: unknown): DiffsPluginSecurity
     return { ...DEFAULT_DIFFS_PLUGIN_SECURITY };
   }
 
-  const {security} = (config as DiffsPluginConfig);
+  const { security } = config as DiffsPluginConfig;
   if (!security || typeof security !== "object" || Array.isArray(security)) {
     return { ...DEFAULT_DIFFS_PLUGIN_SECURITY };
   }
@@ -295,7 +295,7 @@ export function resolveDiffsPluginViewerBaseUrl(config: unknown): string | undef
     return undefined;
   }
 
-  const {viewerBaseUrl} = (config as DiffsPluginConfig);
+  const { viewerBaseUrl } = config as DiffsPluginConfig;
   if (typeof viewerBaseUrl !== "string") {
     return undefined;
   }

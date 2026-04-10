@@ -188,9 +188,9 @@ async function promptProviderSecretRefForSetup(params: {
       : "Secret id for the exec provider";
   const idDefault =
     providerEntry.source === "file"
-      ? (providerEntry.mode === "singleValue"
+      ? providerEntry.mode === "singleValue"
         ? "value"
-        : params.defaultFilePointer)
+        : params.defaultFilePointer
       : `${params.provider}/apiKey`;
   const idRaw = await params.prompter.text({
     initialValue: idDefault,

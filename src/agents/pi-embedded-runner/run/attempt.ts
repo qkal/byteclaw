@@ -266,7 +266,7 @@ export {
 const MAX_BTW_SNAPSHOT_MESSAGES = 100;
 
 function summarizeMessagePayload(msg: AgentMessage): { textChars: number; imageBlocks: number } {
-  const {content} = (msg as { content?: unknown });
+  const { content } = msg as { content?: unknown };
   if (typeof content === "string") {
     return { imageBlocks: 0, textChars: content.length };
   }
@@ -351,9 +351,9 @@ export async function runEmbeddedAttempt(
     workspaceDir: resolvedWorkspace,
   });
   const effectiveWorkspace = sandbox?.enabled
-    ? (sandbox.workspaceAccess === "rw"
+    ? sandbox.workspaceAccess === "rw"
       ? resolvedWorkspace
-      : sandbox.workspaceDir)
+      : sandbox.workspaceDir
     : resolvedWorkspace;
   await fs.mkdir(effectiveWorkspace, { recursive: true });
   const { sessionAgentId } = resolveSessionAgentIds({
@@ -1310,9 +1310,7 @@ export async function runEmbeddedAttempt(
               );
             }
           } catch (error) {
-            log.warn(
-              `context engine assemble failed, using pipeline messages: ${String(error)}`,
-            );
+            log.warn(`context engine assemble failed, using pipeline messages: ${String(error)}`);
           }
         }
       } catch (error) {
@@ -1382,7 +1380,7 @@ export async function runEmbeddedAttempt(
         abortRun(true, error);
       };
       const abortable = <T>(promise: Promise<T>): Promise<T> => {
-        const {signal} = runAbortController;
+        const { signal } = runAbortController;
         if (signal.aborted) {
           return Promise.reject(makeAbortError(signal));
         }
@@ -2017,9 +2015,7 @@ export async function runEmbeddedAttempt(
         ({ messagesSnapshot } = snapshotSelection);
         ({ sessionIdUsed } = snapshotSelection);
 
-        lastAssistant = [...messagesSnapshot]
-          .toReversed()
-          .find((m) => m.role === "assistant");
+        lastAssistant = [...messagesSnapshot].toReversed().find((m) => m.role === "assistant");
         const currentAttemptAssistant = findCurrentAttemptAssistantMessage({
           messagesSnapshot,
           prePromptMessageCount,
@@ -2045,9 +2041,9 @@ export async function runEmbeddedAttempt(
                   : {}),
                 ...(typeof cacheBreak?.cacheRead === "number"
                   ? { cacheRead: cacheBreak.cacheRead }
-                  : (typeof attemptUsage?.cacheRead === "number"
+                  : typeof attemptUsage?.cacheRead === "number"
                     ? { cacheRead: attemptUsage.cacheRead }
-                    : {})),
+                    : {}),
                 changes: cacheBreak?.changes ?? promptCacheChangesForTurn,
               }
             : undefined;
@@ -2135,9 +2131,9 @@ export async function runEmbeddedAttempt(
           messages: messagesSnapshot,
           note: timedOutDuringCompaction
             ? "compaction timeout"
-            : (promptError
+            : promptError
               ? "prompt error"
-              : undefined),
+              : undefined,
         });
         anthropicPayloadLogger?.recordUsage(messagesSnapshot, promptError);
 

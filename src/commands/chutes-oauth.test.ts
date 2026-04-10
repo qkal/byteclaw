@@ -14,7 +14,7 @@ async function getFreePort(): Promise<number> {
         server.close(() => reject(new Error("No TCP address")));
         return;
       }
-      const {port} = address;
+      const { port } = address;
       server.close((err) => (err ? reject(err) : resolve(port)));
     });
   });

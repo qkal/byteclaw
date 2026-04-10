@@ -100,9 +100,9 @@ function formatDirectExecApprovalFollowupText(
     if (!body) {
       prefix = metadata.includes("code 0")
         ? "Background command finished."
-        : (metadata.includes("signal")
+        : metadata.includes("signal")
           ? "Background command stopped unexpectedly."
-          : "Background command finished with an error.");
+          : "Background command finished with an error.";
     }
 
     return body ? `${prefix ? `${prefix}\n\n` : ""}${body}` : prefix || null;
@@ -143,19 +143,19 @@ function buildAgentFollowupArgs(params: {
     channel: deliveryTarget.deliver ? deliveryTarget.channel : sessionOnlyOriginChannel,
     to: deliveryTarget.deliver
       ? deliveryTarget.to
-      : (sessionOnlyOriginChannel
+      : sessionOnlyOriginChannel
         ? params.turnSourceTo
-        : undefined),
+        : undefined,
     accountId: deliveryTarget.deliver
       ? deliveryTarget.accountId
-      : (sessionOnlyOriginChannel
+      : sessionOnlyOriginChannel
         ? params.turnSourceAccountId
-        : undefined),
+        : undefined,
     threadId: deliveryTarget.deliver
       ? deliveryTarget.threadId
-      : (sessionOnlyOriginChannel
+      : sessionOnlyOriginChannel
         ? params.turnSourceThreadId
-        : undefined),
+        : undefined,
     idempotencyKey: `exec-approval-followup:${params.approvalId}`,
   };
 }

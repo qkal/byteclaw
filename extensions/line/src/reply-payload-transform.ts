@@ -24,7 +24,7 @@ import type { LineChannelData } from "./types.js";
  * - [[appletv_remote: name | status]]
  */
 export function parseLineDirectives(payload: ReplyPayload): ReplyPayload {
-  let {text} = payload;
+  let { text } = payload;
   if (!text) {
     return payload;
   }

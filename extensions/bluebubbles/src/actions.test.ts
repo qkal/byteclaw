@@ -62,7 +62,8 @@ describe("bluebubblesMessageActions", () => {
       },
     },
   });
-  const runReactAction = async (params: Record<string, unknown>) => await callHandleAction({
+  const runReactAction = async (params: Record<string, unknown>) =>
+    await callHandleAction({
       accountId: null,
       action: "react",
       cfg: blueBubblesConfig(),

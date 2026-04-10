@@ -8,8 +8,8 @@ import {
 
 describe("transport stream shared helpers", () => {
   it("sanitizes unpaired surrogate code units", () => {
-    const high = String.fromCharCode(0xD8_3D);
-    const low = String.fromCharCode(0xDC_00);
+    const high = String.fromCharCode(0xd8_3d);
+    const low = String.fromCharCode(0xdc_00);
 
     expect(sanitizeTransportPayloadText(`left${high}right`)).toBe("leftright");
     expect(sanitizeTransportPayloadText(`left${low}right`)).toBe("leftright");

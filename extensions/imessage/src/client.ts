@@ -126,7 +126,7 @@ export class IMessageRpcClient {
     this.reader?.close();
     this.reader = null;
     this.child.stdin?.end();
-    const {child} = this;
+    const { child } = this;
     this.child = null;
 
     await Promise.race([
@@ -208,7 +208,7 @@ export class IMessageRpcClient {
       if (parsed.error) {
         const baseMessage = parsed.error.message ?? "imsg rpc error";
         const details = parsed.error.data;
-        const {code} = parsed.error;
+        const { code } = parsed.error;
         const suffixes = [] as string[];
         if (typeof code === "number") {
           suffixes.push(`code=${code}`);

@@ -384,7 +384,7 @@ export const matrixPlugin: ChannelPlugin<ResolvedMatrixAccount, MatrixProbe> =
       doctor: matrixDoctor,
       gateway: {
         startAccount: async (ctx) => {
-          const {account} = ctx;
+          const { account } = ctx;
           ctx.setStatus({
             accountId: account.accountId,
             baseUrl: account.homeserver,

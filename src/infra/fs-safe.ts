@@ -121,12 +121,12 @@ async function openVerifiedLocalFile(
   let handle: FileHandle;
   try {
     const openFlags = options?.allowSymlinkTargetWithinRoot
-      ? (options?.nonBlockingRead
+      ? options?.nonBlockingRead
         ? OPEN_READ_FOLLOW_NONBLOCK_FLAGS
-        : OPEN_READ_FOLLOW_FLAGS)
-      : (options?.nonBlockingRead
+        : OPEN_READ_FOLLOW_FLAGS
+      : options?.nonBlockingRead
         ? OPEN_READ_NONBLOCK_FLAGS
-        : OPEN_READ_FLAGS);
+        : OPEN_READ_FLAGS;
     await fsSafeTestHooks?.beforeOpen?.(filePath, openFlags);
     handle = await fs.open(filePath, openFlags);
   } catch (error) {
@@ -404,9 +404,9 @@ export async function resolveOpenedFileRealPathForHandle(
   const fdCandidates =
     process.platform === "linux"
       ? [`/proc/self/fd/${handle.fd}`, `/dev/fd/${handle.fd}`]
-      : (process.platform === "win32"
+      : process.platform === "win32"
         ? []
-        : [`/dev/fd/${handle.fd}`]);
+        : [`/dev/fd/${handle.fd}`];
   for (const fdPath of fdCandidates) {
     try {
       return await fs.realpath(fdPath);
@@ -562,11 +562,11 @@ export async function appendFileWithinRoot(params: {
       !target.createdForWrite &&
       target.openedStat.size > 0 &&
       ((typeof params.data === "string" && !params.data.startsWith("\n")) ||
-        (Buffer.isBuffer(params.data) && params.data.length > 0 && params.data[0] !== 0x0A))
+        (Buffer.isBuffer(params.data) && params.data.length > 0 && params.data[0] !== 0x0a))
     ) {
       const lastByte = Buffer.alloc(1);
       const { bytesRead } = await target.handle.read(lastByte, 0, 1, target.openedStat.size - 1);
-      if (bytesRead === 1 && lastByte[0] !== 0x0A) {
+      if (bytesRead === 1 && lastByte[0] !== 0x0a) {
         prefix = "\n";
       }
     }
@@ -917,7 +917,7 @@ function normalizePinnedPathError(error: unknown): Error {
     return error;
   }
   if (error instanceof Error) {
-    const {message} = error;
+    const { message } = error;
     if (/No such file or directory/i.test(message)) {
       return new SafeOpenError("not-found", "file not found", { cause: error });
     }

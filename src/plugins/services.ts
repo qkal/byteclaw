@@ -1,10 +1,10 @@
-import type { OpenClawConfig } from "../config/config.js";
-import { STATE_DIR } from "../config/paths.js";
-import { createSubsystemLogger } from "../logging/subsystem.js";
-import type { PluginRegistry } from "./registry.js";
-import type { OpenClawPluginServiceContext, PluginLogger } from "./types.js";
+import type { OpenClawConfig } from '../config/config.js';
+import { STATE_DIR } from '../config/paths.js';
+import { createSubsystemLogger } from '../logging/subsystem.js';
+import type { PluginRegistry } from './registry.js';
+import type { OpenClawPluginServiceContext, PluginLogger } from './types.js';
 
-const log = createSubsystemLogger("plugins");
+const log = createSubsystemLogger('plugins');
 function createPluginLogger(): PluginLogger {
   return {
     debug: (msg) => log.debug(msg),
@@ -45,7 +45,7 @@ export async function startPluginServices(params: {
   });
 
   for (const entry of params.registry.services) {
-    const {service} = entry;
+    const { service } = entry;
     try {
       await service.start(serviceContext);
       running.push({
@@ -53,10 +53,10 @@ export async function startPluginServices(params: {
         stop: service.stop ? () => service.stop?.(serviceContext) : undefined,
       });
     } catch (error) {
-      const error = error as Error;
-      const stack = error?.stack?.trim();
+      const serviceError = error as Error;
+      const stack = serviceError?.stack?.trim();
       log.error(
-        `plugin service failed (${service.id}, plugin=${entry.pluginId}, root=${entry.rootDir ?? "unknown"}): ${error?.message ?? String(error)}${stack ? `\n${stack}` : ""}`,
+        `plugin service failed (${service.id}, plugin=${entry.pluginId}, root=${entry.rootDir ?? 'unknown'}): ${serviceError?.message ?? String(error)}${stack ? `\n${stack}` : ''}`,
       );
     }
   }
@@ -70,7 +70,9 @@ export async function startPluginServices(params: {
         try {
           await entry.stop();
         } catch (error) {
-          log.warn(`plugin service stop failed (${entry.id}): ${String(error)}`);
+          log.warn(
+            `plugin service stop failed (${entry.id}): ${String(error)}`,
+          );
         }
       }
     },

@@ -59,7 +59,7 @@ function makeToolResultWithDetails(id: string, text: string, detailText: string)
 }
 
 function getToolResultText(msg: AgentMessage): string {
-  const {content} = (msg as { content?: unknown });
+  const { content } = msg as { content?: unknown };
   if (typeof content === "string") {
     return content;
   }

@@ -167,11 +167,11 @@ export async function executePreparedCliRun(
   context: PreparedCliRunContext,
   cliSessionIdToUse?: string,
 ): Promise<CliOutput> {
-  const {params} = context;
+  const { params } = context;
   if (params.abortSignal?.aborted) {
     throw createCliAbortError();
   }
-  const {backend} = context.preparedBackend;
+  const { backend } = context.preparedBackend;
   const { sessionId: resolvedSessionId, isNew } = resolveSessionIdToSend({
     backend,
     cliSessionId: cliSessionIdToUse,

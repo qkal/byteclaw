@@ -24,15 +24,15 @@ export function resetPairingSecurityMocks(config: Record<string, unknown>) {
 }
 
 vi.mock("openclaw/plugin-sdk/config-runtime", () => ({
-    loadConfig: (...args: unknown[]) => loadConfigMock(...args),
-    resolveDefaultGroupPolicy,
-    resolveOpenProviderRuntimeGroupPolicy,
-    warnMissingProviderGroupPolicyFallbackOnce,
-  }));
+  loadConfig: (...args: unknown[]) => loadConfigMock(...args),
+  resolveDefaultGroupPolicy,
+  resolveOpenProviderRuntimeGroupPolicy,
+  warnMissingProviderGroupPolicyFallbackOnce,
+}));
 
 vi.mock("openclaw/plugin-sdk/conversation-runtime", () => ({
-    upsertChannelPairingRequest: (...args: unknown[]) => upsertPairingRequestMock(...args),
-  }));
+  upsertChannelPairingRequest: (...args: unknown[]) => upsertPairingRequestMock(...args),
+}));
 
 vi.mock("openclaw/plugin-sdk/security-runtime", async () => {
   const actual = await vi.importActual<typeof import("openclaw/plugin-sdk/security-runtime")>(

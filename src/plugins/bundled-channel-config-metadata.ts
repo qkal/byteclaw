@@ -182,9 +182,9 @@ export function collectBundledChannelConfigs(params: {
         : {}),
       ...(existing?.preferOver?.length
         ? { preferOver: existing.preferOver }
-        : (preferOver.length > 0
+        : preferOver.length > 0
           ? { preferOver }
-          : {})),
+          : {}),
     };
   }
 

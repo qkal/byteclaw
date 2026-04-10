@@ -199,7 +199,9 @@ describe("runWithModelFallback – probe logic", () => {
       return [];
     });
     // Default: only openai profiles are in cooldown; fallback providers are available
-    mockedIsProfileInCooldown.mockImplementation((_store: AuthProfileStore, profileId: string) => profileId.startsWith("openai"));
+    mockedIsProfileInCooldown.mockImplementation((_store: AuthProfileStore, profileId: string) =>
+      profileId.startsWith("openai"),
+    );
     mockedResolveProfilesUnavailableReason.mockReturnValue("rate_limit");
   });
 

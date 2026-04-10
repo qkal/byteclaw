@@ -90,7 +90,7 @@ export function resolveGroupSessionKey(ctx: MsgContext): GroupKeyResolution | nu
   const from = normalizeOptionalString(ctx.From) ?? "";
   const chatType = normalizeOptionalLowercaseString(ctx.ChatType);
   const normalizedChatType =
-    chatType === "channel" ? "channel" : (chatType === "group" ? "group" : undefined);
+    chatType === "channel" ? "channel" : chatType === "group" ? "group" : undefined;
   const implicitGroupSurface = resolveImplicitGroupSurface({ from, normalizedChatType });
 
   const legacyResolution = resolveLegacyGroupSessionKey(ctx);
@@ -126,13 +126,13 @@ export function resolveGroupSessionKey(ctx: MsgContext): GroupKeyResolution | nu
   const secondIsKind = second === "group" || second === "channel";
   const kind = secondIsKind
     ? second
-    : (from.includes(":channel:") || normalizedChatType === "channel"
+    : from.includes(":channel:") || normalizedChatType === "channel"
       ? "channel"
-      : (implicitGroupSurface?.chatType ?? "group"));
+      : (implicitGroupSurface?.chatType ?? "group");
   const id = headIsSurface
-    ? (secondIsKind
+    ? secondIsKind
       ? parts.slice(2).join(":")
-      : parts.slice(1).join(":"))
+      : parts.slice(1).join(":")
     : from;
   const finalId = normalizeLowercaseStringOrEmpty(id);
   if (!finalId) {

@@ -1,6 +1,4 @@
-import type {
-  Button,
-  StringSelectMenu} from "@buape/carbon";
+import type { Button, StringSelectMenu } from "@buape/carbon";
 import {
   type AutocompleteInteraction,
   type ButtonInteraction,
@@ -237,12 +235,12 @@ function resolveDiscordGuildNativeCommandAuthorized(params: {
   const fallbackAuthorizers = [policyAuthorizer, ownerAuthorizer, memberAuthorizer];
   return resolveCommandAuthorizedFromAuthorizers({
     authorizers: params.useAccessGroups
-      ? (params.commandsAllowFromAccess.configured
+      ? params.commandsAllowFromAccess.configured
         ? [commandAllowlistAuthorizer]
-        : fallbackAuthorizers)
-      : (params.commandsAllowFromAccess.configured
+        : fallbackAuthorizers
+      : params.commandsAllowFromAccess.configured
         ? [commandAllowlistAuthorizer]
-        : fallbackAuthorizers),
+        : fallbackAuthorizers,
     modeWhenAccessGroupsOff: "configured",
     useAccessGroups: params.useAccessGroups,
   });
@@ -258,7 +256,7 @@ function buildDiscordCommandOptions(params: {
 }): CommandOptions | undefined {
   const { command, cfg, authorizeChoiceContext, resolveChoiceContext } = params;
   const commandLabel = resolveDiscordCommandLogLabel(command);
-  const {args} = command;
+  const { args } = command;
   if (!args || args.length === 0) {
     return undefined;
   }
@@ -391,12 +389,12 @@ async function resolveDiscordNativeAutocompleteAuthorized(params: {
   accountId: string;
 }): Promise<boolean> {
   const { interaction, cfg, discordConfig, accountId } = params;
-  const {user} = interaction;
+  const { user } = interaction;
   if (!user) {
     return false;
   }
   const sender = resolveDiscordSenderIdentity({ author: user, pluralkitInfo: null });
-  const {channel} = interaction;
+  const { channel } = interaction;
   const channelType = channel?.type;
   const isDirectMessage = channelType === ChannelType.DM;
   const isGroupDm = channelType === ChannelType.GroupDM;
@@ -672,7 +670,7 @@ export function createDiscordNativeCommand(params: {
   });
   const options = commandOptions
     ? (commandOptions satisfies CommandOptions)
-    : (command.acceptsArgs
+    : command.acceptsArgs
       ? ([
           {
             description: "Command input",
@@ -681,7 +679,7 @@ export function createDiscordNativeCommand(params: {
             type: ApplicationCommandOptionType.String,
           },
         ] satisfies CommandOptions)
-      : undefined);
+      : undefined;
 
   return new (class extends Command {
     name = command.name;
@@ -702,9 +700,9 @@ export function createDiscordNativeCommand(params: {
       }
       const commandArgs = argDefinitions?.length
         ? readDiscordCommandArgs(interaction, argDefinitions)
-        : (command.acceptsArgs
+        : command.acceptsArgs
           ? parseCommandArgs(commandDefinition, interaction.options.getString("input") ?? "")
-          : undefined);
+          : undefined;
       const commandArgsWithRaw = commandArgs
         ? ({
             ...commandArgs,
@@ -771,12 +769,12 @@ async function dispatchDiscordCommandInteraction(params: {
   };
 
   const useAccessGroups = cfg.commands?.useAccessGroups !== false;
-  const {user} = interaction;
+  const { user } = interaction;
   if (!user) {
     return;
   }
   const sender = resolveDiscordSenderIdentity({ author: user, pluralkitInfo: null });
-  const {channel} = interaction;
+  const { channel } = interaction;
   const channelType = channel?.type;
   const isDirectMessage = channelType === ChannelType.DM;
   const isGroupDm = channelType === ChannelType.GroupDM;
@@ -1064,9 +1062,9 @@ async function dispatchDiscordCommandInteraction(params: {
       config: cfg,
       from: isDirectMessage
         ? `discord:${user.id}`
-        : (isGroupDm
+        : isGroupDm
           ? `discord:group:${channelId}`
-          : `discord:channel:${channelId}`),
+          : `discord:channel:${channelId}`,
       isAuthorizedSender: commandAuthorized,
       messageThreadId,
       senderId: sender.id,
@@ -1114,7 +1112,7 @@ async function dispatchDiscordCommandInteraction(params: {
   const interactionId = interaction.rawData.id;
   const routeState = await getNativeRouteState();
   if (routeState.bindingReadiness && !routeState.bindingReadiness.ok) {
-    const {configuredBinding} = routeState;
+    const { configuredBinding } = routeState;
     if (configuredBinding) {
       logVerbose(
         `discord native command: configured ACP binding unavailable for channel ${configuredBinding.record.conversation.conversationId}: ${routeState.bindingReadiness.error}`,
@@ -1123,8 +1121,8 @@ async function dispatchDiscordCommandInteraction(params: {
       return;
     }
   }
-  const {boundSessionKey} = routeState;
-  const {effectiveRoute} = routeState;
+  const { boundSessionKey } = routeState;
+  const { effectiveRoute } = routeState;
   const { sessionKey, commandTargetSessionKey } = resolveNativeCommandSessionTargets({
     agentId: effectiveRoute.agentId,
     boundSessionKey,

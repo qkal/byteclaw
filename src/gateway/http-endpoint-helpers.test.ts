@@ -4,19 +4,19 @@ import type { ResolvedGatewayAuth } from "./auth.js";
 import { handleGatewayPostJsonEndpoint } from "./http-endpoint-helpers.js";
 
 vi.mock("./http-utils.js", () => ({
-    authorizeGatewayHttpRequestOrReply: vi.fn(),
-    resolveTrustedHttpOperatorScopes: vi.fn(),
-  }));
+  authorizeGatewayHttpRequestOrReply: vi.fn(),
+  resolveTrustedHttpOperatorScopes: vi.fn(),
+}));
 
 vi.mock("./http-common.js", () => ({
-    readJsonBodyOrError: vi.fn(),
-    sendJson: vi.fn(),
-    sendMethodNotAllowed: vi.fn(),
-  }));
+  readJsonBodyOrError: vi.fn(),
+  sendJson: vi.fn(),
+  sendMethodNotAllowed: vi.fn(),
+}));
 
 vi.mock("./method-scopes.js", () => ({
-    authorizeOperatorScopesForMethod: vi.fn(),
-  }));
+  authorizeOperatorScopesForMethod: vi.fn(),
+}));
 
 const { readJsonBodyOrError, sendJson, sendMethodNotAllowed } = await import("./http-common.js");
 const { authorizeGatewayHttpRequestOrReply, resolveTrustedHttpOperatorScopes } =

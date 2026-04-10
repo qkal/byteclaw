@@ -401,7 +401,7 @@ export async function runDiagnostics(): Promise<DiagnosticReport> {
   const warnings: string[] = [];
 
   const platform = `${process.platform} (${os.release()})`;
-  const {arch} = process;
+  const { arch } = process;
   const nodeVersion = process.version;
   const homeDir = getHomeDir();
   const tempDir = getTempDir();
@@ -413,9 +413,9 @@ export async function runDiagnostics(): Promise<DiagnosticReport> {
     warnings.push(
       isWindows()
         ? "⚠️ ffmpeg is not installed. Audio/video conversion will be limited. Install it with choco install ffmpeg, scoop install ffmpeg, or from https://ffmpeg.org."
-        : (getPlatform() === "darwin"
+        : getPlatform() === "darwin"
           ? "⚠️ ffmpeg is not installed. Audio/video conversion will be limited. Install it with brew install ffmpeg."
-          : "⚠️ ffmpeg is not installed. Audio/video conversion will be limited. Install it with sudo apt install ffmpeg or sudo yum install ffmpeg."),
+          : "⚠️ ffmpeg is not installed. Audio/video conversion will be limited. Install it with sudo apt install ffmpeg or sudo yum install ffmpeg.",
     );
   }
 

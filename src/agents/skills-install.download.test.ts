@@ -256,10 +256,7 @@ describe("installDownloadSpec extraction safety", () => {
     });
     expect(result.ok).toBe(true);
     expect(
-      await fs.readFile(
-        path.join(resolveSkillToolsRootDir(entry), "runtime", "hello.txt"),
-        "utf8",
-      ),
+      await fs.readFile(path.join(resolveSkillToolsRootDir(entry), "runtime", "hello.txt"), "utf8"),
     ).toBe("hi");
   });
 

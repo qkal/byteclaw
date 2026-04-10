@@ -472,7 +472,7 @@ export function toPluginConversationBinding(
   if (!record || !isPluginOwnedBindingMetadata(record.metadata)) {
     return null;
   }
-  const {metadata} = record;
+  const { metadata } = record;
   return {
     accountId: record.conversation.accountId,
     bindingId: record.bindingId,
@@ -683,7 +683,7 @@ export function buildPluginBindingApprovalCustomId(
   approvalId: string,
   decision: PluginBindingApprovalDecision,
 ): string {
-  const decisionCode = decision === "allow-once" ? "o" : (decision === "allow-always" ? "a" : "d");
+  const decisionCode = decision === "allow-once" ? "o" : decision === "allow-always" ? "a" : "d";
   return `${PLUGIN_BINDING_CUSTOM_ID_PREFIX}:${encodeCustomIdValue(approvalId)}:${decisionCode}`;
 }
 

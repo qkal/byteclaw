@@ -32,8 +32,13 @@ export interface ConnectAuthState {
   deviceTokenCandidateSource?: DeviceTokenCandidateSource;
 }
 
-interface VerifyDeviceTokenResult { ok: boolean }
-interface VerifyBootstrapTokenResult { ok: boolean; reason?: string }
+interface VerifyDeviceTokenResult {
+  ok: boolean;
+}
+interface VerifyBootstrapTokenResult {
+  ok: boolean;
+  reason?: string;
+}
 
 export interface ConnectAuthDecision {
   authResult: GatewayAuthResult;
@@ -152,11 +157,11 @@ export async function resolveConnectAuthDecision(params: {
     scopes: string[];
   }) => Promise<VerifyDeviceTokenResult>;
 }): Promise<ConnectAuthDecision> {
-  let {authResult} = params.state;
-  let {authOk} = params.state;
-  let {authMethod} = params.state;
+  let { authResult } = params.state;
+  let { authOk } = params.state;
+  let { authMethod } = params.state;
 
-  const {bootstrapTokenCandidate} = params.state;
+  const { bootstrapTokenCandidate } = params.state;
   if (params.hasDeviceIdentity && params.deviceId && params.publicKey && bootstrapTokenCandidate) {
     const tokenCheck = await params.verifyBootstrapToken({
       deviceId: params.deviceId,
@@ -178,7 +183,7 @@ export async function resolveConnectAuthDecision(params: {
     }
   }
 
-  const {deviceTokenCandidate} = params.state;
+  const { deviceTokenCandidate } = params.state;
   if (!params.hasDeviceIdentity || !params.deviceId || authOk || !deviceTokenCandidate) {
     return { authMethod, authOk, authResult };
   }

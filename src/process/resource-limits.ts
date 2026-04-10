@@ -75,7 +75,7 @@ export async function checkResourceLimits(
   if (limits.maxMemoryMB && usage.memoryMB > limits.maxMemoryMB) {
     return {
       exceeded: true,
-      limit: 'memory',
+      limit: "memory",
       actual: usage.memoryMB,
       limitValue: limits.maxMemoryMB,
     };
@@ -84,7 +84,7 @@ export async function checkResourceLimits(
   if (limits.maxCpuTimeMs && usage.cpuTimeMs > limits.maxCpuTimeMs) {
     return {
       exceeded: true,
-      limit: 'cpuTime',
+      limit: "cpuTime",
       actual: usage.cpuTimeMs,
       limitValue: limits.maxCpuTimeMs,
     };
@@ -93,7 +93,7 @@ export async function checkResourceLimits(
   if (limits.maxFiles && usage.openFiles > limits.maxFiles) {
     return {
       exceeded: true,
-      limit: 'files',
+      limit: "files",
       actual: usage.openFiles,
       limitValue: limits.maxFiles,
     };
@@ -109,11 +109,11 @@ export async function checkResourceLimits(
 async function getResourceUsage(pid: number): Promise<ResourceUsage> {
   const platform = process.platform;
 
-  if (platform === 'linux' || platform === 'darwin') {
+  if (platform === "linux" || platform === "darwin") {
     return await getUnixResourceUsage(pid);
   }
 
-  if (platform === 'win32') {
+  if (platform === "win32") {
     return await getWindowsResourceUsage(pid);
   }
 
@@ -129,18 +129,18 @@ async function getResourceUsage(pid: number): Promise<ResourceUsage> {
 
 async function getUnixResourceUsage(pid: number): Promise<ResourceUsage> {
   try {
-    const fs = await import('node:fs/promises');
+    const fs = await import("node:fs/promises");
     const procPath = `/proc/${pid}`;
 
     // Read memory info
-    const statm = await fs.readFile(`${procPath}/statm`, 'utf8');
-    const pages = parseInt(statm.split(' ')[1], 10);
+    const statm = await fs.readFile(`${procPath}/statm`, "utf8");
+    const pages = parseInt(statm.split(" ")[1], 10);
     const pageSize = 4096; // Typical page size
     const memoryMB = (pages * pageSize) / (1024 * 1024);
 
     // Read stat for CPU time
-    const stat = await fs.readFile(`${procPath}/stat`, 'utf8');
-    const parts = stat.split(' ');
+    const stat = await fs.readFile(`${procPath}/stat`, "utf8");
+    const parts = stat.split(" ");
     const utime = parseInt(parts[13], 10);
     const stime = parseInt(parts[14], 10);
     const cpuTimeMs = ((utime + stime) * 1000) / 100; // Convert jiffies to ms
@@ -212,8 +212,6 @@ export const DEFAULT_RESOURCE_LIMITS: Record<string, ResourceLimits> = {
 /**
  * Get resource limits for a process type.
  */
-export function getResourceLimits(
-  type: keyof typeof DEFAULT_RESOURCE_LIMITS,
-): ResourceLimits {
+export function getResourceLimits(type: keyof typeof DEFAULT_RESOURCE_LIMITS): ResourceLimits {
   return DEFAULT_RESOURCE_LIMITS[type] ?? DEFAULT_RESOURCE_LIMITS.mediumLived;
 }

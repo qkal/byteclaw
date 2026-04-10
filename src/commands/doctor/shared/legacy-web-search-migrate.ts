@@ -250,6 +250,6 @@ export function resolvePluginWebSearchConfig(
   if (!isRecord(pluginConfig)) {
     return undefined;
   }
-  const {webSearch} = pluginConfig;
+  const { webSearch } = pluginConfig;
   return isRecord(webSearch) ? webSearch : undefined;
 }

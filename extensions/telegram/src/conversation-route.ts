@@ -112,9 +112,9 @@ export function resolveTelegramConversationRoute(params: {
   const threadBindingConversationId =
     params.replyThreadId != null
       ? `${params.chatId}:topic:${params.replyThreadId}`
-      : (!params.isGroup
+      : !params.isGroup
         ? String(params.chatId)
-        : undefined);
+        : undefined;
   if (threadBindingConversationId) {
     const threadBinding = getSessionBindingService().resolveByConversation({
       accountId: params.accountId,

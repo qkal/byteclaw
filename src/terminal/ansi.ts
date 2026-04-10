@@ -35,21 +35,21 @@ export function splitGraphemes(input: string): string[] {
  */
 export function sanitizeForLog(v: string): string {
   let out = stripAnsi(v);
-  for (let c = 0; c <= 0x1F; c++) {
+  for (let c = 0; c <= 0x1f; c++) {
     out = out.replaceAll(String.fromCharCode(c), "");
   }
-  return out.replaceAll(String.fromCharCode(0x7F), "");
+  return out.replaceAll(String.fromCharCode(0x7f), "");
 }
 
 function isZeroWidthCodePoint(codePoint: number): boolean {
   return (
-    (codePoint >= 0x03_00 && codePoint <= 0x03_6F) ||
-    (codePoint >= 0x1A_B0 && codePoint <= 0x1A_FF) ||
-    (codePoint >= 0x1D_C0 && codePoint <= 0x1D_FF) ||
-    (codePoint >= 0x20_D0 && codePoint <= 0x20_FF) ||
-    (codePoint >= 0xFE_20 && codePoint <= 0xFE_2F) ||
-    (codePoint >= 0xFE_00 && codePoint <= 0xFE_0F) ||
-    codePoint === 0x20_0D
+    (codePoint >= 0x03_00 && codePoint <= 0x03_6f) ||
+    (codePoint >= 0x1a_b0 && codePoint <= 0x1a_ff) ||
+    (codePoint >= 0x1d_c0 && codePoint <= 0x1d_ff) ||
+    (codePoint >= 0x20_d0 && codePoint <= 0x20_ff) ||
+    (codePoint >= 0xfe_20 && codePoint <= 0xfe_2f) ||
+    (codePoint >= 0xfe_00 && codePoint <= 0xfe_0f) ||
+    codePoint === 0x20_0d
   );
 }
 
@@ -58,25 +58,25 @@ function isFullWidthCodePoint(codePoint: number): boolean {
     return false;
   }
   return (
-    codePoint <= 0x11_5F ||
+    codePoint <= 0x11_5f ||
     codePoint === 0x23_29 ||
-    codePoint === 0x23_2A ||
-    (codePoint >= 0x2E_80 && codePoint <= 0x32_47 && codePoint !== 0x30_3F) ||
-    (codePoint >= 0x32_50 && codePoint <= 0x4D_BF) ||
-    (codePoint >= 0x4E_00 && codePoint <= 0xA4_C6) ||
-    (codePoint >= 0xA9_60 && codePoint <= 0xA9_7C) ||
-    (codePoint >= 0xAC_00 && codePoint <= 0xD7_A3) ||
-    (codePoint >= 0xF9_00 && codePoint <= 0xFA_FF) ||
-    (codePoint >= 0xFE_10 && codePoint <= 0xFE_19) ||
-    (codePoint >= 0xFE_30 && codePoint <= 0xFE_6B) ||
-    (codePoint >= 0xFF_01 && codePoint <= 0xFF_60) ||
-    (codePoint >= 0xFF_E0 && codePoint <= 0xFF_E6) ||
-    (codePoint >= 0x1_AF_F0 && codePoint <= 0x1_AF_F3) ||
-    (codePoint >= 0x1_AF_F5 && codePoint <= 0x1_AF_FB) ||
-    (codePoint >= 0x1_AF_FD && codePoint <= 0x1_AF_FE) ||
-    (codePoint >= 0x1_B0_00 && codePoint <= 0x1_B2_FF) ||
-    (codePoint >= 0x1_F2_00 && codePoint <= 0x1_F2_51) ||
-    (codePoint >= 0x2_00_00 && codePoint <= 0x3_FF_FD)
+    codePoint === 0x23_2a ||
+    (codePoint >= 0x2e_80 && codePoint <= 0x32_47 && codePoint !== 0x30_3f) ||
+    (codePoint >= 0x32_50 && codePoint <= 0x4d_bf) ||
+    (codePoint >= 0x4e_00 && codePoint <= 0xa4_c6) ||
+    (codePoint >= 0xa9_60 && codePoint <= 0xa9_7c) ||
+    (codePoint >= 0xac_00 && codePoint <= 0xd7_a3) ||
+    (codePoint >= 0xf9_00 && codePoint <= 0xfa_ff) ||
+    (codePoint >= 0xfe_10 && codePoint <= 0xfe_19) ||
+    (codePoint >= 0xfe_30 && codePoint <= 0xfe_6b) ||
+    (codePoint >= 0xff_01 && codePoint <= 0xff_60) ||
+    (codePoint >= 0xff_e0 && codePoint <= 0xff_e6) ||
+    (codePoint >= 0x1_af_f0 && codePoint <= 0x1_af_f3) ||
+    (codePoint >= 0x1_af_f5 && codePoint <= 0x1_af_fb) ||
+    (codePoint >= 0x1_af_fd && codePoint <= 0x1_af_fe) ||
+    (codePoint >= 0x1_b0_00 && codePoint <= 0x1_b2_ff) ||
+    (codePoint >= 0x1_f2_00 && codePoint <= 0x1_f2_51) ||
+    (codePoint >= 0x2_00_00 && codePoint <= 0x3_ff_fd)
   );
 }
 

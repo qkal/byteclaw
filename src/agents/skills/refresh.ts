@@ -148,7 +148,7 @@ export function ensureSkillsWatcher(params: { workspaceDir: string; config?: Ope
       clearTimeout(state.timer);
     }
     state.timer = setTimeout(() => {
-      const {pendingPath} = state;
+      const { pendingPath } = state;
       state.pendingPath = undefined;
       state.timer = undefined;
       bumpSkillsSnapshotVersion({

@@ -133,7 +133,7 @@ const mediaHarnessDispatchReplyWithBufferedBlockDispatcher = vi.hoisted(() =>
   vi.fn<DispatchReplyWithBufferedBlockDispatcherFn>(async (params: DispatchReplyHarnessParams) => {
     await params.dispatcherOptions.typingCallbacks?.onReplyStart?.();
     const reply = await mediaHarnessReplySpy(params.ctx, params.replyOptions);
-    const payloads = reply === undefined ? [] : (Array.isArray(reply) ? reply : [reply]);
+    const payloads = reply === undefined ? [] : Array.isArray(reply) ? reply : [reply];
     for (const payload of payloads) {
       await params.dispatcherOptions?.deliver?.(payload, { kind: "final" });
     }

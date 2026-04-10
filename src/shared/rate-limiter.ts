@@ -6,7 +6,7 @@
 export interface RateLimitOptions {
   maxRequests: number;
   windowMs: number;
-  strategy?: 'tokenBucket' | 'slidingWindow' | 'fixedWindow';
+  strategy?: "tokenBucket" | "slidingWindow" | "fixedWindow";
   keyGenerator?: (identifier: string) => string;
 }
 
@@ -25,7 +25,7 @@ export class RateLimiter {
     this.options = {
       maxRequests: options.maxRequests,
       windowMs: options.windowMs,
-      strategy: options.strategy ?? 'slidingWindow',
+      strategy: options.strategy ?? "slidingWindow",
       keyGenerator: options.keyGenerator ?? ((id) => id),
     };
   }
@@ -36,13 +36,13 @@ export class RateLimiter {
   check(identifier: string): RateLimitResult {
     const key = this.options.keyGenerator(identifier);
     const now = Date.now();
-    
+
     switch (this.options.strategy) {
-      case 'tokenBucket':
+      case "tokenBucket":
         return this.tokenBucketCheck(key, now);
-      case 'slidingWindow':
+      case "slidingWindow":
         return this.slidingWindowCheck(key, now);
-      case 'fixedWindow':
+      case "fixedWindow":
         return this.fixedWindowCheck(key, now);
       default:
         return this.slidingWindowCheck(key, now);
@@ -76,7 +76,7 @@ export class RateLimiter {
 
   private tokenBucketCheck(key: string, now: number): RateLimitResult {
     let state = this.store.get(key);
-    
+
     if (!state) {
       state = {
         tokens: this.options.maxRequests,
@@ -112,7 +112,7 @@ export class RateLimiter {
 
   private slidingWindowCheck(key: string, now: number): RateLimitResult {
     let state = this.store.get(key);
-    
+
     if (!state) {
       state = {
         tokens: this.options.maxRequests,
@@ -146,9 +146,9 @@ export class RateLimiter {
 
   private fixedWindowCheck(key: string, now: number): RateLimitResult {
     let state = this.store.get(key);
-    
+
     const windowStart = Math.floor(now / this.options.windowMs) * this.options.windowMs;
-    
+
     if (!state || state.lastRefill < windowStart) {
       state = {
         tokens: this.options.maxRequests,
@@ -200,5 +200,5 @@ export function createRateLimitMiddleware(options: RateLimitOptions) {
 export const defaultRateLimiter = new RateLimiter({
   maxRequests: 100,
   windowMs: 60000, // 1 minute
-  strategy: 'slidingWindow',
+  strategy: "slidingWindow",
 });

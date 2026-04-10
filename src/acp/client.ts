@@ -101,9 +101,9 @@ function promptUserPermission(toolName: string | undefined, toolTitle?: string):
     }, 30_000);
 
     const label = toolTitle
-      ? (toolName
+      ? toolName
         ? `${toolTitle} (${toolName})`
-        : toolTitle)
+        : toolTitle
       : (toolName ?? "unknown tool");
     rl.question(`\n[permission] Allow "${label}"? (y/N) `, (answer) => {
       const approved = normalizeLowercaseStringOrEmpty(answer) === "y";
@@ -123,7 +123,7 @@ export async function resolvePermissionRequest(
   const options = params.options ?? [];
   const toolTitle = sanitizeTerminalText(params.toolCall?.title ?? "tool");
   const classification = classifyAcpToolApproval({ cwd, toolCall: params.toolCall });
-  const {toolName} = classification;
+  const { toolName } = classification;
   const toolKind = resolveToolKindForPermission(toolName, classification.approvalClass);
 
   if (options.length === 0) {
@@ -294,7 +294,7 @@ function resolveSelfEntryPath(): string | null {
 }
 
 function printSessionUpdate(notification: SessionNotification): void {
-  const {update} = notification;
+  const { update } = notification;
   if (!("sessionUpdate" in update)) {
     return;
   }
@@ -383,7 +383,8 @@ export async function createAcpClient(opts: AcpClientOptions = {}): Promise<AcpC
 
   const client = new ClientSideConnection(
     () => ({
-      requestPermission: async (params: RequestPermissionRequest) => resolvePermissionRequest(params, { cwd }),
+      requestPermission: async (params: RequestPermissionRequest) =>
+        resolvePermissionRequest(params, { cwd }),
       sessionUpdate: async (params: SessionNotification) => {
         printSessionUpdate(params);
       },

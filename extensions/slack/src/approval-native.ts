@@ -26,7 +26,10 @@ import {
 import { parseSlackTarget } from "./targets.js";
 
 type ApprovalRequest = ExecApprovalRequest | PluginApprovalRequest;
-interface SlackOriginTarget { to: string; threadId?: string }
+interface SlackOriginTarget {
+  to: string;
+  threadId?: string;
+}
 
 function extractSlackSessionKind(
   sessionKey?: string | null,
@@ -68,9 +71,9 @@ function resolveTurnSourceSlackOriginTarget(request: ApprovalRequest): SlackOrig
   const threadId =
     typeof request.request.turnSourceThreadId === "string"
       ? normalizeOptionalString(request.request.turnSourceThreadId)
-      : (typeof request.request.turnSourceThreadId === "number"
+      : typeof request.request.turnSourceThreadId === "number"
         ? String(request.request.turnSourceThreadId)
-        : undefined);
+        : undefined;
   return {
     threadId,
     to: `${parsed.kind}:${parsed.id}`,
@@ -85,9 +88,9 @@ function resolveSessionSlackOriginTarget(sessionTarget: {
     threadId:
       typeof sessionTarget.threadId === "string"
         ? normalizeOptionalString(sessionTarget.threadId)
-        : (typeof sessionTarget.threadId === "number"
+        : typeof sessionTarget.threadId === "number"
           ? String(sessionTarget.threadId)
-          : undefined),
+          : undefined,
     to: sessionTarget.to,
   };
 }

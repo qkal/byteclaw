@@ -76,7 +76,7 @@ export function resolveToolNameForPermission(params: {
     rawInput?: unknown;
   };
 }): string | undefined {
-  const {toolCall} = params;
+  const { toolCall } = params;
   const toolMeta = asRecord(toolCall?._meta);
   const rawInput = asRecord(toolCall?.rawInput);
 

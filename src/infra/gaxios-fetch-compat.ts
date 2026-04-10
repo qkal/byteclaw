@@ -203,7 +203,7 @@ function hasGaxiosConstructorShape(value: unknown): value is GaxiosConstructor {
 
 function getTestGaxiosConstructorOverride(): GaxiosConstructor | null | undefined {
   const testGlobal = globalThis as Record<string, unknown>;
-  if (! Object.hasOwn(testGlobal, TEST_GAXIOS_CONSTRUCTOR_OVERRIDE)) {
+  if (!Object.hasOwn(testGlobal, TEST_GAXIOS_CONSTRUCTOR_OVERRIDE)) {
     return undefined;
   }
   const override = testGlobal[TEST_GAXIOS_CONSTRUCTOR_OVERRIDE];
@@ -302,7 +302,7 @@ export async function installGaxiosFetchCompat(): Promise<void> {
       return;
     }
 
-    const {prototype} = Gaxios;
+    const { prototype } = Gaxios;
     const originalDefaultAdapter = prototype._defaultAdapter;
     const compatFetch = createGaxiosCompatFetch();
 

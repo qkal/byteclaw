@@ -97,7 +97,7 @@ function resolveMissingProperty(error: ErrorObject): string | null {
   ) {
     return null;
   }
-  const {missingProperty} = (error.params as { missingProperty?: unknown });
+  const { missingProperty } = error.params as { missingProperty?: unknown };
   return typeof missingProperty === "string" && missingProperty.trim() ? missingProperty : null;
 }
 
@@ -112,13 +112,13 @@ function resolveAjvErrorPath(error: ErrorObject): string {
 
 function extractAllowedValues(error: ErrorObject): unknown[] | null {
   if (error.keyword === "enum") {
-    const {allowedValues} = (error.params as { allowedValues?: unknown });
+    const { allowedValues } = error.params as { allowedValues?: unknown };
     return Array.isArray(allowedValues) ? allowedValues : null;
   }
 
   if (error.keyword === "const") {
     const params = error.params as { allowedValue?: unknown };
-    if (! Object.hasOwn(params, "allowedValue")) {
+    if (!Object.hasOwn(params, "allowedValue")) {
       return null;
     }
     return [params.allowedValue];

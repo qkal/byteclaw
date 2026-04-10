@@ -646,9 +646,9 @@ async function appendSessionCorpusLines(params: {
   const existingLineCount =
     normalizedExisting.length === 0
       ? 0
-      : (normalizedExisting.endsWith("\n")
+      : normalizedExisting.endsWith("\n")
         ? normalizedExisting.slice(0, -1).split("\n").length
-        : normalizedExisting.split("\n").length);
+        : normalizedExisting.split("\n").length;
   const payload = `${params.lines.map((entry) => entry.rendered).join("\n")}\n`;
   await fs.appendFile(absolutePath, payload, "utf8");
   return params.lines.map((entry, index) => {

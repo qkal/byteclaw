@@ -3,8 +3,8 @@ import { parseIMessageNotification } from "./parse-notification.js";
 
 describe("parseIMessageNotification", () => {
   it("strips a length-delimited field wrapper from text and reply_to_text", () => {
-    const wrappedText = `${String.fromCharCode(0x0A, 11)}hello world`;
-    const wrappedReply = `${String.fromCharCode(0x0A, 5)}quote`;
+    const wrappedText = `${String.fromCharCode(0x0a, 11)}hello world`;
+    const wrappedReply = `${String.fromCharCode(0x0a, 5)}quote`;
     const raw = {
       message: {
         attachments: null,

@@ -11,7 +11,7 @@ function readApprovalNotFoundDetailsReason(value: unknown): string | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return null;
   }
-  const {reason} = (value as { reason?: unknown });
+  const { reason } = value as { reason?: unknown };
   return typeof reason === "string" ? (normalizeOptionalString(reason) ?? null) : null;
 }
 

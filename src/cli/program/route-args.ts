@@ -226,9 +226,9 @@ export function parseModelsStatusRouteArgs(argv: string[]) {
   const probeProfile =
     probeProfileValues.length === 0
       ? undefined
-      : (probeProfileValues.length === 1
+      : probeProfileValues.length === 1
         ? probeProfileValues[0]
-        : probeProfileValues);
+        : probeProfileValues;
   return {
     agent: agent.value,
     check: hasFlag(argv, "--check"),

@@ -114,7 +114,7 @@ export function createMattermostClient(params: {
 
   const guardedFetchImpl: MattermostFetch = async (input, init) => {
     const url =
-      typeof input === "string" ? input : (input instanceof URL ? input.toString() : input.url);
+      typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
     const { response, release } = await fetchWithSsrFGuard({
       auditContext: "mattermost-api",
       init,
@@ -448,7 +448,7 @@ function readErrorMessage(error: unknown): string | undefined {
   if (!error || typeof error !== "object") {
     return undefined;
   }
-  const {message} = (error as { message?: unknown });
+  const { message } = error as { message?: unknown };
   return typeof message === "string" && message.trim() ? message : undefined;
 }
 
@@ -456,7 +456,7 @@ function readErrorName(error: unknown): string | undefined {
   if (!error || typeof error !== "object") {
     return undefined;
   }
-  const {name} = (error as { name?: unknown });
+  const { name } = error as { name?: unknown };
   return typeof name === "string" && name.trim() ? name : undefined;
 }
 

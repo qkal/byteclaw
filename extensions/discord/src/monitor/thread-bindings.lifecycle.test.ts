@@ -102,7 +102,7 @@ describe("thread binding lifecycle", () => {
     );
     vi.spyOn(discordThreadBindingApi, "createWebhookForChannel").mockImplementation(
       async (params) => {
-        const {rest} = hoisted.createDiscordRestClient(
+        const { rest } = hoisted.createDiscordRestClient(
           {
             accountId: params.accountId,
             token: params.token,
@@ -126,7 +126,7 @@ describe("thread binding lifecycle", () => {
         if (explicit) {
           return explicit;
         }
-        const {rest} = hoisted.createDiscordRestClient(
+        const { rest } = hoisted.createDiscordRestClient(
           {
             accountId: params.accountId,
             token: params.token,
@@ -143,9 +143,9 @@ describe("thread binding lifecycle", () => {
         const parentId =
           typeof channel?.parent_id === "string"
             ? channel.parent_id.trim()
-            : (typeof channel?.parentId === "string"
+            : typeof channel?.parentId === "string"
               ? channel.parentId.trim()
-              : "");
+              : "";
         const isThreadType =
           channel?.type === ChannelType.PublicThread ||
           channel?.type === ChannelType.PrivateThread ||

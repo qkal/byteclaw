@@ -123,7 +123,7 @@ export function readStatusIssueFields<TField extends string>(
 }
 
 export function coerceStatusIssueAccountId(value: unknown): string | undefined {
-  return typeof value === "string" ? value : (typeof value === "number" ? String(value) : undefined);
+  return typeof value === "string" ? value : typeof value === "number" ? String(value) : undefined;
 }
 
 export function createDeferred<T>() {

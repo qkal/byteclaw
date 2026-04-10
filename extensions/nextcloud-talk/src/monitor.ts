@@ -208,8 +208,8 @@ export function createNextcloudTalkWebhookServer(opts: NextcloudTalkWebhookServe
       ? Math.floor(opts.maxBodyBytes)
       : DEFAULT_WEBHOOK_MAX_BODY_BYTES;
   const readBody = opts.readBody ?? readNextcloudTalkWebhookBody;
-  const {isBackendAllowed} = opts;
-  const {shouldProcessMessage} = opts;
+  const { isBackendAllowed } = opts;
+  const { shouldProcessMessage } = opts;
   const webhookAuthRateLimiter = createAuthRateLimiter({
     exemptLoopback: false,
     lockoutMs: WEBHOOK_RATE_LIMIT_DEFAULTS.windowMs,
@@ -274,7 +274,7 @@ export function createNextcloudTalkWebhookServer(opts: NextcloudTalkWebhookServe
         return;
       }
 
-      const {message} = decoded;
+      const { message } = decoded;
       if (shouldProcessMessage) {
         const shouldProcess = await shouldProcessMessage(message);
         if (!shouldProcess) {
@@ -305,7 +305,8 @@ export function createNextcloudTalkWebhookServer(opts: NextcloudTalkWebhookServe
     }
   });
 
-  const start = (): Promise<void> => new Promise((resolve) => {
+  const start = (): Promise<void> =>
+    new Promise((resolve) => {
       server.listen(port, host, () => resolve());
     });
 

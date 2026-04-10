@@ -318,9 +318,9 @@ async function listAgentFiles(workspaceDir: string, options?: { hideBootstrap?: 
     const meta =
       resolved.kind === "ready"
         ? await statFileSafely(resolved.ioPath)
-        : (resolved.kind === "missing"
+        : resolved.kind === "missing"
           ? null
-          : null);
+          : null;
     if (meta) {
       files.push({
         missing: false,

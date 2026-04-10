@@ -15,17 +15,20 @@ import { createChannelManager } from "./server-channels.js";
 
 const hoisted = vi.hoisted(() => {
   const computeBackoff = vi.fn(() => 10);
-  const sleepWithAbort = vi.fn((ms: number, abortSignal?: AbortSignal) => new Promise<void>((resolve, reject) => {
-      const timer = setTimeout(() => resolve(), ms);
-      abortSignal?.addEventListener(
-        "abort",
-        () => {
-          clearTimeout(timer);
-          reject(new Error("aborted"));
-        },
-        { once: true },
-      );
-    }));
+  const sleepWithAbort = vi.fn(
+    (ms: number, abortSignal?: AbortSignal) =>
+      new Promise<void>((resolve, reject) => {
+        const timer = setTimeout(() => resolve(), ms);
+        abortSignal?.addEventListener(
+          "abort",
+          () => {
+            clearTimeout(timer);
+            reject(new Error("aborted"));
+          },
+          { once: true },
+        );
+      }),
+  );
   return { computeBackoff, sleepWithAbort };
 });
 

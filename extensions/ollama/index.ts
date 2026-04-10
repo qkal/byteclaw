@@ -236,7 +236,8 @@ export default definePluginEntry({
         }
         await ensureOllamaModelPulled({ config, model, prompter });
       },
-      createStreamFn: ({ config, model, provider }) => createConfiguredOllamaStreamFn({
+      createStreamFn: ({ config, model, provider }) =>
+        createConfiguredOllamaStreamFn({
           model,
           providerBaseUrl: resolveConfiguredOllamaProviderConfig({ config, providerId: provider })
             ?.baseUrl,

@@ -59,7 +59,7 @@ const EMBEDDED_IPV4_SENTINEL_RULES: {
     // NAT64 local-use prefix: 64:ff9b:1::/48.
     matches: (parts) =>
       parts[0] === 0x00_64 &&
-      parts[1] === 0xFF_9B &&
+      parts[1] === 0xff_9b &&
       parts[2] === 0x00_01 &&
       parts[3] === 0 &&
       parts[4] === 0 &&
@@ -74,11 +74,11 @@ const EMBEDDED_IPV4_SENTINEL_RULES: {
   {
     // Teredo prefix: 2001:0000::/32 (client IPv4 XOR 0xffff in hextets 6..7).
     matches: (parts) => parts[0] === 0x20_01 && parts[1] === 0x00_00,
-    toHextets: (parts) => [parts[6] ^ 0xFF_FF, parts[7] ^ 0xFF_FF],
+    toHextets: (parts) => [parts[6] ^ 0xff_ff, parts[7] ^ 0xff_ff],
   },
   {
     // ISATAP IID marker: ....:0000:5efe:w.x.y.z with u/g bits allowed in hextet 4.
-    matches: (parts) => (parts[4] & 0xFC_FF) === 0 && parts[5] === 0x5E_FE,
+    matches: (parts) => (parts[4] & 0xfc_ff) === 0 && parts[5] === 0x5e_fe,
     toHextets: (parts) => [parts[6], parts[7]],
   },
 ];
@@ -245,7 +245,7 @@ export function isBlockedSpecialUseIpv6Address(address: ipaddr.IPv6): boolean {
     return true;
   }
   // Ipaddr.js does not classify deprecated site-local fec0::/10 as private.
-  return (address.parts[0] & 0xFF_C0) === 0xFE_C0;
+  return (address.parts[0] & 0xff_c0) === 0xfe_c0;
 }
 
 export function isRfc1918Ipv4Address(raw: string | undefined): boolean {
@@ -277,10 +277,10 @@ export function isBlockedSpecialUseIpv4Address(
 
 function decodeIpv4FromHextets(high: number, low: number): ipaddr.IPv4 {
   const octets: [number, number, number, number] = [
-    (high >>> 8) & 0xFF,
-    high & 0xFF,
-    (low >>> 8) & 0xFF,
-    low & 0xFF,
+    (high >>> 8) & 0xff,
+    high & 0xff,
+    (low >>> 8) & 0xff,
+    low & 0xff,
   ];
   return ipaddr.IPv4.parse(octets.join("."));
 }

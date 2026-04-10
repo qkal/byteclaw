@@ -143,9 +143,9 @@ export function resolveEffectiveBlockStreamingConfig(params: {
       coalescingDefaults?.joiner ??
       (chunking.breakPreference === "sentence"
         ? " "
-        : (chunking.breakPreference === "newline"
+        : chunking.breakPreference === "newline"
           ? "\n"
-          : "\n\n")),
+          : "\n\n"),
     maxChars: coalescingMax,
     minChars: coalescingMin,
     ...(coalescingDefaults?.flushOnEnqueue === true ? { flushOnEnqueue: true } : {}),
@@ -228,7 +228,7 @@ export function resolveBlockStreamingCoalescing(
     ),
   );
   const preference = chunking?.breakPreference ?? "paragraph";
-  const joiner = preference === "sentence" ? " " : (preference === "newline" ? "\n" : "\n\n");
+  const joiner = preference === "sentence" ? " " : preference === "newline" ? "\n" : "\n\n";
   return {
     idleMs,
     joiner,

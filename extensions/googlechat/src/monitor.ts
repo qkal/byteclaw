@@ -146,8 +146,8 @@ async function processMessageWithPipeline(params: {
   mediaMaxMb: number;
 }): Promise<void> {
   const { event, account, config, runtime, core, statusSink, mediaMaxMb } = params;
-  const {space} = event;
-  const {message} = event;
+  const { space } = event;
+  const { message } = event;
   if (!space || !message) {
     return;
   }
@@ -381,9 +381,9 @@ async function deliverGoogleChatReply(params: {
   const { payload, account, spaceId, runtime, core, config, statusSink, typingMessageName } =
     params;
   const reply = resolveSendableOutboundReplyParts(payload);
-  const {mediaCount} = reply;
-  const {hasMedia} = reply;
-  const {text} = reply;
+  const { mediaCount } = reply;
+  const { hasMedia } = reply;
+  const { text } = reply;
   let firstTextChunk = true;
   let suppressCaption = false;
 
@@ -398,9 +398,9 @@ async function deliverGoogleChatReply(params: {
         runtime.error?.(`Google Chat typing cleanup failed: ${String(error)}`);
         const fallbackText = reply.hasText
           ? text
-          : (mediaCount > 1
+          : mediaCount > 1
             ? "Sent attachments."
-            : "Sent attachment.");
+            : "Sent attachment.";
         try {
           await updateGoogleChatMessage({
             account,

@@ -184,9 +184,9 @@ export function buildTogetherVideoGenerationProvider(): VideoGenerationProvider 
         const input = req.inputImages[0];
         const value = normalizeOptionalString(input.url)
           ? normalizeOptionalString(input.url)
-          : (input.buffer
+          : input.buffer
             ? toDataUrl(input.buffer, normalizeOptionalString(input.mimeType) ?? "image/png")
-            : undefined);
+            : undefined;
         if (!value) {
           throw new Error("Together reference image is missing image data.");
         }

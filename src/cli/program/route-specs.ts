@@ -15,7 +15,7 @@ export interface RouteSpec {
 
 function createCommandLoadPlugins(commandPath: readonly string[]): (argv: string[]) => boolean {
   return (argv) => {
-    const {loadPlugins} = resolveCliCommandPathPolicy([...commandPath]);
+    const { loadPlugins } = resolveCliCommandPathPolicy([...commandPath]);
     return loadPlugins === "always" || (loadPlugins === "text-only" && !hasFlag(argv, "--json"));
   };
 }

@@ -22,7 +22,11 @@ installGatewayTestHooks({ scope: "suite" });
 
 type GatewayHarness = Awaited<ReturnType<typeof createGatewaySuiteHarness>>;
 type GatewaySocket = Awaited<ReturnType<GatewayHarness["openWs"]>>;
-interface SecretRef { source?: string; provider?: string; id?: string }
+interface SecretRef {
+  source?: string;
+  provider?: string;
+  id?: string;
+}
 interface TalkConfigPayload {
   config?: {
     talk?: {

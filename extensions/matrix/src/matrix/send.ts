@@ -468,11 +468,9 @@ async function getPreviousMatrixEvent(
   roomId: string,
   eventId: string,
 ): Promise<Record<string, unknown> | null> {
-  const {getEvent} = (
-    client as {
-      getEvent?: (roomId: string, eventId: string) => Promise<Record<string, unknown>>;
-    }
-  );
+  const { getEvent } = client as {
+    getEvent?: (roomId: string, eventId: string) => Promise<Record<string, unknown>>;
+  };
   if (typeof getEvent !== "function") {
     return null;
   }

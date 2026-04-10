@@ -179,7 +179,7 @@ export async function ensureSandboxBrowser(params: {
 
   const now = Date.now();
   let hasContainer = state.exists;
-  let {running} = state;
+  let { running } = state;
   let currentHash: string | null = null;
   let hashMismatch = false;
   const noVncEnabled = isNoVncEnabled(params.cfg.browser);

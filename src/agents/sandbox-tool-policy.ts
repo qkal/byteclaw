@@ -11,10 +11,10 @@ function unionAllow(base?: string[], extra?: string[]): string[] | undefined {
     return base;
   }
   if (!Array.isArray(base)) {
-    return [...new Set(['*', ...extra])];
+    return [...new Set(["*", ...extra])];
   }
   if (base.length === 0) {
-    return [...new Set(['*', ...extra])];
+    return [...new Set(["*", ...extra])];
   }
   return [...new Set([...base, ...extra])];
 }
@@ -27,9 +27,9 @@ export function pickSandboxToolPolicy(
   }
   const allow = Array.isArray(config.allow)
     ? unionAllow(config.allow, config.alsoAllow)
-    : (Array.isArray(config.alsoAllow) && config.alsoAllow.length > 0
+    : Array.isArray(config.alsoAllow) && config.alsoAllow.length > 0
       ? unionAllow(undefined, config.alsoAllow)
-      : undefined);
+      : undefined;
   const deny = Array.isArray(config.deny) ? config.deny : undefined;
   if (!allow && !deny) {
     return undefined;

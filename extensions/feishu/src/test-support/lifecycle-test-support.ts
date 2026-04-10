@@ -341,7 +341,7 @@ export async function expectFeishuReplyPipelineDedupedAcrossReplay(params: {
   createFeishuReplyDispatcherMock: ReturnType<typeof vi.fn>;
   waitTimeoutMs?: number;
 }) {
-  const {waitTimeoutMs} = params;
+  const { waitTimeoutMs } = params;
   await replayFeishuLifecycleEvent({
     event: params.event,
     handler: params.handler,

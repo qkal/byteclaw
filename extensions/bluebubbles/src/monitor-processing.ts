@@ -610,9 +610,9 @@ export async function processMessage(
   });
   const isTapbackMessage = Boolean(tapbackParsed);
   const rawBody = tapbackParsed
-    ? (tapbackParsed.action === "removed"
+    ? tapbackParsed.action === "removed"
       ? `removed ${tapbackParsed.emoji} reaction`
-      : `reacted with ${tapbackParsed.emoji}`)
+      : `reacted with ${tapbackParsed.emoji}`
     : text || placeholder;
   const isSelfChatMessage = isBlueBubblesSelfChatMessage(message, isGroup);
   const selfChatLookup = {
@@ -725,8 +725,8 @@ export async function processMessage(
       }),
     storeAllowFrom,
   });
-  const {effectiveAllowFrom} = accessDecision;
-  const {effectiveGroupAllowFrom} = accessDecision;
+  const { effectiveAllowFrom } = accessDecision;
+  const { effectiveGroupAllowFrom } = accessDecision;
   const groupAllowEntry = formatGroupAllowlistEntry({
     chatGuid: message.chatGuid,
     chatId: message.chatId ?? undefined,
@@ -900,7 +900,7 @@ export async function processMessage(
     hasControlCommand: hasControlCmd,
     useAccessGroups,
   });
-  const {commandAuthorized} = commandGate;
+  const { commandAuthorized } = commandGate;
 
   // Block control commands from unauthorized senders in groups
   if (isGroup && commandGate.shouldBlock) {
@@ -1016,9 +1016,9 @@ export async function processMessage(
       }
     }
   }
-  let {replyToId} = message;
-  let {replyToBody} = message;
-  let {replyToSender} = message;
+  let { replyToId } = message;
+  let { replyToBody } = message;
+  let { replyToSender } = message;
   let replyToShortId: string | undefined;
 
   if (isTapbackMessage && tapbackContext?.replyToId) {
@@ -1060,7 +1060,7 @@ export async function processMessage(
   const replySenderAllowed =
     !isGroup || effectiveGroupAllowFrom.length === 0
       ? true
-      : (replyToSender
+      : replyToSender
         ? isAllowedBlueBubblesSender({
             allowFrom: effectiveGroupAllowFrom,
             chatGuid: message.chatGuid ?? undefined,
@@ -1068,7 +1068,7 @@ export async function processMessage(
             chatIdentifier: message.chatIdentifier ?? undefined,
             sender: replyToSender,
           })
-        : false);
+        : false;
   const includeReplyContext =
     !hasReplyContext ||
     evaluateSupplementalContextVisibility({
@@ -1096,9 +1096,9 @@ export async function processMessage(
     replyToShortId: visibleReplyToShortId,
   });
   const baseBody = replyTag
-    ? (isTapbackMessage
+    ? isTapbackMessage
       ? `${rawBody} ${replyTag}`
-      : `${replyTag} ${rawBody}`)
+      : `${replyTag} ${rawBody}`
     : rawBody;
   // Build fromLabel the same way as iMessage/Signal (formatInboundFromLabel):
   // Group label + id for groups, sender for DMs.
@@ -1106,9 +1106,9 @@ export async function processMessage(
   const senderLabel = message.senderName || `user:${message.senderId}`;
   const fromLabel = isGroup
     ? `${normalizeOptionalString(message.chatName) || "Group"} id:${peerId}`
-    : (senderLabel !== message.senderId
+    : senderLabel !== message.senderId
       ? `${senderLabel} id:${message.senderId}`
-      : senderLabel);
+      : senderLabel;
   const groupSubject = isGroup ? normalizeOptionalString(message.chatName) : undefined;
   const groupMembers = isGroup
     ? formatGroupMembers({
@@ -1138,9 +1138,9 @@ export async function processMessage(
   if (!chatGuidForActions && baseUrl && password) {
     const resolveTarget =
       isGroup && (chatId || chatIdentifier)
-        ? (chatId
+        ? chatId
           ? ({ chatId, kind: "chat_id" } as const)
-          : ({ chatIdentifier: chatIdentifier ?? "", kind: "chat_identifier" } as const))
+          : ({ chatIdentifier: chatIdentifier ?? "", kind: "chat_identifier" } as const)
         : ({ address: message.senderId, kind: "handle" } as const);
     if (resolveTarget.kind !== "chat_identifier" || resolveTarget.chatIdentifier) {
       chatGuidForActions =
@@ -1220,9 +1220,9 @@ export async function processMessage(
         chatId,
         chatIdentifier,
       }) || peerId
-    : (chatGuidForActions
+    : chatGuidForActions
       ? formatBlueBubblesChatTarget({ chatGuid: chatGuidForActions })
-      : message.senderId);
+      : message.senderId;
 
   const maybeEnqueueOutboundMessageId = (messageId?: string, snippet?: string): boolean => {
     const trimmed = messageId?.trim();

@@ -180,7 +180,7 @@ function resolveLinkedPeerId(params: {
   channel: string;
   peerId: string;
 }): string | null {
-  const {identityLinks} = params;
+  const { identityLinks } = params;
   if (!identityLinks) {
     return null;
   }

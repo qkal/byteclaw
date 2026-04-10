@@ -118,14 +118,14 @@ export function collectRuntimeConfigAssignments(params: {
   const surface = resolveChannelAccountSurface(googleChat as Record<string, unknown>);
   const topLevelServiceAccountActive = !surface.channelEnabled
     ? false
-    : (!surface.hasExplicitAccounts
+    : !surface.hasExplicitAccounts
       ? true
       : surface.accounts.some(
           ({ account, enabled }) =>
             enabled &&
             !hasOwnProperty(account, "serviceAccount") &&
             !hasOwnProperty(account, "serviceAccountRef"),
-        ));
+        );
   collectGoogleChatAccountAssignment({
     active: topLevelServiceAccountActive,
     context: params.context,

@@ -4,7 +4,12 @@ import { resolveDiscordChannelAllowlist } from "./resolve-channels.js";
 import { jsonResponse, urlToString } from "./test-http-helpers.js";
 
 describe("resolveDiscordChannelAllowlist", () => {
-  interface DiscordChannel { id: string; name: string; guild_id: string; type: number }
+  interface DiscordChannel {
+    id: string;
+    name: string;
+    guild_id: string;
+    type: number;
+  }
 
   async function resolveWithChannelLookup(params: {
     guilds: { id: string; name: string }[];

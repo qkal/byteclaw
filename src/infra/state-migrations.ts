@@ -961,7 +961,7 @@ export async function runLegacyStateMigrations(params: {
   now?: () => number;
 }): Promise<{ changes: string[]; warnings: string[] }> {
   const now = params.now ?? (() => Date.now());
-  const {detected} = params;
+  const { detected } = params;
   const sessions = await migrateLegacySessions(detected, now);
   const agentDir = await migrateLegacyAgentDir(detected, now);
   const channelPlans = await migrateChannelLegacyStatePlans(detected);

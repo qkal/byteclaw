@@ -1,4 +1,7 @@
-export interface ScopedExpiringIdCache<TScope extends string | number, TId extends string | number> {
+export interface ScopedExpiringIdCache<
+  TScope extends string | number,
+  TId extends string | number,
+> {
   record: (scope: TScope, id: TId, now?: number) => void;
   has: (scope: TScope, id: TId, now?: number) => boolean;
   clear: () => void;

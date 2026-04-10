@@ -81,7 +81,7 @@ export async function configureGatewayForSetup(
           ],
         });
 
-  let {customBindHost} = quickstartGateway;
+  let { customBindHost } = quickstartGateway;
   if (bind === "custom") {
     const needsPrompt = flow !== "quickstart" || !customBindHost;
     if (needsPrompt) {
@@ -164,9 +164,9 @@ export async function configureGatewayForSetup(
     }).ref;
     const tokenMode =
       flow === "quickstart" && opts.secretInputMode !== "ref" // Pragma: allowlist secret
-        ? (quickstartTokenRef
+        ? quickstartTokenRef
           ? "ref"
-          : "plaintext")
+          : "plaintext"
         : await resolveSecretInputModeForEnvSelection({
             copy: {
               modeMessage: "How do you want to provide the gateway token?",

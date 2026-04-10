@@ -3,7 +3,11 @@ import type { SessionManager } from "@mariozechner/pi-coding-agent";
 import { expect, vi } from "vitest";
 import type { TranscriptPolicy } from "./transcript-policy.js";
 
-export interface SessionEntry { type: string; customType: string; data: unknown }
+export interface SessionEntry {
+  type: string;
+  customType: string;
+  data: unknown;
+}
 export type SanitizeSessionHistoryFn = (params: {
   messages: AgentMessage[];
   modelApi: string;

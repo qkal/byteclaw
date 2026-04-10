@@ -126,46 +126,46 @@ export function mapHookExternalContentSource(
   return source === "gmail" ? "email" : "webhook";
 }
 
-const FULLWIDTH_ASCII_OFFSET = 0xFE_E0;
+const FULLWIDTH_ASCII_OFFSET = 0xfe_e0;
 
 // Map of Unicode angle bracket homoglyphs to their ASCII equivalents.
 const ANGLE_BRACKET_MAP: Record<number, string> = {
-  0xFF_1C: "<", // Fullwidth <
-  0xFF_1E: ">", // Fullwidth >
+  0xff_1c: "<", // Fullwidth <
+  0xff_1e: ">", // Fullwidth >
   0x23_29: "<", // Left-pointing angle bracket
-  0x23_2A: ">", // Right-pointing angle bracket
+  0x23_2a: ">", // Right-pointing angle bracket
   0x30_08: "<", // CJK left angle bracket
   0x30_09: ">", // CJK right angle bracket
   0x20_39: "<", // Single left-pointing angle quotation mark
-  0x20_3A: ">", // Single right-pointing angle quotation mark
-  0x27_E8: "<", // Mathematical left angle bracket
-  0x27_E9: ">", // Mathematical right angle bracket
-  0xFE_64: "<", // Small less-than sign
-  0xFE_65: ">", // Small greater-than sign
-  0x00_AB: "<", // Left-pointing double angle quotation mark
-  0x00_BB: ">", // Right-pointing double angle quotation mark
-  0x30_0A: "<", // Left double angle bracket
-  0x30_0B: ">", // Right double angle bracket
-  0x27_EA: "<", // Mathematical left double angle bracket
-  0x27_EB: ">", // Mathematical right double angle bracket
-  0x27_EC: "<", // Mathematical left white tortoise shell bracket
-  0x27_ED: ">", // Mathematical right white tortoise shell bracket
-  0x27_EE: "<", // Mathematical left flattened parenthesis
-  0x27_EF: ">", // Mathematical right flattened parenthesis
-  0x27_6C: "<", // Medium left-pointing angle bracket ornament
-  0x27_6D: ">", // Medium right-pointing angle bracket ornament
-  0x27_6E: "<", // Heavy left-pointing angle quotation mark ornament
-  0x27_6F: ">", // Heavy right-pointing angle quotation mark ornament
-  0x02_C2: "<", // Modifier letter left arrowhead
-  0x02_C3: ">", // Modifier letter right arrowhead
+  0x20_3a: ">", // Single right-pointing angle quotation mark
+  0x27_e8: "<", // Mathematical left angle bracket
+  0x27_e9: ">", // Mathematical right angle bracket
+  0xfe_64: "<", // Small less-than sign
+  0xfe_65: ">", // Small greater-than sign
+  0x00_ab: "<", // Left-pointing double angle quotation mark
+  0x00_bb: ">", // Right-pointing double angle quotation mark
+  0x30_0a: "<", // Left double angle bracket
+  0x30_0b: ">", // Right double angle bracket
+  0x27_ea: "<", // Mathematical left double angle bracket
+  0x27_eb: ">", // Mathematical right double angle bracket
+  0x27_ec: "<", // Mathematical left white tortoise shell bracket
+  0x27_ed: ">", // Mathematical right white tortoise shell bracket
+  0x27_ee: "<", // Mathematical left flattened parenthesis
+  0x27_ef: ">", // Mathematical right flattened parenthesis
+  0x27_6c: "<", // Medium left-pointing angle bracket ornament
+  0x27_6d: ">", // Medium right-pointing angle bracket ornament
+  0x27_6e: "<", // Heavy left-pointing angle quotation mark ornament
+  0x27_6f: ">", // Heavy right-pointing angle quotation mark ornament
+  0x02_c2: "<", // Modifier letter left arrowhead
+  0x02_c3: ">", // Modifier letter right arrowhead
 };
 
 function foldMarkerChar(char: string): string {
   const code = char.charCodeAt(0);
-  if (code >= 0xFF_21 && code <= 0xFF_3A) {
+  if (code >= 0xff_21 && code <= 0xff_3a) {
     return String.fromCharCode(code - FULLWIDTH_ASCII_OFFSET);
   }
-  if (code >= 0xFF_41 && code <= 0xFF_5A) {
+  if (code >= 0xff_41 && code <= 0xff_5a) {
     return String.fromCharCode(code - FULLWIDTH_ASCII_OFFSET);
   }
   const bracket = ANGLE_BRACKET_MAP[code];

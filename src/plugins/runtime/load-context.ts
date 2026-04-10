@@ -46,7 +46,7 @@ export function resolvePluginRuntimeLoadContext(
   const env = options?.env ?? process.env;
   const rawConfig = options?.config ?? loadConfig();
   const autoEnabled = applyPluginAutoEnable({ config: rawConfig, env });
-  const {config} = autoEnabled;
+  const { config } = autoEnabled;
   const workspaceDir =
     options?.workspaceDir ?? resolveAgentWorkspaceDir(config, resolveDefaultAgentId(config));
   return {

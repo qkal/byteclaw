@@ -9,7 +9,11 @@ import {
 } from "./anthropic-family-cache-semantics.js";
 import { isGooglePromptCacheEligible } from "./prompt-cache-retention.js";
 
-interface CustomEntryLike { type?: unknown; customType?: unknown; data?: unknown }
+interface CustomEntryLike {
+  type?: unknown;
+  customType?: unknown;
+  data?: unknown;
+}
 
 export const CACHE_TTL_CUSTOM_TYPE = "openclaw.cache-ttl";
 

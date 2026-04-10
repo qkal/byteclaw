@@ -310,7 +310,7 @@ function isPureTransientRateLimitSummary(err: unknown): boolean {
     isFallbackSummaryError(err) &&
     err.attempts.length > 0 &&
     err.attempts.every((attempt) => {
-      const {reason} = attempt;
+      const { reason } = attempt;
       return reason === "rate_limit" || reason === "overloaded";
     })
   );
@@ -656,7 +656,7 @@ export async function runAgentTurnWithFallback(params: {
       provider,
       run: params.followupRun.run,
     });
-    const {nextState} = applied;
+    const { nextState } = applied;
     if (!applied.updated || !nextState) {
       return;
     }
@@ -706,7 +706,7 @@ export async function runAgentTurnWithFallback(params: {
   while (true) {
     try {
       const normalizeStreamingText = (payload: ReplyPayload): { text?: string; skip: boolean } => {
-        let {text} = payload;
+        let { text } = payload;
         const reply = resolveSendableOutboundReplyParts(payload);
         if (params.followupRun.run.silentExpected) {
           return { skip: true };
@@ -762,7 +762,7 @@ export async function runAgentTurnWithFallback(params: {
         await params.typingSignals.signalTextDelta(text);
         return text;
       };
-      const {blockReplyPipeline} = params;
+      const { blockReplyPipeline } = params;
       // Build the delivery handler once so both onAgentEvent (compaction start
       // Notice) and the onBlockReply field share the same instance.  This
       // Ensures replyToId threading (replyToMode=all|first) is applied to
@@ -1381,7 +1381,7 @@ export async function runAgentTurnWithFallback(params: {
         params.activeSessionStore &&
         params.storePath
       ) {
-        const {sessionKey} = params;
+        const { sessionKey } = params;
         const corruptedSessionId = params.getActiveSessionEntry()?.sessionId;
         defaultRuntime.error(
           `Session history corrupted (Gemini function call ordering). Resetting session: ${params.sessionKey}`,

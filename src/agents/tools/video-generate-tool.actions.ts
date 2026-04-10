@@ -18,9 +18,9 @@ function summarizeVideoGenerationCapabilities(
   provider: ReturnType<typeof listRuntimeVideoGenerationProviders>[number],
 ): string {
   const supportedModes = listSupportedVideoGenerationModes(provider);
-  const {generate} = provider.capabilities;
-  const {imageToVideo} = provider.capabilities;
-  const {videoToVideo} = provider.capabilities;
+  const { generate } = provider.capabilities;
+  const { imageToVideo } = provider.capabilities;
+  const { videoToVideo } = provider.capabilities;
   const capabilities = [
     supportedModes.length > 0 ? `modes=${supportedModes.join("/")}` : null,
     generate?.maxVideos ? `maxVideos=${generate.maxVideos}` : null,

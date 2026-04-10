@@ -10,7 +10,7 @@ const HTML_ENTITY_REPLACEMENTS: Readonly<Record<string, string>> = {
   nbsp: " ",
   quot: '"',
 };
-const MAX_UNICODE_SCALAR_VALUE = 0x10_FF_FF;
+const MAX_UNICODE_SCALAR_VALUE = 0x10_ff_ff;
 
 function decodeNumericHtmlEntity(match: string, rawValue: string, radix: 10 | 16): string {
   const codePoint = Number.parseInt(rawValue, radix);
@@ -18,7 +18,7 @@ function decodeNumericHtmlEntity(match: string, rawValue: string, radix: 10 | 16
     !Number.isSafeInteger(codePoint) ||
     codePoint < 0 ||
     codePoint > MAX_UNICODE_SCALAR_VALUE ||
-    (codePoint >= 0xD8_00 && codePoint <= 0xDF_FF)
+    (codePoint >= 0xd8_00 && codePoint <= 0xdf_ff)
   ) {
     return match;
   }

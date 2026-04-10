@@ -8,7 +8,11 @@ export interface BraveConfig {
   mode?: string;
 }
 
-export interface BraveLlmContextResult { url: string; title: string; snippets: string[] }
+export interface BraveLlmContextResult {
+  url: string;
+  title: string;
+  snippets: string[];
+}
 export interface BraveLlmContextResponse {
   grounding: { generic?: BraveLlmContextResult[] };
   sources?: { url?: string; hostname?: string; date?: string }[];

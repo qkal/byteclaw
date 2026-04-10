@@ -62,7 +62,7 @@ function isCronAddAction(args: unknown): boolean {
   if (!args || typeof args !== "object") {
     return false;
   }
-  const {action} = (args as Record<string, unknown>);
+  const { action } = args as Record<string, unknown>;
   return normalizeOptionalLowercaseString(action) === "add";
 }
 
@@ -130,7 +130,7 @@ function readToolResultDetailsRecord(result: unknown): Record<string, unknown> |
   if (!result || typeof result !== "object") {
     return undefined;
   }
-  const {details} = (result as { details?: unknown });
+  const { details } = result as { details?: unknown };
   return details && typeof details === "object" && !Array.isArray(details)
     ? (details as Record<string, unknown>)
     : undefined;
@@ -223,7 +223,7 @@ function collectMessagingMediaUrlsFromRecord(record: Record<string, unknown>): s
   pushUniqueMediaUrl(urls, seen, record.path);
   pushUniqueMediaUrl(urls, seen, record.filePath);
 
-  const {mediaUrls} = record;
+  const { mediaUrls } = record;
   if (Array.isArray(mediaUrls)) {
     for (const mediaUrl of mediaUrls) {
       pushUniqueMediaUrl(urls, seen, mediaUrl);
@@ -345,7 +345,7 @@ function readExecApprovalPendingDetails(result: unknown): {
   const approvalId = readStringValue(details.approvalId) ?? "";
   const approvalSlug = readStringValue(details.approvalSlug) ?? "";
   const command = typeof details.command === "string" ? details.command : "";
-  const host = details.host === "node" ? "node" : (details.host === "gateway" ? "gateway" : null);
+  const host = details.host === "node" ? "node" : details.host === "gateway" ? "gateway" : null;
   if (!approvalId || !approvalSlug || !command || !host) {
     return null;
   }
@@ -538,8 +538,8 @@ export function handleToolExecutionStart(
     const rawToolName = String(evt.toolName);
     const toolName = normalizeToolName(rawToolName);
     const toolCallId = String(evt.toolCallId);
-    const {args} = evt;
-    const {runId} = ctx.params;
+    const { args } = evt;
+    const { runId } = ctx.params;
 
     // Track start time and args for after_tool_call hook.
     const startedAt = Date.now();
@@ -550,9 +550,9 @@ export function handleToolExecutionStart(
       const filePathValue =
         typeof record.path === "string"
           ? record.path
-          : (typeof record.file_path === "string"
+          : typeof record.file_path === "string"
             ? record.file_path
-            : "");
+            : "";
       const filePath = filePathValue.trim();
       if (!filePath) {
         const argsPreview = readStringValue(args)?.slice(0, 200);
@@ -753,9 +753,9 @@ export async function handleToolExecutionEnd(
 ) {
   const toolName = normalizeToolName(String(evt.toolName));
   const toolCallId = String(evt.toolCallId);
-  const {runId} = ctx.params;
+  const { runId } = ctx.params;
   const isError = Boolean(evt.isError);
-  const {result} = evt;
+  const { result } = evt;
   const isToolError = isError || isToolResultError(result);
   const sanitizedResult = sanitizeToolResult(result);
   const toolStartKey = buildToolStartKey(runId, toolCallId);

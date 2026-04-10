@@ -189,7 +189,7 @@ class OpenShellFsBridge implements SandboxFsBridge {
     return {
       mtimeMs: stats.mtimeMs,
       size: stats.size,
-      type: stats.isDirectory() ? "directory" : (stats.isFile() ? "file" : "other"),
+      type: stats.isDirectory() ? "directory" : stats.isFile() ? "file" : "other",
     };
   }
 

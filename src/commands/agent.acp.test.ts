@@ -116,9 +116,7 @@ function mockAcpManager(params: {
   }) => ReturnType<ReturnType<typeof acpManagerModule.getAcpSessionManager>["resolveSession"]>;
 }) {
   getAcpSessionManagerSpy.mockReturnValue({
-    resolveSession:
-      params.resolveSession ??
-      ((input) => resolveReadySession(input.sessionKey)),
+    resolveSession: params.resolveSession ?? ((input) => resolveReadySession(input.sessionKey)),
     runTurn: params.runTurn,
   } as unknown as ReturnType<typeof acpManagerModule.getAcpSessionManager>);
 }
@@ -384,13 +382,13 @@ describe("agentCommand ACP runtime routing", () => {
       const runTurn = vi.fn(async (_params: unknown) => {});
       mockAcpManager({
         resolveSession: ({ sessionKey }) => ({
-            kind: "stale",
-            sessionKey,
-            error: new AcpRuntimeError(
-              "ACP_SESSION_INIT_FAILED",
-              `ACP metadata is missing for session ${sessionKey}.`,
-            ),
-          }),
+          kind: "stale",
+          sessionKey,
+          error: new AcpRuntimeError(
+            "ACP_SESSION_INIT_FAILED",
+            `ACP metadata is missing for session ${sessionKey}.`,
+          ),
+        }),
         runTurn: (params: unknown) => runTurn(params),
       });
 

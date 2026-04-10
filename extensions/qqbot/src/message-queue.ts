@@ -105,7 +105,9 @@ export function createMessageQueue(ctx: MessageQueueContext): MessageQueue {
             messagesProcessed++;
           }
         } catch (error) {
-          log?.error(`[qqbot:${accountId}] Message processor error for ${peerId}: ${String(error)}`);
+          log?.error(
+            `[qqbot:${accountId}] Message processor error for ${peerId}: ${String(error)}`,
+          );
         }
       }
     } finally {

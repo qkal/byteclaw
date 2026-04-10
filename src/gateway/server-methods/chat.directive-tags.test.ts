@@ -190,11 +190,11 @@ function extractFirstTextBlock(payload: unknown): string | undefined {
   if (!payload || typeof payload !== "object") {
     return undefined;
   }
-  const {message} = (payload as { message?: unknown });
+  const { message } = payload as { message?: unknown };
   if (!message || typeof message !== "object") {
     return undefined;
   }
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (!Array.isArray(content)) {
     return undefined;
   }
@@ -324,9 +324,9 @@ async function runNonStreamingChatSend(params: {
     params.waitFor ??
     (params.waitForCompletion === false || params.waitForDedupe === false
       ? "none"
-      : (params.expectBroadcast === false
+      : params.expectBroadcast === false
         ? "dedupe"
-        : "broadcast"));
+        : "broadcast");
   if (waitFor === "none") {
     return undefined;
   }

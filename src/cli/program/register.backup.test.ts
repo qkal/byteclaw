@@ -12,9 +12,9 @@ const mocks = vi.hoisted(() => ({
   },
 }));
 
-const {backupCreateCommand} = mocks;
-const {backupVerifyCommand} = mocks;
-const {runtime} = mocks;
+const { backupCreateCommand } = mocks;
+const { backupVerifyCommand } = mocks;
+const { runtime } = mocks;
 
 vi.mock("../../commands/backup.js", () => ({
   backupCreateCommand: mocks.backupCreateCommand,

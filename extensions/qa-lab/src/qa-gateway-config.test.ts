@@ -10,7 +10,7 @@ function getPrimaryModel(value: unknown): string | undefined {
     return value;
   }
   if (value && typeof value === "object" && "primary" in value) {
-    const {primary} = (value as { primary?: unknown });
+    const { primary } = value as { primary?: unknown };
     return typeof primary === "string" ? primary : undefined;
   }
   return undefined;

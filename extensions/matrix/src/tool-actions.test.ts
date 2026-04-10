@@ -15,18 +15,18 @@ const mocks = vi.hoisted(() => ({
 }));
 
 vi.mock("./matrix/actions.js", () => ({
-    getMatrixMemberInfo: mocks.getMatrixMemberInfo,
-    getMatrixRoomInfo: mocks.getMatrixRoomInfo,
-    listMatrixPins: mocks.listMatrixPins,
-    listMatrixReactions: mocks.listMatrixReactions,
-    removeMatrixReactions: mocks.removeMatrixReactions,
-    sendMatrixMessage: mocks.sendMatrixMessage,
-    voteMatrixPoll: mocks.voteMatrixPoll,
-  }));
+  getMatrixMemberInfo: mocks.getMatrixMemberInfo,
+  getMatrixRoomInfo: mocks.getMatrixRoomInfo,
+  listMatrixPins: mocks.listMatrixPins,
+  listMatrixReactions: mocks.listMatrixReactions,
+  removeMatrixReactions: mocks.removeMatrixReactions,
+  sendMatrixMessage: mocks.sendMatrixMessage,
+  voteMatrixPoll: mocks.voteMatrixPoll,
+}));
 
 vi.mock("./matrix/send.js", () => ({
-    reactMatrixMessage: mocks.reactMatrixMessage,
-  }));
+  reactMatrixMessage: mocks.reactMatrixMessage,
+}));
 
 vi.mock("./profile-update.js", () => ({
   applyMatrixProfileUpdate: (...args: unknown[]) => mocks.applyMatrixProfileUpdate(...args),

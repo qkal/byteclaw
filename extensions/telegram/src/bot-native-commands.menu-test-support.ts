@@ -37,10 +37,10 @@ const deliveryMocks = vi.hoisted(() => ({
   emitTelegramMessageSentHooks: vi.fn(),
 }));
 
-export const {listSkillCommandsForAgents} = skillCommandMocks;
-export const {deliverReplies} = deliveryMocks;
-export const {editMessageTelegram} = deliveryMocks;
-export const {emitTelegramMessageSentHooks} = deliveryMocks;
+export const { listSkillCommandsForAgents } = skillCommandMocks;
+export const { deliverReplies } = deliveryMocks;
+export const { editMessageTelegram } = deliveryMocks;
+export const { emitTelegramMessageSentHooks } = deliveryMocks;
 
 vi.mock("./bot/delivery.js", () => ({
   deliverReplies,

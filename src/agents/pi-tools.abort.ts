@@ -52,7 +52,7 @@ export function wrapToolWithAbortSignal(
   if (!abortSignal) {
     return tool;
   }
-  const {execute} = tool;
+  const { execute } = tool;
   if (!execute) {
     return tool;
   }

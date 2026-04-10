@@ -153,7 +153,9 @@ describe("resolveDiscordMemberAllowed", () => {
 });
 
 describe("gateway-registry", () => {
-  interface GatewayPlugin { isConnected: boolean }
+  interface GatewayPlugin {
+    isConnected: boolean;
+  }
 
   function fakeGateway(props: Partial<GatewayPlugin> = {}): GatewayPlugin {
     return { isConnected: true, ...props };

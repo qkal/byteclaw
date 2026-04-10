@@ -69,7 +69,8 @@ class MemoryLeakDetector {
     if (this.#samples.length > 1) {
       const firstSample = this.#samples[0];
       const lastSample = this.#samples[this.#samples.length - 1];
-      const growthRate = (lastSample.heapUsedMB - firstSample.heapUsedMB) / 
+      const growthRate =
+        (lastSample.heapUsedMB - firstSample.heapUsedMB) /
         ((lastSample.elapsedMs - firstSample.elapsedMs) / 1000);
       console.log(`Growth rate: ${growthRate.toFixed(4)}MB/s`);
 

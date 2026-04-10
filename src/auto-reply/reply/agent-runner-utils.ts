@@ -132,7 +132,7 @@ export const resolveEnforceFinalTag = (
   );
 
 export function resolveModelFallbackOptions(run: FollowupRun["run"]) {
-  const {config} = run;
+  const { config } = run;
   return {
     agentDir: run.agentDir,
     cfg: config,
@@ -154,7 +154,7 @@ export function buildEmbeddedRunBaseParams(params: {
   authProfile: ReturnType<typeof resolveProviderScopedAuthProfile>;
   allowTransientCooldownProbe?: boolean;
 }) {
-  const {config} = params.run;
+  const { config } = params.run;
   return {
     sessionFile: params.run.sessionFile,
     workspaceDir: params.run.workspaceDir,
@@ -185,7 +185,7 @@ export function buildEmbeddedContextFromTemplate(params: {
   sessionCtx: TemplateContext;
   hasRepliedRef: { value: boolean } | undefined;
 }) {
-  const {config} = params.run;
+  const { config } = params.run;
   return {
     sessionId: params.run.sessionId,
     sessionKey: params.run.sessionKey,

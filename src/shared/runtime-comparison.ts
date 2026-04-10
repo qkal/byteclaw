@@ -3,7 +3,7 @@
  * Provides tools to measure and compare performance and behavior differences.
  */
 
-import { getEffectiveRuntime, getRuntimeVersion } from './runtime-detection.js';
+import { getEffectiveRuntime, getRuntimeVersion } from "./runtime-detection.js";
 
 export interface ComparisonResult<T> {
   bun: T;
@@ -13,7 +13,7 @@ export interface ComparisonResult<T> {
 }
 
 export interface PerformanceResult {
-  runtime: 'bun' | 'node';
+  runtime: "bun" | "node";
   durationMs: number;
   memoryBytes?: number;
 }
@@ -60,14 +60,13 @@ export function comparePerformanceResults(
 /**
  * Logs a comparison result in a readable format.
  */
-export function logComparisonResult<T>(
-  label: string,
-  result: ComparisonResult<T>,
-): void {
+export function logComparisonResult<T>(label: string, result: ComparisonResult<T>): void {
   console.log(`\n${label}:`);
   console.log(`  Bun: ${result.bun}`);
   console.log(`  Node: ${result.node}`);
-  console.log(`  Difference: ${result.difference.toFixed(2)} (${result.percentDifference.toFixed(1)}%)`);
+  console.log(
+    `  Difference: ${result.difference.toFixed(2)} (${result.percentDifference.toFixed(1)}%)`,
+  );
 }
 
 /**
@@ -93,7 +92,7 @@ export function assertPerformanceTolerance(
 ): void {
   const ratio = bunMs / nodeMs;
   const maxRatio = 1 + tolerancePercent / 100;
-  
+
   if (ratio > maxRatio) {
     throw new Error(
       `Bun performance outside tolerance: ${bunMs}ms vs ${nodeMs}ms (${ratio.toFixed(2)}x, max ${maxRatio.toFixed(2)}x)`,
@@ -104,11 +103,7 @@ export function assertPerformanceTolerance(
 /**
  * Runtime-aware assertion that logs runtime information on failure.
  */
-export function assertEqual<T>(
-  actual: T,
-  expected: T,
-  message?: string,
-): void {
+export function assertEqual<T>(actual: T, expected: T, message?: string): void {
   const runtime = getEffectiveRuntime();
   if (actual !== expected) {
     const errorMsg = message

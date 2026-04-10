@@ -208,9 +208,9 @@ function parseOptionalPositiveInt(value: unknown, fallback: number): number {
   const parsed =
     typeof value === "number"
       ? value
-      : (typeof value === "string"
+      : typeof value === "string"
         ? Number.parseInt(value, 10)
-        : Number.NaN);
+        : Number.NaN;
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }
 
@@ -330,7 +330,7 @@ async function readToggleStore(statePath: string): Promise<ActiveMemoryToggleSto
     if (!parsed || typeof parsed !== "object") {
       return {};
     }
-    const {sessions} = (parsed as { sessions?: unknown });
+    const { sessions } = parsed as { sessions?: unknown };
     if (!sessions || typeof sessions !== "object" || Array.isArray(sessions)) {
       return {};
     }
@@ -877,7 +877,7 @@ function sanitizeDebugText(text: string): string {
   let sanitized = "";
   for (const ch of text) {
     const code = ch.charCodeAt(0);
-    const isControl = (code >= 0x00 && code <= 0x1F) || (code >= 0x7F && code <= 0x9F);
+    const isControl = (code >= 0x00 && code <= 0x1f) || (code >= 0x7f && code <= 0x9f);
     if (!isControl) {
       sanitized += ch;
     }
@@ -918,7 +918,7 @@ async function persistPluginStatusLines(params: {
     }
     await updateSessionStore(storePath, (store) => {
       const resolved = resolveSessionStoreEntry({ sessionKey, store });
-      const {existing} = resolved;
+      const { existing } = resolved;
       if (!existing) {
         return;
       }

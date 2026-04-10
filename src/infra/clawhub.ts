@@ -608,9 +608,9 @@ export async function downloadClawHubPackageArchive(params: {
 }): Promise<ClawHubDownloadResult> {
   const search = params.version
     ? { version: params.version }
-    : (params.tag
+    : params.tag
       ? { tag: params.tag }
-      : undefined);
+      : undefined;
   const { response, url } = await clawhubRequest({
     baseUrl: params.baseUrl,
     fetchImpl: params.fetchImpl,

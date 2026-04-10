@@ -228,7 +228,9 @@ async function loadWebMediaInternal(
     try {
       mediaUrl = safeFileURLToPath(mediaUrl);
     } catch (error) {
-      throw new LocalMediaAccessError("invalid-file-url", (error as Error).message, { cause: error });
+      throw new LocalMediaAccessError("invalid-file-url", (error as Error).message, {
+        cause: error,
+      });
     }
   }
 
@@ -306,9 +308,9 @@ async function loadWebMediaInternal(
     const fetchCap =
       maxBytes === undefined
         ? defaultFetchCap
-        : (optimizeImages
+        : optimizeImages
           ? Math.max(maxBytes, defaultFetchCap)
-          : maxBytes);
+          : maxBytes;
     const fetched = await fetchRemoteMedia({ maxBytes: fetchCap, ssrfPolicy, url: mediaUrl });
     const { buffer, contentType, fileName } = fetched;
     const kind = kindFromMime(contentType);

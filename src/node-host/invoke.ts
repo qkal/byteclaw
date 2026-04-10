@@ -581,9 +581,9 @@ export function coerceNodeInvokePayload(payload: unknown): NodeInvokeRequestPayl
   const paramsJSON =
     typeof obj.paramsJSON === "string"
       ? obj.paramsJSON
-      : (obj.params !== undefined
+      : obj.params !== undefined
         ? JSON.stringify(obj.params)
-        : null);
+        : null;
   const timeoutMs = typeof obj.timeoutMs === "number" ? obj.timeoutMs : null;
   const idempotencyKey = typeof obj.idempotencyKey === "string" ? obj.idempotencyKey : null;
   return {

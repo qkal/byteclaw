@@ -93,7 +93,7 @@ function createLockPayload(params: { configPath: string; startTime: number; crea
 }
 
 function mockProcStatRead(params: { onProcRead: () => string }) {
-  const {readFileSync} = fsSync;
+  const { readFileSync } = fsSync;
   return vi.spyOn(fsSync, "readFileSync").mockImplementation((filePath, encoding) => {
     if (filePath === `/proc/${process.pid}/stat`) {
       return params.onProcRead();

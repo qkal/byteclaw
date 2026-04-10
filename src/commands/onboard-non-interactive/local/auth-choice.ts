@@ -39,7 +39,7 @@ export async function applyNonInteractiveAuthChoice(params: {
     env: process.env,
     tokenProvider: opts.tokenProvider,
   });
-  const {nextConfig} = params;
+  const { nextConfig } = params;
   const requestedSecretInputMode = normalizeSecretInputModeInput(opts.secretInputMode);
   if (opts.secretInputMode && !requestedSecretInputMode) {
     runtime.error('Invalid --secret-input-mode. Use "plaintext" or "ref".');

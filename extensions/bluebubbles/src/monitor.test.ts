@@ -172,7 +172,7 @@ function installTimingAwareInboundDebouncer(core: PluginRuntime) {
         clearTimeout(bucket.timer);
         bucket.timer = null;
       }
-      const {items} = bucket;
+      const { items } = bucket;
       bucket.items = [];
       if (items.length > 0) {
         try {

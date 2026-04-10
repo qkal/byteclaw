@@ -228,7 +228,7 @@ export function registerVoiceCallCli(params: {
     .option("--since <n>", "Print last N lines first", "25")
     .option("--poll <ms>", "Poll interval in ms", "250")
     .action(async (options: { file: string; since?: string; poll?: string }) => {
-      const {file} = options;
+      const { file } = options;
       const since = Math.max(0, Number(options.since ?? 0));
       const pollMs = Math.max(50, Number(options.poll ?? 250));
 
@@ -278,7 +278,7 @@ export function registerVoiceCallCli(params: {
     .option("--file <path>", "Path to calls.jsonl", resolveDefaultStorePath(config))
     .option("--last <n>", "Analyze last N records", "200")
     .action(async (options: { file: string; last?: string }) => {
-      const {file} = options;
+      const { file } = options;
       const last = Math.max(1, Number(options.last ?? 200));
 
       if (!fs.existsSync(file)) {

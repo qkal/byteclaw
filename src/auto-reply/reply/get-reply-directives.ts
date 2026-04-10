@@ -343,9 +343,9 @@ export async function resolveReplyDirectives(params: {
 
   const messageProviderKey = normalizeOptionalString(sessionCtx.Provider)
     ? normalizeLowercaseStringOrEmpty(sessionCtx.Provider)
-    : (normalizeOptionalString(ctx.Provider)
+    : normalizeOptionalString(ctx.Provider)
       ? normalizeLowercaseStringOrEmpty(ctx.Provider)
-      : "");
+      : "";
   const elevated = resolveElevatedPermissions({
     agentId,
     cfg,

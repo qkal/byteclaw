@@ -74,7 +74,7 @@ export async function resolveInboundDirectDmAccessWithRuntime(params: {
     access.effectiveAllowFrom,
   );
   const commandAuthorized = shouldComputeAuth
-    ? (dmPolicy === "open"
+    ? dmPolicy === "open"
       ? true
       : params.runtime.resolveCommandAuthorizedFromAuthorizers({
           authorizers: [
@@ -85,7 +85,7 @@ export async function resolveInboundDirectDmAccessWithRuntime(params: {
           ],
           modeWhenAccessGroupsOff: params.modeWhenAccessGroupsOff,
           useAccessGroups: params.cfg.commands?.useAccessGroups !== false,
-        }))
+        })
     : undefined;
 
   return {

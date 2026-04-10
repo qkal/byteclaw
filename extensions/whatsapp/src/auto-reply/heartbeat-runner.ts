@@ -214,7 +214,7 @@ export async function runWebHeartbeatOnce(opts: {
     }
 
     const reply = resolveSendableOutboundReplyParts(replyPayload);
-    const {hasMedia} = reply;
+    const { hasMedia } = reply;
     const ackMaxChars = Math.max(
       0,
       cfg.agents?.defaults?.heartbeat?.ackMaxChars ?? DEFAULT_HEARTBEAT_ACK_MAX_CHARS,

@@ -41,7 +41,7 @@ export class UnauthorizedFloodGuard {
       };
     }
 
-    const {suppressedSinceLastLog} = this;
+    const { suppressedSinceLastLog } = this;
     this.suppressedSinceLastLog = 0;
     return {
       count: this.count,

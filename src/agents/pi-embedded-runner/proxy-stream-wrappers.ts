@@ -64,7 +64,7 @@ export function createOpenRouterSystemCacheWrapper(baseStreamFn: StreamFn | unde
     const modelId = readStringValue(model.id);
     // Keep OpenRouter-specific cache markers on verified OpenRouter routes
     // (or the provider's default route), but not on arbitrary OpenAI proxies.
-    const {endpointClass} = resolveProviderRequestPolicy({
+    const { endpointClass } = resolveProviderRequestPolicy({
       api: readStringValue(model.api),
       baseUrl: readStringValue(model.baseUrl),
       capability: "llm",
@@ -94,7 +94,7 @@ export function createOpenRouterWrapper(
 ): StreamFn {
   const underlying = baseStreamFn ?? streamSimple;
   return (model, context, options) => {
-    const {headers} = resolveProviderRequestPolicyConfig({
+    const { headers } = resolveProviderRequestPolicyConfig({
       api: readStringValue(model.api),
       baseUrl: readStringValue(model.baseUrl),
       callerHeaders: options?.headers,
@@ -128,7 +128,7 @@ export function createKilocodeWrapper(
 ): StreamFn {
   const underlying = baseStreamFn ?? streamSimple;
   return (model, context, options) => {
-    const {headers} = resolveProviderRequestPolicyConfig({
+    const { headers } = resolveProviderRequestPolicyConfig({
       api: readStringValue(model.api),
       baseUrl: readStringValue(model.baseUrl),
       callerHeaders: options?.headers,

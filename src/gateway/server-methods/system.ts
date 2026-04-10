@@ -32,7 +32,7 @@ export const systemHandlers: GatewayRequestHandlers = {
     respond(true, getLastHeartbeatEvent(), undefined);
   },
   "set-heartbeats": ({ params, respond }) => {
-    const {enabled} = params;
+    const { enabled } = params;
     if (typeof enabled !== "boolean") {
       respond(
         false,
@@ -99,7 +99,7 @@ export const systemHandlers: GatewayRequestHandlers = {
     });
     const isNodePresenceLine = text.startsWith("Node:");
     if (isNodePresenceLine) {
-      const {next} = presenceUpdate;
+      const { next } = presenceUpdate;
       const changed = new Set(presenceUpdate.changedKeys);
       const reasonValue = next.reason ?? reason;
       const normalizedReason = normalizeLowercaseStringOrEmpty(reasonValue);

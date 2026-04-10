@@ -167,7 +167,7 @@ export async function handleSessionHistoryHttpRequest(
     maxChars: effectiveMaxChars,
     rawMessages: rawSnapshot,
   });
-  const {history} = historySnapshot;
+  const { history } = historySnapshot;
 
   if (!shouldStreamSse(req)) {
     sendJson(res, 200, {

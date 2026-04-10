@@ -245,7 +245,7 @@ async function addMatrixAccount(params: {
         avatarUrl: desiredAvatarUrl,
         displayName: desiredDisplayName,
       });
-      let {resolvedAvatarUrl} = synced;
+      let { resolvedAvatarUrl } = synced;
       if (synced.convertedAvatarFromHttp && synced.resolvedAvatarUrl) {
         const latestCfg = runtime.config.loadConfig() as CoreConfig;
         const withAvatar = updateMatrixAccountConfig(latestCfg, accountId, {

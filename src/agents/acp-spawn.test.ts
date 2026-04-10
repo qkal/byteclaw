@@ -342,7 +342,11 @@ describe("spawnAcpDirect", () => {
       }
       return {};
     });
-    callGatewaySpy.mockReset().mockImplementation(async (argsUnknown: unknown) => await hoisted.callGatewayMock(argsUnknown));
+    callGatewaySpy
+      .mockReset()
+      .mockImplementation(
+        async (argsUnknown: unknown) => await hoisted.callGatewayMock(argsUnknown),
+      );
 
     hoisted.closeSessionMock.mockReset().mockResolvedValue({
       metaCleared: false,

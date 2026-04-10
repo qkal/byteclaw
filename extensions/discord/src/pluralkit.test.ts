@@ -9,8 +9,8 @@ interface MockResponse {
 }
 
 const buildResponse = (params: { status: number; body?: unknown }): MockResponse => {
-  const {body} = params;
-  const textPayload = typeof body === "string" ? body : (body == null ? "" : JSON.stringify(body));
+  const { body } = params;
+  const textPayload = typeof body === "string" ? body : body == null ? "" : JSON.stringify(body);
   return {
     json: async () => body ?? {},
     ok: params.status >= 200 && params.status < 300,

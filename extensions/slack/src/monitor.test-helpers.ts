@@ -1,4 +1,4 @@
-import type { Mock} from "vitest";
+import type { Mock } from "vitest";
 import { vi } from "vitest";
 
 type SlackHandler = (args: unknown) => Promise<void>;
@@ -232,8 +232,8 @@ vi.mock("./resolve-users.js", () => ({
 }));
 
 vi.mock("./monitor/send.runtime.js", () => ({
-    sendMessageSlack: (...args: unknown[]) => slackTestState.sendMock(...args),
-  }));
+  sendMessageSlack: (...args: unknown[]) => slackTestState.sendMock(...args),
+}));
 
 vi.mock("./monitor/conversation.runtime.js", async () => {
   const actual = await vi.importActual<typeof import("./monitor/conversation.runtime.js")>(

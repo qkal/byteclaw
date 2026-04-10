@@ -45,9 +45,9 @@ function collectAuthProfileServiceEnvVars(params: {
     const ref =
       credential.type === "api_key"
         ? credential.keyRef
-        : (credential.type === "token"
+        : credential.type === "token"
           ? credential.tokenRef
-          : undefined);
+          : undefined;
     if (!ref || ref.source !== "env") {
       continue;
     }

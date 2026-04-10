@@ -30,7 +30,7 @@ export function applyBrowserProxyPaths(result: unknown, mapping: Map<string, str
   if (typeof obj.imagePath === "string" && mapping.has(obj.imagePath)) {
     obj.imagePath = mapping.get(obj.imagePath);
   }
-  const {download} = obj;
+  const { download } = obj;
   if (download && typeof download === "object") {
     const d = download as Record<string, unknown>;
     if (typeof d.path === "string" && mapping.has(d.path)) {

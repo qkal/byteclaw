@@ -17,7 +17,7 @@ export function extractGeminiResponse(raw: string): string | null {
   if (!payload || typeof payload !== "object") {
     return null;
   }
-  const {response} = (payload as { response?: unknown });
+  const { response } = payload as { response?: unknown };
   if (typeof response !== "string") {
     return null;
   }

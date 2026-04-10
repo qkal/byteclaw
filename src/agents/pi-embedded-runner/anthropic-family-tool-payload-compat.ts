@@ -81,9 +81,9 @@ function normalizeOpenAiFunctionAnthropicToolDefinition(
     parameters:
       toolObj.input_schema && typeof toolObj.input_schema === "object"
         ? toolObj.input_schema
-        : (toolObj.parameters && typeof toolObj.parameters === "object"
+        : toolObj.parameters && typeof toolObj.parameters === "object"
           ? toolObj.parameters
-          : { properties: {}, type: "object" }),
+          : { properties: {}, type: "object" },
   };
 
   if (typeof toolObj.description === "string" && toolObj.description.trim()) {

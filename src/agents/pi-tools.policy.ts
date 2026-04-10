@@ -280,7 +280,7 @@ export function resolveEffectiveToolPolicy(params: {
   const implicitProfileAlsoAllow = resolveImplicitProfileAlsoAllow({ agentTools, globalTools });
   const profileAlsoAllow =
     explicitProfileAlsoAllow || implicitProfileAlsoAllow
-      ? [...new Set([...explicitProfileAlsoAllow ?? [], ...implicitProfileAlsoAllow ?? []])]
+      ? [...new Set([...(explicitProfileAlsoAllow ?? []), ...(implicitProfileAlsoAllow ?? [])])]
       : undefined;
   return {
     agentId,
@@ -294,9 +294,9 @@ export function resolveEffectiveToolPolicy(params: {
     profileAlsoAllow,
     providerProfileAlsoAllow: Array.isArray(agentProviderPolicy?.alsoAllow)
       ? agentProviderPolicy?.alsoAllow
-      : (Array.isArray(providerPolicy?.alsoAllow)
+      : Array.isArray(providerPolicy?.alsoAllow)
         ? providerPolicy?.alsoAllow
-        : undefined),
+        : undefined,
   };
 }
 

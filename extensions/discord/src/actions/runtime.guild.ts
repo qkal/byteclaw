@@ -304,7 +304,7 @@ export async function handleDiscordGuildAction(
       const location = readStringParam(params, "location");
       const imageUrl = readStringParam(params, "image", { trim: false });
       const entityTypeRaw = readStringParam(params, "entityType");
-      const entityType = entityTypeRaw === "stage" ? 1 : (entityTypeRaw === "external" ? 3 : 2);
+      const entityType = entityTypeRaw === "stage" ? 1 : entityTypeRaw === "external" ? 3 : 2;
       const image = imageUrl
         ? await discordGuildActionRuntime.resolveEventCoverImage(imageUrl, {
             localRoots: options?.mediaLocalRoots,

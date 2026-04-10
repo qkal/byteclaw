@@ -1,7 +1,10 @@
 import { type Mock, afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => {
-  interface MockAuthProfile { provider: string; [key: string]: unknown }
+  interface MockAuthProfile {
+    provider: string;
+    [key: string]: unknown;
+  }
   const store = {
     profiles: {
       "anthropic:default": {
@@ -49,9 +52,11 @@ const mocks = vi.hoisted(() => {
         "OPENAI_OAUTH_TOKEN",
         "FAL_KEY",
       ]),
-    listProfilesForProvider: vi.fn((s: typeof store, provider: string) => Object.entries(s.profiles)
+    listProfilesForProvider: vi.fn((s: typeof store, provider: string) =>
+      Object.entries(s.profiles)
         .filter(([, cred]) => cred.provider === provider)
-        .map(([id]) => id)),
+        .map(([id]) => id),
+    ),
     loadConfig: vi.fn().mockReturnValue({
       agents: {
         defaults: {

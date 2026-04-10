@@ -105,7 +105,7 @@ function extractTelegramApiMethod(input: TelegramFetchInput): string | null {
     return null;
   }
   try {
-    const {pathname} = new URL(url);
+    const { pathname } = new URL(url);
     const segments = pathname.split("/").filter(Boolean);
     const method = segments.length > 0 ? (segments.at(-1) ?? null) : null;
     return normalizeOptionalLowercaseString(method) ?? null;
@@ -218,7 +218,8 @@ export function createTelegramBot(opts: TelegramBotOptions): TelegramBotInstance
   }
   if (finalFetch) {
     const baseFetch = finalFetch;
-    finalFetch = (input: TelegramFetchInput, init?: TelegramFetchInit) => Promise.resolve(baseFetch(input, init)).catch((error: unknown) => {
+    finalFetch = (input: TelegramFetchInput, init?: TelegramFetchInit) =>
+      Promise.resolve(baseFetch(input, init)).catch((error: unknown) => {
         try {
           tagTelegramNetworkError(error, {
             method: extractTelegramApiMethod(input),
@@ -415,7 +416,7 @@ export function createTelegramBot(opts: TelegramBotOptions): TelegramBotInstance
       `agent:${agentId}:telegram:group:${buildTelegramGroupPeerId(params.chatId, params.messageThreadId)}`;
     const storePath = telegramDeps.resolveStorePath(cfg.session?.store, { agentId });
     try {
-      const {loadSessionStore} = telegramDeps;
+      const { loadSessionStore } = telegramDeps;
       if (!loadSessionStore) {
         return undefined;
       }
@@ -456,8 +457,8 @@ export function createTelegramBot(opts: TelegramBotOptions): TelegramBotInstance
   };
   const resolveTelegramGroupConfig = (chatId: string | number, messageThreadId?: number) => {
     const freshTelegramCfg = loadFreshTelegramAccountConfig();
-    const {groups} = freshTelegramCfg;
-    const {direct} = freshTelegramCfg;
+    const { groups } = freshTelegramCfg;
+    const { direct } = freshTelegramCfg;
     const chatIdStr = String(chatId);
     const isDm = !chatIdStr.startsWith("-");
 

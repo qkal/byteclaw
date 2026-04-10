@@ -28,17 +28,17 @@ vi.mock("openclaw/plugin-sdk/runtime-env", async () => {
 });
 
 vi.mock("./probe.js", () => ({
-    probeDiscord: probeDiscordMock,
-  }));
+  probeDiscord: probeDiscordMock,
+}));
 
 vi.mock("./monitor/provider.runtime.js", () => ({
-    monitorDiscordProvider: monitorDiscordProviderMock,
-  }));
+  monitorDiscordProvider: monitorDiscordProviderMock,
+}));
 
 vi.mock("./audit.js", () => ({
-    auditDiscordChannelPermissions: auditDiscordChannelPermissionsMock,
-    collectDiscordAuditChannelIds: collectDiscordAuditChannelIdsMock,
-  }));
+  auditDiscordChannelPermissions: auditDiscordChannelPermissionsMock,
+  collectDiscordAuditChannelIds: collectDiscordAuditChannelIdsMock,
+}));
 
 function createCfg(): OpenClawConfig {
   return {

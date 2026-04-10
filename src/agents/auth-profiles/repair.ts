@@ -52,7 +52,7 @@ export function suggestOAuthProfileIdForLegacyDefault(params: {
   const configuredEmail = legacyCfg?.email?.trim();
   if (configuredEmail) {
     const byEmail = oauthProfiles.find((id) => {
-      const {email} = resolveAuthProfileMetadata({
+      const { email } = resolveAuthProfileMetadata({
         cfg: params.cfg,
         profileId: id,
         store: params.store,

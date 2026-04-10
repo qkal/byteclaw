@@ -7,7 +7,7 @@ function collectConfiguredChannelIds(raw: unknown): ChannelId[] {
   if (!raw || typeof raw !== "object") {
     return [];
   }
-  const {channels} = (raw as { channels?: unknown });
+  const { channels } = raw as { channels?: unknown };
   if (!channels || typeof channels !== "object" || Array.isArray(channels)) {
     return [];
   }

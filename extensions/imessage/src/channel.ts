@@ -85,9 +85,9 @@ function resolveIMessageOutboundSessionRoute(params: {
   const peerId =
     parsed.kind === "chat_id"
       ? String(parsed.chatId)
-      : (parsed.kind === "chat_guid"
+      : parsed.kind === "chat_guid"
         ? parsed.chatGuid
-        : parsed.chatIdentifier);
+        : parsed.chatIdentifier;
   if (!peerId) {
     return null;
   }
@@ -101,9 +101,9 @@ function resolveIMessageOutboundSessionRoute(params: {
   const toPrefix =
     parsed.kind === "chat_id"
       ? "chat_id"
-      : (parsed.kind === "chat_guid"
+      : parsed.kind === "chat_guid"
         ? "chat_guid"
-        : "chat_identifier");
+        : "chat_identifier";
   return {
     baseSessionKey,
     chatType: "group" as const,

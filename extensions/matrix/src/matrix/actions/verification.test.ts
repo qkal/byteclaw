@@ -47,7 +47,9 @@ describe("matrix verification actions", () => {
         },
       },
     });
-    withStartedActionClientMock.mockImplementation(async (_opts, run) => await run({ crypto: null }));
+    withStartedActionClientMock.mockImplementation(
+      async (_opts, run) => await run({ crypto: null }),
+    );
 
     await expect(listMatrixVerifications({ accountId: "ops" })).rejects.toThrow(
       "Matrix encryption is not available (enable channels.matrix.accounts.ops.encryption=true)",
@@ -67,7 +69,9 @@ describe("matrix verification actions", () => {
         },
       },
     });
-    withStartedActionClientMock.mockImplementation(async (_opts, run) => await run({ crypto: null }));
+    withStartedActionClientMock.mockImplementation(
+      async (_opts, run) => await run({ crypto: null }),
+    );
 
     await expect(listMatrixVerifications()).rejects.toThrow(
       "Matrix encryption is not available (enable channels.matrix.accounts.ops.encryption=true)",
@@ -89,7 +93,9 @@ describe("matrix verification actions", () => {
     loadConfigMock.mockImplementation(() => {
       throw new Error("verification actions should not reload runtime config when cfg is provided");
     });
-    withStartedActionClientMock.mockImplementation(async (_opts, run) => await run({ crypto: null }));
+    withStartedActionClientMock.mockImplementation(
+      async (_opts, run) => await run({ crypto: null }),
+    );
 
     await expect(listMatrixVerifications({ accountId: "ops", cfg: explicitCfg })).rejects.toThrow(
       "Matrix encryption is not available (enable channels.matrix.accounts.ops.encryption=true)",

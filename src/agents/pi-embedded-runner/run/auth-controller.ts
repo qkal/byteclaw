@@ -311,7 +311,8 @@ export function createEmbeddedRunAuthController(params: {
     throw new Error(message);
   };
 
-  const resolveApiKeyForCandidate = async (candidate?: string) => getApiKeyForModel({
+  const resolveApiKeyForCandidate = async (candidate?: string) =>
+    getApiKeyForModel({
       agentDir: params.agentDir,
       cfg: params.config,
       lockedProfile: candidate != null && candidate === params.lockedProfileId,

@@ -584,9 +584,9 @@ describe("gateway server cron", () => {
       expect(allRunsRes.ok).toBe(true);
       const allEntries = (allRunsRes.payload as { entries?: unknown } | null)?.entries;
       expect(Array.isArray(allEntries)).toBe(true);
-      expect(
-        (allEntries as { jobId?: unknown }[]).some((entry) => entry.jobId === jobId),
-      ).toBe(true);
+      expect((allEntries as { jobId?: unknown }[]).some((entry) => entry.jobId === jobId)).toBe(
+        true,
+      );
 
       const statusRes = await rpcReq(ws, "cron.status", {});
       expect(statusRes.ok).toBe(true);

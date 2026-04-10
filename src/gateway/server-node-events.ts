@@ -340,12 +340,14 @@ export const handleNodeEvent = async (ctx: NodeEventContext, nodeId: string, evt
         sessionKey?: string | null;
         thinking?: string | null;
         deliver?: boolean;
-        attachments?: {
-          type?: string;
-          mimeType?: string;
-          fileName?: string;
-          content?: unknown;
-        }[] | null;
+        attachments?:
+          | {
+              type?: string;
+              mimeType?: string;
+              fileName?: string;
+              content?: unknown;
+            }[]
+          | null;
         receipt?: boolean;
         receiptText?: string | null;
         to?: string | null;
@@ -413,7 +415,9 @@ export const handleNodeEvent = async (ctx: NodeEventContext, nodeId: string, evt
             return;
           }
         } catch (error) {
-          ctx.logGateway.warn(`agent.request attachment parse failed: ${formatErrorMessage(error)}`);
+          ctx.logGateway.warn(
+            `agent.request attachment parse failed: ${formatErrorMessage(error)}`,
+          );
           return;
         }
       }
@@ -646,7 +650,7 @@ export const handleNodeEvent = async (ctx: NodeEventContext, nodeId: string, evt
       }
       const transport = normalizeLowercaseStringOrEmpty(obj.transport) || "direct";
       const topic = typeof obj.topic === "string" ? obj.topic : "";
-      const {environment} = obj;
+      const { environment } = obj;
       try {
         if (transport === "relay") {
           const gatewayDeviceId = normalizeOptionalString(obj.gatewayDeviceId) ?? "";

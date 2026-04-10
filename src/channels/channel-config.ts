@@ -65,7 +65,7 @@ export function resolveChannelEntryMatch<T>(params: {
   const entries = params.entries ?? {};
   const match: ChannelEntryMatch<T> = {};
   for (const key of params.keys) {
-    if (! Object.hasOwn(entries, key)) {
+    if (!Object.hasOwn(entries, key)) {
       continue;
     }
     match.entry = entries[key];
@@ -96,7 +96,7 @@ export function resolveChannelEntryMatchWithFallback<T>(params: {
     return { ...direct, matchKey: direct.key, matchSource: "direct" };
   }
 
-  const {normalizeKey} = params;
+  const { normalizeKey } = params;
   if (normalizeKey) {
     const normalizedKeys = params.keys.map((key) => normalizeKey(key)).filter(Boolean);
     if (normalizedKeys.length > 0) {

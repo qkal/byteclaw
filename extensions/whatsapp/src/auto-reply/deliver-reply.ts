@@ -22,7 +22,7 @@ function shouldSuppressReasoningReply(payload: ReplyPayload): boolean {
   if (payload.isReasoning === true) {
     return true;
   }
-  const {text} = payload;
+  const { text } = payload;
   if (typeof text !== "string") {
     return false;
   }

@@ -6,7 +6,7 @@
 export interface EnvVarSpec {
   name: string;
   required: boolean;
-  type: 'string' | 'number' | 'boolean' | 'url' | 'email' | 'port';
+  type: "string" | "number" | "boolean" | "url" | "email" | "port";
   defaultValue?: string | number | boolean;
   validator?: (value: string) => boolean;
   description?: string;
@@ -21,9 +21,9 @@ export interface ValidationResult {
 
 class EnvValidationError extends Error {
   constructor(public readonly validationErrors: Array<{ name: string; message: string }>) {
-    const messages = validationErrors.map(e => `${e.name}: ${e.message}`).join('\n');
+    const messages = validationErrors.map((e) => `${e.name}: ${e.message}`).join("\n");
     super(`Environment validation failed:\n${messages}`);
-    this.name = 'EnvValidationError';
+    this.name = "EnvValidationError";
   }
 }
 
@@ -37,10 +37,10 @@ export function validateEnv(specs: EnvVarSpec[]): ValidationResult {
 
   for (const spec of specs) {
     const value = process.env[spec.name];
-    
+
     if (value === undefined) {
       if (spec.required) {
-        errors.push({ name: spec.name, message: 'Required environment variable is missing' });
+        errors.push({ name: spec.name, message: "Required environment variable is missing" });
       } else if (spec.defaultValue !== undefined) {
         env[spec.name] = spec.defaultValue;
       }
@@ -56,7 +56,7 @@ export function validateEnv(specs: EnvVarSpec[]): ValidationResult {
 
     // Custom validation
     if (spec.validator && !spec.validator(value)) {
-      errors.push({ name: spec.name, message: 'Custom validation failed' });
+      errors.push({ name: spec.name, message: "Custom validation failed" });
       continue;
     }
 
@@ -85,36 +85,40 @@ export function validateEnvOrThrow(specs: EnvVarSpec[]): Record<string, string |
 /**
  * Parse environment value based on type.
  */
-function parseEnvValue(value: string, type: EnvVarSpec['type'], name: string): string | number | boolean | null {
+function parseEnvValue(
+  value: string,
+  type: EnvVarSpec["type"],
+  name: string,
+): string | number | boolean | null {
   switch (type) {
-    case 'string':
+    case "string":
       return value;
-    
-    case 'number':
+
+    case "number":
       const num = Number(value);
       return isNaN(num) ? null : num;
-    
-    case 'boolean':
-      if (value.toLowerCase() === 'true' || value === '1') return true;
-      if (value.toLowerCase() === 'false' || value === '0') return false;
+
+    case "boolean":
+      if (value.toLowerCase() === "true" || value === "1") return true;
+      if (value.toLowerCase() === "false" || value === "0") return false;
       return null;
-    
-    case 'url':
+
+    case "url":
       try {
         new URL(value);
         return value;
       } catch {
         return null;
       }
-    
-    case 'email':
+
+    case "email":
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(value) ? value : null;
-    
-    case 'port':
+
+    case "port":
       const port = Number(value);
-      return (Number.isInteger(port) && port >= 1 && port <= 65535) ? port : null;
-    
+      return Number.isInteger(port) && port >= 1 && port <= 65535 ? port : null;
+
     default:
       return null;
   }
@@ -125,27 +129,27 @@ function parseEnvValue(value: string, type: EnvVarSpec['type'], name: string): s
  */
 export const COMMON_ENV_SPECS: EnvVarSpec[] = [
   {
-    name: 'NODE_ENV',
+    name: "NODE_ENV",
     required: false,
-    type: 'string',
-    defaultValue: 'production',
-    description: 'Node environment (development, production, test)',
-    validator: (value) => ['development', 'production', 'test'].includes(value),
+    type: "string",
+    defaultValue: "production",
+    description: "Node environment (development, production, test)",
+    validator: (value) => ["development", "production", "test"].includes(value),
   },
   {
-    name: 'PORT',
+    name: "PORT",
     required: false,
-    type: 'port',
+    type: "port",
     defaultValue: 3000,
-    description: 'Server port',
+    description: "Server port",
   },
   {
-    name: 'LOG_LEVEL',
+    name: "LOG_LEVEL",
     required: false,
-    type: 'string',
-    defaultValue: 'info',
-    description: 'Logging level',
-    validator: (value) => ['debug', 'info', 'warn', 'error'].includes(value),
+    type: "string",
+    defaultValue: "info",
+    description: "Logging level",
+    validator: (value) => ["debug", "info", "warn", "error"].includes(value),
   },
 ];
 

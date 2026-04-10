@@ -225,9 +225,9 @@ export async function maybeRepairSandboxImages(
       buildScript:
         dockerImage === DEFAULT_SANDBOX_COMMON_IMAGE
           ? "scripts/sandbox-common-setup.sh"
-          : (dockerImage === DEFAULT_SANDBOX_IMAGE
+          : dockerImage === DEFAULT_SANDBOX_IMAGE
             ? "scripts/sandbox-setup.sh"
-            : undefined),
+            : undefined,
       image: dockerImage,
       kind: "base",
       updateConfig: (image) => {

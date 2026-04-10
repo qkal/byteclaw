@@ -9,7 +9,9 @@ import { normalizeTalkConfig } from "./talk.js";
 import type { OpenClawConfig } from "./types.js";
 import type { ModelDefinitionConfig } from "./types.models.js";
 
-interface WarnState { warned: boolean }
+interface WarnState {
+  warned: boolean;
+}
 
 let defaultWarnState: WarnState = { warned: false };
 
@@ -89,7 +91,7 @@ export interface SessionDefaultsOptions {
 }
 
 export function applyMessageDefaults(cfg: OpenClawConfig): OpenClawConfig {
-  const {messages} = cfg;
+  const { messages } = cfg;
   const hasAckScope = messages?.ackReactionScope !== undefined;
   if (hasAckScope) {
     return cfg;
@@ -107,7 +109,7 @@ export function applySessionDefaults(
   cfg: OpenClawConfig,
   options: SessionDefaultsOptions = {},
 ): OpenClawConfig {
-  const {session} = cfg;
+  const { session } = cfg;
   if (!session || session.mainKey === undefined) {
     return cfg;
   }
@@ -145,7 +147,7 @@ export function applyModelDefaults(cfg: OpenClawConfig): OpenClawConfig {
         provider: providerId,
         providerConfig: provider,
       });
-      const {models} = normalizedProvider;
+      const { models } = normalizedProvider;
       if (!Array.isArray(models) || models.length === 0) {
         if (normalizedProvider !== provider) {
           nextProviders[providerId] = normalizedProvider;
@@ -282,7 +284,7 @@ export function applyModelDefaults(cfg: OpenClawConfig): OpenClawConfig {
 }
 
 export function applyAgentDefaults(cfg: OpenClawConfig): OpenClawConfig {
-  const {agents} = cfg;
+  const { agents } = cfg;
   const defaults = agents?.defaults;
   const hasMax =
     typeof defaults?.maxConcurrent === "number" && Number.isFinite(defaults.maxConcurrent);
@@ -323,7 +325,7 @@ export function applyAgentDefaults(cfg: OpenClawConfig): OpenClawConfig {
 }
 
 export function applyLoggingDefaults(cfg: OpenClawConfig): OpenClawConfig {
-  const {logging} = cfg;
+  const { logging } = cfg;
   if (!logging) {
     return cfg;
   }

@@ -51,7 +51,7 @@ function messageText(message: AgentMessage): string {
   if (!("content" in message)) {
     return "";
   }
-  const {content} = message;
+  const { content } = message;
   if (typeof content === "string") {
     return content;
   }

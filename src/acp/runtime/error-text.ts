@@ -1,4 +1,4 @@
-import type { AcpRuntimeError} from "./errors.js";
+import type { AcpRuntimeError } from "./errors.js";
 import { type AcpRuntimeErrorCode, toAcpRuntimeError } from "./errors.js";
 
 function resolveAcpRuntimeErrorNextStep(error: AcpRuntimeError): string | undefined {

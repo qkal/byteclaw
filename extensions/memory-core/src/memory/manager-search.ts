@@ -23,7 +23,10 @@ export interface SearchRowResult {
 }
 
 function escapeLikePattern(term: string): string {
-  return term.replaceAll("\\", String.raw`\\`).replaceAll("%", String.raw`\%`).replaceAll("_", String.raw`\_`);
+  return term
+    .replaceAll("\\", String.raw`\\`)
+    .replaceAll("%", String.raw`\%`)
+    .replaceAll("_", String.raw`\_`);
 }
 
 function buildMatchQueryFromTerms(terms: string[]): string | null {
@@ -214,7 +217,9 @@ export async function searchKeyword(params: {
   // When providerModel is undefined (FTS-only mode), search all models
   const modelClause = params.providerModel ? " AND model = ?" : "";
   const modelParams = params.providerModel ? [params.providerModel] : [];
-  const substringClause = plan.substringTerms.map(() => String.raw` AND text LIKE ? ESCAPE '\'`).join("");
+  const substringClause = plan.substringTerms
+    .map(() => String.raw` AND text LIKE ? ESCAPE '\'`)
+    .join("");
   const substringParams = plan.substringTerms.map((term) => `%${escapeLikePattern(term)}%`);
   const whereClause = plan.matchQuery
     ? `${params.ftsTable} MATCH ?${substringClause}${modelClause}${params.sourceFilter.sql}`

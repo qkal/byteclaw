@@ -262,11 +262,11 @@ function buildFence(text: string, language?: string): string {
 export function getExecApprovalReplyMetadata(
   payload: ReplyPayload,
 ): ExecApprovalReplyMetadata | null {
-  const {channelData} = payload;
+  const { channelData } = payload;
   if (!channelData || typeof channelData !== "object" || Array.isArray(channelData)) {
     return null;
   }
-  const {execApproval} = channelData;
+  const { execApproval } = channelData;
   if (!execApproval || typeof execApproval !== "object" || Array.isArray(execApproval)) {
     return null;
   }

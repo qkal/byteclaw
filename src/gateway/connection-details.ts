@@ -47,12 +47,12 @@ export function buildGatewayConnectionDetailsWithResolvers(
   const remoteUrl = normalizeOptionalString(remote?.url);
   const remoteMisconfigured = isRemoteMode && !urlOverride && !remoteUrl;
   const urlSourceHint =
-    options.urlSource ?? (cliUrlOverride ? "cli" : (envUrlOverride ? "env" : undefined));
+    options.urlSource ?? (cliUrlOverride ? "cli" : envUrlOverride ? "env" : undefined);
   const url = urlOverride || remoteUrl || localUrl;
   const urlSource = urlOverride
-    ? (urlSourceHint === "env"
+    ? urlSourceHint === "env"
       ? "env OPENCLAW_GATEWAY_URL"
-      : "cli --url")
+      : "cli --url"
     : remoteUrl
       ? "config gateway.remote.url"
       : remoteMisconfigured

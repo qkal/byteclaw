@@ -28,7 +28,7 @@ async function startPtySession(command: string) {
   });
 
   expect(result.details.status).toBe("running");
-  const {sessionId} = (result.details as { sessionId: string });
+  const { sessionId } = result.details as { sessionId: string };
   expect(sessionId).toBeTruthy();
   return { processTool, sessionId };
 }

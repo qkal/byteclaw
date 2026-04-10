@@ -24,10 +24,7 @@ function normalizePathForAssertion(value: string | undefined): string | undefine
   return value.replace(/\\/g, "/");
 }
 
-function hasDiagnosticSourceSuffix(
-  diagnostics: { source?: string }[],
-  suffix: string,
-): boolean {
+function hasDiagnosticSourceSuffix(diagnostics: { source?: string }[], suffix: string): boolean {
   const normalizedSuffix = normalizePathForAssertion(suffix);
   return diagnostics.some((entry) =>
     normalizePathForAssertion(entry.source)?.endsWith(normalizedSuffix ?? suffix),
@@ -186,10 +183,7 @@ function expectCandidatePresence(
   });
 }
 
-function expectCandidateOrder(
-  candidates: { idHint: string }[],
-  expectedIds: readonly string[],
-) {
+function expectCandidateOrder(candidates: { idHint: string }[], expectedIds: readonly string[]) {
   expect(candidates.map((candidate) => candidate.idHint)).toEqual(expectedIds);
 }
 

@@ -542,7 +542,7 @@ export function collectMattermostSlashCallbackPaths(raw?: Partial<MattermostSlas
   const paths = new Set<string>([config.callbackPath]);
   if (typeof config.callbackUrl === "string" && config.callbackUrl.trim()) {
     try {
-      const {pathname} = new URL(config.callbackUrl);
+      const { pathname } = new URL(config.callbackUrl);
       if (pathname) {
         paths.add(pathname);
       }

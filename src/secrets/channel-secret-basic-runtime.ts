@@ -27,7 +27,7 @@ export function getChannelRecord(
   config: { channels?: Record<string, unknown> },
   channelKey: string,
 ): Record<string, unknown> | undefined {
-  const {channels} = config;
+  const { channels } = config;
   if (!isRecord(channels)) {
     return undefined;
   }
@@ -53,7 +53,7 @@ export function resolveChannelAccountSurface(
   channel: Record<string, unknown>,
 ): ChannelAccountSurface {
   const channelEnabled = isEnabledFlag(channel);
-  const {accounts} = channel;
+  const { accounts } = channel;
   if (!isRecord(accounts) || Object.keys(accounts).length === 0) {
     return {
       accounts: [{ account: channel, accountId: "default", enabled: channelEnabled }],

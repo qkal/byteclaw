@@ -48,7 +48,10 @@ function isLegacyGatewayBindHostAlias(value: unknown): boolean {
 }
 
 function escapeControlForLog(value: string): string {
-  return value.replace(/\r/g, String.raw`\r`).replace(/\n/g, String.raw`\n`).replace(/\t/g, String.raw`\t`);
+  return value
+    .replace(/\r/g, String.raw`\r`)
+    .replace(/\n/g, String.raw`\n`)
+    .replace(/\t/g, String.raw`\t`);
 }
 
 export const LEGACY_CONFIG_MIGRATIONS_RUNTIME_GATEWAY: LegacyConfigMigrationSpec[] = [
@@ -58,7 +61,7 @@ export const LEGACY_CONFIG_MIGRATIONS_RUNTIME_GATEWAY: LegacyConfigMigrationSpec
       if (!gateway) {
         return;
       }
-      const {bind} = gateway;
+      const { bind } = gateway;
       if (!isGatewayNonLoopbackBindMode(bind)) {
         return;
       }

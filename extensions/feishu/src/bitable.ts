@@ -14,7 +14,11 @@ function json(data: unknown) {
   };
 }
 
-interface LarkResponse<T = unknown> { code?: number; msg?: string; data?: T }
+interface LarkResponse<T = unknown> {
+  code?: number;
+  msg?: string;
+  data?: T;
+}
 type BitableRecordCreatePayload = NonNullable<
   Parameters<Lark.Client["bitable"]["appTableRecord"]["create"]>[0]
 >;
@@ -553,7 +557,9 @@ export function registerFeishuBitableTools(api: OpenClawPluginApi) {
     return;
   }
 
-  interface AccountAwareParams { accountId?: string }
+  interface AccountAwareParams {
+    accountId?: string;
+  }
 
   const getClient = (params: AccountAwareParams | undefined, defaultAccountId?: string) =>
     createFeishuToolClient({ api, defaultAccountId, executeParams: params });

@@ -21,13 +21,13 @@ class MockGatewayClient {
     void Promise.resolve()
       .then(async () => {
         if (clientState.startMode === "close") {
-          const {onClose} = this.opts;
+          const { onClose } = this.opts;
           if (typeof onClose === "function") {
             onClose(clientState.close.code, clientState.close.reason);
           }
           return;
         }
-        const {onHelloOk} = this.opts;
+        const { onHelloOk } = this.opts;
         if (typeof onHelloOk === "function") {
           await onHelloOk();
         }

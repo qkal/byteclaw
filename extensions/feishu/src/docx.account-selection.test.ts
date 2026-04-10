@@ -7,13 +7,13 @@ const createFeishuClientMock = vi.fn((creds: { appId?: string } | undefined) => 
 }));
 
 vi.mock("./client.js", () => ({
-    createFeishuClient: (creds: { appId?: string } | undefined) => createFeishuClientMock(creds),
-  }));
+  createFeishuClient: (creds: { appId?: string } | undefined) => createFeishuClientMock(creds),
+}));
 
 // Patch SDK import so tool execution can run without network concerns.
 vi.mock("@larksuiteoapi/node-sdk", () => ({
-    default: {},
-  }));
+  default: {},
+}));
 
 describe("feishu_doc account selection", () => {
   let registerFeishuDocTools: typeof import("./docx.js").registerFeishuDocTools;

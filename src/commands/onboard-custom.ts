@@ -635,7 +635,7 @@ export function applyCustomApiConfig(params: ApplyCustomApiConfigParams): Custom
     config: params.config,
     providerId: params.providerId,
   });
-  const {providerId} = providerIdResult;
+  const { providerId } = providerIdResult;
   const providers = params.config.models?.providers ?? {};
 
   const modelRef = modelKey(providerId, modelId);
@@ -786,9 +786,9 @@ export async function promptCustomApiConfig(params: {
     prompter,
     secretInputMode: params.secretInputMode,
   });
-  let {baseUrl} = baseInput;
-  let {apiKey} = baseInput;
-  let {resolvedApiKey} = baseInput;
+  let { baseUrl } = baseInput;
+  let { apiKey } = baseInput;
+  let { resolvedApiKey } = baseInput;
 
   const compatibilityChoice = await prompter.select({
     message: "Endpoint compatibility",

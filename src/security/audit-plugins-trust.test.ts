@@ -17,7 +17,8 @@ describe("security audit install metadata findings", () => {
     return dir;
   };
 
-  const runInstallMetadataAudit = async (cfg: OpenClawConfig, stateDir: string) => await collectPluginsTrustFindings({ cfg, stateDir });
+  const runInstallMetadataAudit = async (cfg: OpenClawConfig, stateDir: string) =>
+    await collectPluginsTrustFindings({ cfg, stateDir });
 
   beforeAll(async () => {
     fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-security-install-"));
@@ -193,7 +194,8 @@ describe("security audit extension tool reachability findings", () => {
   const previousPathResolutionEnv: Partial<Record<(typeof pathResolutionEnvKeys)[number], string>> =
     {};
 
-  const runSharedExtensionsAudit = async (config: OpenClawConfig) => await collectPluginsTrustFindings({
+  const runSharedExtensionsAudit = async (config: OpenClawConfig) =>
+    await collectPluginsTrustFindings({
       cfg: config,
       stateDir: sharedExtensionsStateDir,
     });

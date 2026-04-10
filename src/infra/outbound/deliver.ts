@@ -169,15 +169,15 @@ async function createChannelHandler(params: ChannelHandlerParams): Promise<Chann
 function createPluginHandler(
   params: ChannelHandlerParams & { outbound?: ChannelOutboundAdapter },
 ): ChannelHandler | null {
-  const {outbound} = params;
+  const { outbound } = params;
   if (!outbound?.sendText) {
     return null;
   }
   const baseCtx = createChannelOutboundContextBase(params);
-  const {sendText} = outbound;
-  const {sendMedia} = outbound;
+  const { sendText } = outbound;
+  const { sendMedia } = outbound;
   const chunker = outbound.chunker ?? null;
-  const {chunkerMode} = outbound;
+  const { chunkerMode } = outbound;
   const resolveCtx = (overrides?: {
     replyToId?: string | null;
     threadId?: string | number | null;
@@ -573,9 +573,9 @@ async function deliverOutboundPayloadsCore(
   params: DeliverOutboundPayloadsCoreParams,
 ): Promise<OutboundDeliveryResult[]> {
   const { cfg, channel, to, payloads } = params;
-  const {accountId} = params;
-  const {deps} = params;
-  const {abortSignal} = params;
+  const { accountId } = params;
+  const { deps } = params;
+  const { abortSignal } = params;
   const mediaAccess = resolveAgentScopedOutboundMediaAccess({
     agentId: params.session?.agentId ?? params.mirror?.agentId,
     cfg,

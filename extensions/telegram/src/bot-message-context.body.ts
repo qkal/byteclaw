@@ -138,7 +138,7 @@ export async function resolveTelegramInboundBody(params: {
     hasControlCommand: hasControlCommandInMessage,
     useAccessGroups,
   });
-  const {commandAuthorized} = commandGate;
+  const { commandAuthorized } = commandGate;
   const historyKey = isGroup ? buildTelegramGroupPeerId(chatId, resolvedThreadId) : undefined;
 
   const primaryMedia = resolveTelegramPrimaryMedia(msg);
@@ -272,7 +272,7 @@ export async function resolveTelegramInboundBody(params: {
       requireMention: Boolean(requireMention),
     },
   });
-  const {effectiveWasMentioned} = mentionDecision;
+  const { effectiveWasMentioned } = mentionDecision;
   if (isGroup && requireMention && canDetectMention && mentionDecision.shouldSkip) {
     logger.info({ chatId, reason: "no-mention" }, "skipping group message");
     recordPendingHistoryEntryIfEnabled({

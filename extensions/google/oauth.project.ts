@@ -33,11 +33,11 @@ function isVpcScAffected(payload: unknown): boolean {
   if (!payload || typeof payload !== "object") {
     return false;
   }
-  const {error} = (payload as { error?: unknown });
+  const { error } = payload as { error?: unknown };
   if (!error || typeof error !== "object") {
     return false;
   }
-  const {details} = (error as { details?: unknown[] });
+  const { details } = error as { details?: unknown[] };
   if (!Array.isArray(details)) {
     return false;
   }
@@ -148,7 +148,8 @@ async function discoverProject(accessToken: string): Promise<string> {
       loadError = undefined;
       break;
     } catch (error) {
-      loadError = error instanceof Error ? error : new Error("loadCodeAssist failed", { cause: error });
+      loadError =
+        error instanceof Error ? error : new Error("loadCodeAssist failed", { cause: error });
     }
   }
 

@@ -251,7 +251,7 @@ function closeStyle(state: RenderState, style: MarkdownStyle) {
   const target = resolveRenderTarget(state);
   for (let i = target.openStyles.length - 1; i >= 0; i -= 1) {
     if (target.openStyles[i]?.style === style) {
-      const {start} = target.openStyles[i];
+      const { start } = target.openStyles[i];
       target.openStyles.splice(i, 1);
       const end = target.text.length;
       if (end > start) {
@@ -347,7 +347,7 @@ function finishTableCell(cell: RenderTarget): TableCell {
 }
 
 function trimCell(cell: TableCell): TableCell {
-  const {text} = cell;
+  const { text } = cell;
   let start = 0;
   let end = text.length;
   while (start < end && /\s/.test(text[start] ?? "")) {

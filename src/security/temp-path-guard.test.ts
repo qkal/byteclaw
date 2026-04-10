@@ -219,8 +219,8 @@ describe("temp path guard", () => {
     const weakRandomMatches: string[] = [];
 
     for (const file of files) {
-      const {relativePath} = file;
-      const {source} = file;
+      const { relativePath } = file;
+      const { source } = file;
       const mightContainTmpdirJoin =
         source.includes("tmpdir") &&
         source.includes("path") &&

@@ -406,9 +406,9 @@ export async function initSessionState(params: {
   const isSystemEvent =
     ctx.Provider === "heartbeat" || ctx.Provider === "cron-event" || ctx.Provider === "exec-event";
   const entryFreshness = entry
-    ? (isSystemEvent
+    ? isSystemEvent
       ? ({ fresh: true } satisfies SessionFreshness)
-      : evaluateSessionFreshness({ now, policy: resetPolicy, updatedAt: entry.updatedAt }))
+      : evaluateSessionFreshness({ now, policy: resetPolicy, updatedAt: entry.updatedAt })
     : undefined;
   const freshEntry = entryFreshness?.fresh ?? false;
   // Capture the current session entry before any reset so its transcript can be

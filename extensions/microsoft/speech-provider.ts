@@ -114,10 +114,10 @@ export function isCjkDominant(text: string): boolean {
   for (const ch of stripped) {
     const code = ch.codePointAt(0) ?? 0;
     if (
-      (code >= 0x4E_00 && code <= 0x9F_FF) ||
-      (code >= 0x34_00 && code <= 0x4D_BF) ||
-      (code >= 0x30_00 && code <= 0x30_3F) ||
-      (code >= 0xFF_00 && code <= 0xFF_EF)
+      (code >= 0x4e_00 && code <= 0x9f_ff) ||
+      (code >= 0x34_00 && code <= 0x4d_bf) ||
+      (code >= 0x30_00 && code <= 0x30_3f) ||
+      (code >= 0xff_00 && code <= 0xff_ef)
     ) {
       cjkCount += 1;
     }
@@ -212,7 +212,7 @@ export function buildMicrosoftSpeechProvider(): SpeechProviderPlugin {
       const tempDir = mkdtempSync(path.join(tempRoot, "tts-microsoft-"));
       const overrideVoice = trimToUndefined(req.providerOverrides?.voice);
       let voice = overrideVoice ?? config.voice;
-      let {lang} = config;
+      let { lang } = config;
       let outputFormat =
         trimToUndefined(req.providerOverrides?.outputFormat) ?? config.outputFormat;
       const fallbackOutputFormat =

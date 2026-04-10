@@ -111,7 +111,7 @@ export async function assertCanonicalPathWithinBase(params: {
     await validateDirectory(candidatePath);
     return;
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code !== "ENOENT") {
       throw error;
     }

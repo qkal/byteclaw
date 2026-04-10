@@ -390,7 +390,8 @@ export function createSignalEventHandler(deps: SignalEventHandlerDeps) {
         mediaTypes: undefined,
       });
     },
-    shouldDebounce: (entry) => shouldDebounceTextInbound({
+    shouldDebounce: (entry) =>
+      shouldDebounceTextInbound({
         text: entry.bodyText,
         cfg: deps.cfg,
         hasMedia: Boolean(entry.mediaPath || entry.mediaType || entry.mediaPaths?.length),
@@ -522,9 +523,9 @@ export function createSignalEventHandler(deps: SignalEventHandlerDeps) {
     const dataMessage = envelope.dataMessage ?? envelope.editMessage?.dataMessage;
     const reaction = deps.isSignalReactionMessage(envelope.reactionMessage)
       ? envelope.reactionMessage
-      : (deps.isSignalReactionMessage(dataMessage?.reaction)
+      : deps.isSignalReactionMessage(dataMessage?.reaction)
         ? dataMessage?.reaction
-        : null);
+        : null;
 
     // Replace ￼ (object replacement character) with @uuid or @phone from mentions
     // Signal encodes mentions as the object replacement character; hydrate them from metadata first.
@@ -639,7 +640,7 @@ export function createSignalEventHandler(deps: SignalEventHandlerDeps) {
       hasControlCommand: hasControlCommandInMessage,
       useAccessGroups,
     });
-    const {commandAuthorized} = commandGate;
+    const { commandAuthorized } = commandGate;
     if (isGroup && commandGate.shouldBlock) {
       logInboundDrop({
         channel: "signal",
@@ -683,7 +684,7 @@ export function createSignalEventHandler(deps: SignalEventHandlerDeps) {
         requireMention: Boolean(requireMention),
       },
     });
-    const {effectiveWasMentioned} = mentionDecision;
+    const { effectiveWasMentioned } = mentionDecision;
     if (isGroup && requireMention && canDetectMention && mentionDecision.shouldSkip) {
       logInboundDrop({
         channel: "signal",
@@ -823,9 +824,9 @@ export function createSignalEventHandler(deps: SignalEventHandlerDeps) {
     const receiptTimestamp =
       typeof envelope.timestamp === "number"
         ? envelope.timestamp
-        : (typeof dataMessage.timestamp === "number"
+        : typeof dataMessage.timestamp === "number"
           ? dataMessage.timestamp
-          : undefined);
+          : undefined;
     if (deps.sendReadReceipts && !deps.readReceiptsViaDaemon && !isGroup && receiptTimestamp) {
       try {
         await sendReadReceiptSignal(`signal:${senderRecipient}`, receiptTimestamp, {

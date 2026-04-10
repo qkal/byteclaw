@@ -91,7 +91,7 @@ export async function collectTelegramSecurityAuditFindings(params: {
           target: invalidTelegramAllowFromEntries,
         });
       }
-      const {topics} = group;
+      const { topics } = group;
       if (!topics || typeof topics !== "object") {
         continue;
       }

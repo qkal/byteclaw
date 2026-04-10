@@ -49,8 +49,8 @@ export function filterMessagingToolMediaDuplicates(params: {
   }
   const sentSet = new Set(sentMediaUrls.map(normalizeMediaForDedupe).filter(Boolean));
   return payloads.map((payload) => {
-    const {mediaUrl} = payload;
-    const {mediaUrls} = payload;
+    const { mediaUrl } = payload;
+    const { mediaUrls } = payload;
     const stripSingle = mediaUrl && sentSet.has(normalizeMediaForDedupe(mediaUrl));
     const filteredUrls = mediaUrls?.filter((u) => !sentSet.has(normalizeMediaForDedupe(u)));
     if (!stripSingle && (!mediaUrls || filteredUrls?.length === mediaUrls.length)) {

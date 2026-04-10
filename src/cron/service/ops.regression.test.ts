@@ -101,7 +101,10 @@ describe("cron service ops regressions", () => {
 
     const runStarted = createDeferred<void>();
     const runFinished = createDeferred<void>();
-    const runResolvers: ((value: { status: "ok" | "error" | "skipped"; summary?: string }) => void)[] = [];
+    const runResolvers: ((value: {
+      status: "ok" | "error" | "skipped";
+      summary?: string;
+    }) => void)[] = [];
     const runIsolatedAgentJob = vi.fn(async () => {
       if (runIsolatedAgentJob.mock.calls.length === 1) {
         runStarted.resolve();

@@ -117,7 +117,7 @@ export function migrateElevenLabsLegacyTalkConfig<T>(raw: T): { config: T; chang
   const movedKeys: string[] = [];
 
   for (const key of LEGACY_TALK_FIELD_KEYS) {
-    if (! Object.hasOwn(nextTalk, key)) {
+    if (!Object.hasOwn(nextTalk, key)) {
       continue;
     }
     legacyFields[key] = nextTalk[key];

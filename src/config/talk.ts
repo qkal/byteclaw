@@ -87,7 +87,7 @@ function normalizeTalkProviders(value: unknown): Record<string, TalkProviderConf
 
 function activeProviderFromTalk(talk: TalkConfig): string | undefined {
   const provider = normalizeOptionalString(talk.provider);
-  const {providers} = talk;
+  const { providers } = talk;
   if (provider) {
     if (providers && !(provider in providers)) {
       return undefined;

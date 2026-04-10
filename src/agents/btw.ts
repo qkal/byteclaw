@@ -198,7 +198,7 @@ async function toSimpleContextMessages(params: {
     if (!message || typeof message !== "object") {
       continue;
     }
-    const {role} = (message as { role?: unknown });
+    const { role } = message as { role?: unknown };
     if (role === "user") {
       const sanitizedMessage = await sanitizeBtwUserMessage({
         imageLimits: params.imageLimits,

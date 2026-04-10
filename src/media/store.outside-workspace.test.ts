@@ -11,9 +11,9 @@ const mocks = vi.hoisted(() => ({
 }));
 
 vi.mock("./store.runtime.js", () => ({
-    isSafeOpenError: mocks.isSafeOpenError,
-    readLocalFileSafely: mocks.readLocalFileSafely,
-  }));
+  isSafeOpenError: mocks.isSafeOpenError,
+  readLocalFileSafely: mocks.readLocalFileSafely,
+}));
 
 type StoreModule = typeof import("./store.js");
 

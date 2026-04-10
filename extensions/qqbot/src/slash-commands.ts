@@ -458,7 +458,7 @@ function tailFileLines(
       bytesRead += readSize;
 
       for (let i = 0; i < readSize; i++) {
-        if (buf[i] === 0x0A) {
+        if (buf[i] === 0x0a) {
           newlineCount++;
         }
       }

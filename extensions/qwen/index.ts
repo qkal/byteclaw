@@ -150,7 +150,7 @@ export default defineSingleProviderPluginEntry({
     ],
     catalog: {
       run: async (ctx) => {
-        const {apiKey} = ctx.resolveProviderApiKey(PROVIDER_ID);
+        const { apiKey } = ctx.resolveProviderApiKey(PROVIDER_ID);
         if (!apiKey) {
           return null;
         }

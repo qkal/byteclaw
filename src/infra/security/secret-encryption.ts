@@ -3,7 +3,7 @@
  * Provides AES-256-GCM encryption for sensitive data storage
  */
 
-import { createCipheriv, createDecipheriv, randomBytes, scryptSync } from 'crypto';
+import { createCipheriv, createDecipheriv, randomBytes, scryptSync } from "crypto";
 
 export interface EncryptionOptions {
   key: string;
@@ -30,24 +30,24 @@ function deriveKey(password: string, salt: Buffer, keyLength: number = 32): Buff
  * Encrypt data using AES-256-GCM
  */
 export function encrypt(text: string, options: EncryptionOptions): EncryptedData {
-  const salt = options.salt ? Buffer.from(options.salt, 'hex') : randomBytes(16);
+  const salt = options.salt ? Buffer.from(options.salt, "hex") : randomBytes(16);
   const ivLength = options.ivLength ?? 16;
   const keyLength = options.keyLength ?? 32;
 
   const key = deriveKey(options.key, salt, keyLength);
   const iv = randomBytes(ivLength);
 
-  const cipher = createCipheriv('aes-256-gcm', key, iv);
-  let encrypted = cipher.update(text, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
+  const cipher = createCipheriv("aes-256-gcm", key, iv);
+  let encrypted = cipher.update(text, "utf8", "hex");
+  encrypted += cipher.final("hex");
 
   const authTag = cipher.getAuthTag();
 
   return {
-    iv: iv.toString('hex'),
-    salt: salt.toString('hex'),
+    iv: iv.toString("hex"),
+    salt: salt.toString("hex"),
     data: encrypted,
-    authTag: authTag.toString('hex'),
+    authTag: authTag.toString("hex"),
   };
 }
 
@@ -55,17 +55,17 @@ export function encrypt(text: string, options: EncryptionOptions): EncryptedData
  * Decrypt data using AES-256-GCM
  */
 export function decrypt(encryptedData: EncryptedData, options: EncryptionOptions): string {
-  const salt = Buffer.from(encryptedData.salt, 'hex');
-  const iv = Buffer.from(encryptedData.iv, 'hex');
+  const salt = Buffer.from(encryptedData.salt, "hex");
+  const iv = Buffer.from(encryptedData.iv, "hex");
   const keyLength = options.keyLength ?? 32;
 
   const key = deriveKey(options.key, salt, keyLength);
 
-  const decipher = createDecipheriv('aes-256-gcm', key, iv);
-  decipher.setAuthTag(Buffer.from(encryptedData.authTag, 'hex'));
+  const decipher = createDecipheriv("aes-256-gcm", key, iv);
+  decipher.setAuthTag(Buffer.from(encryptedData.authTag, "hex"));
 
-  let decrypted = decipher.update(encryptedData.data, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
+  let decrypted = decipher.update(encryptedData.data, "hex", "utf8");
+  decrypted += decipher.final("utf8");
 
   return decrypted;
 }
@@ -96,14 +96,14 @@ export function decryptObject<T extends Record<string, unknown>>(
  * Generate a random encryption key
  */
 export function generateEncryptionKey(length: number = 32): string {
-  return randomBytes(length).toString('hex');
+  return randomBytes(length).toString("hex");
 }
 
 /**
  * Generate a random salt
  */
 export function generateSalt(length: number = 16): string {
-  return randomBytes(length).toString('hex');
+  return randomBytes(length).toString("hex");
 }
 
 /**

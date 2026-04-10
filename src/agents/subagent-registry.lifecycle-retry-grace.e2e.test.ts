@@ -58,7 +58,7 @@ let chatHistoryBySessionKey = new Map<string, Record<string, unknown>[]>();
 let sessionStore: Record<string, SessionStoreEntry> = {};
 
 const callGatewayMock = vi.fn(async (request: GatewayRequest) => {
-  const {method} = request;
+  const { method } = request;
   if (method === "agent.wait") {
     // Keep wait unresolved from the RPC path so lifecycle fallback logic is exercised.
     return { status: "pending" };

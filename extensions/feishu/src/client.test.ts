@@ -199,7 +199,7 @@ afterEach(() => {
 
 describe("createFeishuClient HTTP timeout", () => {
   const getLastClientHttpInstance = (): HttpInstanceLike | undefined => {
-    const {httpInstance} = readCallOptions(clientCtorMock);
+    const { httpInstance } = readCallOptions(clientCtorMock);
     if (
       isRecord(httpInstance) &&
       typeof httpInstance.get === "function" &&

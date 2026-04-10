@@ -26,7 +26,7 @@ import { getDefaultMediaLocalRoots } from "../media/local-roots.js";
 import { runExec } from "../process/exec.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
-import type { MediaAttachmentCache} from "./attachments.js";
+import type { MediaAttachmentCache } from "./attachments.js";
 import { selectAttachments } from "./attachments.js";
 import { resolveAutoMediaKeyProviders, resolveDefaultMediaModel } from "./defaults.js";
 import { isMediaUnderstandingSkipError } from "./errors.js";
@@ -560,7 +560,7 @@ export async function resolveAutoImageModel(params: {
     if (!entry || entry.type === "cli") {
       return null;
     }
-    const {provider} = entry;
+    const { provider } = entry;
     const model = entry.model?.trim();
     if (!provider || !model) {
       return null;

@@ -90,7 +90,7 @@ export async function snapshotAiViaPlaywright(opts: {
     track: "response",
   });
   let snapshot = String(result?.full ?? "");
-  const {maxChars} = opts;
+  const { maxChars } = opts;
   const limit =
     typeof maxChars === "number" && Number.isFinite(maxChars) && maxChars > 0
       ? Math.floor(maxChars)
@@ -170,12 +170,12 @@ export async function snapshotRoleViaPlaywright(opts: {
   const frameSelector = normalizeOptionalString(opts.frameSelector) ?? "";
   const selector = normalizeOptionalString(opts.selector) ?? "";
   const locator = frameSelector
-    ? (selector
+    ? selector
       ? page.frameLocator(frameSelector).locator(selector)
-      : page.frameLocator(frameSelector).locator(":root"))
-    : (selector
+      : page.frameLocator(frameSelector).locator(":root")
+    : selector
       ? page.locator(selector)
-      : page.locator(":root"));
+      : page.locator(":root");
 
   const ariaSnapshot = await locator.ariaSnapshot();
   const built = buildRoleSnapshotFromAriaSnapshot(String(ariaSnapshot ?? ""), opts.options);
@@ -205,9 +205,9 @@ export async function navigateViaPlaywright(opts: {
     const msg =
       typeof err === "string"
         ? err.toLowerCase()
-        : (err instanceof Error
+        : err instanceof Error
           ? err.message.toLowerCase()
-          : "");
+          : "";
     return (
       msg.includes("frame has been detached") ||
       msg.includes("target page, context or browser has been closed")

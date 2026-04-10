@@ -67,9 +67,9 @@ export function extractMcpServerMap(raw: unknown): Record<string, BundleMcpServe
   }
   const nested = isRecord(raw.mcpServers)
     ? raw.mcpServers
-    : (isRecord(raw.servers)
+    : isRecord(raw.servers)
       ? raw.servers
-      : raw);
+      : raw;
   if (!isRecord(nested)) {
     return {};
   }
@@ -113,7 +113,7 @@ function absolutizeBundleMcpServer(params: {
     next.cwd = params.baseDir;
   }
 
-  const {command} = next;
+  const { command } = next;
   if (typeof command === "string") {
     const expanded = expandBundleRootPlaceholders(command, params.rootDir);
     next.command = isExplicitRelativePath(expanded)
@@ -121,13 +121,13 @@ function absolutizeBundleMcpServer(params: {
       : normalizeExpandedAbsolutePath(expanded);
   }
 
-  const {cwd} = next;
+  const { cwd } = next;
   if (typeof cwd === "string") {
     const expanded = expandBundleRootPlaceholders(cwd, params.rootDir);
     next.cwd = path.isAbsolute(expanded) ? expanded : path.resolve(params.baseDir, expanded);
   }
 
-  const {workingDirectory} = next;
+  const { workingDirectory } = next;
   if (typeof workingDirectory === "string") {
     const expanded = expandBundleRootPlaceholders(workingDirectory, params.rootDir);
     next.workingDirectory = path.isAbsolute(expanded)

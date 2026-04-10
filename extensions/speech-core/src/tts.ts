@@ -405,9 +405,9 @@ export function buildTtsSystemPromptHint(cfg: OpenClawConfig): string | undefine
   const autoHint =
     autoMode === "inbound"
       ? "Only use TTS when the user's last message includes audio/voice."
-      : (autoMode === "tagged"
+      : autoMode === "tagged"
         ? "Only use TTS when you include [[tts]] or [[tts:text]] tags."
-        : undefined);
+        : undefined;
   return [
     "Voice (TTS) is enabled.",
     autoHint,
@@ -639,7 +639,10 @@ function formatTtsProviderError(provider: TtsProvider, err: unknown): string {
 
 function sanitizeTtsErrorForLog(err: unknown): string {
   const raw = formatErrorMessage(err);
-  return redactSensitiveText(raw).replace(/\r/g, String.raw`\r`).replace(/\n/g, String.raw`\n`).replace(/\t/g, String.raw`\t`);
+  return redactSensitiveText(raw)
+    .replace(/\r/g, String.raw`\r`)
+    .replace(/\n/g, String.raw`\n`)
+    .replace(/\t/g, String.raw`\t`);
 }
 
 function buildTtsFailureResult(
@@ -1042,7 +1045,7 @@ export async function maybeApplyTtsToPayload(params: {
   const config = resolveTtsConfig(params.cfg);
 
   const reply = resolveSendableOutboundReplyParts(params.payload);
-  const {text} = reply;
+  const { text } = reply;
   const directives = parseTtsDirectives(text, config.modelOverrides, {
     cfg: params.cfg,
     providerConfigs: config.providerConfigs,
@@ -1061,7 +1064,7 @@ export async function maybeApplyTtsToPayload(params: {
     );
   }
 
-  const {cleanedText} = directives;
+  const { cleanedText } = directives;
   const trimmedCleaned = cleanedText.trim();
   const visibleText = trimmedCleaned.length > 0 ? trimmedCleaned : "";
   const ttsText = directives.ttsText?.trim() || visibleText;

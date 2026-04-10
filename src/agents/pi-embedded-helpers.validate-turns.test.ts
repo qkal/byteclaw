@@ -184,7 +184,7 @@ describe("validateAnthropicTurns", () => {
 
     expect(result).toHaveLength(1);
     expect(result[0].role).toBe("user");
-    const {content} = (result[0] as { content: unknown[] });
+    const { content } = result[0] as { content: unknown[] };
     expect(content).toHaveLength(2);
     expect(content[0]).toEqual({ text: "First message", type: "text" });
     expect(content[1]).toEqual({ text: "Second message", type: "text" });
@@ -202,7 +202,7 @@ describe("validateAnthropicTurns", () => {
     const result = validateAnthropicTurns(msgs);
 
     expect(result).toHaveLength(1);
-    const {content} = (result[0] as { content: unknown[] });
+    const { content } = result[0] as { content: unknown[] };
     expect(content).toHaveLength(3);
   });
 

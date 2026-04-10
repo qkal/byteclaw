@@ -302,7 +302,7 @@ async function listAgentFileNames(agentId = "main") {
   await promise;
 
   const [, result] = respond.mock.calls[0] ?? [];
-  const {files} = (result as { files: { name: string }[] });
+  const { files } = result as { files: { name: string }[] };
   return files.map((file) => file.name);
 }
 

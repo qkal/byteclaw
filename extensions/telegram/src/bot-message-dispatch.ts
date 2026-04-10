@@ -289,7 +289,10 @@ export const dispatchTelegramMessage = async ({
     });
     return draftLaneEventQueue;
   };
-  interface SplitLaneSegment { lane: LaneName; text: string }
+  interface SplitLaneSegment {
+    lane: LaneName;
+    text: string;
+  }
   interface SplitLaneSegmentsResult {
     segments: SplitLaneSegment[];
     suppressedReasoningOnly: boolean;
@@ -627,7 +630,7 @@ export const dispatchTelegramMessage = async ({
             payload.channelData?.telegram as { buttons?: TelegramInlineButtons } | undefined
           )?.buttons;
           const split = splitTextIntoLaneSegments(payload.text);
-          const {segments} = split;
+          const { segments } = split;
           const reply = resolveSendableOutboundReplyParts(payload);
           const _hasMedia = reply.hasMedia;
 
@@ -843,7 +846,7 @@ export const dispatchTelegramMessage = async ({
       { lane: reasoningLane, laneName: "reasoning" },
     ];
     for (const laneState of lanesToCleanup) {
-      const {stream} = laneState.lane;
+      const { stream } = laneState.lane;
       if (!stream) {
         continue;
       }

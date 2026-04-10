@@ -191,12 +191,14 @@ export function listChannelMessageCapabilitiesForChannel(params: {
   }
   const plugin = getChannelPlugin(channelId as Parameters<typeof getChannelPlugin>[0]);
   return plugin?.actions
-    ? [...resolveMessageActionDiscoveryForPlugin({
-	actions: plugin.actions,
-	context: createMessageActionDiscoveryContext(params),
-	includeCapabilities: true,
-	pluginId: plugin.id
-}).capabilities]
+    ? [
+        ...resolveMessageActionDiscoveryForPlugin({
+          actions: plugin.actions,
+          context: createMessageActionDiscoveryContext(params),
+          includeCapabilities: true,
+          pluginId: plugin.id,
+        }).capabilities,
+      ]
     : [];
 }
 

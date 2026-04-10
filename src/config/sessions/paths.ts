@@ -242,9 +242,9 @@ export function resolveSessionTranscriptPathInDir(
   const safeTopicId =
     typeof topicId === "string"
       ? encodeURIComponent(topicId)
-      : (typeof topicId === "number"
+      : typeof topicId === "number"
         ? String(topicId)
-        : undefined);
+        : undefined;
   const fileName =
     safeTopicId !== undefined
       ? `${safeSessionId}-topic-${safeTopicId}.jsonl`

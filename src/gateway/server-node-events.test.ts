@@ -96,9 +96,7 @@ const runtimeMocks = vi.hoisted(() => ({
       provider,
       model,
     }: {
-      loadGatewayModelCatalog: () => Promise<
-        { id: string; provider: string; input?: string[] }[]
-      >;
+      loadGatewayModelCatalog: () => Promise<{ id: string; provider: string; input?: string[] }[]>;
       provider?: string;
       model?: string;
     }) => {

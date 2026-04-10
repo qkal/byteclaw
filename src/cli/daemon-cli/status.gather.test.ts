@@ -55,7 +55,10 @@ const resolveGatewayPort = vi.fn((_cfg?: unknown, _env?: unknown) => 18_789);
 const resolveStateDir = vi.fn(
   (env: NodeJS.ProcessEnv) => env.OPENCLAW_STATE_DIR ?? "/tmp/openclaw-cli",
 );
-const resolveConfigPath = vi.fn((env: NodeJS.ProcessEnv, stateDir: string) => env.OPENCLAW_CONFIG_PATH ?? `${stateDir}/openclaw.json`);
+const resolveConfigPath = vi.fn(
+  (env: NodeJS.ProcessEnv, stateDir: string) =>
+    env.OPENCLAW_CONFIG_PATH ?? `${stateDir}/openclaw.json`,
+);
 const readConfigFileSnapshotCalls = vi.fn((configPath: string) => configPath);
 const loadConfigCalls = vi.fn((configPath: string) => configPath);
 let daemonLoadedConfig: Record<string, unknown> = {

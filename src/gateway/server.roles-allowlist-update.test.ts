@@ -509,11 +509,7 @@ describe("gateway node command allowlist", () => {
       await iosClient.stopAndWait();
       await expect
         .poll(async () => {
-          const listRes = await rpcReq<{ nodes?: { connected?: boolean }[] }>(
-            ws,
-            "node.list",
-            {},
-          );
+          const listRes = await rpcReq<{ nodes?: { connected?: boolean }[] }>(ws, "node.list", {});
           return (listRes.payload?.nodes ?? []).filter((node) => node.connected).length;
         }, FAST_WAIT_OPTS)
         .toBe(0);

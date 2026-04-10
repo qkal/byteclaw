@@ -7,7 +7,11 @@ import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/ssrf-runtime";
 import { type CardHeaderConfig, resolveFeishuCardTemplate } from "./send.js";
 import type { FeishuDomain } from "./types.js";
 
-interface Credentials { appId: string; appSecret: string; domain?: FeishuDomain }
+interface Credentials {
+  appId: string;
+  appSecret: string;
+  domain?: FeishuDomain;
+}
 interface CardState {
   cardId: string;
   messageId: string;
@@ -263,7 +267,9 @@ export class FeishuStreamingSession {
       // Root_id is undeclared in the SDK types but accepted at runtime
       sendRes = await this.client.im.message.create({
         data: {
-          receive_id: receiveId, msg_type: "interactive", content: cardContent,
+          receive_id: receiveId,
+          msg_type: "interactive",
+          content: cardContent,
           root_id: sendOptions.rootId,
         },
         params: { receive_id_type: receiveIdType },

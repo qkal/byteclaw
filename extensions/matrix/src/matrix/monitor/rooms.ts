@@ -41,7 +41,7 @@ export function resolveMatrixRoomConfig(params: {
   const legacyAllow = readLegacyRoomAllowAlias(resolved);
   const allowed = resolved ? resolved.enabled !== false && legacyAllow !== false : false;
   const matchKey = matchedKey ?? wildcardKey;
-  const matchSource = matched ? "direct" : (wildcardEntry ? "wildcard" : undefined);
+  const matchSource = matched ? "direct" : wildcardEntry ? "wildcard" : undefined;
   return {
     allowed,
     allowlistConfigured,

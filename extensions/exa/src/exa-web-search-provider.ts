@@ -105,7 +105,7 @@ function resolveExaApiKey(exa?: ExaConfig): string | undefined {
 }
 
 function resolveExaDescription(result: ExaSearchResult): string {
-  const {highlights} = result;
+  const { highlights } = result;
   if (Array.isArray(highlights)) {
     const highlightText = highlights
       .map((entry) => normalizeOptionalString(entry))
@@ -297,7 +297,7 @@ function normalizeExaResults(payload: unknown): ExaSearchResult[] {
   if (!payload || typeof payload !== "object") {
     return [];
   }
-  const {results} = (payload as ExaSearchResponse);
+  const { results } = payload as ExaSearchResponse;
   if (!Array.isArray(results)) {
     return [];
   }
@@ -570,7 +570,17 @@ function createExaToolDefinition(
             typeof entry.publishedDate === "string" && entry.publishedDate
               ? entry.publishedDate
               : undefined;
-          return Object.assign({title:title?wrapWebContent(title,`web_search`):``,url,description:description?wrapWebContent(description,`web_search`):``,published,siteName:resolveSiteName(url)||undefined}, summary?{summary:wrapWebContent(summary,`web_search`)}:{}, highlightScores.length>0?{highlightScores}:{});
+          return Object.assign(
+            {
+              title: title ? wrapWebContent(title, `web_search`) : ``,
+              url,
+              description: description ? wrapWebContent(description, `web_search`) : ``,
+              published,
+              siteName: resolveSiteName(url) || undefined,
+            },
+            summary ? { summary: wrapWebContent(summary, `web_search`) } : {},
+            highlightScores.length > 0 ? { highlightScores } : {},
+          );
         }),
         tookMs: Date.now() - start,
       };

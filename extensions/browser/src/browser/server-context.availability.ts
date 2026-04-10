@@ -106,14 +106,14 @@ export function createProfileAvailability({
 
   const reconcileProfileRuntime = async (): Promise<void> => {
     const profileState = getProfileState();
-    const {reconcile} = profileState;
+    const { reconcile } = profileState;
     if (!reconcile) {
       return;
     }
     profileState.reconcile = null;
     profileState.lastTargetId = null;
 
-    const {previousProfile} = reconcile;
+    const { previousProfile } = reconcile;
     if (profileState.running) {
       await stopOpenClawChrome(profileState.running).catch(() => {});
       setProfileRunning(null);
@@ -181,7 +181,7 @@ export function createProfileAvailability({
     }
     const current = state();
     const remoteCdp = capabilities.isRemote;
-    const {attachOnly} = profile;
+    const { attachOnly } = profile;
     const profileState = getProfileState();
     const httpReachable = await isHttpReachable();
 

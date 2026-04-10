@@ -219,7 +219,7 @@ function normalizeAttachment(
   opts: { stripDataUrlPrefix: boolean; requireImageMime: boolean },
 ): NormalizedAttachment {
   const mime = att.mimeType ?? "";
-  const {content} = att;
+  const { content } = att;
   const label = att.fileName || att.type || `attachment-${idx + 1}`;
 
   if (typeof content !== "string") {

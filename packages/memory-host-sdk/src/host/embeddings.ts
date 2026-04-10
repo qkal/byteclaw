@@ -184,7 +184,7 @@ export async function createEmbeddingProvider(
   options: EmbeddingProviderOptions,
 ): Promise<EmbeddingProviderResult> {
   const requestedProvider = options.provider;
-  const {fallback} = options;
+  const { fallback } = options;
 
   const createProvider = async (id: EmbeddingProviderId) => {
     if (id === "local") {
@@ -327,7 +327,7 @@ function isNodeLlamaCppMissing(err: unknown): boolean {
   if (!(err instanceof Error)) {
     return false;
   }
-  const {code} = (err as Error & { code?: unknown });
+  const { code } = err as Error & { code?: unknown };
   if (code === "ERR_MODULE_NOT_FOUND") {
     return err.message.includes("node-llama-cpp");
   }
@@ -341,9 +341,9 @@ function formatLocalSetupError(err: unknown): string {
     "Local embeddings unavailable.",
     missing
       ? "Reason: optional dependency node-llama-cpp is missing (or failed to install)."
-      : (detail
+      : detail
         ? `Reason: ${detail}`
-        : undefined),
+        : undefined,
     missing && detail ? `Detail: ${detail}` : null,
     "To enable local embeddings:",
     "1) Use Node 24 (recommended for installs/updates; Node 22 LTS, currently 22.14+, remains supported)",

@@ -1,8 +1,7 @@
 import type { WebInboundMsg } from "../types.js";
 import { formatGroupMembers } from "./group-members.js";
 import type { GroupHistoryEntry } from "./inbound-context.js";
-import type {
-  createChannelReplyPipeline} from "./inbound-dispatch.runtime.js";
+import type { createChannelReplyPipeline } from "./inbound-dispatch.runtime.js";
 import {
   type LoadConfigFn,
   type ReplyPayload,

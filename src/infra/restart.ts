@@ -264,7 +264,7 @@ function formatSpawnDetail(result: {
   stderr?: string | Buffer | null;
 }): string {
   const clean = (value: string | Buffer | null | undefined) => {
-    const text = typeof value === "string" ? value : (value ? value.toString() : "");
+    const text = typeof value === "string" ? value : value ? value.toString() : "";
     return text.replace(/\s+/g, " ").trim();
   };
   if (result.error) {

@@ -137,7 +137,7 @@ export async function sendMessageNextcloudTalk(
   try {
     if (!response.ok) {
       const errorBody = await response.text().catch(() => "");
-      const {status} = response;
+      const { status } = response;
       let errorMsg = `Nextcloud Talk send failed (${status})`;
 
       if (status === 400) {

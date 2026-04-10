@@ -53,7 +53,7 @@ function resolveMemoryToolDisableReasons(cfg: ReturnType<typeof loadConfig>): st
     return [];
   }
   const reasons: string[] = [];
-  const {plugins} = cfg;
+  const { plugins } = cfg;
   const slotRaw = plugins?.slots?.memory;
   const slotDisabled = slotRaw === null || normalizeOptionalLowercaseString(slotRaw) === "none";
   const pluginsDisabled = plugins?.enabled === false;
@@ -109,17 +109,17 @@ function getErrorMessage(err: unknown): string {
 
 function resolveToolInputErrorStatus(err: unknown): number | null {
   if (err instanceof ToolInputError) {
-    const {status} = (err as { status?: unknown });
+    const { status } = err as { status?: unknown };
     return typeof status === "number" ? status : 400;
   }
   if (typeof err !== "object" || err === null || !("name" in err)) {
     return null;
   }
-  const {name} = (err as { name?: unknown });
+  const { name } = err as { name?: unknown };
   if (name !== "ToolInputError" && name !== "ToolAuthorizationError") {
     return null;
   }
-  const {status} = (err as { status?: unknown });
+  const { status } = err as { status?: unknown };
   if (typeof status === "number") {
     return status;
   }

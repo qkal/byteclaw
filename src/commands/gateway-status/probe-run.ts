@@ -52,7 +52,7 @@ export async function runGatewayStatusProbePass(params: {
     wideAreaDomain: params.wideAreaDomain,
   });
 
-  let {sshTarget} = params;
+  let { sshTarget } = params;
   let sshTunnelError: string | null = null;
   let sshTunnelStarted = false;
 

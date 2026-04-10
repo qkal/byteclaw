@@ -23,9 +23,9 @@ export function normalizeCronStaggerMs(raw: unknown): number | undefined {
   const numeric =
     typeof raw === "number"
       ? raw
-      : (typeof raw === "string" && raw.trim()
+      : typeof raw === "string" && raw.trim()
         ? Number(raw)
-        : Number.NaN);
+        : Number.NaN;
   if (!Number.isFinite(numeric)) {
     return undefined;
   }
@@ -41,7 +41,7 @@ export function resolveCronStaggerMs(schedule: Extract<CronSchedule, { kind: "cr
   if (explicit !== undefined) {
     return explicit;
   }
-  const {expr} = (schedule as { expr?: unknown });
+  const { expr } = schedule as { expr?: unknown };
   const cronExpr = typeof expr === "string" ? expr : "";
   return resolveDefaultCronStaggerMs(cronExpr) ?? 0;
 }

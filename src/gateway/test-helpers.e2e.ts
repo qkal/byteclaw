@@ -157,7 +157,7 @@ export async function connectDeviceAuthReq(params: { url: string; token?: string
   const connectNonce = await connectNoncePromise;
   const identity = loadOrCreateDeviceIdentity();
   const signedAtMs = Date.now();
-  const {platform} = process;
+  const { platform } = process;
   const payload = buildDeviceAuthPayloadV3({
     clientId: GATEWAY_CLIENT_NAMES.TEST,
     clientMode: GATEWAY_CLIENT_MODES.TEST,

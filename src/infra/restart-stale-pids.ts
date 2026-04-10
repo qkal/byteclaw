@@ -163,13 +163,13 @@ export function findGatewayPidsOnPortSync(
     timeout: spawnTimeoutMs,
   });
   if (res.error) {
-    const {code} = (res.error as NodeJS.ErrnoException);
+    const { code } = res.error as NodeJS.ErrnoException;
     const detail =
       code && code.trim().length > 0
         ? code
-        : (res.error instanceof Error
+        : res.error instanceof Error
           ? res.error.message
-          : "unknown error");
+          : "unknown error";
     restartLog.warn(`lsof failed during initial stale-pid scan for port ${port}: ${detail}`);
     return [];
   }
@@ -219,7 +219,7 @@ function pollPortOnce(port: number): PollResult {
     if (res.error) {
       // Spawn-level failure. ENOENT / EACCES means lsof is permanently
       // Unavailable on this system; other errors (e.g. timeout) are transient.
-      const {code} = (res.error as NodeJS.ErrnoException);
+      const { code } = res.error as NodeJS.ErrnoException;
       const permanent = code === "ENOENT" || code === "EACCES" || code === "EPERM";
       return { free: null, permanent };
     }

@@ -186,7 +186,7 @@ export async function ensureMatrixSdkInstalled(params: {
   if (isMatrixSdkAvailable()) {
     return;
   }
-  const {confirm} = params;
+  const { confirm } = params;
   if (confirm) {
     const ok = await confirm(
       "Matrix requires matrix-js-sdk, @matrix-org/matrix-sdk-crypto-nodejs, and @matrix-org/matrix-sdk-crypto-wasm. Install now?",

@@ -381,7 +381,7 @@ function resolveStaleHeartbeatIsolatedSessionKey(params: {
 function resolveHeartbeatReasoningPayloads(
   replyResult: ReplyPayload | ReplyPayload[] | undefined,
 ): ReplyPayload[] {
-  const payloads = Array.isArray(replyResult) ? replyResult : (replyResult ? [replyResult] : []);
+  const payloads = Array.isArray(replyResult) ? replyResult : replyResult ? [replyResult] : [];
   return payloads.filter((payload) => {
     const text = typeof payload.text === "string" ? payload.text : "";
     return text.trimStart().startsWith("Reasoning:");
@@ -448,7 +448,7 @@ function normalizeHeartbeatReply(
     maxAckChars: ackMaxChars,
     mode: "heartbeat",
   });
-  const {hasMedia} = resolveSendableOutboundReplyParts(payload);
+  const { hasMedia } = resolveSendableOutboundReplyParts(payload);
   if (stripped.shouldSkip && !hasMedia) {
     return {
       hasMedia,
@@ -590,7 +590,7 @@ function resolveHeartbeatRunPrompt(params: {
   startedAt: number;
   heartbeatFileContent?: string;
 }): HeartbeatPromptResolution {
-  const {pendingEventEntries} = params.preflight;
+  const { pendingEventEntries } = params.preflight;
   const pendingEvents = params.preflight.shouldInspectPendingEvents
     ? pendingEventEntries.map((event) => event.text)
     : [];
@@ -606,7 +606,7 @@ function resolveHeartbeatRunPrompt(params: {
 
   // If tasks are defined, build a batched prompt with due tasks
   if (params.preflight.tasks && params.preflight.tasks.length > 0) {
-    const {tasks} = params.preflight;
+    const { tasks } = params.preflight;
     const dueTasks = tasks.filter((task) =>
       isTaskDue(
         (params.preflight.session.entry?.heartbeatTaskState as Record<string, number>)?.[task.name],
@@ -641,9 +641,9 @@ After completing all due tasks, reply HEARTBEAT_OK.`;
   // Fallback to original behavior
   const basePrompt = hasExecCompletion
     ? buildExecEventPrompt({ deliverToUser: params.canRelayToUser })
-    : (hasCronEvents
+    : hasCronEvents
       ? buildCronEventPrompt(cronEvents, { deliverToUser: params.canRelayToUser })
-      : resolveHeartbeatPrompt(params.cfg, params.heartbeat));
+      : resolveHeartbeatPrompt(params.cfg, params.heartbeat);
   const prompt = appendHeartbeatWorkspacePathHint(basePrompt, params.workspaceDir);
 
   return { hasCronEvents, hasExecCompletion, prompt };
@@ -757,7 +757,7 @@ export async function runHeartbeatOnce(opts: {
         })
       : { showAlerts: true, showOk: false, useIndicator: true };
   const { sender } = resolveHeartbeatSenderContext({ cfg, delivery, entry });
-  const {responsePrefix} = resolveEffectiveMessagesConfig(cfg, agentId, {
+  const { responsePrefix } = resolveEffectiveMessagesConfig(cfg, agentId, {
     accountId: delivery.accountId,
     channel: delivery.channel !== "none" ? delivery.channel : undefined,
   });
@@ -878,7 +878,7 @@ export async function runHeartbeatOnce(opts: {
     OriginatingChannel:
       !suppressOriginatingContext && delivery.channel !== "none" ? delivery.channel : undefined,
     OriginatingTo: !suppressOriginatingContext ? delivery.to : undefined,
-    Provider: hasExecCompletion ? "exec-event" : (hasCronEvents ? "cron-event" : "heartbeat"),
+    Provider: hasExecCompletion ? "exec-event" : hasCronEvents ? "cron-event" : "heartbeat",
     SessionKey: runSessionKey,
     To: sender,
   };
@@ -1009,7 +1009,7 @@ export async function runHeartbeatOnce(opts: {
       return { durationMs: Date.now() - startedAt, status: "ran" };
     }
 
-    const {mediaUrls} = resolveSendableOutboundReplyParts(replyPayload);
+    const { mediaUrls } = resolveSendableOutboundReplyParts(replyPayload);
 
     // Suppress duplicate heartbeats (same payload) within a short window.
     // This prevents "nagging" when nothing changed but the model repeats the same items.

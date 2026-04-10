@@ -68,7 +68,7 @@ import {
   resolveMissingMetaError,
   resolveRuntimeIdleTtlMs,
 } from "./manager.utils.js";
-import type { CachedRuntimeState} from "./runtime-cache.js";
+import type { CachedRuntimeState } from "./runtime-cache.js";
 import { RuntimeCache } from "./runtime-cache.js";
 import {
   inferRuntimeOptionPatchFromConfigOption,
@@ -311,7 +311,7 @@ export class AcpSessionManager {
     await this.evictIdleRuntimeHandles({ cfg: input.cfg });
     return await this.withSessionActor(sessionKey, async () => {
       const backend = this.deps.requireRuntimeBackend(input.backendId || input.cfg.acp?.backend);
-      const {runtime} = backend;
+      const { runtime } = backend;
       const initialRuntimeOptions = validateRuntimeOptionPatch({ cwd: input.cwd });
       const requestedCwd = initialRuntimeOptions.cwd;
       this.enforceConcurrentSessionLimit({
@@ -561,8 +561,8 @@ export class AcpSessionManager {
       throw new AcpRuntimeError("ACP_SESSION_INIT_FAILED", "ACP session key is required.");
     }
     const normalizedOption = validateRuntimeConfigOptionInput(params.key, params.value);
-    const {key} = normalizedOption;
-    const {value} = normalizedOption;
+    const { key } = normalizedOption;
+    const { value } = normalizedOption;
 
     await this.evictIdleRuntimeHandles({ cfg: params.cfg });
     return await this.withSessionActor(sessionKey, async () => {
@@ -1373,7 +1373,7 @@ export class AcpSessionManager {
   }): Promise<{ runtime: AcpRuntime; handle: AcpRuntimeHandle; meta: SessionAcpMeta }> {
     const agent =
       normalizeText(params.meta.agent) || resolveAcpAgentFromSessionKey(params.sessionKey, "main");
-    const {mode} = params.meta;
+    const { mode } = params.meta;
     const runtimeOptions = resolveRuntimeOptionsFromMeta(params.meta);
     const cwd = runtimeOptions.cwd ?? normalizeText(params.meta.cwd);
     const configuredBackend = (params.meta.backend || params.cfg.acp?.backend || "").trim();
@@ -1414,7 +1414,7 @@ export class AcpSessionManager {
     });
 
     const backend = this.deps.requireRuntimeBackend(configuredBackend || undefined);
-    const {runtime} = backend;
+    const { runtime } = backend;
     const previousMeta = params.meta;
     const previousIdentity = resolveSessionIdentityFromMeta(previousMeta);
     let identityForEnsure = previousIdentity;

@@ -306,7 +306,7 @@ describe("sanitizeSessionMessagesImages", () => {
       const out = await sanitizeSessionMessagesImages(input, "test");
 
       expect(out).toHaveLength(1);
-      const {content} = (out[0] as { content?: unknown[] });
+      const { content } = out[0] as { content?: unknown[] };
       expect(content).toHaveLength(2);
       expect("thought_signature" in ((content?.[0] ?? {}) as object)).toBe(false);
       expect((content?.[1] as { thought_signature?: unknown })?.thought_signature).toBe("AQID");
@@ -331,7 +331,7 @@ describe("sanitizeSessionMessagesImages", () => {
         },
       });
 
-      const {content} = (out[0] as { content?: { thought_signature?: unknown }[] });
+      const { content } = out[0] as { content?: { thought_signature?: unknown }[] };
       expect(content).toHaveLength(2);
       expect(content?.[0]?.thought_signature).toBeUndefined();
     });
@@ -363,7 +363,7 @@ describe("sanitizeSessionMessagesImages", () => {
       });
 
       expect(out).toHaveLength(1);
-      const {content} = (out[0] as { content?: { type?: string; text?: string }[] });
+      const { content } = out[0] as { content?: { type?: string; text?: string }[] };
       expect(content?.map((block) => block.type)).toEqual([
         "thinking",
         "text",

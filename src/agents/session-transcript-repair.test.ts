@@ -16,7 +16,7 @@ function getAssistantToolCallBlocks(messages: AgentMessage[]) {
     return [] as { type?: unknown; id?: unknown; name?: unknown }[];
   }
   return assistant.content.filter((block) => {
-    const {type} = (block as { type?: unknown });
+    const { type } = block as { type?: unknown };
     return typeof type === "string" && TOOL_CALL_BLOCK_TYPES.has(type);
   }) as { type?: unknown; id?: unknown; name?: unknown }[];
 }

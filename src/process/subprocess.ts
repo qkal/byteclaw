@@ -3,15 +3,15 @@
  * Automatically selects the appropriate subprocess abstraction based on the current runtime.
  */
 
-import { getEffectiveRuntime } from '../shared/runtime-detection.js';
-import { BunSubprocessAbstraction } from './subprocess-bun.js';
-import { NodeSubprocessAbstraction } from './subprocess-node.js';
+import { getEffectiveRuntime } from "../shared/runtime-detection.js";
+import { BunSubprocessAbstraction } from "./subprocess-bun.js";
+import { NodeSubprocessAbstraction } from "./subprocess-node.js";
 import type {
   SubprocessAbstraction,
   SubprocessOptions,
   SubprocessResult,
   SubprocessSpawnResult,
-} from './subprocess-abstraction.js';
+} from "./subprocess-abstraction.js";
 
 export type { SubprocessOptions, SubprocessResult, SubprocessSpawnResult };
 
@@ -21,7 +21,7 @@ function getAbstraction(): SubprocessAbstraction {
   if (!subprocessAbstraction) {
     const runtime = getEffectiveRuntime();
 
-    if (runtime === 'bun') {
+    if (runtime === "bun") {
       const bunAbstraction = new BunSubprocessAbstraction();
       if (bunAbstraction.isAvailable()) {
         subprocessAbstraction = bunAbstraction;

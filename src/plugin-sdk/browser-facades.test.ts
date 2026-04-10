@@ -28,7 +28,9 @@ describe("plugin-sdk browser facades", () => {
 
     const browserProfiles = await import("./browser-profiles.js");
     const cfg = { enabled: true } as unknown as import("../config/config.js").BrowserConfig;
-    const rootConfig = { gateway: { port: 18_789 } } as import("../config/config.js").OpenClawConfig;
+    const rootConfig = {
+      gateway: { port: 18_789 },
+    } as import("../config/config.js").OpenClawConfig;
 
     expect(browserProfiles.resolveBrowserConfig(cfg, rootConfig)).toBe(resolvedConfig);
     expect(browserProfiles.resolveProfile(resolvedConfig, "openclaw")).toBe(resolvedProfile);

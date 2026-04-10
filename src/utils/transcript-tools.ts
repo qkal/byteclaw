@@ -11,7 +11,8 @@ interface ToolResultCounts {
 const TOOL_CALL_TYPES = new Set(["tool_use", "toolcall", "tool_call"]);
 const TOOL_RESULT_TYPES = new Set(["tool_result", "tool_result_error"]);
 
-const normalizeType = (value: unknown): string => typeof value === "string" ? (normalizeOptionalLowercaseString(value) ?? "") : "";
+const normalizeType = (value: unknown): string =>
+  typeof value === "string" ? (normalizeOptionalLowercaseString(value) ?? "") : "";
 
 export const extractToolCallNames = (message: Record<string, unknown>): string[] => {
   const names = new Set<string>();
@@ -22,7 +23,7 @@ export const extractToolCallNames = (message: Record<string, unknown>): string[]
     names.add(toolName);
   }
 
-  const {content} = message;
+  const { content } = message;
   if (!Array.isArray(content)) {
     return [...names];
   }
@@ -49,7 +50,7 @@ export const hasToolCall = (message: Record<string, unknown>): boolean =>
   extractToolCallNames(message).length > 0;
 
 export const countToolResults = (message: Record<string, unknown>): ToolResultCounts => {
-  const {content} = message;
+  const { content } = message;
   if (!Array.isArray(content)) {
     return { errors: 0, total: 0 };
   }

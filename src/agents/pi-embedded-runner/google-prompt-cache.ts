@@ -18,7 +18,11 @@ const GOOGLE_PROMPT_CACHE_SHORT_REFRESH_WINDOW_MS = 30_000;
 const GOOGLE_PROMPT_CACHE_LONG_REFRESH_WINDOW_MS = 5 * 60_000;
 
 type CacheRetention = "short" | "long";
-interface CustomEntryLike { type?: unknown; customType?: unknown; data?: unknown }
+interface CustomEntryLike {
+  type?: unknown;
+  customType?: unknown;
+  data?: unknown;
+}
 
 interface GooglePromptCacheSessionManager {
   appendCustomEntry(customType: string, data?: unknown): unknown;
@@ -96,9 +100,9 @@ function resolveExplicitCachedContent(
   const raw =
     typeof extraParams?.cachedContent === "string"
       ? extraParams.cachedContent
-      : (typeof extraParams?.cached_content === "string"
+      : typeof extraParams?.cached_content === "string"
         ? extraParams.cached_content
-        : undefined);
+        : undefined;
   const trimmed = raw?.trim();
   return trimmed ? trimmed : undefined;
 }

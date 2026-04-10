@@ -126,16 +126,16 @@ export function subscribeEmbeddedPiSession(params: SubscribeEmbeddedPiSessionPar
   };
   let compactionCount = 0;
 
-  const {assistantTexts} = state;
-  const {toolMetas} = state;
-  const {toolMetaById} = state;
-  const {toolSummaryById} = state;
-  const {messagingToolSentTexts} = state;
-  const {messagingToolSentTextsNormalized} = state;
-  const {messagingToolSentTargets} = state;
-  const {messagingToolSentMediaUrls} = state;
-  const {pendingMessagingTexts} = state;
-  const {pendingMessagingTargets} = state;
+  const { assistantTexts } = state;
+  const { toolMetas } = state;
+  const { toolMetaById } = state;
+  const { toolSummaryById } = state;
+  const { messagingToolSentTexts } = state;
+  const { messagingToolSentTextsNormalized } = state;
+  const { messagingToolSentTargets } = state;
+  const { messagingToolSentMediaUrls } = state;
+  const { pendingMessagingTexts } = state;
+  const { pendingMessagingTargets } = state;
   const pendingBlockReplyTasks = new Set<Promise<void>>();
   const replyDirectiveAccumulator = createStreamingDirectiveAccumulator();
   const partialReplyDirectiveAccumulator = createStreamingDirectiveAccumulator();

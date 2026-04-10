@@ -148,7 +148,7 @@ function isApplyPatchAllowedForModel(params: {
 }
 
 function resolveExecConfig(params: { cfg?: OpenClawConfig; agentId?: string }) {
-  const {cfg} = params;
+  const { cfg } = params;
   const globalExec = cfg?.tools?.exec;
   const agentExec =
     cfg && params.agentId ? resolveAgentConfig(cfg, params.agentId)?.tools?.exec : undefined;
@@ -371,7 +371,7 @@ export function createOpenClawCodingTools(options?: {
   const sandboxFsBridge = sandbox?.fsBridge;
   const allowWorkspaceWrites = sandbox?.workspaceAccess !== "ro";
   const workspaceRoot = resolveWorkspaceRoot(options?.workspaceDir);
-  const {workspaceOnly} = fsPolicy;
+  const { workspaceOnly } = fsPolicy;
   const applyPatchConfig = execConfig.applyPatch;
   // Secure by default: apply_patch is workspace-contained unless explicitly disabled.
   // (tools.fs.workspaceOnly is a separate umbrella flag for read/write/edit/apply_patch.)
@@ -491,7 +491,7 @@ export function createOpenClawCodingTools(options?: {
   const tools: AnyAgentTool[] = [
     ...base,
     ...(sandboxRoot
-      ? (allowWorkspaceWrites
+      ? allowWorkspaceWrites
         ? [
             workspaceOnly
               ? wrapToolWorkspaceRootGuardWithOptions(
@@ -512,7 +512,7 @@ export function createOpenClawCodingTools(options?: {
                 )
               : createSandboxedWriteTool({ bridge: sandboxFsBridge!, root: sandboxRoot }),
           ]
-        : [])
+        : []
       : []),
     ...(applyPatchTool ? [applyPatchTool as unknown as AnyAgentTool] : []),
     execTool as unknown as AnyAgentTool,

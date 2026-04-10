@@ -23,7 +23,9 @@ function toolText(msg: ToolResultMessage): string {
 }
 
 function findToolResult(messages: AgentMessage[], toolCallId: string): ToolResultMessage {
-  const msg = messages.find((m): m is ToolResultMessage => isToolResultMessage(m) && m.toolCallId === toolCallId);
+  const msg = messages.find(
+    (m): m is ToolResultMessage => isToolResultMessage(m) && m.toolCallId === toolCallId,
+  );
   if (!msg) {
     throw new Error(`missing toolResult: ${toolCallId}`);
   }

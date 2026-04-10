@@ -4,6 +4,6 @@ export function installAcceptedSubagentGatewayMock(mock: {
   ) => unknown;
 }) {
   mock.mockImplementation(async ({ method }) =>
-    method === "agent" ? { runId: "run-1" } : (method?.startsWith("sessions.") ? { ok: true } : {}),
+    method === "agent" ? { runId: "run-1" } : method?.startsWith("sessions.") ? { ok: true } : {},
   );
 }

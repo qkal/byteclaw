@@ -159,14 +159,12 @@ describe("memory index", () => {
   function resetManagerForTest(manager: MemoryIndexManager) {
     // These tests reuse managers for performance. Clear the index + embedding
     // Cache to keep each test fully isolated.
-    const {db} = (
-      manager as unknown as {
-        db: {
-          exec: (sql: string) => void;
-          prepare: (sql: string) => { get: (name: string) => { name?: string } | undefined };
-        };
-      }
-    );
+    const { db } = manager as unknown as {
+      db: {
+        exec: (sql: string) => void;
+        prepare: (sql: string) => { get: (name: string) => { name?: string } | undefined };
+      };
+    };
     (manager as unknown as { resetIndex: () => void }).resetIndex();
     const embeddingCacheTable = db
       .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?")

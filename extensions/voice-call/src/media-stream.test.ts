@@ -194,7 +194,7 @@ describe("MediaStreamHandler security hardening", () => {
       ws,
     });
 
-    const result = handler.sendAudio("MZ-backpressure", Buffer.alloc(160, 0xFF));
+    const result = handler.sendAudio("MZ-backpressure", Buffer.alloc(160, 0xff));
 
     expect(result.sent).toBe(false);
     expect(ws.send).not.toHaveBeenCalled();
@@ -253,8 +253,7 @@ describe("MediaStreamHandler security hardening", () => {
   });
 
   it("closes idle pre-start connections after timeout", async () => {
-    const shouldAcceptStreamCalls: { callId: string; streamSid: string; token?: string }[] =
-      [];
+    const shouldAcceptStreamCalls: { callId: string; streamSid: string; token?: string }[] = [];
     const handler = new MediaStreamHandler({
       preStartTimeoutMs: 40,
       providerConfig: {},
@@ -363,8 +362,7 @@ describe("MediaStreamHandler security hardening", () => {
   });
 
   it("rejects oversized pre-start frames at the websocket maxPayload guard before validation runs", async () => {
-    const shouldAcceptStreamCalls: { callId: string; streamSid: string; token?: string }[] =
-      [];
+    const shouldAcceptStreamCalls: { callId: string; streamSid: string; token?: string }[] = [];
     const handler = new MediaStreamHandler({
       preStartTimeoutMs: 1000,
       providerConfig: {},

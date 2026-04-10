@@ -32,7 +32,7 @@ export function applyEmbeddingBatchOutputLine(params: {
     return;
   }
 
-  const {response} = params.line;
+  const { response } = params.line;
   const statusCode = response?.status_code ?? 0;
   if (statusCode >= 400) {
     const messageFromObject =

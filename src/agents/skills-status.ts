@@ -119,7 +119,7 @@ function normalizeInstallOptions(
     return [];
   }
 
-  const {platform} = process;
+  const { platform } = process;
   const filtered = install.filter((spec) => {
     const osList = spec.os ?? [];
     return osList.length === 0 || osList.includes(platform);

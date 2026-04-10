@@ -67,9 +67,7 @@ const parseCache = new LRUCache(config.maxCacheSize);
 /**
  * Configure the JSON optimizer.
  */
-export function configureJsonOptimizer(
-  newConfig: Partial<JsonOptimizerConfig>,
-): void {
+export function configureJsonOptimizer(newConfig: Partial<JsonOptimizerConfig>): void {
   config = { ...config, ...newConfig };
   if (newConfig.maxCacheSize !== undefined) {
     const newCache = new LRUCache(config.maxCacheSize);
@@ -84,9 +82,7 @@ export function configureJsonOptimizer(
 export function cachedJsonParse(text: string): unknown {
   // Security: Check string length to prevent memory exhaustion
   if (text.length > config.maxStringLength) {
-    throw new Error(
-      `JSON string exceeds maximum length of ${config.maxStringLength} bytes`,
-    );
+    throw new Error(`JSON string exceeds maximum length of ${config.maxStringLength} bytes`);
   }
 
   if (!config.enableCache) {
@@ -125,9 +121,9 @@ export function optimizedJsonStringify(
       value,
       (_key, val) => {
         // Circular reference detection
-        if (typeof val === 'object' && val !== null) {
+        if (typeof val === "object" && val !== null) {
           if (seen.has(val)) {
-            return '[Circular]';
+            return "[Circular]";
           }
           seen.add(val);
         }
@@ -143,7 +139,7 @@ export function optimizedJsonStringify(
 
     return result;
   } catch (error) {
-    if (error instanceof Error && error.message.includes('maximum size')) {
+    if (error instanceof Error && error.message.includes("maximum size")) {
       throw error;
     }
     return null;
@@ -154,20 +150,20 @@ export function optimizedJsonStringify(
  * Custom replacer for optimized serialization of common types.
  */
 function jsonReplacer(_key: string, val: unknown): unknown {
-  if (typeof val === 'bigint') {
+  if (typeof val === "bigint") {
     return val.toString();
   }
-  if (typeof val === 'function') {
-    return '[Function]';
+  if (typeof val === "function") {
+    return "[Function]";
   }
   if (val instanceof Error) {
     return { message: val.message, name: val.name, stack: val.stack };
   }
   if (val instanceof Uint8Array) {
-    return { data: Buffer.from(val).toString('base64'), type: 'Uint8Array' };
+    return { data: Buffer.from(val).toString("base64"), type: "Uint8Array" };
   }
   if (Buffer.isBuffer(val)) {
-    return { data: val.toString('base64'), type: 'Buffer' };
+    return { data: val.toString("base64"), type: "Buffer" };
   }
   return val;
 }
@@ -178,9 +174,7 @@ function jsonReplacer(_key: string, val: unknown): unknown {
  */
 export function optimizedJsonParse(text: string): unknown {
   if (text.length > config.maxStringLength) {
-    throw new Error(
-      `JSON string exceeds maximum length of ${config.maxStringLength} bytes`,
-    );
+    throw new Error(`JSON string exceeds maximum length of ${config.maxStringLength} bytes`);
   }
   return JSON.parse(text, jsonReviver);
 }
@@ -189,13 +183,13 @@ export function optimizedJsonParse(text: string): unknown {
  * Custom reviver for deserialization of common custom types.
  */
 function jsonReviver(_key: string, val: unknown): unknown {
-  if (typeof val === 'object' && val !== null) {
+  if (typeof val === "object" && val !== null) {
     const record = val as Record<string, unknown>;
-    if (record.type === 'Buffer' && typeof record.data === 'string') {
-      return Buffer.from(record.data, 'base64');
+    if (record.type === "Buffer" && typeof record.data === "string") {
+      return Buffer.from(record.data, "base64");
     }
-    if (record.type === 'Uint8Array' && typeof record.data === 'string') {
-      return Buffer.from(record.data, 'base64');
+    if (record.type === "Uint8Array" && typeof record.data === "string") {
+      return Buffer.from(record.data, "base64");
     }
   }
   return val;

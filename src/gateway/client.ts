@@ -311,7 +311,7 @@ export class GatewayClient {
         !this.opts.password &&
         this.opts.deviceIdentity
       ) {
-        const {deviceId} = this.opts.deviceIdentity;
+        const { deviceId } = this.opts.deviceIdentity;
         const role = this.opts.role ?? "operator";
         try {
           clearDeviceAuthToken({ deviceId, role });
@@ -385,7 +385,7 @@ export class GatewayClient {
       this.flushPendingErrors(new Error("gateway client stopped"));
       return this.pendingStop.promise;
     }
-    const {ws} = this;
+    const { ws } = this;
     this.ws = null;
     if (ws) {
       const stopPromise = this.createPendingStop(ws);
@@ -542,7 +542,9 @@ export class GatewayClient {
       })
       .catch((error) => {
         this.pendingConnectErrorDetailCode =
-          error instanceof GatewayClientRequestError ? readConnectErrorDetailCode(error.details) : null;
+          error instanceof GatewayClientRequestError
+            ? readConnectErrorDetailCode(error.details)
+            : null;
         const shouldRetryWithDeviceToken = this.shouldRetryWithStoredDeviceToken({
           error,
           explicitGatewayToken: normalizeOptionalString(this.opts.token),
@@ -667,9 +669,9 @@ export class GatewayClient {
       const protocol =
         parsed.protocol === "https:"
           ? "wss:"
-          : (parsed.protocol === "http:"
+          : parsed.protocol === "http:"
             ? "ws:"
-            : parsed.protocol);
+            : parsed.protocol;
       if (isLoopbackHost(parsed.hostname)) {
         return true;
       }

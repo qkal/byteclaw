@@ -18,7 +18,7 @@ function isRetryableLocalFetchError(error: unknown) {
   if (!(error instanceof TypeError)) {
     return false;
   }
-  const {cause} = (error as TypeError & { cause?: unknown });
+  const { cause } = error as TypeError & { cause?: unknown };
   if (!cause || typeof cause !== "object") {
     return false;
   }

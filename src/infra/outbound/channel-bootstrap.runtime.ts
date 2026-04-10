@@ -18,7 +18,7 @@ export function bootstrapOutboundChannelPlugin(params: {
   channel: DeliverableMessageChannel;
   cfg?: OpenClawConfig;
 }): void {
-  const {cfg} = params;
+  const { cfg } = params;
   if (!cfg) {
     return;
   }

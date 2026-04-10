@@ -8,10 +8,10 @@ export function sanitizeForConsole(text: string | undefined, maxChars = 200): st
       const code = char.charCodeAt(0);
       return !(
         code <= 0x08 ||
-        code === 0x0B ||
-        code === 0x0C ||
-        (code >= 0x0E && code <= 0x1F) ||
-        code === 0x7F
+        code === 0x0b ||
+        code === 0x0c ||
+        (code >= 0x0e && code <= 0x1f) ||
+        code === 0x7f
       );
     })
     .join("");

@@ -107,7 +107,7 @@ export const twitchOutbound: ChannelOutboundAdapter = {
    */
   sendText: async (params: ChannelOutboundContext): Promise<OutboundDeliveryResult> => {
     const { cfg, to, text, accountId } = params;
-    const {signal} = (params as { signal?: AbortSignal });
+    const { signal } = params as { signal?: AbortSignal };
 
     if (signal?.aborted) {
       throw new Error("Outbound delivery aborted");
@@ -167,7 +167,7 @@ export const twitchOutbound: ChannelOutboundAdapter = {
    */
   sendMedia: async (params: ChannelOutboundContext): Promise<OutboundDeliveryResult> => {
     const { text, mediaUrl } = params;
-    const {signal} = (params as { signal?: AbortSignal });
+    const { signal } = params as { signal?: AbortSignal };
 
     if (signal?.aborted) {
       throw new Error("Outbound delivery aborted");

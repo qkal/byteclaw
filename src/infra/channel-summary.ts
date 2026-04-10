@@ -53,7 +53,7 @@ const buildAccountDetails = (params: {
   includeAllowFrom: boolean;
 }): string[] => {
   const details: string[] = [];
-  const {snapshot} = params.entry;
+  const { snapshot } = params.entry;
   if (snapshot.enabled === false) {
     details.push("disabled");
   }
@@ -218,9 +218,9 @@ export async function buildChannelSummary(
     const statusColor =
       status === "linked" || status === "configured"
         ? theme.success
-        : (status === "not linked"
+        : status === "not linked"
           ? theme.error
-          : theme.muted);
+          : theme.muted;
     const baseLabel = plugin.meta.label ?? plugin.id;
     let line = `${baseLabel}: ${status}`;
 

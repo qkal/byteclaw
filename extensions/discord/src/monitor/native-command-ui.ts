@@ -235,7 +235,7 @@ async function resolveDiscordModelPickerRouteState(params: {
   enforceConfiguredBindingReadiness?: boolean;
 }) {
   const { interaction, cfg, accountId } = params;
-  const {channel} = interaction;
+  const { channel } = interaction;
   const channelType = channel?.type;
   const isDirectMessage = channelType === ChannelType.DM;
   const isGroupDm = channelType === ChannelType.GroupDM;
@@ -661,7 +661,7 @@ export async function handleDiscordModelPickerInteraction(params: {
 
   if (parsed.action === "model") {
     const selectedModel = resolveModelPickerSelectionValue(interaction);
-    const {provider} = parsed;
+    const { provider } = parsed;
     if (!provider || !selectedModel) {
       await params.safeInteractionCall("model picker update", () =>
         interaction.update(
@@ -723,7 +723,7 @@ export async function handleDiscordModelPickerInteraction(params: {
         modelRef = dedupedRecents[slot - 2] ?? null;
       }
     } else {
-      const {provider} = parsed;
+      const { provider } = parsed;
       const selectedModel = resolveDiscordModelPickerModelByIndex({
         data: pickerData,
         modelIndex: parsed.modelIndex,

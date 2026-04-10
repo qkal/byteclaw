@@ -417,9 +417,9 @@ export async function sendWebhookMessageDiscord(
   return {
     channelId: payload.channel_id
       ? String(payload.channel_id)
-      : (opts.threadId
+      : opts.threadId
         ? String(opts.threadId)
-        : ""),
+        : "",
     messageId: payload.id ? String(payload.id) : "unknown",
   };
 }
@@ -554,9 +554,9 @@ export async function sendVoiceMessageDiscord(
     const client = createDiscordClient(opts, cfg);
     ({ token } = client);
     ({ rest } = client);
-    const {request} = client;
+    const { request } = client;
     const recipient = await parseAndResolveRecipient(to, opts.accountId, cfg);
-    ({ channelId } = (await resolveChannelId(rest, recipient, request)));
+    ({ channelId } = await resolveChannelId(rest, recipient, request));
 
     // Convert to OGG/Opus if needed
     const ogg = await ensureOggOpus(localInputPath);

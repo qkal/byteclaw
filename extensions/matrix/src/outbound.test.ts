@@ -32,7 +32,7 @@ describe("matrixOutbound cfg threading", () => {
   });
 
   it("chunks outbound text without requiring Matrix runtime initialization", () => {
-    const {chunker} = matrixOutbound;
+    const { chunker } = matrixOutbound;
     if (!chunker) {
       throw new Error("matrixOutbound.chunker missing");
     }

@@ -191,14 +191,16 @@ describe("renderDiffDocument", () => {
   });
 
   it("rejects patches that exceed file-count limits", async () => {
-    const patch = Array.from({ length: 129 }, (_, i) => [
+    const patch = Array.from({ length: 129 }, (_, i) =>
+      [
         `diff --git a/f${i}.ts b/f${i}.ts`,
         `--- a/f${i}.ts`,
         `+++ b/f${i}.ts`,
         "@@ -1 +1 @@",
         "-const x = 1;",
         "+const x = 2;",
-      ].join("\n")).join("\n");
+      ].join("\n"),
+    ).join("\n");
 
     await expect(
       renderDiffDocument(

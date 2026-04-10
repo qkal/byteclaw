@@ -75,7 +75,7 @@ function parseApproveCommand(raw: string): ParsedApproveCommand | null {
 }
 
 function buildResolvedByLabel(params: Parameters<CommandHandler>[0]): string {
-  const {channel} = params.command;
+  const { channel } = params.command;
   const sender = params.command.senderId ?? "unknown";
   return `${channel}:${sender}`;
 }

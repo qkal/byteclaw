@@ -39,9 +39,9 @@ function resolveLogSliceWindow(offset?: number, limit?: number) {
   const effectiveLimit =
     typeof limit === "number" && Number.isFinite(limit)
       ? limit
-      : (usingDefaultTail
+      : usingDefaultTail
         ? DEFAULT_LOG_TAIL_LINES
-        : undefined);
+        : undefined;
   return { effectiveLimit, effectiveOffset: offset, usingDefaultTail };
 }
 
@@ -347,7 +347,7 @@ export function createProcessTool(
             }
           }
           const { stdout, stderr } = drainSession(scopedSession);
-          const {exited} = scopedSession;
+          const { exited } = scopedSession;
           const exitCode = scopedSession.exitCode ?? 0;
           const exitSignal = scopedSession.exitSignal ?? undefined;
           if (exited) {
@@ -360,9 +360,9 @@ export function createProcessTool(
             );
           }
           const status = exited
-            ? (exitCode === 0 && exitSignal == null
+            ? exitCode === 0 && exitSignal == null
               ? "completed"
-              : "failed")
+              : "failed"
             : "running";
           const output = [stdout.trimEnd(), stderr.trimEnd()].filter(Boolean).join("\n").trim();
           const hasNewOutput = output.length > 0;

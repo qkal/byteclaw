@@ -65,11 +65,11 @@ export function createBrowserRouteDispatcher(ctx: BrowserRouteContext) {
 
   return {
     dispatch: async (req: BrowserDispatchRequest): Promise<BrowserDispatchResponse> => {
-      const {method} = req;
+      const { method } = req;
       const path = normalizePath(req.path);
       const query = req.query ?? {};
-      const {body} = req;
-      const {signal} = req;
+      const { body } = req;
+      const { signal } = req;
 
       const match = registry.routes.find((route) => {
         if (route.method !== method) {

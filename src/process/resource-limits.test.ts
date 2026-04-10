@@ -13,9 +13,7 @@ describe("resource-limits", () => {
       const limits: ResourceLimits = { maxMemoryMB: 512 };
       const result = applyResourceLimits(options, limits);
       expect(result.resourceLimits).toBeDefined();
-      expect((result.resourceLimits as Record<string, unknown>).maxRSS).toBe(
-        512 * 1024 * 1024,
-      );
+      expect((result.resourceLimits as Record<string, unknown>).maxRSS).toBe(512 * 1024 * 1024);
     });
 
     it("applies CPU time limits", () => {

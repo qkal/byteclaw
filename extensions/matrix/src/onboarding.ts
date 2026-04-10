@@ -1,8 +1,5 @@
 import { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/account-id";
-import type {
-  ChannelSetupDmPolicy,
-  ChannelSetupWizardAdapter,
-} from "openclaw/plugin-sdk/setup";
+import type { ChannelSetupDmPolicy, ChannelSetupWizardAdapter } from "openclaw/plugin-sdk/setup";
 import { isPrivateNetworkOptInEnabled } from "openclaw/plugin-sdk/ssrf-runtime";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -566,8 +563,8 @@ async function runMatrixConfigure(params: {
     dangerouslyAllowPrivateNetwork: allowPrivateNetwork,
   });
 
-  let {accessToken} = existing;
-  let {password} = existing;
+  let { accessToken } = existing;
+  let { password } = existing;
   let userId = existing.userId ?? "";
 
   if (hasConfiguredSecretInput(accessToken) || hasConfiguredSecretInput(password)) {
@@ -762,7 +759,7 @@ export const matrixOnboardingAdapter: ChannelSetupWizardAdapter = {
       accountId: resolveMatrixOnboardingAccountId(resolvedCfg, accountOverrides[channel]),
       cfg: resolvedCfg,
     });
-    const {configured} = account;
+    const { configured } = account;
     return {
       channel,
       configured,

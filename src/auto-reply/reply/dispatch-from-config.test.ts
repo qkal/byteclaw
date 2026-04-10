@@ -24,7 +24,11 @@ import type { GetReplyOptions, ReplyPayload } from "../types.js";
 import type { ReplyDispatcher } from "./reply-dispatcher.js";
 import { buildTestCtx } from "./test-ctx.js";
 
-interface AbortResult { handled: boolean; aborted: boolean; stoppedSubagents?: number }
+interface AbortResult {
+  handled: boolean;
+  aborted: boolean;
+  stoppedSubagents?: number;
+}
 
 const mocks = vi.hoisted(() => ({
   routeReply: vi.fn(async (_params: unknown) => ({ messageId: "mock", ok: true })),
@@ -160,9 +164,9 @@ function parseGenericThreadSessionInfo(sessionKey: string | undefined) {
   const topicMarker = ":topic:";
   const marker = trimmed.includes(threadMarker)
     ? threadMarker
-    : (trimmed.includes(topicMarker)
+    : trimmed.includes(topicMarker)
       ? topicMarker
-      : undefined);
+      : undefined;
   if (!marker) {
     return { baseSessionKey: trimmed, threadId: undefined };
   }
@@ -422,7 +426,7 @@ function createAcpRuntime(events: AcpRuntimeEvent[]): MockAcpRuntime {
       }),
     ),
     runTurn: vi.fn<(input: AcpRuntimeTurnInput) => AsyncIterable<AcpRuntimeEvent>>(
-      async function*  runTurn(_input) {
+      async function* runTurn(_input) {
         for (const event of events) {
           yield event;
         }

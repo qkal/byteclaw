@@ -295,9 +295,9 @@ export async function ensureTailscaleEndpoint(params: {
   const target =
     typeof params.target === "string" && params.target.trim().length > 0
       ? params.target.trim()
-      : (params.port
+      : params.port
         ? String(params.port)
-        : "");
+        : "";
   if (!target) {
     throw new Error("tailscale target missing; set a port or target URL");
   }

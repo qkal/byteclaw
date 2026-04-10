@@ -29,7 +29,7 @@ function toToolList(value: AnyAgentTool | AnyAgentTool[] | null | undefined): An
 function asToolLike(tool: AnyAgentTool, fallbackName?: string): ToolLike {
   const candidate = tool as Partial<ToolLike>;
   const name = candidate.name ?? fallbackName;
-  const {execute} = candidate;
+  const { execute } = candidate;
   if (!name || typeof execute !== "function") {
     throw new Error(`Resolved tool is missing required fields (name=${String(name)})`);
   }

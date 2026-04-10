@@ -34,8 +34,8 @@ describe("agents_list", () => {
   }
 
   function readAgentList(result: unknown) {
-    return (result as { details?: { agents?: { id: string; configured?: boolean }[] } })
-      .details?.agents;
+    return (result as { details?: { agents?: { id: string; configured?: boolean }[] } }).details
+      ?.agents;
   }
 
   it("defaults to the requester agent only", async () => {

@@ -399,7 +399,7 @@ function collectModelsJsonSecrets(params: {
     if (!isRecord(providerValue)) {
       continue;
     }
-    const {apiKey} = providerValue;
+    const { apiKey } = providerValue;
     if (coerceSecretRef(apiKey)) {
       addFinding(params.collector, {
         code: "REF_UNRESOLVED",
@@ -721,9 +721,9 @@ export async function runSecretsAudit(
   const status: SecretsAuditStatus =
     summary.unresolvedRefCount > 0
       ? "unresolved"
-      : (collector.findings.length > 0
+      : collector.findings.length > 0
         ? "findings"
-        : "clean");
+        : "clean";
 
   return {
     filesScanned: [...collector.filesScanned].toSorted(),

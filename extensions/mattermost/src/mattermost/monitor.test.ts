@@ -25,9 +25,9 @@ function resolveRequireMentionForTest(params: MattermostRequireMentionResolverIn
   const configMention =
     typeof groupConfig?.requireMention === "boolean"
       ? groupConfig.requireMention
-      : (typeof defaultGroupConfig?.requireMention === "boolean"
+      : typeof defaultGroupConfig?.requireMention === "boolean"
         ? defaultGroupConfig.requireMention
-        : undefined);
+        : undefined;
   if (typeof configMention === "boolean") {
     return configMention;
   }

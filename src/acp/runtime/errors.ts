@@ -30,7 +30,7 @@ function getForeignAcpRuntimeError(value: unknown): {
   if (!(value instanceof Error)) {
     return null;
   }
-  const {code} = (value as { code?: unknown });
+  const { code } = value as { code?: unknown };
   if (typeof code !== "string" || !ACP_ERROR_CODE_SET.has(code as AcpRuntimeErrorCode)) {
     return null;
   }

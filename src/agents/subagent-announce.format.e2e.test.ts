@@ -19,7 +19,10 @@ import { createChannelTestPluginBase, createTestRegistry } from "../test-utils/c
 import * as piEmbedded from "./pi-embedded.js";
 import * as agentStep from "./tools/agent-step.js";
 
-interface AgentCallRequest { method?: string; params?: Record<string, unknown> }
+interface AgentCallRequest {
+  method?: string;
+  params?: Record<string, unknown>;
+}
 type RequesterResolution = {
   requesterSessionKey: string;
   requesterOrigin?: Record<string, unknown>;

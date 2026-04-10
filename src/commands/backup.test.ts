@@ -5,12 +5,11 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 import type { RuntimeEnv } from "../runtime.js";
 import { type TempHomeEnv, createTempHomeEnv } from "../test-utils/temp-home.js";
 import * as backupShared from "./backup-shared.js";
-import type {
-  resolveBackupPlanFromDisk} from "./backup-shared.js";
+import type { resolveBackupPlanFromDisk } from "./backup-shared.js";
 import {
   buildBackupArchiveRoot,
   encodeAbsolutePathForBackupArchive,
-  resolveBackupPlanFromPaths
+  resolveBackupPlanFromPaths,
 } from "./backup-shared.js";
 import { backupCreateCommand } from "./backup.js";
 

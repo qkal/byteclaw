@@ -118,7 +118,7 @@ export function resolvePluginActivationSnapshot(params: {
   const env = params.env ?? process.env;
   const rawConfig = params.rawConfig ?? params.resolvedConfig;
   let resolvedConfig = params.resolvedConfig ?? params.rawConfig;
-  let {autoEnabledReasons} = params;
+  let { autoEnabledReasons } = params;
 
   if (params.applyAutoEnable && rawConfig !== undefined) {
     const autoEnabled = applyPluginAutoEnable({

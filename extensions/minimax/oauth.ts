@@ -44,7 +44,10 @@ export interface MiniMaxOAuthToken {
   notification_message?: string;
 }
 
-interface TokenPending { status: "pending"; message?: string }
+interface TokenPending {
+  status: "pending";
+  message?: string;
+}
 
 type TokenResult =
   | { status: "success"; token: MiniMaxOAuthToken }

@@ -175,13 +175,13 @@ const hoisted = vi.hoisted(() => {
 });
 
 vi.mock("../../plugins/runtime.js", () => ({
-    getActivePluginChannelRegistry: () => hoisted.runtimeChannelRegistry,
-    getActivePluginChannelRegistryVersion: () => 1,
-    getActivePluginRegistry: () => hoisted.runtimeChannelRegistry,
-    getActivePluginRegistryVersion: () => 1,
-    requireActivePluginChannelRegistry: () => hoisted.runtimeChannelRegistry,
-    requireActivePluginRegistry: () => hoisted.runtimeChannelRegistry,
-  }));
+  getActivePluginChannelRegistry: () => hoisted.runtimeChannelRegistry,
+  getActivePluginChannelRegistryVersion: () => 1,
+  getActivePluginRegistry: () => hoisted.runtimeChannelRegistry,
+  getActivePluginRegistryVersion: () => 1,
+  requireActivePluginChannelRegistry: () => hoisted.runtimeChannelRegistry,
+  requireActivePluginRegistry: () => hoisted.runtimeChannelRegistry,
+}));
 
 vi.mock("../../channels/plugins/index.js", () => ({
   getChannelPlugin: (channelId: string) =>
@@ -254,15 +254,15 @@ vi.mock("../../channels/plugins/conversation-bindings.js", () => ({
 }));
 
 vi.mock("../../infra/outbound/session-binding-service.js", () => ({
-    getSessionBindingService: () => ({
-      bind: vi.fn(),
-      getCapabilities: vi.fn(),
-      listBySession: vi.fn(),
-      resolveByConversation: (ref: unknown) => hoisted.sessionBindingResolveByConversationMock(ref),
-      touch: vi.fn(),
-      unbind: vi.fn(),
-    }),
-  }));
+  getSessionBindingService: () => ({
+    bind: vi.fn(),
+    getCapabilities: vi.fn(),
+    listBySession: vi.fn(),
+    resolveByConversation: (ref: unknown) => hoisted.sessionBindingResolveByConversationMock(ref),
+    touch: vi.fn(),
+    unbind: vi.fn(),
+  }),
+}));
 
 let handleSessionCommand: (typeof import("./commands-session.js"))["handleSessionCommand"];
 const baseCfg = {

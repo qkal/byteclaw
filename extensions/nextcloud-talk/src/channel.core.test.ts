@@ -51,7 +51,7 @@ describe("nextcloud talk channel core", () => {
   });
 
   it("normalizes trimmed DM allowlist prefixes to lowercase ids", () => {
-    const {resolveDmPolicy} = nextcloudTalkSecurityAdapter;
+    const { resolveDmPolicy } = nextcloudTalkSecurityAdapter;
     if (!resolveDmPolicy) {
       throw new Error("resolveDmPolicy unavailable");
     }

@@ -106,7 +106,7 @@ export function patchAllowlistUsersInConfigEntries<
     if (!entryConfig || typeof entryConfig !== "object") {
       continue;
     }
-    const {users} = (entryConfig as { users?: (string | number)[] });
+    const { users } = entryConfig as { users?: (string | number)[] };
     if (!Array.isArray(users) || users.length === 0) {
       continue;
     }
@@ -135,7 +135,7 @@ export function addAllowlistUserEntriesFromConfigEntry(target: Set<string>, entr
   if (!entry || typeof entry !== "object") {
     return;
   }
-  const {users} = (entry as { users?: (string | number)[] });
+  const { users } = entry as { users?: (string | number)[] };
   if (!Array.isArray(users)) {
     return;
   }

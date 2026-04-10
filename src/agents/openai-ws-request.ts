@@ -96,7 +96,7 @@ export function buildOpenAIWebSocketResponseCreatePayload(params: {
     extraParams.text = { ...existingText, verbosity: textVerbosity };
   }
 
-  const {supportsResponsesStoreField} = resolveProviderRequestPolicyConfig({
+  const { supportsResponsesStoreField } = resolveProviderRequestPolicyConfig({
     api: readStringValue(params.model.api),
     baseUrl: readStringValue(params.model.baseUrl),
     capability: "llm",

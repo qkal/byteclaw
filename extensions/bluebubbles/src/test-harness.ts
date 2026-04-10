@@ -133,9 +133,9 @@ export function createBlueBubblesFetchGuardPassthroughInstaller() {
         const text =
           typeof (raw as { text?: () => Promise<string> }).text === "function"
             ? await (raw as { text: () => Promise<string> }).text()
-            : (typeof (raw as { json?: () => Promise<unknown> }).json === "function"
+            : typeof (raw as { json?: () => Promise<unknown> }).json === "function"
               ? JSON.stringify(await (raw as { json: () => Promise<unknown> }).json())
-              : "");
+              : "";
         body = new TextEncoder().encode(text).buffer;
       }
       return {

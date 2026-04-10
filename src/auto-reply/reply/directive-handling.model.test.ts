@@ -76,7 +76,11 @@ vi.mock("./queue.js", () => ({
 const TEST_AGENT_DIR = "/tmp/agent";
 const OPENAI_DATE_PROFILE_ID = "20251001";
 
-interface ApiKeyProfile { type: "api_key"; provider: string; key: string }
+interface ApiKeyProfile {
+  type: "api_key";
+  provider: string;
+  key: string;
+}
 
 function baseAliasIndex(): ModelAliasIndex {
   return { byAlias: new Map(), byKey: new Map() };

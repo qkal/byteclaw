@@ -36,9 +36,9 @@ function isHostExcludedByNoProxy(hostname: string, env: NodeJS.ProcessEnv = proc
     // Match both `slack.com` (apex) and Slack subdomains.
     const bare = entry.startsWith("*.")
       ? entry.slice(2)
-      : (entry.startsWith(".")
+      : entry.startsWith(".")
         ? entry.slice(1)
-        : entry);
+        : entry;
     if (lower === bare || lower.endsWith(`.${bare}`)) {
       return true;
     }

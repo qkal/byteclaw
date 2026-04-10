@@ -126,7 +126,7 @@ export function createClackPrompter(): WizardPrompter {
         }),
       ),
     text: async (params) => {
-      const {validate} = params;
+      const { validate } = params;
       return guardCancel(
         await text({
           initialValue: params.initialValue,

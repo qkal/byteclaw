@@ -8,7 +8,7 @@ function resolveTelegramSessionConversation(params: { kind: "group" | "channel";
   if (!match?.groups?.chatId || !match.groups.topicId) {
     return null;
   }
-  const {chatId} = match.groups;
+  const { chatId } = match.groups;
   return {
     baseConversationId: chatId,
     id: chatId,
@@ -27,8 +27,8 @@ function resolveFeishuSessionConversation(params: { kind: "group" | "channel"; r
   if (!senderMatch?.groups?.chatId || !senderMatch.groups.topicId || !senderMatch.groups.senderId) {
     return null;
   }
-  const {chatId} = senderMatch.groups;
-  const {topicId} = senderMatch.groups;
+  const { chatId } = senderMatch.groups;
+  const { topicId } = senderMatch.groups;
   return {
     baseConversationId: chatId,
     id: params.rawId,

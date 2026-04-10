@@ -4,6 +4,6 @@ const contract = createLegacyPrivateNetworkDoctorContract({
   channelKey: "nextcloud-talk",
 });
 
-export const {legacyConfigRules} = contract;
+export const { legacyConfigRules } = contract;
 
-export const {normalizeCompatibilityConfig} = contract;
+export const { normalizeCompatibilityConfig } = contract;

@@ -37,8 +37,9 @@ vi.mock("../runtime-api.js", () => ({
       await params.onAbort?.();
     },
   ),
-  mergeAllowlist: (params: { existing?: string[]; additions?: string[] }) =>
-    [...new Set([...params.existing ?? [], ...params.additions ?? []])],
+  mergeAllowlist: (params: { existing?: string[]; additions?: string[] }) => [
+    ...new Set([...(params.existing ?? []), ...(params.additions ?? [])]),
+  ],
   normalizeResolvedSecretInputString: (params: { value?: unknown }) =>
     typeof params?.value === "string" && params.value.trim() ? params.value.trim() : undefined,
   normalizeSecretInputString: (value: unknown) =>
@@ -48,8 +49,8 @@ vi.mock("../runtime-api.js", () => ({
 
 vi.mock("express", () => {
   const json = vi.fn(() => (_req: unknown, _res: unknown, next?: (err?: unknown) => void) => {
-      next?.();
-    });
+    next?.();
+  });
 
   const factory = () => ({
     listen: vi.fn((_port: number) => {

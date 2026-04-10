@@ -122,7 +122,8 @@ export function createSessionActions(context: SessionActionContext) {
     }
   };
 
-  const resolveModelSelection = (entry?: SessionInfoEntry) => resolveSessionInfoModelSelection({
+  const resolveModelSelection = (entry?: SessionInfoEntry) =>
+    resolveSessionInfoModelSelection({
       currentModel: state.sessionInfo.model,
       currentProvider: state.sessionInfo.modelProvider,
       entryModel: entry?.model,
@@ -266,7 +267,7 @@ export function createSessionActions(context: SessionActionContext) {
       state.currentSessionKey = result.key;
       updateHeader();
     }
-    const {resolved} = result;
+    const { resolved } = result;
     const entry =
       resolved && (resolved.modelProvider || resolved.model)
         ? {

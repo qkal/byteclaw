@@ -26,7 +26,10 @@ vi.mock("../../agents/agent-scope.js", () => ({
 describe("resolveSessionKeyForRequest", () => {
   const MAIN_STORE_PATH = "/tmp/main-store.json";
   const MYBOT_STORE_PATH = "/tmp/mybot-store.json";
-  interface SessionStoreEntry { sessionId: string; updatedAt: number }
+  interface SessionStoreEntry {
+    sessionId: string;
+    updatedAt: number;
+  }
   type SessionStoreMap = Record<string, SessionStoreEntry>;
 
   const setupMainAndMybotStorePaths = () => {

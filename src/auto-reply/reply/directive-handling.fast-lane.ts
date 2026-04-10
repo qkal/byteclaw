@@ -47,7 +47,7 @@ export async function applyInlineDirectivesFastLane(
     return { directiveAck: undefined, model, provider };
   }
 
-  const {agentCfg} = params;
+  const { agentCfg } = params;
   const {
     currentThinkLevel,
     currentFastMode,

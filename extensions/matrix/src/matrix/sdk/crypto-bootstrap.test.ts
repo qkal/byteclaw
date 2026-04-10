@@ -310,12 +310,12 @@ describe("MatrixCryptoBootstrapper", () => {
     await bootstrapper.bootstrap(crypto);
 
     const bootstrapCrossSigningCalls = bootstrapCrossSigning.mock.calls as [
-        {
-          authUploadDeviceSigningKeys?: <T>(
-            makeRequest: (authData: Record<string, unknown> | null) => Promise<T>,
-          ) => Promise<T>;
-        }?,
-      ][];
+      {
+        authUploadDeviceSigningKeys?: <T>(
+          makeRequest: (authData: Record<string, unknown> | null) => Promise<T>,
+        ) => Promise<T>;
+      }?,
+    ][];
     const authUploadDeviceSigningKeys =
       bootstrapCrossSigningCalls[0]?.[0]?.authUploadDeviceSigningKeys;
     expect(authUploadDeviceSigningKeys).toBeTypeOf("function");

@@ -22,7 +22,7 @@ export async function readJsonFileWithFallback<T>(
     }
     return { exists: true, value: parsed };
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return { exists: false, value: fallback };
     }

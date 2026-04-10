@@ -276,7 +276,9 @@ describe("Security: Channel Authorization Logic", () => {
     // The logic in resolveChannelAuthorization is:
     // Const mode = rule?.mode ?? "restricted";
     // We verify this by checking undefined rule gives restricted
-    interface ModeRule { mode?: "restricted" | "open" }
+    interface ModeRule {
+      mode?: "restricted" | "open";
+    }
     const rule = undefined as ModeRule | undefined;
     const mode = rule?.mode ?? "restricted";
     expect(mode).toBe("restricted");
@@ -305,7 +307,9 @@ describe("Security: Channel Authorization Logic", () => {
   it("settings should override file config for channel rules", () => {
     // Documented behavior: settingsRules[nest] ?? fileRules[nest]
     // This means settings take precedence
-    interface ChannelRule { mode: "restricted" | "open" }
+    interface ChannelRule {
+      mode: "restricted" | "open";
+    }
     const fileRules: Record<string, ChannelRule> = { "chat/~zod/test": { mode: "restricted" } };
     const settingsRules: Record<string, ChannelRule> = { "chat/~zod/test": { mode: "open" } };
     const nest = "chat/~zod/test";

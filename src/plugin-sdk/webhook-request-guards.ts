@@ -219,7 +219,7 @@ export function beginWebhookRequestPipelineOrReject(params: {
   }
 
   const inFlightKey = params.inFlightKey ?? "";
-  const {inFlightLimiter} = params;
+  const { inFlightLimiter } = params;
   if (inFlightLimiter && inFlightKey && !inFlightLimiter.tryAcquire(inFlightKey)) {
     params.res.statusCode = params.inFlightLimitStatusCode ?? 429;
     params.res.end(params.inFlightLimitMessage ?? "Too Many Requests");

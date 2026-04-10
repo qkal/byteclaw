@@ -87,9 +87,9 @@ function addLegacyChannelAcpBindingIssues(
   }
 
   const record = value as Record<string, unknown>;
-  const {bindings} = record;
+  const { bindings } = record;
   if (bindings && typeof bindings === "object" && !Array.isArray(bindings)) {
-    const {acp} = (bindings as Record<string, unknown>);
+    const { acp } = bindings as Record<string, unknown>;
     if (acp && typeof acp === "object") {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -119,7 +119,7 @@ function normalizeBundledChannelConfigs(
     if (!runtimeSchema) {
       continue;
     }
-    if (! Object.hasOwn(value, channelId)) {
+    if (!Object.hasOwn(value, channelId)) {
       continue;
     }
     const parsed = runtimeSchema.safeParse(value[channelId]);

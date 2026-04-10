@@ -39,7 +39,8 @@ describe("applyJobPatch", () => {
     sessionTarget: "main",
   });
 
-  const createMainSystemEventJob = (id: string, delivery: CronJob["delivery"]): CronJob => createIsolatedAgentTurnJob(id, delivery, {
+  const createMainSystemEventJob = (id: string, delivery: CronJob["delivery"]): CronJob =>
+    createIsolatedAgentTurnJob(id, delivery, {
       payload: { kind: "systemEvent", text: "ping" },
       sessionTarget: "main",
     });

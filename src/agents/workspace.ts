@@ -631,14 +631,14 @@ export async function loadExtraBootstrapFilesWithDiagnostics(
     }
 
     const reason: ExtraBootstrapLoadDiagnosticCode =
-      loaded.reason === "path" ? "missing" : (loaded.reason === "validation" ? "security" : "io");
+      loaded.reason === "path" ? "missing" : loaded.reason === "validation" ? "security" : "io";
     diagnostics.push({
       detail:
         loaded.error instanceof Error
           ? loaded.error.message
-          : (typeof loaded.error === "string"
+          : typeof loaded.error === "string"
             ? loaded.error
-            : reason),
+            : reason,
       path: filePath,
       reason,
     });

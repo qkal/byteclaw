@@ -418,7 +418,7 @@ function formatDiscordStartupGatewayState(gateway?: GatewayPlugin): string {
   if (!gateway) {
     return "gateway=missing";
   }
-  const {reconnectAttempts} = (gateway as unknown as { reconnectAttempts?: unknown });
+  const { reconnectAttempts } = gateway as unknown as { reconnectAttempts?: unknown };
   return `gatewayConnected=${gateway.isConnected ? "true" : "false"} reconnectAttempts=${typeof reconnectAttempts === "number" ? reconnectAttempts : "na"}`;
 }
 
@@ -539,9 +539,9 @@ function formatDiscordDeployErrorDetails(err: unknown): string {
   if (!err || typeof err !== "object") {
     return "";
   }
-  const {status} = (err as DiscordDeployErrorLike);
-  const {discordCode} = (err as DiscordDeployErrorLike);
-  const {rawBody} = (err as DiscordDeployErrorLike);
+  const { status } = err as DiscordDeployErrorLike;
+  const { discordCode } = err as DiscordDeployErrorLike;
+  const { rawBody } = err as DiscordDeployErrorLike;
   const requestBody = (err as DiscordDeployErrorLike).deployRequestBody;
   const details: string[] = [];
   if (typeof status === "number") {

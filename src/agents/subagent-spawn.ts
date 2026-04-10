@@ -200,7 +200,7 @@ async function persistInitialChildSessionRuntimeModel(params: {
     });
     return undefined;
   } catch (error) {
-    return error instanceof Error ? error.message : (typeof error === "string" ? error : "error");
+    return error instanceof Error ? error.message : typeof error === "string" ? error : "error";
   }
 }
 
@@ -296,7 +296,7 @@ async function ensureThreadBindingForSubagentSpawn(params: {
     threadId?: string | number;
   };
 }): Promise<{ status: "ok" } | { status: "error"; error: string }> {
-  const {hookRunner} = params;
+  const { hookRunner } = params;
   if (!hookRunner?.hasHooks("subagent_spawning")) {
     return {
       error:
@@ -347,7 +347,7 @@ export async function spawnSubagentDirect(
   params: SpawnSubagentParams,
   ctx: SpawnSubagentContext,
 ): Promise<SpawnSubagentResult> {
-  const {task} = params;
+  const { task } = params;
   const label = params.label?.trim() || "";
   const requestedAgentId = params.agentId?.trim();
 
@@ -378,9 +378,9 @@ export async function spawnSubagentDirect(
   const cleanup =
     spawnMode === "session"
       ? "keep"
-      : (params.cleanup === "keep" || params.cleanup === "delete"
+      : params.cleanup === "keep" || params.cleanup === "delete"
         ? params.cleanup
-        : "keep");
+        : "keep";
   const expectsCompletionMessage = params.expectsCompletionMessage !== false;
   const requesterOrigin = normalizeDeliveryContext({
     accountId: ctx.agentAccountId,
@@ -522,7 +522,7 @@ export async function spawnSubagentDirect(
       });
       return undefined;
     } catch (error) {
-      return error instanceof Error ? error.message : (typeof error === "string" ? error : "error");
+      return error instanceof Error ? error.message : typeof error === "string" ? error : "error";
     }
   };
 
@@ -888,9 +888,9 @@ export async function spawnSubagentDirect(
   const note =
     spawnMode === "session"
       ? SUBAGENT_SPAWN_SESSION_ACCEPTED_NOTE
-      : (isCronSession
+      : isCronSession
         ? undefined
-        : SUBAGENT_SPAWN_ACCEPTED_NOTE);
+        : SUBAGENT_SPAWN_ACCEPTED_NOTE;
 
   return {
     attachments: attachmentsReceipt,

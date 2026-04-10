@@ -498,7 +498,9 @@ function createAcpThreadBinding(input: AcpBindInput): FakeBinding {
 }
 
 function expectBoundIntroTextToExclude(match: string): void {
-  const calls = hoisted.sessionBindingBindMock.mock.calls as [{ metadata?: { introText?: unknown } }][];
+  const calls = hoisted.sessionBindingBindMock.mock.calls as [
+    { metadata?: { introText?: unknown } },
+  ][];
   const introText = calls
     .map((call) => call[0]?.metadata?.introText)
     .find((value): value is string => typeof value === "string");

@@ -58,7 +58,10 @@ export const runDrySend = (params: {
     action: "send",
   });
 
-interface ResolvedTestTarget { to: string; kind: ChannelDirectoryEntryKind }
+interface ResolvedTestTarget {
+  to: string;
+  kind: ChannelDirectoryEntryKind;
+}
 
 export function normalizeSlackTarget(raw: string): string {
   const trimmed = raw.trim();

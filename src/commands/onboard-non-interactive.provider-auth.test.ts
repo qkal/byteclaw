@@ -128,12 +128,12 @@ function upsertAuthProfile(params: {
           ...params.credential,
           key: normalizeStoredSecret(params.credential.key),
         }
-      : (params.credential.type === "token" && typeof params.credential.token === "string"
+      : params.credential.type === "token" && typeof params.credential.token === "string"
         ? {
             ...params.credential,
             token: normalizeStoredSecret(params.credential.token),
           }
-        : params.credential);
+        : params.credential;
   for (const targetAgentDir of new Set([undefined, params.agentDir])) {
     const store = getOrCreateTestAuthStore(targetAgentDir);
     store.profiles[params.profileId] = credential;
@@ -460,9 +460,9 @@ vi.mock("./onboard-non-interactive/local/auth-choice.plugin-providers.js", async
           apiKey: resolved.key,
           ...(choiceId === "zai-coding-global"
             ? { endpoint: "coding-global" as const }
-            : (choiceId === "zai-coding-cn"
+            : choiceId === "zai-coding-cn"
               ? { endpoint: "coding-cn" as const }
-              : {})),
+              : {}),
         });
         const fallback = ZAI_FALLBACKS[choiceId];
         let next = applyAuthProfileConfig(ctx.config as never, {
@@ -867,7 +867,7 @@ interface ProviderAuthConfigSnapshot {
 
 function createZaiFetchMock(responses: Record<string, number>): FetchLike {
   return vi.fn(async (input, init) => {
-    const url = typeof input === "string" ? input : (input instanceof URL ? input.toString() : "");
+    const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : "";
     const parsedBody =
       typeof init?.body === "string" ? (JSON.parse(init.body) as { model?: string }) : {};
     const key = `${url}::${parsedBody.model ?? ""}`;
@@ -908,7 +908,7 @@ function expectZaiProbeCalls(
   fetchMock: FetchLike,
   expected: { url: string; modelId: string }[],
 ): void {
-  const {calls} = (
+  const { calls } = (
     fetchMock as unknown as { mock: { calls: [RequestInfo | URL, RequestInit?][] } }
   ).mock;
 
@@ -937,7 +937,7 @@ async function removeDirWithRetry(dir: string): Promise<void> {
       await fs.rm(dir, { force: true, recursive: true });
       return;
     } catch (error) {
-      const {code} = (error as NodeJS.ErrnoException);
+      const { code } = error as NodeJS.ErrnoException;
       const isTransient = code === "ENOTEMPTY" || code === "EBUSY" || code === "EPERM";
       if (!isTransient || attempt === 4) {
         throw error;

@@ -11,7 +11,7 @@ export function sanitizeTerminalText(input: string): string {
   let sanitized = "";
   for (const char of normalized) {
     const code = char.charCodeAt(0);
-    const isControl = (code >= 0x00 && code <= 0x1F) || (code >= 0x7F && code <= 0x9F);
+    const isControl = (code >= 0x00 && code <= 0x1f) || (code >= 0x7f && code <= 0x9f);
     if (!isControl) {
       sanitized += char;
     }

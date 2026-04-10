@@ -191,9 +191,9 @@ describe("before_tool_call loop detection behavior", () => {
 
   it("does not block known poll loops when output progresses", async () => {
     const execute = vi.fn().mockImplementation(async (toolCallId: string) => ({
-        content: [{ text: `output ${toolCallId}`, type: "text" }],
-        details: { aggregated: `output ${toolCallId}`, status: "running" },
-      }));
+      content: [{ text: `output ${toolCallId}`, type: "text" }],
+      details: { aggregated: `output ${toolCallId}`, status: "running" },
+    }));
     const tool = createWrappedTool("process", execute);
     const params = { action: "poll", sessionId: "sess-2" };
 

@@ -321,7 +321,7 @@ export function buildMinimaxVideoGenerationProvider(): VideoGenerationProvider {
               timeoutMs: req.timeoutMs,
               url: videoUrl,
             })
-          : (fileId
+          : fileId
             ? await downloadVideoFromFileId({
                 fileId,
                 headers,
@@ -333,7 +333,7 @@ export function buildMinimaxVideoGenerationProvider(): VideoGenerationProvider {
                 throw new Error(
                   "MiniMax video generation completed without a video URL or file_id",
                 );
-              })());
+              })();
         return {
           metadata: {
             fileId,

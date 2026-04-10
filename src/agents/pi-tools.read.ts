@@ -146,11 +146,11 @@ function withToolResultText(
 function extractReadTruncationDetails(
   result: AgentToolResult<unknown>,
 ): ReadTruncationDetails | null {
-  const {details} = (result as { details?: unknown });
+  const { details } = result as { details?: unknown };
   if (!details || typeof details !== "object") {
     return null;
   }
-  const {truncation} = (details as { truncation?: unknown });
+  const { truncation } = details as { truncation?: unknown };
   if (!truncation || typeof truncation !== "object") {
     return null;
   }
@@ -177,7 +177,7 @@ function stripReadContinuationNotice(text: string): string {
 function stripReadTruncationContentDetails(
   result: AgentToolResult<unknown>,
 ): AgentToolResult<unknown> {
-  const {details} = (result as { details?: unknown });
+  const { details } = result as { details?: unknown };
   if (!details || typeof details !== "object") {
     return result;
   }
@@ -189,7 +189,7 @@ function stripReadTruncationContentDetails(
   }
 
   const truncation = truncationRaw as Record<string, unknown>;
-  if (! Object.hasOwn(truncation, "content")) {
+  if (!Object.hasOwn(truncation, "content")) {
     return result;
   }
 

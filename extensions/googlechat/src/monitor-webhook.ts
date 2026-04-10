@@ -17,12 +17,12 @@ import type {
 
 function extractBearerToken(header: unknown): string {
   const authHeader = Array.isArray(header)
-    ? (typeof header[0] === "string"
+    ? typeof header[0] === "string"
       ? header[0]
-      : "")
-    : (typeof header === "string"
+      : ""
+    : typeof header === "string"
       ? header
-      : "");
+      : "";
   return normalizeLowercaseStringOrEmpty(authHeader).startsWith("bearer ")
     ? authHeader.slice("bearer ".length).trim()
     : "";
@@ -61,8 +61,8 @@ function parseGoogleChatInboundPayload(
   };
 
   if (rawObj.commonEventObject?.hostApp === "CHAT" && rawObj.chat?.messagePayload) {
-    const {chat} = rawObj;
-    const {messagePayload} = chat;
+    const { chat } = rawObj;
+    const { messagePayload } = chat;
     eventPayload = {
       eventTime: chat.eventTime,
       message: messagePayload?.message,
@@ -106,7 +106,8 @@ export function createGoogleChatWebhookRequestHandler(params: {
   webhookInFlightLimiter: WebhookInFlightLimiter;
   processEvent: (event: GoogleChatEvent, target: WebhookTarget) => Promise<void>;
 }): (req: IncomingMessage, res: ServerResponse) => Promise<boolean> {
-  return async (req: IncomingMessage, res: ServerResponse): Promise<boolean> => await withResolvedWebhookRequestPipeline({
+  return async (req: IncomingMessage, res: ServerResponse): Promise<boolean> =>
+    await withResolvedWebhookRequestPipeline({
       allowMethods: ["POST"],
       handle: async ({ targets }) => {
         const headerBearer = extractBearerToken(req.headers.authorization);

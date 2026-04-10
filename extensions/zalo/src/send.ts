@@ -59,7 +59,7 @@ function resolveSendContext(options: ZaloSendOptions): {
   }
 
   const token = options.token ?? resolveZaloToken(undefined, options.accountId).token;
-  const {proxy} = options;
+  const { proxy } = options;
   return { fetcher: resolveZaloProxyFetch(proxy), token };
 }
 

@@ -74,7 +74,10 @@ function wrapLine(text: string, width: number): string[] {
   // Across newlines, so as long as we don't corrupt escape sequences we're safe.
   const ESC = "\u001b";
 
-  interface Token { kind: "ansi" | "char"; value: string }
+  interface Token {
+    kind: "ansi" | "char";
+    value: string;
+  }
   const tokens: Token[] = [];
   for (let i = 0; i < text.length; ) {
     if (text[i] === ESC) {
@@ -289,14 +292,14 @@ export function renderTable(opts: RenderTableOptions): string {
   });
   const border = opts.border ?? resolveDefaultBorder(process.platform, process.env);
   if (border === "none") {
-    const {columns} = opts;
+    const { columns } = opts;
     const header = columns.map((c) => c.header).join(" | ");
     const lines = [header, ...rows.map((r) => columns.map((c) => r[c.key] ?? "").join(" | "))];
     return `${lines.join("\n")}\n`;
   }
 
   const padding = Math.max(0, opts.padding ?? 1);
-  const {columns} = opts;
+  const { columns } = opts;
 
   const metrics = columns.map((c) => {
     const headerW = visibleWidth(c.header);

@@ -1,8 +1,11 @@
-import type { z} from "zod";
+import type { z } from "zod";
 import type { ZodTypeAny } from "zod";
 import type { OpenClawPluginConfigSchema, PluginConfigUiHint } from "./types.js";
 
-interface Issue { path: (string | number)[]; message: string }
+interface Issue {
+  path: (string | number)[];
+  message: string;
+}
 
 type SafeParseResult =
   | { success: true; data?: unknown }
@@ -59,7 +62,7 @@ function normalizeJsonSchema(schema: unknown): unknown {
     record[key] = normalizeJsonSchema(value);
   }
 
-  const {propertyNames} = record;
+  const { propertyNames } = record;
   if (
     propertyNames &&
     typeof propertyNames === "object" &&

@@ -60,7 +60,7 @@ function hasExplicitProviderAccountConfig(
   if (!channel || typeof channel !== "object") {
     return false;
   }
-  const {accounts} = (channel as { accounts?: Record<string, unknown> });
+  const { accounts } = channel as { accounts?: Record<string, unknown> };
   if (!accounts || typeof accounts !== "object") {
     return false;
   }
@@ -150,9 +150,9 @@ export async function collectChannelSecurityFindings(params: {
     let enabled =
       typeof selectedInspection?.enabled === "boolean"
         ? selectedInspection.enabled
-        : (typeof accountRecord?.enabled === "boolean"
+        : typeof accountRecord?.enabled === "boolean"
           ? accountRecord.enabled
-          : true);
+          : true;
     if (
       typeof selectedInspection?.enabled !== "boolean" &&
       typeof accountRecord?.enabled !== "boolean" &&
@@ -171,9 +171,9 @@ export async function collectChannelSecurityFindings(params: {
     let configured =
       typeof selectedInspection?.configured === "boolean"
         ? selectedInspection.configured
-        : (typeof accountRecord?.configured === "boolean"
+        : typeof accountRecord?.configured === "boolean"
           ? accountRecord.configured
-          : true);
+          : true;
     if (
       typeof selectedInspection?.configured !== "boolean" &&
       typeof accountRecord?.configured !== "boolean" &&

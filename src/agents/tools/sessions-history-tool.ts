@@ -218,7 +218,7 @@ export function createSessionsHistoryTool(opts?: {
       }
       // From here on, use the canonical key (sessionId inputs already resolved).
       const resolvedKey = visibleSession.key;
-      const {displayKey} = visibleSession;
+      const { displayKey } = visibleSession;
 
       const a2aPolicy = createAgentToAgentPolicy(cfg);
       const visibility = resolveEffectiveSessionToolsVisibility({

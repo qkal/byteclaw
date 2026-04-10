@@ -80,7 +80,9 @@ export const signalSetupWizard: ChannelSetupWizard = {
     unconfiguredScore: 0,
   }),
   textInputs: [
-    createSignalCliPathTextInput(async ({ currentValue }) => !(await detectBinary(currentValue ?? "signal-cli"))),
+    createSignalCliPathTextInput(
+      async ({ currentValue }) => !(await detectBinary(currentValue ?? "signal-cli")),
+    ),
     signalNumberTextInput,
   ],
 };

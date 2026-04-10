@@ -16,7 +16,7 @@ function isToolCallBlock(block: AnthropicContentBlock): boolean {
 }
 
 function isAbortedAssistantTurn(message: AgentMessage): boolean {
-  const {stopReason} = (message as { stopReason?: unknown });
+  const { stopReason } = message as { stopReason?: unknown };
   return stopReason === "aborted" || stopReason === "error";
 }
 
@@ -34,7 +34,7 @@ function extractToolResultIdsFromRecord(record: Record<string, unknown>): string
 
 function collectMatchingToolResultIds(message: AgentMessage): Set<string> {
   const ids = new Set<string>();
-  const {role} = (message as { role?: unknown });
+  const { role } = message as { role?: unknown };
   if (role === "toolResult") {
     const toolResultId = extractToolResultId(
       message as Extract<AgentMessage, { role: "toolResult" }>,
@@ -50,7 +50,7 @@ function collectMatchingToolResultIds(message: AgentMessage): Set<string> {
     }
   }
 
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (!Array.isArray(content)) {
     return ids;
   }

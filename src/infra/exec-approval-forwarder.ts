@@ -152,7 +152,7 @@ function shouldForwardRoute(params: {
   };
   routeRequest: ApprovalRouteRequest;
 }): boolean {
-  const {config} = params;
+  const { config } = params;
   if (!config?.enabled) {
     return false;
   }
@@ -320,7 +320,7 @@ function defaultResolveSessionTarget(params: {
     if (!resolvedTarget?.channel || !resolvedTarget.to) {
       return null;
     }
-    const {channel} = resolvedTarget;
+    const { channel } = resolvedTarget;
     if (!isDeliverableMessageChannel(channel)) {
       return null;
     }

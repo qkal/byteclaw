@@ -15,21 +15,21 @@ vi.mock("../plugins/web-search-providers.runtime.js", () => ({
 }));
 
 vi.mock("../channels/plugins/bootstrap-registry.js", () => ({
-    getBootstrapChannelPlugin: (id: string) =>
-      id === "telegram"
-        ? {
-            secrets: {
-              collectRuntimeConfigAssignments: () => {},
-            },
-          }
-        : undefined,
-    getBootstrapChannelSecrets: (id: string) =>
-      id === "telegram"
-        ? {
+  getBootstrapChannelPlugin: (id: string) =>
+    id === "telegram"
+      ? {
+          secrets: {
             collectRuntimeConfigAssignments: () => {},
-          }
-        : undefined,
-  }));
+          },
+        }
+      : undefined,
+  getBootstrapChannelSecrets: (id: string) =>
+    id === "telegram"
+      ? {
+          collectRuntimeConfigAssignments: () => {},
+        }
+      : undefined,
+}));
 
 function asConfig(value: unknown): OpenClawConfig {
   return value as OpenClawConfig;

@@ -115,9 +115,9 @@ export function inspectSlackAccount(params: {
         : "none";
   const signingSecretSource: SlackTokenSource = configSigningSecret.token
     ? "config"
-    : (configSigningSecret.status === "configured_unavailable"
+    : configSigningSecret.status === "configured_unavailable"
       ? "config"
-      : "none");
+      : "none";
   const userTokenSource: SlackTokenSource = configUser.token
     ? "config"
     : configUser.status === "configured_unavailable"
@@ -157,9 +157,9 @@ export function inspectSlackAccount(params: {
       ? {
           signingSecretStatus: configSigningSecret.token
             ? "available"
-            : (configSigningSecret.status === "configured_unavailable"
+            : configSigningSecret.status === "configured_unavailable"
               ? "configured_unavailable"
-              : "missing"),
+              : "missing",
         }
       : {}),
     userTokenStatus: configUser.token

@@ -128,7 +128,7 @@ function readDiskCache(): Map<string, OpenRouterModelCapabilities> | undefined {
     if (!payload || typeof payload !== "object") {
       return undefined;
     }
-    const {models} = (payload as DiskCachePayload);
+    const { models } = payload as DiskCachePayload;
     if (!models || typeof models !== "object") {
       return undefined;
     }

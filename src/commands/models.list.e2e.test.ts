@@ -229,9 +229,7 @@ describe("models list/status", () => {
 
   function enableGoogleAntigravityAuthProfile() {
     listProfilesForProvider.mockImplementation((_: unknown, provider: string) =>
-      provider === "google-antigravity"
-        ? ([{ id: "profile-1" }] as Record<string, unknown>[])
-        : [],
+      provider === "google-antigravity" ? ([{ id: "profile-1" }] as Record<string, unknown>[]) : [],
     );
   }
 
@@ -415,7 +413,7 @@ describe("models list/status", () => {
     expect(loaded.models.map((model) => `${model.provider}/${model.id}`)).toEqual([
       "openai-codex/gpt-5.3-codex-spark",
     ]);
-    expect([...loaded.availableKeys ?? []]).toEqual(["openai-codex/gpt-5.3-codex-spark"]);
+    expect([...(loaded.availableKeys ?? [])]).toEqual(["openai-codex/gpt-5.3-codex-spark"]);
   });
 
   it("modelsListCommand persists using the source snapshot config when provided", async () => {

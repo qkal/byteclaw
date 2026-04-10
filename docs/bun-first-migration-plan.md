@@ -2,7 +2,7 @@
 
 **Status:** Planning Phase  
 **Date:** 2026-04-10  
-**Target:** Bun as primary runtime with full Node.js compatibility preserved  
+**Target:** Bun as primary runtime with full Node.js compatibility preserved
 
 ---
 
@@ -17,6 +17,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - **Mixed Bun usage already**: Some scripts already use Bun (android:bundle:release, test:live:cache, extension builds)
 
 **Biggest technical risks:**
+
 1. Native dependency compatibility (sharp, canvas, llama-cpp, matrix crypto)
 2. Windows subprocess execution semantics (cmd.exe, .bat/.cmd, npm shims)
 3. Plugin loading behavior under Bun's module resolution
@@ -25,6 +26,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 6. Extension ecosystem assumptions about Node internals
 
 **Highest-leverage migration steps:**
+
 1. Establish Bun+Node dual-path execution scaffolding first
 2. Migrate build scripts (lowest risk, highest visibility)
 3. Create runtime abstraction layer for subprocess execution
@@ -32,6 +34,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 5. Migrate test runner only after parity data exists
 
 **What absolutely must not be rushed:**
+
 - Switching the default runtime before CI proves equivalence
 - Migrating subprocess execution before abstraction layer exists
 - Changing plugin loading without testing under both runtimes
@@ -71,6 +74,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ## C. Current-State Audit Checklist
 
 ### Runtime Execution Surface
+
 - [ ] **CLI entrypoints**: Audit `src/entry.ts`, `openclaw.mjs` shebang, package.json `bin` field
 - [ ] **Long-running services**: Identify daemon processes, gateway server, TUI main loops
 - [ ] **Scripts**: Catalog all scripts in `scripts/` directory and their runtime assumptions
@@ -79,12 +83,13 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - [ ] **Shell assumptions**: Identify shell-specific code (Windows cmd.exe, bash, POSIX assumptions)
 - [ ] **Environment variable handling**: Check `process.env` usage, dotenv loading, env validation
 - [ ] **Filesystem behavior**: Audit fs operations, path resolution, temp file handling
-- [ ] **Path resolution**: Check import.meta.url, __dirname usage, path module assumptions
+- [ ] **Path resolution**: Check import.meta.url, \_\_dirname usage, path module assumptions
 - [ ] **Timers/streams/buffers**: Identify setTimeout/setInterval, stream APIs, Buffer usage
 - [ ] **HTTP/fetch usage**: Audit undici, fetch, HTTP server usage (express, hono)
 - [ ] **WebSocket behavior**: Check ws library usage, WebSocket server/client code
 
 ### Module and Build Surface
+
 - [ ] **ESM/CJS interop**: Verify `type: "module"` in package.json, check for any .cjs files
 - [ ] **tsconfig assumptions**: Audit `tsconfig.json`, `tsconfig.plugin-sdk.dts.json`, target/lib settings
 - [ ] **Transpilation pipeline**: Review `esbuild.config.mjs`, build targets, external dependencies
@@ -95,6 +100,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - [ ] **Build scripts**: Audit all build-related package.json scripts for runtime assumptions
 
 ### Test Surface
+
 - [ ] **Current runner**: Locate all vitest.config.ts files, understand test runner setup
 - [ ] **Mock APIs**: Identify Node-specific mocks (process, fs, child_process)
 - [ ] **Node-only test helpers**: Find test utilities that assume Node internals
@@ -107,15 +113,17 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - [ ] **Live tests**: Catalog `test:live:*` scripts and their runtime requirements
 
 ### Tooling and Developer Workflow
+
 - [ ] **Local dev commands**: Audit `pnpm dev`, `pnpm start`, `pnpm gateway:dev`, TUI commands
 - [ ] **Debugging workflows**: Check if any debugger configurations assume Node
 - [ ] **Lint/typecheck/build/test separation**: Verify each step works independently
 - [ ] **Precommit/prepush hooks**: Review git hooks, prepare script, prepush:ci
 - [ ] **Release scripts**: Audit release-related scripts, npm publish flows
-- [ ] **Container workflows**: Check Docker-related scripts, build:docker, test:docker:*
+- [ ] **Container workflows**: Check Docker-related scripts, build:docker, test:docker:\*
 - [ ] **Cross-platform development**: Verify Windows/Mac/Linux development workflows
 
 ### Compatibility Surface
+
 - [ ] **Runtime-sensitive packages**: Audit dependencies list for known Bun incompatibilities
 - [ ] **Native dependencies**: Verify sharp, @napi-rs/canvas, node-llama-cpp, @matrix-org/matrix-sdk-crypto-nodejs, @lydell/node-pty
 - [ ] **Postinstall/build scripts**: Check all postinstall scripts in package.json and dependencies
@@ -124,6 +132,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - [ ] **Safe under Bun**: Categorize dependencies as likely safe vs risky under Bun
 
 ### Production and CI/CD Surface
+
 - [ ] **CI matrix strategy**: Determine current CI setup (no .github found - may use external CI)
 - [ ] **Lockstep verification**: Plan for running same tests on both Bun and Node
 - [ ] **Build artifacts**: Verify dist/, openclaw.mjs work under both runtimes
@@ -136,21 +145,21 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 
 ## D. Risk Classification Matrix
 
-| Area | Risk Level | Why | Likely Failure Mode | Evidence to Reduce Uncertainty |
-|------|-----------|-----|---------------------|--------------------------------|
-| **Native dependencies (sharp, canvas, llama-cpp, matrix crypto)** | **DO-NOT-TOUCH-EARLY** | Bun may not support these native modules | Build failures, runtime crashes, missing symbols | Test each native dep under Bun in isolation, check Bun compatibility matrix |
-| **Windows subprocess execution (cmd.exe, .bat/.cmd, npm shims)** | **HIGH** | Bun's child_process may not match Node's Windows behavior exactly | Command execution failures, path resolution issues, shell injection | Port subprocess abstraction layer, run Windows integration tests under Bun |
-| **Plugin loading (jiti, dynamic imports, alias resolution)** | **HIGH** | Bun's module resolution differs from Node's | Plugins fail to load, import errors, alias mismatches | Load test plugins under Bun, verify jiti compatibility |
-| **Test runner (Vitest under Bun vs Node)** | **HIGH** | Bun's test runner may have different mock behavior, timing, isolation | Flaky tests, different coverage, false positives/negatives | Run full test suite under Bun, compare results with Node |
-| **Docker container builds** | **HIGH** | Container base images may not include Bun, runtime detection needed | Containers fail to start, wrong runtime selected | Build containers with Bun, test runtime detection logic |
-| **Extension ecosystem compatibility** | **MEDIUM** | Extensions may assume Node internals | Extensions fail under Bun, missing APIs | Sample extension testing under Bun, document compatibility requirements |
-| **HTTP/fetch behavior (undici vs native fetch)** | **MEDIUM** | Bun's fetch may differ from Node's undici | Network errors, different headers, streaming issues | Compare fetch behavior between runtimes, test network code |
-| **Filesystem semantics** | **MEDIUM** | Bun's fs may have edge case differences | File not found errors, permission issues, race conditions | Filesystem integration tests under Bun |
-| **Build scripts (esbuild, TypeScript compilation)** | **LOW** | esbuild runs under both, TypeScript is runtime-agnostic | Build failures if Bun breaks esbuild | Run full build under Bun, verify output identical |
-| **Lint/typecheck (oxlint, tsc)** | **LOW** | These are build-time tools, runtime-agnostic | Minimal risk | Run under Bun, verify identical results |
-| **Package manager (pnpm)** | **LOW** | pnpm works with both runtimes | Minimal risk | Verify pnpm commands work under Bun |
-| **Environment variable handling** | **LOW** | process.env is standard across runtimes | Minimal risk | Test env loading under Bun |
-| **Timers and event loop** | **MEDIUM** | Bun's event loop may have different timing characteristics | Timing-sensitive tests fail, race conditions | Test timer-heavy code under Bun, compare behavior |
+| Area                                                              | Risk Level             | Why                                                                   | Likely Failure Mode                                                 | Evidence to Reduce Uncertainty                                              |
+| ----------------------------------------------------------------- | ---------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Native dependencies (sharp, canvas, llama-cpp, matrix crypto)** | **DO-NOT-TOUCH-EARLY** | Bun may not support these native modules                              | Build failures, runtime crashes, missing symbols                    | Test each native dep under Bun in isolation, check Bun compatibility matrix |
+| **Windows subprocess execution (cmd.exe, .bat/.cmd, npm shims)**  | **HIGH**               | Bun's child_process may not match Node's Windows behavior exactly     | Command execution failures, path resolution issues, shell injection | Port subprocess abstraction layer, run Windows integration tests under Bun  |
+| **Plugin loading (jiti, dynamic imports, alias resolution)**      | **HIGH**               | Bun's module resolution differs from Node's                           | Plugins fail to load, import errors, alias mismatches               | Load test plugins under Bun, verify jiti compatibility                      |
+| **Test runner (Vitest under Bun vs Node)**                        | **HIGH**               | Bun's test runner may have different mock behavior, timing, isolation | Flaky tests, different coverage, false positives/negatives          | Run full test suite under Bun, compare results with Node                    |
+| **Docker container builds**                                       | **HIGH**               | Container base images may not include Bun, runtime detection needed   | Containers fail to start, wrong runtime selected                    | Build containers with Bun, test runtime detection logic                     |
+| **Extension ecosystem compatibility**                             | **MEDIUM**             | Extensions may assume Node internals                                  | Extensions fail under Bun, missing APIs                             | Sample extension testing under Bun, document compatibility requirements     |
+| **HTTP/fetch behavior (undici vs native fetch)**                  | **MEDIUM**             | Bun's fetch may differ from Node's undici                             | Network errors, different headers, streaming issues                 | Compare fetch behavior between runtimes, test network code                  |
+| **Filesystem semantics**                                          | **MEDIUM**             | Bun's fs may have edge case differences                               | File not found errors, permission issues, race conditions           | Filesystem integration tests under Bun                                      |
+| **Build scripts (esbuild, TypeScript compilation)**               | **LOW**                | esbuild runs under both, TypeScript is runtime-agnostic               | Build failures if Bun breaks esbuild                                | Run full build under Bun, verify output identical                           |
+| **Lint/typecheck (oxlint, tsc)**                                  | **LOW**                | These are build-time tools, runtime-agnostic                          | Minimal risk                                                        | Run under Bun, verify identical results                                     |
+| **Package manager (pnpm)**                                        | **LOW**                | pnpm works with both runtimes                                         | Minimal risk                                                        | Verify pnpm commands work under Bun                                         |
+| **Environment variable handling**                                 | **LOW**                | process.env is standard across runtimes                               | Minimal risk                                                        | Test env loading under Bun                                                  |
+| **Timers and event loop**                                         | **MEDIUM**             | Bun's event loop may have different timing characteristics            | Timing-sensitive tests fail, race conditions                        | Test timer-heavy code under Bun, compare behavior                           |
 
 ---
 
@@ -160,13 +169,15 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 
 **Purpose**: Establish current state, identify blockers, create measurement baseline.
 
-**Scope**: 
+**Scope**:
+
 - Audit only, no code changes
 - Document current runtime assumptions
 - Identify native dependencies and their Bun compatibility
 - Establish test baseline on Node
 
 **Tasks**:
+
 1. Complete current-state audit checklist (Section C)
 2. Catalog all native dependencies and check Bun compatibility matrix
 3. Run full test suite on Node, capture baseline results (pass/fail, coverage, timing)
@@ -179,6 +190,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 10. Create migration tracking document with decision log
 
 **Validation**:
+
 - Audit checklist complete
 - Native dependency compatibility report generated
 - Test baseline saved (results, coverage, timing)
@@ -186,6 +198,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Plugin loading flow documented
 
 **Exit criteria**:
+
 - All audit items completed
 - Native dependency blockers identified and documented
 - Test baseline established and saved
@@ -194,6 +207,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Rollback triggers**: N/A (read-only phase)
 
 **Deliverables**:
+
 - Audit report document
 - Native dependency compatibility matrix
 - Test baseline results (saved in .artifacts/)
@@ -208,6 +222,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Build infrastructure to support dual-path execution and measurement.
 
 **Scope**:
+
 - Add Bun to devDependencies
 - Create runtime detection utilities
 - Add CI matrix for Bun+Node
@@ -215,6 +230,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - No changes to production code
 
 **Tasks**:
+
 1. Add Bun as optional devDependency with version pin
 2. Create `src/shared/runtime-detection.ts` with:
    - `isBun()`, `isNode()`, `getRuntime()`, `getRuntimeVersion()`
@@ -233,6 +249,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 8. Add Bun version to system info output (if exists)
 
 **Validation**:
+
 - Bun installs successfully
 - Runtime detection works correctly
 - Comparison tools can run same command under both runtimes
@@ -240,6 +257,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Env var override works
 
 **Exit criteria**:
+
 - Bun installed and version pinned
 - Runtime detection utilities available and tested
 - Comparison tools working
@@ -247,11 +265,13 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Baseline comparison results captured (Bun vs Node differences documented)
 
 **Rollback triggers**:
+
 - Bun fails to install on any platform
 - Runtime detection produces incorrect results
 - Comparison tools cannot execute under Bun
 
 **Deliverables**:
+
 - Runtime detection module
 - Comparison tools
 - CI matrix configuration (or local equivalent)
@@ -265,12 +285,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Migrate build and tooling scripts to Bun-first with Node fallback.
 
 **Scope**:
+
 - Build scripts (esbuild, TypeScript compilation)
 - Lint/typecheck scripts
 - Code generation scripts
 - NOT: Runtime execution scripts, test scripts, CLI entrypoint
 
 **Tasks**:
+
 1. Create `scripts/run-with-fallback.mjs` helper:
    - Tries Bun first, falls back to Node on failure
    - Logs which runtime is being used
@@ -295,6 +317,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 7. Update documentation to reflect Bun-first with Node fallback
 
 **Validation**:
+
 - Each migrated script produces identical output under Bun and Node
 - Build artifacts are byte-for-byte identical
 - Type definitions identical
@@ -302,6 +325,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - No regression in script execution time
 
 **Exit criteria**:
+
 - All build scripts Bun-first with Node fallback
 - All lint scripts Bun-first with Node fallback
 - All code generation scripts Bun-first with Node fallback
@@ -309,12 +333,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Documentation updated
 
 **Rollback triggers**:
+
 - Any script produces different output under Bun vs Node
 - Build artifacts differ between runtimes
 - Script execution time degrades significantly under Bun
 - Script fails under Bun but works under Node (fallback path exercised)
 
 **Deliverables**:
+
 - Fallback wrapper script
 - Migrated build scripts
 - Migrated lint scripts
@@ -329,11 +355,13 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Migrate test execution to Bun-first while maintaining Node test coverage.
 
 **Scope**:
+
 - Test runner execution (Vitest)
 - NOT: Test code changes, test behavior changes
 - Maintain full Node test coverage in CI
 
 **Tasks**:
+
 1. Audit all vitest.config.ts files for Node-specific assumptions
 2. Create test runner wrapper `scripts/run-test.mjs`:
    - Runs tests under Bun by default
@@ -357,6 +385,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 9. Update test documentation
 
 **Validation**:
+
 - Test suite passes under Bun
 - Test suite passes under Node (parity)
 - Test coverage identical between runtimes
@@ -364,6 +393,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - No tests skipped or excluded under Bun
 
 **Exit criteria**:
+
 - Test runner Bun-first by default
 - All tests pass under Bun
 - All tests pass under Node (CI parity job)
@@ -372,12 +402,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Documentation updated
 
 **Rollback triggers**:
+
 - Tests fail under Bun that pass under Node (and cannot be fixed reasonably)
 - Significant coverage loss under Bun
 - Test execution time degrades significantly under Bun (>2x slower)
 - Flaky tests introduced under Bun
 
 **Deliverables**:
+
 - Test runner wrapper
 - Migrated test scripts
 - Bun/Node test parity validation results
@@ -391,11 +423,13 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Migrate CLI and runtime entrypoints to Bun-first with Node fallback.
 
 **Scope**:
+
 - CLI entrypoint (openclaw.mjs, src/entry.ts)
 - Main runtime execution scripts
 - NOT: Subprocess execution, plugin loading, internal runtime behavior
 
 **Tasks**:
+
 1. Audit `src/entry.ts` for Node-specific assumptions
 2. Audit `openclaw.mjs` shebang and bootstrap
 3. Create runtime-aware entrypoint wrapper:
@@ -423,6 +457,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 9. Update CLI documentation
 
 **Validation**:
+
 - CLI starts successfully under Bun
 - CLI starts successfully under Node
 - CLI behavior identical under both runtimes
@@ -430,6 +465,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - All major CLI commands work under both runtimes
 
 **Exit criteria**:
+
 - CLI entrypoint Bun-first with Node fallback
 - All CLI scripts Bun-first with fallback
 - CLI validated under both runtimes
@@ -437,12 +473,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Documentation updated
 
 **Rollback triggers**:
+
 - CLI fails to start under Bun
 - CLI behavior differs significantly between runtimes
 - Startup time degrades significantly under Bun
 - Major CLI commands fail under Bun
 
 **Deliverables**:
+
 - Runtime-aware entrypoint wrapper
 - Migrated CLI scripts
 - CLI validation results
@@ -456,12 +494,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Create abstraction layer for subprocess execution to hide runtime differences.
 
 **Scope**:
+
 - Subprocess execution abstraction
 - Windows-specific handling
 - npm/npx resolution
 - NOT: Actual migration of subprocess calls (that's next phase)
 
 **Tasks**:
+
 1. Design subprocess abstraction interface:
    - `execCommand(command, args, options)`
    - `spawnProcess(command, args, options)`
@@ -487,6 +527,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 7. Create migration guide for subprocess calls
 
 **Validation**:
+
 - Abstraction layer works under Node
 - Abstraction layer works under Bun
 - Behavior identical between implementations (where possible)
@@ -495,6 +536,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Comprehensive test coverage
 
 **Exit criteria**:
+
 - Subprocess abstraction implemented
 - Tests passing under both runtimes
 - Windows handling validated
@@ -502,12 +544,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Documentation complete
 
 **Rollback triggers**:
+
 - Cannot match Node's Windows behavior under Bun
 - npm/npx resolution cannot be made to work under Bun
 - Abstraction introduces significant overhead
 - Tests show behavioral differences that cannot be reconciled
 
 **Deliverables**:
+
 - Subprocess abstraction interface
 - Node implementation
 - Bun implementation
@@ -522,12 +566,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Migrate all subprocess calls to use abstraction layer.
 
 **Scope**:
+
 - All child_process.exec, spawn, execFile calls
 - Windows-specific subprocess code
 - npm/npx execution
 - NOT: Plugin subprocess handling (separate phase)
 
 **Tasks**:
+
 1. Catalog all subprocess calls in codebase:
    - Direct child_process usage
    - Windows-specific code in src/process/
@@ -548,6 +594,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 7. Run integration tests under both runtimes
 
 **Validation**:
+
 - All subprocess calls use abstraction
 - Tests pass under Node
 - Tests pass under Bun
@@ -555,18 +602,21 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Behavior identical between runtimes
 
 **Exit criteria**:
+
 - All subprocess calls migrated
 - All tests passing under both runtimes
 - Integration tests passing under both runtimes
 - No direct child_process usage remaining (except in abstraction layer)
 
 **Rollback triggers**:
+
 - Tests fail under Bun after migration
 - Integration tests fail under Bun
 - Behavior differs between runtimes
 - Cannot migrate specific call without breaking functionality
 
 **Deliverables**:
+
 - Migrated subprocess calls
 - Updated test results
 - Integration test results
@@ -579,12 +629,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Validate plugin loading works under Bun without changes.
 
 **Scope**:
+
 - Plugin loading system testing
 - jiti compatibility
 - Plugin alias resolution
 - NOT: Changing plugin loading code (unless absolutely necessary)
 
 **Tasks**:
+
 1. Test plugin loading under Bun:
    - Load sample plugins under Bun
    - Verify plugin initialization
@@ -608,6 +660,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 8. Run plugin-related tests under both runtimes
 
 **Validation**:
+
 - Plugins load successfully under Bun
 - Plugin initialization works under Bun
 - Plugin API access works under Bun
@@ -617,6 +670,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Tests pass under both runtimes
 
 **Exit criteria**:
+
 - Plugin loading validated under Bun
 - jiti compatibility confirmed
 - Plugin SDK resolution confirmed
@@ -624,12 +678,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Tests passing under both runtimes
 
 **Rollback triggers**:
+
 - Plugins fail to load under Bun
 - jiti incompatible with Bun
 - Plugin SDK resolution fails under Bun
 - Issues cannot be worked around reasonably
 
 **Deliverables**:
+
 - Plugin loading validation results
 - jiti compatibility report
 - Plugin SDK resolution validation
@@ -643,12 +699,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Update Docker containers to support Bun-first with Node fallback.
 
 **Scope**:
+
 - Dockerfile updates
 - Container runtime detection
 - Container build scripts
 - NOT: Changing container behavior or dependencies
 
 **Tasks**:
+
 1. Audit existing Dockerfiles (if any exist)
 2. Create runtime detection script for containers:
    - Detect if Bun is installed
@@ -668,6 +726,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 9. Update container documentation
 
 **Validation**:
+
 - Containers build successfully with Bun
 - Containers build successfully with Node
 - Containers run successfully with Bun
@@ -676,6 +735,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Behavior identical between runtimes
 
 **Exit criteria**:
+
 - Dockerfiles updated to include Bun
 - Runtime detection in containers
 - Container builds work with both runtimes
@@ -683,12 +743,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Documentation updated
 
 **Rollback triggers**:
+
 - Container builds fail with Bun
 - Container runtime fails with Bun
 - Runtime detection fails in containers
 - Significant size increase in containers
 
 **Deliverables**:
+
 - Updated Dockerfiles
 - Container runtime detection script
 - Updated container build scripts
@@ -702,6 +764,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Establish CI matrix that proves Bun-first + Node-supported behavior.
 
 **Scope**:
+
 - CI configuration
 - Test matrix
 - Parity checks
@@ -709,6 +772,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - NOT: Removing Node support
 
 **Tasks**:
+
 1. Establish CI matrix (if CI exists) or create local validation script:
    - Primary job: All tests under Bun
    - Parity job: All tests under Node
@@ -733,6 +797,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 7. Create on-call runbook for CI failures
 
 **Validation**:
+
 - CI matrix running successfully
 - Bun tests passing
 - Node parity tests passing
@@ -741,6 +806,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Release gates functional
 
 **Exit criteria**:
+
 - CI matrix established and running
 - Bun tests passing consistently
 - Node parity tests passing consistently
@@ -749,6 +815,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Documentation complete
 
 **Rollback triggers**:
+
 - CI matrix cannot be established
 - Bun tests consistently failing
 - Node parity consistently failing
@@ -756,6 +823,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Release gates blocking releases
 
 **Deliverables**:
+
 - CI matrix configuration
 - Performance benchmarks
 - Integration test matrix
@@ -770,12 +838,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Make Bun the default for all workflows while maintaining Node support.
 
 **Scope**:
+
 - Update documentation to reflect Bun-first
 - Update developer onboarding
 - Update README
 - NOT: Removing Node support or Node-compatible paths
 
 **Tasks**:
+
 1. Update README to recommend Bun installation
 2. Update CONTRIBUTING.md with Bun-first instructions
 3. Update developer onboarding docs
@@ -788,6 +858,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 10. Create migration FAQ
 
 **Validation**:
+
 - Documentation updated consistently
 - Bun-first message clear
 - Node support still documented
@@ -795,6 +866,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Troubleshooting section helpful
 
 **Exit criteria**:
+
 - All documentation updated
 - Bun-first status clear
 - Node support documented
@@ -804,6 +876,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Rollback triggers**: N/A (documentation only)
 
 **Deliverables**:
+
 - Updated README
 - Updated CONTRIBUTING.md
 - Updated onboarding docs
@@ -820,12 +893,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 **Purpose**: Remove temporary migration code and optimize for Bun-first.
 
 **Scope**:
+
 - Remove temporary fallback wrappers where no longer needed
 - Remove Node-specific code paths that are proven unnecessary
 - Optimize for Bun performance
 - NOT: Removing Node support or making Node incompatible
 
 **Tasks**:
+
 1. Identify temporary migration code:
    - Fallback wrappers that are never exercised
    - Node-specific code paths that are never hit
@@ -841,12 +916,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 7. Final documentation cleanup
 
 **Validation**:
+
 - Unused code removed
 - Optimizations don't break Node compatibility
 - Tests still pass under both runtimes
 - Node support still functional
 
 **Exit criteria**:
+
 - Temporary migration code removed
 - Unused Node-specific paths removed
 - Bun optimizations in place
@@ -855,11 +932,13 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 - Documentation cleaned up
 
 **Rollback triggers**:
+
 - Removal breaks Node compatibility
 - Optimizations cause regressions
 - Tests fail under Node
 
 **Deliverables**:
+
 - Cleaned codebase
 - Optimized Bun paths
 - Archived migration documents
@@ -872,6 +951,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### Evolution of package.json Scripts
 
 **Current state (Phase 0)**:
+
 ```json
 {
   "scripts": {
@@ -883,6 +963,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ```
 
 **After Phase 2 (Build scripts migrated)**:
+
 ```json
 {
   "scripts": {
@@ -894,6 +975,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ```
 
 **After Phase 3 (Test runner migrated)**:
+
 ```json
 {
   "scripts": {
@@ -904,6 +986,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ```
 
 **After Phase 4 (Runtime entrypoint migrated)**:
+
 ```json
 {
   "scripts": {
@@ -914,6 +997,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ```
 
 **Final state (Phase 10+)**:
+
 ```json
 {
   "scripts": {
@@ -963,18 +1047,21 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### Unit Tests
 
 **Migration approach**:
+
 - Phase 3: Migrate test runner to Bun-first
 - Run all unit tests under Bun by default
 - Maintain Node unit test runs in CI for parity
 - Fix Bun-specific issues with runtime detection, not by excluding tests
 
 **Validation**:
+
 - All unit tests pass under Bun
 - All unit tests pass under Node (CI parity)
 - Coverage identical between runtimes
 - Timing within 20% tolerance
 
 **Where not to force Bun immediately**:
+
 - Tests that mock Node internals in Bun-incompatible ways
 - Tests that require specific Node version features not in Bun
 - Tests for subprocess abstraction (test both implementations separately)
@@ -982,16 +1069,19 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### Integration Tests
 
 **Migration approach**:
+
 - Phase 6: After subprocess abstraction, run integration tests under Bun
 - Maintain Node integration test runs in CI for parity
 - Docker-based integration tests support both runtimes
 
 **Validation**:
+
 - Integration tests pass under Bun
 - Integration tests pass under Node (CI parity)
 - Behavior identical between runtimes
 
 **Where not to force Bun immediately**:
+
 - Tests that spawn Node-specific processes
 - Tests that require Node debugger
 - Tests for native dependency compatibility
@@ -999,74 +1089,88 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### Subprocess Tests
 
 **Migration approach**:
+
 - Phase 5: Test abstraction layer under both runtimes
 - Phase 6: After migration, tests verify abstraction behavior
 - Separate tests for Node and Bun implementations
 
 **Validation**:
+
 - Abstraction layer tests pass under both runtimes
 - Subprocess call tests pass under both runtimes
 - Windows-specific tests pass under Bun (on Windows)
 
 **Where not to force Bun immediately**:
+
 - Tests for Node-specific child_process features not in Bun
 - Tests for Windows cmd.exe behavior that Bun cannot match
 
 ### CLI Tests
 
 **Migration approach**:
+
 - Phase 4: Test CLI under both runtimes
 - Test all major CLI commands under Bun and Node
 - Compare CLI output and behavior
 
 **Validation**:
+
 - CLI tests pass under Bun
 - CLI tests pass under Node (CI parity)
 - CLI behavior identical between runtimes
 
 **Where not to force Bun immediately**:
+
 - Tests for CLI startup performance (benchmark both)
 - Tests for CLI-specific Node features
 
 ### Regression Tests
 
 **Migration approach**:
+
 - Add Bun-specific regression tests for known Bun issues
 - Maintain existing regression tests under Node
 - Use runtime detection to skip Bun-inappropriate tests
 
 **Validation**:
+
 - Regression tests pass under appropriate runtime
 - No regressions introduced by Bun migration
 
 **Where not to force Bun immediately**:
+
 - Regression tests for Node-specific bugs
 - Regression tests for features not yet supported under Bun
 
 ### Compatibility Tests
 
 **Migration approach**:
+
 - Create compatibility test suite that runs under both runtimes
 - Test runtime detection, fallback behavior, cross-runtime compatibility
 - Verify Node support doesn't rot
 
 **Validation**:
+
 - Compatibility tests pass under both runtimes
 - Fallback behavior works correctly
 - Node support verified
 
 **Where not to force Bun immediately**:
+
 - N/A - compatibility tests should run under both runtimes by design
 
 ### Flaky Test Handling
 
 **Strategy**:
+
 - Identify flaky tests under Bun
 - Use runtime detection to skip flaky tests under Bun with documentation
 - Fix flaky tests if possible (timing issues, race conditions)
 - Track flaky tests in migration document
 
 **Process**:
+
 1. Document flaky test with runtime and reason
 2. Skip under Bun with `if (!isBun())` or similar
 3. File issue for fixing the flakiness
@@ -1079,12 +1183,14 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### What Stays as Plain TypeScript Execution
 
 **Reason**: Runtime-agnostic, no bundling needed
+
 - Library exports (`dist/index.js`)
 - Plugin SDK exports (`dist/plugin-sdk/*.js`)
 - Extension code (loaded dynamically by jiti)
 - Type definitions (generated by tsc)
 
 **Implementation**:
+
 - Keep esbuild `bundle: false` for library/plugin-sdk
 - Use TypeScript for type generation only
 - No runtime-specific transpilation needed
@@ -1092,11 +1198,13 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### What Gets Bundled
 
 **Reason**: Startup performance, single-file distribution
+
 - CLI entrypoint (`openclaw.mjs`)
 - Browser bundles (extension web UI)
 - Some extension bundles (already using `bun build`)
 
 **Implementation**:
+
 - Keep esbuild bundling for CLI entry
 - Target `node22` for compatibility with both runtimes
 - Keep external dependencies external (sharp, aws-sdk, etc.)
@@ -1105,10 +1213,12 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### What Gets Compiled Differently for Bun vs Node
 
 **Reason**: Runtime-specific optimizations
+
 - **None initially** - use same build artifacts for both runtimes
 - **Phase 11 consideration**: If Bun-specific optimizations needed, create separate build targets
 
 **Implementation**:
+
 - Phase 0-10: Single build artifact for both runtimes
 - Phase 11: Evaluate if Bun-specific builds provide value
 - If Bun-specific builds: create `dist-bun/` with Bun-optimized output
@@ -1116,11 +1226,13 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### What Remains Node-Oriented for Compatibility
 
 **Reason**: Node-specific features or dependencies
+
 - Native dependency postinstall scripts (must run under Node)
 - Some build scripts that require Node-specific tools
 - Type generation (tsc is runtime-agnostic but ecosystem assumes Node)
 
 **Implementation**:
+
 - Keep native dependency builds under Node
 - Use fallback wrapper for scripts that must run under Node
 - Document why specific scripts require Node
@@ -1128,31 +1240,37 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### Evaluation Criteria
 
 **Startup performance**:
+
 - Benchmark CLI startup under both runtimes
 - If Bun is significantly faster, consider Bun-specific optimizations
 - Target: Bun startup ≤ 1.5x Node startup
 
 **Output compatibility**:
+
 - Build artifacts must run under both Node and Bun
 - Verify with `node dist/index.js` and `bun dist/index.js`
 - Test on multiple Node versions
 
 **Sourcemaps**:
+
 - Ensure sourcemaps work under both runtimes
 - Test debugging under both runtimes
 - Verify stack trace quality
 
 **Debugging**:
+
 - Test debugging under both runtimes
 - Verify breakpoints work
 - Verify inspector protocol compatibility
 
 **Package exports**:
+
 - Ensure package.json exports work under both runtimes
 - Test subpath exports
 - Test conditional exports (if any)
 
 **Executable entrypoints**:
+
 - Verify shebang works under both runtimes
 - Test `./openclaw.mjs` execution
 - Test npm global installation
@@ -1164,6 +1282,7 @@ A full Bun-first migration is **realistic but high-risk** for this codebase. The
 ### Matrix Structure
 
 **Primary matrix** (if CI exists):
+
 ```yaml
 test-matrix:
   - runtime: [bun, node]
@@ -1175,6 +1294,7 @@ test-matrix:
 ```
 
 **Jobs**:
+
 1. **test-bun-primary**: Full test suite under Bun (main validation)
 2. **test-node-parity**: Full test suite under Node (parity check)
 3. **test-node-versions**: Test on Node 20, 22 (version compatibility)
@@ -1202,12 +1322,14 @@ test-matrix:
 ### Parity Checks
 
 **Automated**:
+
 - Compare test results between Bun and Node jobs
 - Fail if test pass/fail status differs
 - Fail if coverage differs by > 1%
 - Compare performance benchmarks (fail if Bun > 1.5x Node)
 
 **Manual**:
+
 - Review parity job results weekly
 - Investigate any persistent differences
 - Document acceptable differences
@@ -1215,27 +1337,32 @@ test-matrix:
 ### Failure Policy
 
 **Bun test failures**:
+
 - Block merge
 - Must fix before proceeding
 - Evaluate if Bun incompatibility or test issue
 
 **Node parity failures**:
+
 - Block merge if regression (previously passing)
 - Allow merge if pre-existing issue (document in tracking)
 - Must fix before Phase 10 (defaulting to Bun-first)
 
 **Performance regressions**:
+
 - Warning if Bun 1.2-1.5x slower
 - Block if Bun > 1.5x slower
 - Investigate and optimize
 
 **Integration test failures**:
+
 - Block merge
 - Must fix regardless of runtime
 
 ### Release Gating
 
 **Pre-release checks**:
+
 1. All Bun tests passing
 2. All Node parity tests passing
 3. Performance within limits
@@ -1244,6 +1371,7 @@ test-matrix:
 6. Docker containers verified under both runtimes
 
 **Release checklist**:
+
 - [ ] Bun test suite passes
 - [ ] Node parity test suite passes
 - [ ] Performance benchmarks green
@@ -1256,17 +1384,20 @@ test-matrix:
 ### Preventing Node Support from Silently Breaking
 
 **Automated guards**:
+
 - Node parity job runs on every commit
 - Failure blocks merge
 - Weekly full Node test suite on all Node versions
 - Monthly Node deprecation scan
 
 **Manual checks**:
+
 - Review Node parity results in release meetings
 - Test release candidates under Node locally
 - Monitor Node-specific issue reports
 
 **Monitoring**:
+
 - Track Node-specific bug reports
 - Track Node version compatibility issues
 - Track deprecation warnings from Node
@@ -1481,6 +1612,7 @@ test-matrix:
 **Parallelizable**: Phase 3 can overlap with Phase 4-5, Phase 7 can overlap with Phase 8
 
 **Success criteria**:
+
 - Bun is default runtime for all workflows
 - Node support remains fully functional
 - CI proves parity on every commit

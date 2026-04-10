@@ -566,7 +566,7 @@ export async function runMemoryFlushIfNeeded(params: {
     canAttemptFlush && entry && (!hasFreshPersistedPromptTokens || shouldReadTranscriptForOutput),
   );
 
-  const {forceFlushTranscriptBytes} = memoryFlushPlan;
+  const { forceFlushTranscriptBytes } = memoryFlushPlan;
   const shouldCheckTranscriptSizeForForcedFlush = Boolean(
     canAttemptFlush &&
     entry &&

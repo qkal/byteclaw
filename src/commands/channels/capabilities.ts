@@ -194,11 +194,13 @@ async function resolveChannelReports(params: {
       includeActions: true,
       pluginId: plugin.id,
     }).actions;
-    const actions = [...new Set<string>([
-	'send',
-	'broadcast',
-	...discoveredActions.map((action) => String(action))
-])];
+    const actions = [
+      ...new Set<string>([
+        "send",
+        "broadcast",
+        ...discoveredActions.map((action) => String(action)),
+      ]),
+    ];
 
     reports.push({
       accountId,

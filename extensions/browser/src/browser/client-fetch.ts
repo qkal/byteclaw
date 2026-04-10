@@ -70,9 +70,9 @@ function withLoopbackBrowserAuthImpl(
     const port =
       parsed.port && Number.parseInt(parsed.port, 10) > 0
         ? Number.parseInt(parsed.port, 10)
-        : (parsed.protocol === "https:"
+        : parsed.protocol === "https:"
           ? 443
-          : 80);
+          : 80;
     const bridgeAuth = deps.getBridgeAuthForPort(port);
     if (bridgeAuth?.token) {
       headers.set("Authorization", `Bearer ${bridgeAuth.token}`);
@@ -273,9 +273,9 @@ export async function fetchBrowserJson<T>(
       method:
         init?.method?.toUpperCase() === "DELETE"
           ? "DELETE"
-          : (init?.method?.toUpperCase() === "POST"
+          : init?.method?.toUpperCase() === "POST"
             ? "POST"
-            : "GET"),
+            : "GET",
       path: parsed.pathname,
       query,
       signal: abortCtrl.signal,

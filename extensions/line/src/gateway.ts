@@ -80,7 +80,7 @@ export const lineGatewayAdapter: NonNullable<ChannelPlugin<ResolvedLineAccount>[
     return { cleared, envToken: Boolean(envToken), loggedOut };
   },
   startAccount: async (ctx) => {
-    const {account} = ctx;
+    const { account } = ctx;
     const token = account.channelAccessToken.trim();
     const secret = account.channelSecret.trim();
     if (!token) {

@@ -15,7 +15,11 @@ import type { ReplyPayload } from "../types.js";
 import type { ReplyDispatcher } from "./reply-dispatcher.js";
 import { buildTestCtx } from "./test-ctx.js";
 
-interface AbortResult { handled: boolean; aborted: boolean; stoppedSubagents?: number }
+interface AbortResult {
+  handled: boolean;
+  aborted: boolean;
+  stoppedSubagents?: number;
+}
 
 const mocks = vi.hoisted(() => ({
   routeReply: vi.fn(async (_params: unknown) => ({ messageId: "mock", ok: true })),
@@ -140,9 +144,9 @@ export function parseGenericThreadSessionInfo(sessionKey: string | undefined) {
   const topicMarker = ":topic:";
   const marker = trimmed.includes(threadMarker)
     ? threadMarker
-    : (trimmed.includes(topicMarker)
+    : trimmed.includes(topicMarker)
       ? topicMarker
-      : undefined);
+      : undefined;
   if (!marker) {
     return { baseSessionKey: trimmed, threadId: undefined };
   }

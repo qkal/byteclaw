@@ -41,7 +41,9 @@ export function isSilentReplyText(
   return getSilentExactRegex(token).test(text);
 }
 
-interface SilentReplyActionEnvelope { action?: unknown }
+interface SilentReplyActionEnvelope {
+  action?: unknown;
+}
 
 export function isSilentReplyEnvelopeText(
   text: string | undefined,

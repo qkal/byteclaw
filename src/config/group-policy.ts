@@ -275,7 +275,7 @@ export function resolveToolsBySender(
     toolsBySender?: GroupToolPolicyBySenderConfig;
   } & GroupToolPolicySender,
 ): GroupToolPolicyConfig | undefined {
-  const {toolsBySender} = params;
+  const { toolsBySender } = params;
   if (!toolsBySender) {
     return undefined;
   }
@@ -379,9 +379,9 @@ export function resolveChannelGroupRequireMention(params: {
   const configMention =
     typeof groupConfig?.requireMention === "boolean"
       ? groupConfig.requireMention
-      : (typeof defaultConfig?.requireMention === "boolean"
+      : typeof defaultConfig?.requireMention === "boolean"
         ? defaultConfig.requireMention
-        : undefined);
+        : undefined;
 
   if (overrideOrder === "before-config" && typeof requireMentionOverride === "boolean") {
     return requireMentionOverride;

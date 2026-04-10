@@ -23,7 +23,7 @@ function toAgentToolResult(params: {
   const normalizedContent: AgentToolResult<unknown>["content"] =
     content.length > 0
       ? content
-      : (params.result.structuredContent !== undefined
+      : params.result.structuredContent !== undefined
         ? [
             {
               text: JSON.stringify(params.result.structuredContent, null, 2),
@@ -43,7 +43,7 @@ function toAgentToolResult(params: {
               ),
               type: "text",
             },
-          ] as AgentToolResult<unknown>["content"]));
+          ] as AgentToolResult<unknown>["content"]);
   const details: Record<string, unknown> = {
     mcpServer: params.serverName,
     mcpTool: params.toolName,

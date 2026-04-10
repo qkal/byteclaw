@@ -69,7 +69,7 @@ async function readLogSlice(params: {
     };
   }
 
-  const {size} = stat;
+  const { size } = stat;
   const maxBytes = clamp(params.maxBytes, 1, MAX_BYTES);
   const limit = clamp(params.limit, 1, MAX_LIMIT);
   let cursor =

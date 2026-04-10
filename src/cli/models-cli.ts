@@ -79,7 +79,7 @@ export function registerModelsCli(program: Command) {
       "--probe-profile <id>",
       "Only probe specific auth profile ids (repeat or comma-separated)",
       (value, previous) => {
-        const next = Array.isArray(previous) ? previous : (previous ? [previous] : []);
+        const next = Array.isArray(previous) ? previous : previous ? [previous] : [];
         next.push(value);
         return next;
       },

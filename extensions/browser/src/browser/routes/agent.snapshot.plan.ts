@@ -35,7 +35,7 @@ export function resolveSnapshotPlan(params: {
   const mode = params.query.mode === "efficient" ? "efficient" : undefined;
   const labels = toBoolean(params.query.labels) ?? undefined;
   const explicitFormat =
-    params.query.format === "aria" ? "aria" : (params.query.format === "ai" ? "ai" : undefined);
+    params.query.format === "aria" ? "aria" : params.query.format === "ai" ? "ai" : undefined;
   const format = resolveDefaultSnapshotFormat({
     explicitFormat,
     hasPlaywright: params.hasPlaywright,
@@ -63,7 +63,7 @@ export function resolveSnapshotPlan(params: {
   const depthRaw = toNumber(params.query.depth);
   const refsModeRaw = toStringOrEmpty(params.query.refs).trim();
   const refsMode: "aria" | "role" | undefined =
-    refsModeRaw === "aria" ? "aria" : (refsModeRaw === "role" ? "role" : undefined);
+    refsModeRaw === "aria" ? "aria" : refsModeRaw === "role" ? "role" : undefined;
   const interactive = interactiveRaw ?? (mode === "efficient" ? true : undefined);
   const compact = compactRaw ?? (mode === "efficient" ? true : undefined);
   const depth =

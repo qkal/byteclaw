@@ -52,9 +52,9 @@ function extractBoomDetails(err: unknown): {
   const statusCode =
     typeof (output as { statusCode?: unknown }).statusCode === "number"
       ? ((output as { statusCode?: unknown }).statusCode as number)
-      : (typeof payload?.statusCode === "number"
+      : typeof payload?.statusCode === "number"
         ? payload.statusCode
-        : undefined);
+        : undefined;
   const error = typeof payload?.error === "string" ? payload.error : undefined;
   const message = typeof payload?.message === "string" ? payload.message : undefined;
   if (!statusCode && !error && !message) {

@@ -282,9 +282,7 @@ describe("modelsListCommand forward-compat", () => {
   describe("availability fallback", () => {
     it("marks synthetic codex gpt-5.4 rows as available when provider auth exists", async () => {
       mocks.listProfilesForProvider.mockImplementation((_: unknown, provider: string) =>
-        provider === "openai-codex"
-          ? ([{ id: "profile-1" }] as Record<string, unknown>[])
-          : [],
+        provider === "openai-codex" ? ([{ id: "profile-1" }] as Record<string, unknown>[]) : [],
       );
       const runtime = createRuntime();
 
@@ -343,9 +341,7 @@ describe("modelsListCommand forward-compat", () => {
         },
       ]);
       mocks.listProfilesForProvider.mockImplementation((_: unknown, provider: string) =>
-        provider === "openai-codex"
-          ? ([{ id: "profile-1" }] as Record<string, unknown>[])
-          : [],
+        provider === "openai-codex" ? ([{ id: "profile-1" }] as Record<string, unknown>[]) : [],
       );
       mocks.resolveModelWithRegistry.mockImplementation(
         ({ provider, modelId }: { provider: string; modelId: string }) => {

@@ -210,7 +210,7 @@ export function createCacheTrace(params: CacheTraceInit): CacheTrace | null {
       event.model = sanitizeDiagnosticPayload(payload.model) as Record<string, unknown>;
     }
 
-    const {messages} = payload;
+    const { messages } = payload;
     if (Array.isArray(messages)) {
       const summary = summarizeMessages(messages);
       event.messageCount = summary.messageCount;

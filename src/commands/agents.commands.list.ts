@@ -38,9 +38,9 @@ function formatSummary(summary: AgentSummary) {
   const identitySource =
     summary.identitySource === "identity"
       ? "IDENTITY.md"
-      : (summary.identitySource === "config"
+      : summary.identitySource === "config"
         ? "config"
-        : null);
+        : null;
 
   const lines = [`- ${header}`];
   if (identityLine) {

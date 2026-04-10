@@ -93,7 +93,7 @@ async function safeChmod(params: {
     await fs.chmod(params.path, params.mode);
     return { kind: "chmod", mode: params.mode, ok: true, path: params.path };
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return {
         kind: "chmod",
@@ -169,7 +169,7 @@ async function safeAclReset(params: {
     await exec(cmd.command, cmd.args);
     return { command: cmd.display, kind: "icacls", ok: true, path: params.path };
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return {
         command: display,
@@ -210,7 +210,7 @@ function setGroupPolicyAllowlist(params: {
     params.changes.push(`channels.${params.channel}.groupPolicy=open -> allowlist`);
   }
 
-  const {accounts} = section;
+  const { accounts } = section;
   if (!accounts || typeof accounts !== "object") {
     return;
   }

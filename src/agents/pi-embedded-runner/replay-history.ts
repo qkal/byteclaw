@@ -40,7 +40,11 @@ import { dropThinkingBlocks } from "./thinking.js";
 
 const INTER_SESSION_PREFIX_BASE = "[Inter-session message]";
 const MODEL_SNAPSHOT_CUSTOM_TYPE = "model-snapshot";
-interface CustomEntryLike { type?: unknown; customType?: unknown; data?: unknown }
+interface CustomEntryLike {
+  type?: unknown;
+  customType?: unknown;
+  data?: unknown;
+}
 interface ModelSnapshotEntry {
   timestamp: number;
   provider?: string;

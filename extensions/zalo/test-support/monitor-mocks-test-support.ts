@@ -47,14 +47,14 @@ const lifecycleMocks = vi.hoisted(
   }),
 );
 
-export const {setWebhookMock} = lifecycleMocks;
-export const {deleteWebhookMock} = lifecycleMocks;
-export const {getWebhookInfoMock} = lifecycleMocks;
-export const {getUpdatesMock} = lifecycleMocks;
-export const {sendChatActionMock} = lifecycleMocks;
-export const {sendMessageMock} = lifecycleMocks;
-export const {sendPhotoMock} = lifecycleMocks;
-export const {getZaloRuntimeMock} = lifecycleMocks;
+export const { setWebhookMock } = lifecycleMocks;
+export const { deleteWebhookMock } = lifecycleMocks;
+export const { getWebhookInfoMock } = lifecycleMocks;
+export const { getUpdatesMock } = lifecycleMocks;
+export const { sendChatActionMock } = lifecycleMocks;
+export const { sendMessageMock } = lifecycleMocks;
+export const { sendPhotoMock } = lifecycleMocks;
+export const { getZaloRuntimeMock } = lifecycleMocks;
 
 function installLifecycleModuleMocks() {
   vi.doMock(apiModuleId, async () => {

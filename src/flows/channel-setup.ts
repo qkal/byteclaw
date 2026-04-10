@@ -269,7 +269,7 @@ export async function setupChannels(
     if (plugin.config.isEnabled) {
       enabled = plugin.config.isEnabled(account, next);
     } else if (typeof (account as { enabled?: boolean })?.enabled === "boolean") {
-      ({ enabled } = (account as { enabled?: boolean }));
+      ({ enabled } = account as { enabled?: boolean });
     }
     return enabled === false ? "disabled" : undefined;
   };

@@ -204,9 +204,9 @@ export function getMinimalServicePathParts(options: MinimalServicePathOptions = 
   const userDirs =
     platform === "linux"
       ? resolveLinuxUserBinDirs(options.home, options.env)
-      : (platform === "darwin"
+      : platform === "darwin"
         ? resolveDarwinUserBinDirs(options.home, options.env)
-        : []);
+        : [];
 
   const add = (dir: string) => {
     if (!dir) {

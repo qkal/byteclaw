@@ -229,7 +229,7 @@ function resolveMentionUserId(match: MatrixMentionCandidate): string | null {
 }
 
 async function resolveMatrixSelfUserId(client: MatrixClient): Promise<string | null> {
-  const {getUserId} = (client as { getUserId?: () => Promise<string> | string });
+  const { getUserId } = client as { getUserId?: () => Promise<string> | string };
   if (typeof getUserId !== "function") {
     return null;
   }

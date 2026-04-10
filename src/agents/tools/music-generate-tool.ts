@@ -175,7 +175,7 @@ function validateMusicGenerationCapabilities(params: {
   durationSeconds?: number;
   format?: MusicGenerationOutputFormat;
 }) {
-  const {provider} = params;
+  const { provider } = params;
   if (!provider) {
     return;
   }
@@ -259,12 +259,12 @@ async function loadReferenceImages(params: {
 
     const resolvedInput = params.sandboxConfig
       ? inputRaw
-      : (inputRaw.startsWith("~")
+      : inputRaw.startsWith("~")
         ? resolveUserPath(inputRaw)
-        : inputRaw);
+        : inputRaw;
     const resolvedPathInfo: { resolved: string; rewrittenFrom?: string } = isDataUrl
       ? { resolved: "" }
-      : (params.sandboxConfig
+      : params.sandboxConfig
         ? await resolveSandboxedBridgeMediaPath({
             inboundFallbackDir: "media/inbound",
             mediaPath: resolvedInput,
@@ -274,7 +274,7 @@ async function loadReferenceImages(params: {
             resolved: resolvedInput.startsWith("file://")
               ? resolvedInput.slice("file://".length)
               : resolvedInput,
-          });
+          };
     const resolvedPath = isDataUrl ? null : resolvedPathInfo.resolved;
     const localRoots = resolveMediaToolLocalRoots(
       params.workspaceDir,
@@ -285,14 +285,14 @@ async function loadReferenceImages(params: {
     );
     const media = isDataUrl
       ? decodeDataUrl(resolvedInput)
-      : (params.sandboxConfig
+      : params.sandboxConfig
         ? await loadWebMedia(resolvedPath ?? resolvedInput, {
             readFile: createSandboxBridgeReadFile({ sandbox: params.sandboxConfig }),
             sandboxValidated: true,
           })
         : await loadWebMedia(resolvedPath ?? resolvedInput, {
             localRoots,
-          }));
+          });
     if (media.kind !== "image") {
       throw new ToolInputError(`Unsupported media type: ${media.kind ?? "unknown"}`);
     }

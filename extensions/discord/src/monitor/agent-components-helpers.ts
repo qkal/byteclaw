@@ -158,7 +158,7 @@ export function resolveAgentComponentRoute(params: {
     parentPeer: params.parentId ? { id: params.parentId, kind: "channel" } : undefined,
     peer: {
       id: params.isDirectMessage ? params.userId : params.channelId,
-      kind: params.isDirectMessage ? "direct" : (params.isGroupDm ? "group" : "channel"),
+      kind: params.isDirectMessage ? "direct" : params.isGroupDm ? "group" : "channel",
     },
   });
 }
@@ -181,7 +181,7 @@ export async function ackComponentInteraction(params: {
 export function resolveDiscordChannelContext(
   interaction: AgentComponentInteraction,
 ): DiscordChannelContext {
-  const {channel} = interaction;
+  const { channel } = interaction;
   const channelName = channel && "name" in channel ? (channel.name as string) : undefined;
   const channelSlug = channelName ? normalizeDiscordSlug(channelName) : "";
   const channelType = channel && "type" in channel ? (channel.type as number) : undefined;
@@ -193,7 +193,7 @@ export function resolveDiscordChannelContext(
   if (isThread && channel && "parentId" in channel) {
     parentId = (channel.parentId as string) ?? undefined;
     if ("parent" in channel) {
-      const {parent} = (channel as { parent?: { name?: string } });
+      const { parent } = channel as { parent?: { name?: string } };
       if (parent?.name) {
         parentName = parent.name;
         parentSlug = normalizeDiscordSlug(parentName);
@@ -216,7 +216,7 @@ export async function resolveComponentInteractionContext(params: {
     return null;
   }
 
-  const {user} = interaction;
+  const { user } = interaction;
   if (!user) {
     logError(`${label}: missing user in interaction`);
     return null;
@@ -237,7 +237,7 @@ export async function resolveComponentInteractionContext(params: {
   const username = formatUsername(user);
   const userId = user.id;
   const rawGuildId = interaction.rawData.guild_id;
-  const {channelType} = resolveDiscordChannelContext(interaction);
+  const { channelType } = resolveDiscordChannelContext(interaction);
   const isGroupDm = channelType === ChannelType.GroupDM;
   const isDirectMessage =
     channelType === ChannelType.DM || (!rawGuildId && !isGroupDm && channelType == null);
@@ -451,7 +451,7 @@ export function parseAgentComponentData(data: ComponentData): { componentId: str
     }
   };
   const componentId =
-    typeof raw === "string" ? decodeSafe(raw) : (typeof raw === "number" ? String(raw) : null);
+    typeof raw === "string" ? decodeSafe(raw) : typeof raw === "number" ? String(raw) : null;
   if (!componentId) {
     return null;
   }
@@ -524,7 +524,8 @@ async function ensureDmComponentAuthorized(params: {
   if (dmPolicy === "pairing") {
     const pairingResult = await createChannelPairingChallengeIssuer({
       channel: "discord",
-      upsertPairingRequest: async ({ id, meta }) => await upsertChannelPairingRequest({
+      upsertPairingRequest: async ({ id, meta }) =>
+        await upsertChannelPairingRequest({
           accountId: ctx.accountId,
           channel: "discord",
           id,
@@ -697,7 +698,7 @@ export function resolveInteractionCustomId(
   if (!("data" in interaction.rawData)) {
     return undefined;
   }
-  const {data} = (interaction.rawData as { data?: { custom_id?: unknown } });
+  const { data } = interaction.rawData as { data?: { custom_id?: unknown } };
   const customId = data?.custom_id;
   if (typeof customId !== "string") {
     return undefined;
@@ -729,7 +730,7 @@ export function resolveModalFieldValues(
   field: DiscordModalEntry["fields"][number],
   interaction: ModalInteraction,
 ): string[] {
-  const {fields} = interaction;
+  const { fields } = interaction;
   const optionLabels = field.options?.map((option) => ({
     label: option.label,
     value: option.value,

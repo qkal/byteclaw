@@ -364,9 +364,9 @@ export function createFeishuReplyDispatcher(params: CreateFeishuReplyDispatcherP
     core.channel.reply.createReplyDispatcherWithTyping({
       deliver: async (payload: ReplyPayload, info) => {
         const reply = resolveSendableOutboundReplyParts(payload);
-        const {text} = reply;
-        const {hasText} = reply;
-        const {hasMedia} = reply;
+        const { text } = reply;
+        const { hasText } = reply;
+        const { hasMedia } = reply;
         const skipTextForDuplicateFinal =
           info?.kind === "final" && hasText && deliveredFinalTexts.has(text);
         const shouldDeliverText = hasText && !skipTextForDuplicateFinal;

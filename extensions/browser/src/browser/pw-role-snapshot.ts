@@ -262,9 +262,9 @@ export function parseRoleRef(raw: string): string | null {
   }
   const normalized = trimmed.startsWith("@")
     ? trimmed.slice(1)
-    : (trimmed.startsWith("ref=")
+    : trimmed.startsWith("ref=")
       ? trimmed.slice(4)
-      : trimmed);
+      : trimmed;
   return /^e\d+$/.test(normalized) ? normalized : null;
 }
 

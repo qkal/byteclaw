@@ -1,6 +1,8 @@
 import type { Block, KnownBlock } from "@slack/web-api";
 
-interface PlainTextObject { text?: string }
+interface PlainTextObject {
+  text?: string;
+}
 
 interface SlackBlockWithFields {
   type?: string;

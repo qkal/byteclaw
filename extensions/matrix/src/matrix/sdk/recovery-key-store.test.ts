@@ -109,7 +109,7 @@ describe("MatrixRecoveryKeyStore", () => {
     );
 
     expect(resolved?.[0]).toBe("SSSS");
-    expect([...resolved?.[1] ?? []]).toEqual([1, 2, 3, 4]);
+    expect([...(resolved?.[1] ?? [])]).toEqual([1, 2, 3, 4]);
   });
 
   it("persists cached secret-storage keys with secure file permissions", () => {

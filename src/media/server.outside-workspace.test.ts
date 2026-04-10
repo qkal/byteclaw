@@ -15,12 +15,12 @@ const mocks = vi.hoisted(() => ({
 let mediaDir = "";
 
 vi.mock("./server.runtime.js", () => ({
-    MEDIA_MAX_BYTES: 5 * 1024 * 1024,
-    cleanOldMedia: mocks.cleanOldMedia,
-    getMediaDir: () => mediaDir,
-    isSafeOpenError: mocks.isSafeOpenError,
-    readFileWithinRoot: mocks.readFileWithinRoot,
-  }));
+  MEDIA_MAX_BYTES: 5 * 1024 * 1024,
+  cleanOldMedia: mocks.cleanOldMedia,
+  getMediaDir: () => mediaDir,
+  isSafeOpenError: mocks.isSafeOpenError,
+  readFileWithinRoot: mocks.readFileWithinRoot,
+}));
 
 let startMediaServer: typeof import("./server.js").startMediaServer;
 let realFetch: typeof import("undici").fetch;
@@ -74,7 +74,7 @@ describe("media server outside-workspace mapping", () => {
     if (!boundServer) {
       return;
     }
-    ({ port } = (boundServer.address() as AddressInfo));
+    ({ port } = boundServer.address() as AddressInfo);
   });
 
   beforeEach(() => {

@@ -132,9 +132,9 @@ async function postFirecrawlJson<T>(
           detail =
             typeof payload.error === "string"
               ? payload.error
-              : (typeof payload.message === "string"
+              : typeof payload.message === "string"
                 ? payload.message
-                : detail);
+                : detail;
         } else {
           const errorBody = await readResponseText(response, { maxBytes: 64_000 });
           if (errorBody.text) {
@@ -318,9 +318,9 @@ export async function runFirecrawlSearch(
         const error =
           typeof payload.error === "string"
             ? payload.error
-            : (typeof payload.message === "string"
+            : typeof payload.message === "string"
               ? payload.message
-              : "unknown error");
+              : "unknown error";
         throw new Error(`Firecrawl Search API error: ${error}`);
       }
       return payload;
@@ -343,7 +343,7 @@ export async function runFirecrawlSearch(
 }
 
 function resolveScrapeData(payload: Record<string, unknown>): Record<string, unknown> {
-  const {data} = payload;
+  const { data } = payload;
   if (data && typeof data === "object") {
     return data as Record<string, unknown>;
   }
@@ -470,9 +470,9 @@ export async function runFirecrawlScrape(
         const detail =
           typeof payload.error === "string"
             ? payload.error
-            : (typeof payload.message === "string"
+            : typeof payload.message === "string"
               ? payload.message
-              : response.statusText);
+              : response.statusText;
         throw new Error(
           `Firecrawl fetch failed (${response.status}): ${wrapWebContent(detail, "web_fetch")}`.trim(),
         );

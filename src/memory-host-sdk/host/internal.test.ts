@@ -119,7 +119,7 @@ describe("listMemoryFiles", () => {
       await fs.symlink(targetFile, linkFile, "file");
       await fs.symlink(targetDir, linkDir, "dir");
     } catch (error) {
-      const {code} = (error as NodeJS.ErrnoException);
+      const { code } = error as NodeJS.ErrnoException;
       if (code === "EPERM" || code === "EACCES") {
         symlinksOk = false;
       } else {
@@ -361,11 +361,11 @@ describe("chunkMarkdown", () => {
       // Every character in the chunk should be a valid string (no lone surrogates).
       for (let i = 0; i < chunk.text.length; i += 1) {
         const code = chunk.text.charCodeAt(i);
-        if (code >= 0xD8_00 && code <= 0xDB_FF) {
+        if (code >= 0xd8_00 && code <= 0xdb_ff) {
           // High surrogate must be followed by a low surrogate
           const next = chunk.text.charCodeAt(i + 1);
-          expect(next).toBeGreaterThanOrEqual(0xDC_00);
-          expect(next).toBeLessThanOrEqual(0xDF_FF);
+          expect(next).toBeGreaterThanOrEqual(0xdc_00);
+          expect(next).toBeLessThanOrEqual(0xdf_ff);
         }
       }
     }

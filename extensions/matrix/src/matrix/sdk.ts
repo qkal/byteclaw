@@ -397,7 +397,7 @@ export class MatrixClient {
     await new Promise<void>((resolve, reject) => {
       let settled = false;
       let timeoutId: ReturnType<typeof setTimeout> | undefined;
-      const {abortSignal} = params;
+      const { abortSignal } = params;
 
       const cleanup = () => {
         this.off("sync.state", onSyncState);
@@ -588,7 +588,7 @@ export class MatrixClient {
     if (!crypto) {
       return;
     }
-    const {cryptoBootstrapper} = this;
+    const { cryptoBootstrapper } = this;
     if (!cryptoBootstrapper) {
       return;
     }
@@ -1126,7 +1126,7 @@ export class MatrixClient {
     }
 
     try {
-      const {cryptoBootstrapper} = this;
+      const { cryptoBootstrapper } = this;
       if (!cryptoBootstrapper) {
         return await fail("Matrix crypto bootstrapper is not available");
       }
@@ -1419,7 +1419,7 @@ export class MatrixClient {
         });
       }
 
-      const {cryptoBootstrapper} = this;
+      const { cryptoBootstrapper } = this;
       if (!cryptoBootstrapper) {
         throw new Error("Matrix crypto bootstrapper is not available");
       }
@@ -1542,7 +1542,7 @@ export class MatrixClient {
   private async resolveCachedRoomKeyBackupDecryptionKey(
     crypto: MatrixCryptoBootstrapApi,
   ): Promise<boolean | null> {
-    const {getSessionBackupPrivateKey} = crypto; // Pragma: allowlist secret
+    const { getSessionBackupPrivateKey } = crypto; // Pragma: allowlist secret
     if (typeof getSessionBackupPrivateKey !== "function") {
       return null;
     }
@@ -1567,7 +1567,7 @@ export class MatrixClient {
     if (decryptionKeyCached !== false) {
       return false;
     }
-    const {loadSessionBackupPrivateKeyFromSecretStorage} = crypto; // Pragma: allowlist secret
+    const { loadSessionBackupPrivateKeyFromSecretStorage } = crypto; // Pragma: allowlist secret
     if (typeof loadSessionBackupPrivateKeyFromSecretStorage !== "function") {
       return false;
     }
@@ -1660,7 +1660,7 @@ export class MatrixClient {
       return;
     }
     this.bridgeRegistered = true;
-    const {decryptBridge} = this;
+    const { decryptBridge } = this;
 
     this.client.on(ClientEvent.Event, (event: MatrixEvent) => {
       const roomId = event.getRoomId();

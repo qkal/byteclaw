@@ -3,8 +3,7 @@ import { normalizeResolvedSecretInputString } from "../../config/types.secrets.j
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { normalizeSecretInput } from "../../utils/normalize-secret-input.js";
 import { withTrustedWebToolsEndpoint } from "./web-guarded-fetch.js";
-import type {
-  CacheEntry} from "./web-shared.js";
+import type { CacheEntry } from "./web-shared.js";
 import {
   DEFAULT_CACHE_TTL_MINUTES,
   DEFAULT_TIMEOUT_SECONDS,

@@ -7,21 +7,21 @@ const {
   normalizeQueryMock,
   resolveGraphTokenMock,
 } = vi.hoisted(() => ({
-    listChannelsForTeamMock: vi.fn(),
-    listTeamsByNameMock: vi.fn(),
-    normalizeQueryMock: vi.fn((value?: string | null) => value?.trim() ?? ""),
-    resolveGraphTokenMock: vi.fn(),
-    searchGraphUsersMock: vi.fn(),
-  }));
+  listChannelsForTeamMock: vi.fn(),
+  listTeamsByNameMock: vi.fn(),
+  normalizeQueryMock: vi.fn((value?: string | null) => value?.trim() ?? ""),
+  resolveGraphTokenMock: vi.fn(),
+  searchGraphUsersMock: vi.fn(),
+}));
 
 vi.mock("./graph-users.js", () => ({ searchGraphUsers: searchGraphUsersMock }));
 
 vi.mock("./graph.js", () => ({
-    listChannelsForTeam: listChannelsForTeamMock,
-    listTeamsByName: listTeamsByNameMock,
-    normalizeQuery: normalizeQueryMock,
-    resolveGraphToken: resolveGraphTokenMock,
-  }));
+  listChannelsForTeam: listChannelsForTeamMock,
+  listTeamsByName: listTeamsByNameMock,
+  normalizeQuery: normalizeQueryMock,
+  resolveGraphToken: resolveGraphTokenMock,
+}));
 
 import { listMSTeamsDirectoryGroupsLive, listMSTeamsDirectoryPeersLive } from "./directory-live.js";
 

@@ -95,7 +95,7 @@ describe("outbound", () => {
     });
 
     it("should chunk long messages at 500 characters", () => {
-      const {chunker} = twitchOutbound;
+      const { chunker } = twitchOutbound;
       if (!chunker) {
         throw new Error("twitch outbound.chunker unavailable");
       }

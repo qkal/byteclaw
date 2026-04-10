@@ -69,7 +69,7 @@ function extractAssistantTexts(messages: unknown[]): string[] {
       if (!entry || typeof entry !== "object") {
         return undefined;
       }
-      const {role} = (entry as { role?: unknown });
+      const { role } = entry as { role?: unknown };
       if (role !== "assistant") {
         return undefined;
       }
@@ -483,7 +483,7 @@ describeLive("gateway live (ACP bind)", () => {
         ...cfg,
         acp: {
           ...cfg.acp,
-          allowedAgents: [...new Set([...cfg.acp?.allowedAgents ?? [], liveAgent])],
+          allowedAgents: [...new Set([...(cfg.acp?.allowedAgents ?? []), liveAgent])],
           backend: "acpx",
           defaultAgent: liveAgent,
           dispatch: {
@@ -622,7 +622,7 @@ describeLive("gateway live (ACP bind)", () => {
           sessionKey: spawnedSessionKey,
         });
         const assistantTexts = extractAssistantTexts(boundHistory.messages);
-        const {lastAssistantText} = boundHistory;
+        const { lastAssistantText } = boundHistory;
         expect(assistantTexts.join("\n\n")).toContain(`ACP-BIND-${followupNonce}`);
         expect(lastAssistantText).toContain(`ACP-BIND-MEMORY-${memoryNonce}`);
         logLiveStep("bound session transcript contains the final marker token");

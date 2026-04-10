@@ -37,9 +37,9 @@ export function normalizeDeliveryContext(context?: DeliveryContext): DeliveryCon
   const threadId =
     typeof context.threadId === "number" && Number.isFinite(context.threadId)
       ? Math.trunc(context.threadId)
-      : (typeof context.threadId === "string"
+      : typeof context.threadId === "string"
         ? normalizeOptionalString(context.threadId)
-        : undefined);
+        : undefined;
   const normalizedThreadId =
     typeof threadId === "string" ? (threadId ? threadId : undefined) : threadId;
   if (!channel && !to && !accountId && normalizedThreadId == null) {
@@ -68,18 +68,18 @@ export function formatConversationTarget(params: {
   const conversationId =
     typeof params.conversationId === "number" && Number.isFinite(params.conversationId)
       ? String(Math.trunc(params.conversationId))
-      : (typeof params.conversationId === "string"
+      : typeof params.conversationId === "string"
         ? normalizeOptionalString(params.conversationId)
-        : undefined);
+        : undefined;
   if (!channel || !conversationId) {
     return undefined;
   }
   const parentConversationId =
     typeof params.parentConversationId === "number" && Number.isFinite(params.parentConversationId)
       ? String(Math.trunc(params.parentConversationId))
-      : (typeof params.parentConversationId === "string"
+      : typeof params.parentConversationId === "string"
         ? normalizeOptionalString(params.parentConversationId)
-        : undefined);
+        : undefined;
   const pluginTarget = normalizeChannelId(channel)
     ? getChannelPlugin(normalizeChannelId(channel)!)?.messaging?.resolveDeliveryTarget?.({
         conversationId,
@@ -104,15 +104,15 @@ export function resolveConversationDeliveryTarget(params: {
   const conversationId =
     typeof params.conversationId === "number" && Number.isFinite(params.conversationId)
       ? String(Math.trunc(params.conversationId))
-      : (typeof params.conversationId === "string"
+      : typeof params.conversationId === "string"
         ? normalizeOptionalString(params.conversationId)
-        : undefined);
+        : undefined;
   const parentConversationId =
     typeof params.parentConversationId === "number" && Number.isFinite(params.parentConversationId)
       ? String(Math.trunc(params.parentConversationId))
-      : (typeof params.parentConversationId === "string"
+      : typeof params.parentConversationId === "string"
         ? normalizeOptionalString(params.parentConversationId)
-        : undefined);
+        : undefined;
   const isThreadChild =
     conversationId && parentConversationId && parentConversationId !== conversationId;
   if (channel && isThreadChild) {

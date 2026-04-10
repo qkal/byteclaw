@@ -19,36 +19,34 @@ const hoisted = vi.hoisted(() => ({
 }));
 
 vi.mock("./channel-actions.runtime.js", async () => ({
-    createActionGate: (actions?: { reactions?: boolean; polls?: boolean }) => (name: string) => {
-      if (name === "reactions") {
-        return actions?.reactions !== false;
-      }
-      if (name === "polls") {
-        return actions?.polls !== false;
-      }
-      return true;
-    },
-    listWhatsAppAccountIds: hoisted.listWhatsAppAccountIds,
-    resolveWhatsAppAccount: hoisted.resolveWhatsAppAccount,
-    resolveWhatsAppReactionLevel: ({
-      cfg,
-      accountId,
-    }: {
-      cfg: OpenClawConfig;
-      accountId?: string;
-    }) => {
-      const accountLevel =
-        accountId == null
-          ? undefined
-          : cfg.channels?.whatsapp?.accounts?.[accountId]?.reactionLevel;
-      const level = accountLevel ?? cfg.channels?.whatsapp?.reactionLevel ?? "minimal";
-      return {
-        level,
-        agentReactionsEnabled: level === "minimal" || level === "extensive",
-        agentReactionGuidance: level === "minimal" || level === "extensive" ? level : undefined,
-      };
-    },
-  }));
+  createActionGate: (actions?: { reactions?: boolean; polls?: boolean }) => (name: string) => {
+    if (name === "reactions") {
+      return actions?.reactions !== false;
+    }
+    if (name === "polls") {
+      return actions?.polls !== false;
+    }
+    return true;
+  },
+  listWhatsAppAccountIds: hoisted.listWhatsAppAccountIds,
+  resolveWhatsAppAccount: hoisted.resolveWhatsAppAccount,
+  resolveWhatsAppReactionLevel: ({
+    cfg,
+    accountId,
+  }: {
+    cfg: OpenClawConfig;
+    accountId?: string;
+  }) => {
+    const accountLevel =
+      accountId == null ? undefined : cfg.channels?.whatsapp?.accounts?.[accountId]?.reactionLevel;
+    const level = accountLevel ?? cfg.channels?.whatsapp?.reactionLevel ?? "minimal";
+    return {
+      level,
+      agentReactionsEnabled: level === "minimal" || level === "extensive",
+      agentReactionGuidance: level === "minimal" || level === "extensive" ? level : undefined,
+    };
+  },
+}));
 
 describe("whatsapp channel action helpers", () => {
   beforeEach(() => {

@@ -3,7 +3,7 @@
  * Provides a pool of worker threads for CPU-intensive tasks
  */
 
-import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+import { Worker, isMainThread, parentPort, workerData } from "worker_threads";
 
 interface WorkerTask<TInput, TOutput> {
   id: string;
@@ -39,9 +39,9 @@ class WorkerPool<TInput, TOutput> {
   async initialize(): Promise<void> {
     for (let i = 0; i < this.options.maxWorkers; i++) {
       const worker = new Worker(this.workerScript);
-      worker.on('message', (result) => this.handleWorkerMessage(worker, result));
-      worker.on('error', (error) => this.handleWorkerError(worker, error));
-      worker.on('exit', (code) => this.handleWorkerExit(worker, code));
+      worker.on("message", (result) => this.handleWorkerMessage(worker, result));
+      worker.on("error", (error) => this.handleWorkerError(worker, error));
+      worker.on("exit", (code) => this.handleWorkerExit(worker, code));
       this.workers.push(worker);
     }
   }
@@ -125,9 +125,9 @@ class WorkerPool<TInput, TOutput> {
     // Restart worker if it crashed
     if (code !== 0 && this.workers.length < this.options.maxWorkers) {
       const newWorker = new Worker(this.workerScript);
-      newWorker.on('message', (result) => this.handleWorkerMessage(newWorker, result));
-      newWorker.on('error', (error) => this.handleWorkerError(newWorker, error));
-      newWorker.on('exit', (exitCode) => this.handleWorkerExit(newWorker, exitCode));
+      newWorker.on("message", (result) => this.handleWorkerMessage(newWorker, result));
+      newWorker.on("error", (error) => this.handleWorkerError(newWorker, error));
+      newWorker.on("exit", (exitCode) => this.handleWorkerExit(newWorker, exitCode));
       this.workers.push(newWorker);
     }
   }
@@ -157,7 +157,7 @@ class WorkerPool<TInput, TOutput> {
 
 // Worker-side code
 if (!isMainThread && parentPort) {
-  parentPort.on('message', async (data: { taskId: string; input: unknown }) => {
+  parentPort.on("message", async (data: { taskId: string; input: unknown }) => {
     try {
       // Import and execute the worker function
       const { processTask } = await import(workerData as string);

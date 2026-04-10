@@ -160,7 +160,9 @@ function resolveInjectedBoundThreadLookupRecord(params: {
   threadBindings: DiscordMessagePreflightParams["threadBindings"];
   threadId: string;
 }): BoundThreadLookupRecordLike | undefined {
-  const {getByThreadId} = (params.threadBindings as { getByThreadId?: (threadId: string) => unknown });
+  const { getByThreadId } = params.threadBindings as {
+    getByThreadId?: (threadId: string) => unknown;
+  };
   if (typeof getByThreadId !== "function") {
     return undefined;
   }
@@ -359,8 +361,8 @@ export async function preflightDiscordMessage(
     return null;
   }
   const logger = getChildLogger({ module: "discord-auto-reply" });
-  let {message} = params.data;
-  const {author} = params.data;
+  let { message } = params.data;
+  const { author } = params.data;
   if (!author) {
     return null;
   }
@@ -375,7 +377,7 @@ export async function preflightDiscordMessage(
 
   const allowBotsSetting = params.discordConfig?.allowBots;
   const allowBotsMode =
-    allowBotsSetting === "mentions" ? "mentions" : (allowBotsSetting === true ? "all" : "off");
+    allowBotsSetting === "mentions" ? "mentions" : allowBotsSetting === true ? "all" : "off";
   if (params.botUserId && author.id === params.botUserId) {
     // Always ignore own messages to prevent self-reply loops
     return null;
@@ -909,7 +911,7 @@ export async function preflightDiscordMessage(
   });
   if (shouldLogVerbose()) {
     logVerbose(
-      `discord: inbound id=${message.id} guild=${params.data.guild_id ?? "dm"} channel=${messageChannelId} mention=${wasMentioned ? "yes" : "no"} type=${isDirectMessage ? "dm" : (isGroupDm ? "group-dm" : "guild")} content=${messageText ? "yes" : "no"}`,
+      `discord: inbound id=${message.id} guild=${params.data.guild_id ?? "dm"} channel=${messageChannelId} mention=${wasMentioned ? "yes" : "no"} type=${isDirectMessage ? "dm" : isGroupDm ? "group-dm" : "guild"} content=${messageText ? "yes" : "no"}`,
     );
   }
 
@@ -968,7 +970,7 @@ export async function preflightDiscordMessage(
       requireMention: Boolean(shouldRequireMention),
     },
   });
-  const {effectiveWasMentioned} = mentionDecision;
+  const { effectiveWasMentioned } = mentionDecision;
   logDebug(
     `[discord-preflight] shouldRequireMention=${shouldRequireMention} baseRequireMention=${shouldRequireMentionByConfig} boundThreadSession=${isBoundThreadSession} mentionDecision.shouldSkip=${mentionDecision.shouldSkip} wasMentioned=${wasMentioned}`,
   );

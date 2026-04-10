@@ -14,7 +14,7 @@ export function makeResponse(status: number, body: unknown): Response {
 }
 
 export function toRequestUrl(input: UsageFetchInput): string {
-  return typeof input === "string" ? input : (input instanceof URL ? input.toString() : input.url);
+  return typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
 }
 
 export function createProviderUsageFetch(

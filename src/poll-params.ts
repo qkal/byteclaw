@@ -48,7 +48,7 @@ export function resolveTelegramPollVisibility(params: {
   if (params.pollAnonymous && params.pollPublic) {
     throw new Error("pollAnonymous and pollPublic are mutually exclusive");
   }
-  return params.pollAnonymous ? true : (params.pollPublic ? false : undefined);
+  return params.pollAnonymous ? true : params.pollPublic ? false : undefined;
 }
 
 export function hasPollCreationParams(params: Record<string, unknown>): boolean {

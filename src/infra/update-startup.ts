@@ -376,7 +376,7 @@ export async function runGatewayUpdateCheck(params: {
 
   const channel = normalizeUpdateChannel(params.cfg.update?.channel) ?? DEFAULT_PACKAGE_CHANNEL;
   const resolved = await resolveNpmChannelTag({ channel, timeoutMs: 2500 });
-  const {tag} = resolved;
+  const { tag } = resolved;
   if (!resolved.version) {
     await writeState(statePath, nextState);
     return;

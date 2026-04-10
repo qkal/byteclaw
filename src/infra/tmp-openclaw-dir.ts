@@ -20,7 +20,9 @@ interface ResolvePreferredOpenClawTmpDirOptions {
   warn?: (message: string) => void;
 }
 
-interface MaybeNodeError { code?: string }
+interface MaybeNodeError {
+  code?: string;
+}
 
 function isNodeErrorWithCode(err: unknown, code: string): err is MaybeNodeError {
   return (

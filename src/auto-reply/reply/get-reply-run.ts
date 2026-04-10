@@ -342,9 +342,9 @@ export async function runPreparedReply(
   const threadHistoryBody = normalizeOptionalString(ctx.ThreadHistoryBody);
   const threadContextNote = threadHistoryBody
     ? `[Thread history - for context]\n${threadHistoryBody}`
-    : (threadStarterBody
+    : threadStarterBody
       ? `[Thread starter - for context]\n${threadStarterBody}`
-      : undefined);
+      : undefined;
   const drainedSystemEventBlocks: string[] = [];
   const rebuildPromptBodies = async (): Promise<{
     prefixedCommandBody: string;
@@ -393,7 +393,7 @@ export async function runPreparedReply(
         })();
   sessionEntry = skillResult.sessionEntry ?? sessionEntry;
   currentSystemSent = skillResult.systemSent;
-  const {skillsSnapshot} = skillResult;
+  const { skillsSnapshot } = skillResult;
   let { prefixedCommandBody, queuedBody } = await rebuildPromptBodies();
   if (!resolvedThinkLevel) {
     resolvedThinkLevel = await modelState.resolveDefaultThinkingLevel();

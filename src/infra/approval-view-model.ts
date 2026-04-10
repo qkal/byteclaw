@@ -112,7 +112,7 @@ function buildPluginMetadata(request: PluginApprovalRequest): ApprovalMetadataVi
   const severity = request.request.severity ?? "warning";
   metadata.push({
     label: "Severity",
-    value: severity === "critical" ? "Critical" : (severity === "info" ? "Info" : "Warning"),
+    value: severity === "critical" ? "Critical" : severity === "info" ? "Info" : "Warning",
   });
   if (request.request.toolName) {
     metadata.push({ label: "Tool", value: request.request.toolName });

@@ -355,9 +355,9 @@ export function describeReplyTarget(msg: Message): TelegramReplyTarget | null {
     const replyBody = (
       typeof replyLike.text === "string"
         ? replyLike.text
-        : (typeof replyLike.caption === "string"
+        : typeof replyLike.caption === "string"
           ? replyLike.caption
-          : "")
+          : ""
     ).trim();
     body = replyBody;
     if (!body) {

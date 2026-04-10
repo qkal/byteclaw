@@ -135,7 +135,7 @@ function getExtensionFromContentType(contentType: string): string | null {
 
 function getExtensionFromUrl(url: string): string | null {
   try {
-    const {pathname} = new URL(url);
+    const { pathname } = new URL(url);
     const match = pathname.match(/\.([a-z0-9]+)$/i);
     return match ? normalizeLowercaseStringOrEmpty(match[1]) : null;
   } catch {

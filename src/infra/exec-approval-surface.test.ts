@@ -97,14 +97,14 @@ describe("resolveExecApprovalInitiatingSurfaceState", () => {
             },
             meta: { label: "Telegram" },
           }
-        : (channel === "discord"
+        : channel === "discord"
           ? {
               approvalCapability: {
                 getActionAvailabilityState: () => ({ kind: "disabled" }),
               },
               meta: { label: "Discord" },
             }
-          : undefined),
+          : undefined,
     );
     const cfg = { channels: {} };
 

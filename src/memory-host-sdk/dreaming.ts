@@ -410,9 +410,9 @@ export function resolveMemoryDreamingConfig(params: {
         ),
         ...(typeof maxAgeDays === "number"
           ? { maxAgeDays }
-          : (typeof DEFAULT_MEMORY_DEEP_DREAMING_MAX_AGE_DAYS === "number"
+          : typeof DEFAULT_MEMORY_DEEP_DREAMING_MAX_AGE_DAYS === "number"
             ? { maxAgeDays: DEFAULT_MEMORY_DEEP_DREAMING_MAX_AGE_DAYS }
-            : {})),
+            : {}),
         sources: normalizeStringArray(
           deep?.sources,
           ["daily", "memory", "sessions", "logs", "recall"] as const,

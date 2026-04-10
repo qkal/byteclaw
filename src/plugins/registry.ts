@@ -145,9 +145,11 @@ interface PluginTypedHookPolicy {
   allowPromptInjection?: boolean;
 }
 
-const constrainLegacyPromptInjectionHook = (
-  handler: PluginHookHandlerMap["before_agent_start"],
-): PluginHookHandlerMap["before_agent_start"] => (event, ctx) => {
+const constrainLegacyPromptInjectionHook =
+  (
+    handler: PluginHookHandlerMap["before_agent_start"],
+  ): PluginHookHandlerMap["before_agent_start"] =>
+  (event, ctx) => {
     const result = handler(event, ctx);
     if (result && typeof result === "object" && "then" in result) {
       return Promise.resolve(result).then((resolved) =>
@@ -438,7 +440,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
       typeof (registration as OpenClawPluginChannelRegistration).plugin === "object"
         ? (registration as OpenClawPluginChannelRegistration)
         : { plugin: registration as ChannelPlugin };
-    const {plugin} = normalized;
+    const { plugin } = normalized;
     const id =
       normalizeOptionalString(plugin?.id) ?? normalizeStringifiedOptionalString(plugin?.id) ?? "";
     if (!id) {
@@ -501,7 +503,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     if (!normalizedProvider) {
       return;
     }
-    const {id} = normalizedProvider;
+    const { id } = normalizedProvider;
     const existing = registry.providers.find((entry) => entry.provider.id === id);
     if (existing) {
       pushDiagnostic({

@@ -243,8 +243,8 @@ async function parseSystemRunPhase(
     return null;
   }
 
-  const {shellPayload} = command;
-  const {commandText} = command;
+  const { shellPayload } = command;
+  const { commandText } = command;
   const approvalPlan =
     opts.params.systemRunPlan === undefined
       ? null
@@ -329,9 +329,9 @@ async function evaluateSystemRunPolicyPhase(
     ask: configuredAsk,
     security: configuredSecurity,
   });
-  const {security} = approvals.agent;
-  const {ask} = approvals.agent;
-  const {autoAllowSkills} = approvals.agent;
+  const { security } = approvals.agent;
+  const { ask } = approvals.agent;
+  const { autoAllowSkills } = approvals.agent;
   const { safeBins, safeBinProfiles, trustedSafeBinDirs } = resolveExecSafeBinRuntimePolicy({
     global: cfg.tools?.exec,
     local: agentExec,

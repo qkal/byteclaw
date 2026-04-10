@@ -156,9 +156,9 @@ export function extractVydraResultUrls(payload: unknown, kind: VydraMediaKind): 
   const preferredKeys =
     kind === "audio"
       ? ["audioUrl", "audioUrls"]
-      : (kind === "image"
+      : kind === "image"
         ? ["imageUrl", "imageUrls"]
-        : ["videoUrl", "videoUrls"]);
+        : ["videoUrl", "videoUrls"];
   const sharedKeys = ["resultUrl", "resultUrls", "outputUrl", "outputUrls", "url", "urls"];
   const recurseKeys = ["output", "outputs", "result", "results", "data", "asset", "assets"];
 
@@ -210,7 +210,7 @@ function inferExtension(kind: VydraMediaKind, mimeType: string): string {
   if (normalized.includes("quicktime")) {
     return "mov";
   }
-  return kind === "image" ? "png" : (kind === "audio" ? "mp3" : "mp4");
+  return kind === "image" ? "png" : kind === "audio" ? "mp3" : "mp4";
 }
 
 export async function downloadVydraAsset(params: {
@@ -228,10 +228,10 @@ export async function downloadVydraAsset(params: {
   await assertOkOrThrowHttpError(response, `Vydra ${params.kind} download failed`);
   const mimeType =
     response.headers.get("content-type")?.trim() ||
-    (params.kind === "image" ? "image/png" : (params.kind === "audio" ? "audio/mpeg" : "video/mp4"));
+    (params.kind === "image" ? "image/png" : params.kind === "audio" ? "audio/mpeg" : "video/mp4");
   const arrayBuffer = await response.arrayBuffer();
   const extension = inferExtension(params.kind, mimeType);
-  const fileStem = params.kind === "image" ? "image" : (params.kind === "audio" ? "audio" : "video");
+  const fileStem = params.kind === "image" ? "image" : params.kind === "audio" ? "audio" : "video";
   return {
     buffer: Buffer.from(arrayBuffer),
     fileName: `${fileStem}-1.${extension}`,

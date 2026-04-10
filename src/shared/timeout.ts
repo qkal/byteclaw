@@ -10,9 +10,12 @@ export interface TimeoutOptions {
 }
 
 export class TimeoutError extends Error {
-  constructor(message: string, public readonly timeoutMs: number) {
+  constructor(
+    message: string,
+    public readonly timeoutMs: number,
+  ) {
     super(message);
-    this.name = 'TimeoutError';
+    this.name = "TimeoutError";
   }
 }
 
@@ -28,13 +31,14 @@ export class TimeoutController {
    */
   start(): Promise<never> {
     if (this.aborted) {
-      return Promise.reject(new TimeoutError('Timeout already aborted', this.options.timeoutMs));
+      return Promise.reject(new TimeoutError("Timeout already aborted", this.options.timeoutMs));
     }
 
     this.timer = new Promise<never>((_, reject) => {
       this.timeoutId = setTimeout(() => {
         this.aborted = true;
-        const message = this.options.errorMessage ?? `Operation timed out after ${this.options.timeoutMs}ms`;
+        const message =
+          this.options.errorMessage ?? `Operation timed out after ${this.options.timeoutMs}ms`;
         this.options.onTimeout?.();
         reject(new TimeoutError(message, this.options.timeoutMs));
       }, this.options.timeoutMs);
@@ -82,10 +86,7 @@ export async function withTimeout<T>(
   const timeoutController = new TimeoutController(options);
 
   try {
-    const result = await Promise.race([
-      fn(controller.signal),
-      timeoutController.start(),
-    ]);
+    const result = await Promise.race([fn(controller.signal), timeoutController.start()]);
     return result as T;
   } finally {
     timeoutController.clear();
@@ -107,7 +108,7 @@ export async function withTimeouts<T>(
   );
 
   return results.map((result, index) => {
-    if (result.status === 'fulfilled') {
+    if (result.status === "fulfilled") {
       return { success: true, result: result.value };
     }
     if (options?.failFast) {

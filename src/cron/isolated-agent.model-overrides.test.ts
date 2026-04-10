@@ -48,15 +48,13 @@ describe("runCronIsolatedAgentTurn model overrides", () => {
       ];
       vi.mocked(loadModelCatalog).mockResolvedValue(deterministicCatalog);
 
-      let {res} = (
-        await runCronTurn(home, {
-          jobPayload: {
-            kind: "agentTurn",
-            message: DEFAULT_MESSAGE,
-            model: "openai/gpt-4.1-mini",
-          },
-        })
-      );
+      let { res } = await runCronTurn(home, {
+        jobPayload: {
+          kind: "agentTurn",
+          message: DEFAULT_MESSAGE,
+          model: "openai/gpt-4.1-mini",
+        },
+      });
       expect(res.status).toBe("ok");
       const directModel = expectEmbeddedProviderModel({
         model: "gpt-4.1-mini",
@@ -64,7 +62,7 @@ describe("runCronIsolatedAgentTurn model overrides", () => {
       });
       directModel.assert();
 
-      ({ res } = (await runTurnWithStoredModelOverride(home, DEFAULT_AGENT_TURN_PAYLOAD)));
+      ({ res } = await runTurnWithStoredModelOverride(home, DEFAULT_AGENT_TURN_PAYLOAD));
       expect(res.status).toBe("ok");
       const storedOverride = expectEmbeddedProviderModel({
         model: "gpt-4.1-mini",
@@ -72,13 +70,11 @@ describe("runCronIsolatedAgentTurn model overrides", () => {
       });
       storedOverride.assert();
 
-      ({ res } = (
-        await runTurnWithStoredModelOverride(home, {
-          kind: "agentTurn",
-          message: DEFAULT_MESSAGE,
-          model: "anthropic/claude-opus-4-6",
-        })
-      ));
+      ({ res } = await runTurnWithStoredModelOverride(home, {
+        kind: "agentTurn",
+        message: DEFAULT_MESSAGE,
+        model: "anthropic/claude-opus-4-6",
+      }));
       expect(res.status).toBe("ok");
       const explicitOverride = expectEmbeddedProviderModel({
         model: "claude-opus-4-6",
@@ -90,7 +86,7 @@ describe("runCronIsolatedAgentTurn model overrides", () => {
 
   it("uses hooks.gmail.model and keeps precedence over stored session override", async () => {
     await withTempHome(async (home) => {
-      let {res} = (await runGmailHookTurn(home));
+      let { res } = await runGmailHookTurn(home);
       expect(res.status).toBe("ok");
       const gmailModel = expectEmbeddedProviderModel({
         model: GMAIL_MODEL.replace("openrouter/", ""),
@@ -99,16 +95,14 @@ describe("runCronIsolatedAgentTurn model overrides", () => {
       gmailModel.assert();
 
       vi.mocked(runEmbeddedPiAgent).mockClear();
-      ({ res } = (
-        await runGmailHookTurn(home, {
-          "agent:main:hook:gmail:msg-1": {
-            modelOverride: "claude-opus-4-6",
-            providerOverride: "anthropic",
-            sessionId: "existing-gmail-session",
-            updatedAt: Date.now(),
-          },
-        })
-      ));
+      ({ res } = await runGmailHookTurn(home, {
+        "agent:main:hook:gmail:msg-1": {
+          modelOverride: "claude-opus-4-6",
+          providerOverride: "anthropic",
+          sessionId: "existing-gmail-session",
+          updatedAt: Date.now(),
+        },
+      }));
       expect(res.status).toBe("ok");
       const storedGmailModel = expectEmbeddedProviderModel({
         model: GMAIL_MODEL.replace("openrouter/", ""),

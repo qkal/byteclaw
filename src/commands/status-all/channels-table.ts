@@ -33,7 +33,7 @@ export function buildStatusChannelsTableRows(params: {
   const formatIssueMessage = params.formatIssueMessage ?? ((message: string) => message);
   return params.rows.map((row) => {
     const issues = channelIssuesByChannel.get(row.id) ?? [];
-    const effectiveState = row.state === "off" ? "off" : (issues.length > 0 ? "warn" : row.state);
+    const effectiveState = row.state === "off" ? "off" : issues.length > 0 ? "warn" : row.state;
     const issueSuffix =
       issues.length > 0
         ? ` · ${params.warn(`gateway: ${formatIssueMessage(issues[0]?.message ?? "issue")}`)}`

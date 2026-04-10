@@ -384,9 +384,9 @@ function convertGoogleMessages(model: GoogleTransportModel, context: Context) {
         : [];
       const responseValue = textResult
         ? sanitizeTransportPayloadText(textResult)
-        : (imageContent.length > 0
+        : imageContent.length > 0
           ? "(see attached image)"
-          : "");
+          : "";
       const imageParts = imageContent.map((imageBlock) => ({
         inlineData: {
           data: imageBlock.data,

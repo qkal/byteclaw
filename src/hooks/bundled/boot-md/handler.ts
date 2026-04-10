@@ -16,7 +16,7 @@ const runBootChecklist: HookHandler = async (event) => {
     return;
   }
 
-  const {cfg} = event.context;
+  const { cfg } = event.context;
   const deps = event.context.deps ?? createDefaultDeps();
   const agentIds = listAgentIds(cfg);
 

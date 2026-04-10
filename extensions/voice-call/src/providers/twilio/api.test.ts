@@ -9,7 +9,9 @@ describe("twilioApiRequest", () => {
   });
 
   it("posts form bodies with basic auth and parses json", async () => {
-    globalThis.fetch = vi.fn(async () => new Response(JSON.stringify({ sid: "CA123" }), { status: 200 })) as unknown as typeof fetch;
+    globalThis.fetch = vi.fn(
+      async () => new Response(JSON.stringify({ sid: "CA123" }), { status: 200 }),
+    ) as unknown as typeof fetch;
 
     await expect(
       twilioApiRequest({

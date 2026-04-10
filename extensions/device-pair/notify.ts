@@ -101,9 +101,9 @@ function normalizeNotifyState(raw: unknown): NotifyStateFile {
     const messageThreadId =
       typeof record.messageThreadId === "string"
         ? normalizeOptionalString(record.messageThreadId) || undefined
-        : (typeof record.messageThreadId === "number" && Number.isFinite(record.messageThreadId)
+        : typeof record.messageThreadId === "number" && Number.isFinite(record.messageThreadId)
           ? Math.trunc(record.messageThreadId)
-          : undefined);
+          : undefined;
     const mode = record.mode === "once" ? "once" : "persistent";
     const addedAtMs =
       typeof record.addedAtMs === "number" && Number.isFinite(record.addedAtMs)

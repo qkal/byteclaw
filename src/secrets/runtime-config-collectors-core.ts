@@ -135,19 +135,19 @@ function collectAgentMemorySearchAssignments(params: {
     if (memorySearch?.enabled === false) {
       continue;
     }
-    if (!memorySearch || ! Object.hasOwn(memorySearch, "remote")) {
+    if (!memorySearch || !Object.hasOwn(memorySearch, "remote")) {
       hasEnabledAgentWithoutOverride = true;
       continue;
     }
     const remote = isRecord(memorySearch.remote) ? memorySearch.remote : undefined;
-    if (!remote || ! Object.hasOwn(remote, "apiKey")) {
+    if (!remote || !Object.hasOwn(remote, "apiKey")) {
       hasEnabledAgentWithoutOverride = true;
       continue;
     }
   }
 
   if (defaultsMemorySearch && isRecord(defaultsMemorySearch.remote)) {
-    const {remote} = defaultsMemorySearch;
+    const { remote } = defaultsMemorySearch;
     collectSecretInputAssignment({
       active: defaultsEnabled && (hasEnabledAgentWithoutOverride || list.length === 0),
       apply: (value) => {
@@ -173,7 +173,7 @@ function collectAgentMemorySearchAssignments(params: {
       return;
     }
     const remote = isRecord(memorySearch.remote) ? memorySearch.remote : undefined;
-    if (!remote || ! Object.hasOwn(remote, "apiKey")) {
+    if (!remote || !Object.hasOwn(remote, "apiKey")) {
       return;
     }
     const enabled = rawAgent.enabled !== false && memorySearch.enabled !== false;
@@ -211,7 +211,7 @@ function collectTalkAssignments(params: {
     path: "talk.apiKey",
     value: talk.apiKey,
   });
-  const {providers} = talk;
+  const { providers } = talk;
   if (!isRecord(providers)) {
     return;
   }

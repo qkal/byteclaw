@@ -454,9 +454,9 @@ async function dispatchDiscordComponentEvent(params: {
     ConversationLabel: fromLabel,
     From: interactionCtx.isDirectMessage
       ? `discord:${interactionCtx.userId}`
-      : (interactionCtx.isGroupDm
+      : interactionCtx.isGroupDm
         ? `discord:group:${interactionCtx.channelId}`
-        : `discord:channel:${interactionCtx.channelId}`),
+        : `discord:channel:${interactionCtx.channelId}`,
     GroupChannel: groupChannel,
     GroupSpace: guildInfo?.id ?? guildInfo?.slug ?? interactionCtx.rawGuildId ?? undefined,
     GroupSubject: groupSubject,

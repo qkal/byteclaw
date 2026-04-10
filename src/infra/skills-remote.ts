@@ -335,9 +335,9 @@ export function getRemoteSkillEligibility(options?: {
   const note =
     options?.advertiseExecNode === false
       ? undefined
-      : (labels.length > 0
+      : labels.length > 0
         ? `Remote macOS node available (${labels.join(", ")}). Run macOS-only skills via exec host=node on that node.`
-        : "Remote macOS node available. Run macOS-only skills via exec host=node on that node.");
+        : "Remote macOS node available. Run macOS-only skills via exec host=node on that node.";
   return {
     hasAnyBin: (required) => required.some((bin) => bins.has(bin)),
     hasBin: (bin) => bins.has(bin),

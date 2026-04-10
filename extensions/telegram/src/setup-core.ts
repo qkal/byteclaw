@@ -117,7 +117,7 @@ export async function promptTelegramAllowFromForAccount(params: {
 
 export const telegramSetupAdapter: ChannelSetupAdapter = createEnvPatchedAccountSetupAdapter({
   buildPatch: (input) =>
-    input.tokenFile ? { tokenFile: input.tokenFile } : (input.token ? { botToken: input.token } : {}),
+    input.tokenFile ? { tokenFile: input.tokenFile } : input.token ? { botToken: input.token } : {},
   channelKey: channel,
   defaultAccountOnlyEnvError: "TELEGRAM_BOT_TOKEN can only be used for the default account.",
   hasCredentials: (input) => Boolean(input.token || input.tokenFile),

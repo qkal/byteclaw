@@ -26,7 +26,9 @@ async function resolveMatrixSelfUserId(
   try {
     return (await client.getUserId()) ?? null;
   } catch (error) {
-    logVerboseMessage(`matrix: failed resolving self user id for decrypt warning: ${String(error)}`);
+    logVerboseMessage(
+      `matrix: failed resolving self user id for decrypt warning: ${String(error)}`,
+    );
     return null;
   }
 }

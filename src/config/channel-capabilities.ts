@@ -26,13 +26,13 @@ function resolveAccountCapabilities(params: {
   };
   accountId?: string | null;
 }): string[] | undefined {
-  const {cfg} = params;
+  const { cfg } = params;
   if (!cfg) {
     return undefined;
   }
   const normalizedAccountId = normalizeAccountId(params.accountId);
 
-  const {accounts} = cfg;
+  const { accounts } = cfg;
   if (accounts && typeof accounts === "object") {
     const match = resolveAccountEntry(accounts, normalizedAccountId);
     if (match) {
@@ -48,7 +48,7 @@ export function resolveChannelCapabilities(params: {
   channel?: string | null;
   accountId?: string | null;
 }): string[] | undefined {
-  const {cfg} = params;
+  const { cfg } = params;
   const channel = normalizeChannelId(params.channel);
   if (!cfg || !channel) {
     return undefined;

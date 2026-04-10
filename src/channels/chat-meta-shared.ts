@@ -66,7 +66,7 @@ export function buildChatChannelMetaById(): Record<ChatChannelId, ChatChannelMet
   const entries = new Map<ChatChannelId, ChatChannelMeta>();
 
   for (const entry of listChannelCatalogEntries({ origin: "bundled" })) {
-    const {channel} = entry;
+    const { channel } = entry;
     if (!channel) {
       continue;
     }

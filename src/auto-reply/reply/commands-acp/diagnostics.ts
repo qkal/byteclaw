@@ -137,7 +137,7 @@ function formatAcpSessionLine(params: {
   currentSessionKey?: string;
   threadId?: string;
 }): string {
-  const {acp} = params.entry;
+  const { acp } = params.entry;
   if (!acp) {
     return "";
   }

@@ -162,9 +162,9 @@ describe("brave web search provider", () => {
   it("falls back unsupported country values before calling Brave", async () => {
     vi.stubEnv("BRAVE_API_KEY", "test-key");
     const mockFetch = vi.fn(async (_input?: unknown, _init?: unknown) => ({
-        json: async () => ({ web: { results: [] } }),
-        ok: true,
-      }));
+      json: async () => ({ web: { results: [] } }),
+      ok: true,
+    }));
     global.fetch = mockFetch as typeof global.fetch;
 
     const provider = createBraveWebSearchProvider();

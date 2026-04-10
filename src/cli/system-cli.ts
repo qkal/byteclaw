@@ -79,9 +79,13 @@ export function registerSystemCli(program: Command) {
       .description("Show the last heartbeat event")
       .option("--json", "Output JSON", false),
   ).action(async (opts: SystemGatewayOpts) => {
-    await runSystemGatewayCommand(opts, async () => await callGatewayFromCli("last-heartbeat", opts, undefined, {
-        expectFinal: false,
-      }));
+    await runSystemGatewayCommand(
+      opts,
+      async () =>
+        await callGatewayFromCli("last-heartbeat", opts, undefined, {
+          expectFinal: false,
+        }),
+    );
   });
 
   addGatewayClientOptions(
@@ -90,12 +94,11 @@ export function registerSystemCli(program: Command) {
       .description("Enable heartbeats")
       .option("--json", "Output JSON", false),
   ).action(async (opts: SystemGatewayOpts) => {
-    await runSystemGatewayCommand(opts, async () => await callGatewayFromCli(
-        "set-heartbeats",
-        opts,
-        { enabled: true },
-        { expectFinal: false },
-      ));
+    await runSystemGatewayCommand(
+      opts,
+      async () =>
+        await callGatewayFromCli("set-heartbeats", opts, { enabled: true }, { expectFinal: false }),
+    );
   });
 
   addGatewayClientOptions(
@@ -104,12 +107,16 @@ export function registerSystemCli(program: Command) {
       .description("Disable heartbeats")
       .option("--json", "Output JSON", false),
   ).action(async (opts: SystemGatewayOpts) => {
-    await runSystemGatewayCommand(opts, async () => await callGatewayFromCli(
-        "set-heartbeats",
-        opts,
-        { enabled: false },
-        { expectFinal: false },
-      ));
+    await runSystemGatewayCommand(
+      opts,
+      async () =>
+        await callGatewayFromCli(
+          "set-heartbeats",
+          opts,
+          { enabled: false },
+          { expectFinal: false },
+        ),
+    );
   });
 
   addGatewayClientOptions(
@@ -118,8 +125,12 @@ export function registerSystemCli(program: Command) {
       .description("List system presence entries")
       .option("--json", "Output JSON", false),
   ).action(async (opts: SystemGatewayOpts) => {
-    await runSystemGatewayCommand(opts, async () => await callGatewayFromCli("system-presence", opts, undefined, {
-        expectFinal: false,
-      }));
+    await runSystemGatewayCommand(
+      opts,
+      async () =>
+        await callGatewayFromCli("system-presence", opts, undefined, {
+          expectFinal: false,
+        }),
+    );
   });
 }

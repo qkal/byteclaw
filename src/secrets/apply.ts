@@ -162,7 +162,7 @@ function applyProviderPlanMutations(params: {
   let changed = false;
 
   for (const providerAlias of params.deletes ?? []) {
-    if (! Object.hasOwn(currentProviders, providerAlias)) {
+    if (!Object.hasOwn(currentProviders, providerAlias)) {
       continue;
     }
     delete currentProviders[providerAlias];
@@ -330,7 +330,7 @@ function applyConfigTargetMutations(params: {
       if (isNonEmptyString(previous)) {
         scrubbedValues.add(previous.trim());
       }
-      const {refPathSegments} = resolved;
+      const { refPathSegments } = resolved;
       if (!refPathSegments) {
         throw new Error(`Missing sibling ref path for target ${target.type}.`);
       }
@@ -563,7 +563,7 @@ function applyAuthProfileTargetMutation(params: {
     if (isNonEmptyString(previous)) {
       params.scrubbedValues.add(previous.trim());
     }
-    const {refPathSegments} = params.resolved;
+    const { refPathSegments } = params.resolved;
     if (!refPathSegments) {
       throw new Error(`Missing sibling ref path for auth-profiles target ${params.target.path}.`);
     }

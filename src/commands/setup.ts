@@ -35,7 +35,7 @@ export async function setupCommand(
       : undefined;
 
   const io = createConfigIO();
-  const {configPath} = io;
+  const { configPath } = io;
   const existingRaw = await readConfigFileRaw(configPath);
   const cfg = existingRaw.parsed;
   const defaults = cfg.agents?.defaults ?? {};

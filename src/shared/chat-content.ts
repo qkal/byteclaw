@@ -57,7 +57,7 @@ export function extractTextFromChatContent(
     if ((block as { type?: unknown }).type !== "text") {
       continue;
     }
-    const {text} = (block as { text?: unknown });
+    const { text } = block as { text?: unknown };
     const value = sanitize(text);
     if (value.trim()) {
       chunks.push(value);

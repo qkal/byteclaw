@@ -14,17 +14,20 @@ describe("matrix device actions", () => {
   });
 
   it("lists own devices on a started client", async () => {
-    withStartedActionClientMock.mockImplementation(async (_opts, run) => await run({
-        listOwnDevices: vi.fn(async () => [
-          {
-            current: true,
-            deviceId: "A7hWrQ70ea",
-            displayName: "OpenClaw Gateway",
-            lastSeenIp: null,
-            lastSeenTs: null,
-          },
-        ]),
-      }));
+    withStartedActionClientMock.mockImplementation(
+      async (_opts, run) =>
+        await run({
+          listOwnDevices: vi.fn(async () => [
+            {
+              current: true,
+              deviceId: "A7hWrQ70ea",
+              displayName: "OpenClaw Gateway",
+              lastSeenIp: null,
+              lastSeenTs: null,
+            },
+          ]),
+        }),
+    );
 
     const result = await listMatrixOwnDevices({ accountId: "poe" });
 
@@ -54,46 +57,49 @@ describe("matrix device actions", () => {
         },
       ],
     }));
-    withStartedActionClientMock.mockImplementation(async (_opts, run) => await run({
-        deleteOwnDevices,
-        listOwnDevices: vi.fn(async () => [
-          {
-            deviceId: "du314Zpw3A",
-            displayName: "OpenClaw Gateway",
-            lastSeenIp: null,
-            lastSeenTs: null,
-            current: true,
-          },
-          {
-            deviceId: "BritdXC6iL",
-            displayName: "OpenClaw Gateway",
-            lastSeenIp: null,
-            lastSeenTs: null,
-            current: false,
-          },
-          {
-            deviceId: "G6NJU9cTgs",
-            displayName: "OpenClaw Debug",
-            lastSeenIp: null,
-            lastSeenTs: null,
-            current: false,
-          },
-          {
-            deviceId: "My3T0hkTE0",
-            displayName: "OpenClaw Gateway",
-            lastSeenIp: null,
-            lastSeenTs: null,
-            current: false,
-          },
-          {
-            deviceId: "phone123",
-            displayName: "Element iPhone",
-            lastSeenIp: null,
-            lastSeenTs: null,
-            current: false,
-          },
-        ]),
-      }));
+    withStartedActionClientMock.mockImplementation(
+      async (_opts, run) =>
+        await run({
+          deleteOwnDevices,
+          listOwnDevices: vi.fn(async () => [
+            {
+              deviceId: "du314Zpw3A",
+              displayName: "OpenClaw Gateway",
+              lastSeenIp: null,
+              lastSeenTs: null,
+              current: true,
+            },
+            {
+              deviceId: "BritdXC6iL",
+              displayName: "OpenClaw Gateway",
+              lastSeenIp: null,
+              lastSeenTs: null,
+              current: false,
+            },
+            {
+              deviceId: "G6NJU9cTgs",
+              displayName: "OpenClaw Debug",
+              lastSeenIp: null,
+              lastSeenTs: null,
+              current: false,
+            },
+            {
+              deviceId: "My3T0hkTE0",
+              displayName: "OpenClaw Gateway",
+              lastSeenIp: null,
+              lastSeenTs: null,
+              current: false,
+            },
+            {
+              deviceId: "phone123",
+              displayName: "Element iPhone",
+              lastSeenIp: null,
+              lastSeenTs: null,
+              current: false,
+            },
+          ]),
+        }),
+    );
 
     const result = await pruneMatrixStaleGatewayDevices({ accountId: "poe" });
 

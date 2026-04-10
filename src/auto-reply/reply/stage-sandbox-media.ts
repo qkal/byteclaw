@@ -157,9 +157,9 @@ function resolveRawPaths(ctx: MsgContext): string[] {
   const pathsFromArray = Array.isArray(ctx.MediaPaths) ? ctx.MediaPaths : undefined;
   return pathsFromArray && pathsFromArray.length > 0
     ? pathsFromArray
-    : (normalizeOptionalString(ctx.MediaPath)
+    : normalizeOptionalString(ctx.MediaPath)
       ? [normalizeOptionalString(ctx.MediaPath)!]
-      : []);
+      : [];
 }
 
 function resolveAbsolutePath(value: string): string | null {

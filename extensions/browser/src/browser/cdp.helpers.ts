@@ -22,9 +22,9 @@ export function parseBrowserHttpUrl(raw: string, label: string) {
   const port =
     parsed.port && Number.parseInt(parsed.port, 10) > 0
       ? Number.parseInt(parsed.port, 10)
-      : (isSecure
+      : isSecure
         ? 443
-        : 80);
+        : 80;
 
   if (Number.isNaN(port) || port <= 0 || port > 65_535) {
     throw new Error(`${label} has invalid port: ${parsed.port}`);

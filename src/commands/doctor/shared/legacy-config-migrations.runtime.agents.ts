@@ -129,7 +129,7 @@ function migrateLegacySandboxPerSession(
   pathLabel: string,
   changes: string[],
 ): void {
-  if (! Object.hasOwn(sandbox, "perSession")) {
+  if (!Object.hasOwn(sandbox, "perSession")) {
     return;
   }
   const rawPerSession = sandbox.perSession;

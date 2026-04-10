@@ -71,10 +71,14 @@ function mergeSsrFPolicies(...policies: (SsrFPolicy | undefined)[]): SsrFPolicy 
       merged.allowRfc2544BenchmarkRange = true;
     }
     if (policy.allowedHostnames?.length) {
-      merged.allowedHostnames = [...new Set([...merged.allowedHostnames ?? [], ...policy.allowedHostnames])];
+      merged.allowedHostnames = [
+        ...new Set([...(merged.allowedHostnames ?? []), ...policy.allowedHostnames]),
+      ];
     }
     if (policy.hostnameAllowlist?.length) {
-      merged.hostnameAllowlist = [...new Set([...merged.hostnameAllowlist ?? [], ...policy.hostnameAllowlist])];
+      merged.hostnameAllowlist = [
+        ...new Set([...(merged.hostnameAllowlist ?? []), ...policy.hostnameAllowlist]),
+      ];
     }
   }
   return Object.keys(merged).length > 0 ? merged : undefined;
@@ -148,7 +152,7 @@ function mapResolutionToEdge(resolution: "1K" | "2K" | "4K" | undefined): number
   if (!resolution) {
     return undefined;
   }
-  return resolution === "4K" ? 4096 : (resolution === "2K" ? 2048 : 1024);
+  return resolution === "4K" ? 4096 : resolution === "2K" ? 2048 : 1024;
 }
 
 function aspectRatioToEnum(aspectRatio: string | undefined): string | undefined {

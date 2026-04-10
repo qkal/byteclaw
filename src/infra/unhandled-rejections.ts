@@ -144,7 +144,7 @@ function extractErrorCodeOrErrno(err: unknown): string | undefined {
   if (!err || typeof err !== "object") {
     return undefined;
   }
-  const {errno} = (err as { errno?: unknown });
+  const { errno } = err as { errno?: unknown };
   if (typeof errno === "string" && errno.trim()) {
     return errno.trim().toUpperCase();
   }

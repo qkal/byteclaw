@@ -530,7 +530,7 @@ export function isSecureWebSocketUrl(
   // Treat those aliases the same way here so loopback cron announce delivery
   // And TLS-backed https endpoints follow the same security policy.
   const protocol =
-    parsed.protocol === "https:" ? "wss:" : (parsed.protocol === "http:" ? "ws:" : parsed.protocol);
+    parsed.protocol === "https:" ? "wss:" : parsed.protocol === "http:" ? "ws:" : parsed.protocol;
 
   if (protocol === "wss:") {
     return true;

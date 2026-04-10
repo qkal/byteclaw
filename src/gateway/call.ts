@@ -125,9 +125,9 @@ function loadGatewayConfig(): OpenClawConfig {
   const loadConfigFn =
     typeof gatewayCallDeps.loadConfig === "function"
       ? gatewayCallDeps.loadConfig
-      : (typeof defaultGatewayCallDeps.loadConfig === "function"
+      : typeof defaultGatewayCallDeps.loadConfig === "function"
         ? defaultGatewayCallDeps.loadConfig
-        : loadConfigFromIo);
+        : loadConfigFromIo;
   return loadConfigFn();
 }
 
@@ -308,7 +308,7 @@ function resolveGatewayCallContext(opts: CallGatewayBaseOptions): ResolvedGatewa
     ? undefined
     : trimToUndefined(process.env.OPENCLAW_GATEWAY_URL);
   const urlOverride = cliUrlOverride ?? envUrlOverride;
-  const urlOverrideSource = cliUrlOverride ? "cli" : (envUrlOverride ? "env" : undefined);
+  const urlOverrideSource = cliUrlOverride ? "cli" : envUrlOverride ? "env" : undefined;
   const canSkipConfigLoad = canSkipGatewayConfigLoad({
     config: opts.config,
     explicitAuth,
@@ -570,7 +570,7 @@ async function resolveGatewayCredentialsFromConfigWithSecretInputs(params: {
       if (!(error instanceof GatewaySecretRefUnavailableError)) {
         throw error;
       }
-      const {path} = error;
+      const { path } = error;
       if (!isSupportedGatewaySecretInputPath(path) || resolvedPaths.has(path)) {
         throw error;
       }
@@ -606,7 +606,7 @@ export async function resolveGatewayCredentialsWithSecretInputs(params: {
   remoteTokenFallback?: GatewayRemoteCredentialFallback;
   remotePasswordFallback?: GatewayRemoteCredentialFallback;
 }): Promise<{ token?: string; password?: string }> {
-  const {modeOverride} = params;
+  const { modeOverride } = params;
   const isRemoteMode = modeOverride
     ? modeOverride === "remote"
     : params.config.gateway?.mode === "remote";
@@ -676,7 +676,7 @@ function formatGatewayCloseError(
 ): string {
   const reasonText = normalizeOptionalString(reason) || "no close reason";
   const hint =
-    code === 1006 ? "abnormal closure (no close frame)" : (code === 1000 ? "normal closure" : "");
+    code === 1006 ? "abnormal closure (no close frame)" : code === 1000 ? "normal closure" : "";
   const suffix = hint ? ` ${hint}` : "";
   return `gateway closed (${code}${suffix}): ${reasonText}\n${connectionDetails.message}`;
 }
@@ -829,7 +829,7 @@ async function callGatewayWithScopes<T = Record<string, unknown>>(
     urlSource: context.urlOverrideSource,
     ...(opts.configPath ? { configPath: opts.configPath } : {}),
   });
-  const {url} = connectionDetails;
+  const { url } = connectionDetails;
   const tlsFingerprint = await resolveGatewayTlsFingerprint({ context, opts, url });
   const { token, password } = resolvedCredentials;
   return await executeGatewayRequestWithScopes<T>({

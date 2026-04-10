@@ -42,9 +42,9 @@ const pluginCommandMocks = vi.hoisted(() => ({
   getPluginCommandSpecs: vi.fn<GetPluginCommandSpecsFn>(() => []),
   matchPluginCommand: vi.fn<MatchPluginCommandFn>(() => null),
 }));
-export const {getPluginCommandSpecs} = pluginCommandMocks;
-export const {matchPluginCommand} = pluginCommandMocks;
-export const {executePluginCommand} = pluginCommandMocks;
+export const { getPluginCommandSpecs } = pluginCommandMocks;
+export const { matchPluginCommand } = pluginCommandMocks;
+export const { executePluginCommand } = pluginCommandMocks;
 
 vi.mock("openclaw/plugin-sdk/plugin-runtime", () => ({
   executePluginCommand: pluginCommandMocks.executePluginCommand,
@@ -74,12 +74,12 @@ const replyPipelineMocks = vi.hoisted(() => {
     resolveChunkMode: vi.fn((() => "length") as unknown as ResolveChunkModeFn),
   };
 });
-export const {dispatchReplyWithBufferedBlockDispatcher} = replyPipelineMocks;
+export const { dispatchReplyWithBufferedBlockDispatcher } = replyPipelineMocks;
 
 const deliveryMocks = vi.hoisted(() => ({
   deliverReplies: vi.fn(async () => {}),
 }));
-export const {deliverReplies} = deliveryMocks;
+export const { deliverReplies } = deliveryMocks;
 
 vi.mock("./bot-native-commands.runtime.js", () => ({
   ensureConfiguredBindingRouteReady: replyPipelineMocks.ensureConfiguredBindingRouteReady,

@@ -934,17 +934,16 @@ describe("OpenResponses HTTP API (e2e)", () => {
 
     const completed = events.find((event) => event.event === "response.completed");
     expect(completed).toBeTruthy();
-    const {response} = (
-      JSON.parse(completed?.data ?? "{}") as {
-        response?: { status?: string; output?: Record<string, unknown>[] };
-      }
-    );
+    const { response } = JSON.parse(completed?.data ?? "{}") as {
+      response?: { status?: string; output?: Record<string, unknown>[] };
+    };
     expect(response?.status).toBe("incomplete");
     expect(response?.output?.map((item) => item.type)).toEqual(["message", "function_call"]);
     expect(response?.output?.[0]?.phase).toBe("commentary");
     expect(
-      (((response?.output?.[0]?.content as Record<string, unknown>[] | undefined) ?? [])[0]
-        ?.text as string | undefined) ?? "",
+      (((response?.output?.[0]?.content as Record<string, unknown>[] | undefined) ?? [])[0]?.text as
+        | string
+        | undefined) ?? "",
     ).toBe("Let me check that.");
     expect(response?.output?.[1]?.name).toBe("get_weather");
     expect(events.some((event) => event.data === "[DONE]")).toBe(true);

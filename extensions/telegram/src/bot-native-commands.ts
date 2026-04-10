@@ -156,7 +156,7 @@ async function cleanupTelegramProgressPlaceholder(params: {
   progressMessageId?: number;
   runtime: RuntimeEnv;
 }): Promise<void> {
-  const {progressMessageId} = params;
+  const { progressMessageId } = params;
   if (progressMessageId == null) {
     return;
   }
@@ -361,7 +361,8 @@ async function resolveTelegramCommandAuth(params: {
     });
     return null;
   };
-  const rejectNotAuthorized = async () => await sendAuthMessage("You are not authorized to use this command.");
+  const rejectNotAuthorized = async () =>
+    await sendAuthMessage("You are not authorized to use this command.");
 
   const baseAccess = evaluateTelegramGroupBaseAccess({
     effectiveGroupAllow,
@@ -771,14 +772,14 @@ export const registerTelegramNativeCommands = ({
         const rawText = ctx.match?.trim() ?? "";
         const commandArgs = commandDefinition
           ? parseCommandArgs(commandDefinition, rawText)
-          : (rawText
+          : rawText
             ? ({ raw: rawText } satisfies CommandArgs)
-            : undefined);
+            : undefined;
         const prompt = commandDefinition
           ? buildCommandTextFromArgs(commandDefinition, commandArgs)
-          : (rawText
+          : rawText
             ? `/${command.name} ${rawText}`
-            : `/${command.name}`);
+            : `/${command.name}`;
         const menu = commandDefinition
           ? resolveCommandArgMenu({
               args: commandArgs,
@@ -861,9 +862,9 @@ export const registerTelegramNativeCommands = ({
           threadSpec,
         });
         const conversationLabel = isGroup
-          ? (msg.chat.title
+          ? msg.chat.title
             ? `${msg.chat.title} id:${chatId}`
-            : `group:${chatId}`)
+            : `group:${chatId}`
           : (buildSenderName(msg) ?? String(senderId || chatId));
         const ctxPayload = nativeCommandRuntime.finalizeInboundContext({
           Body: prompt,

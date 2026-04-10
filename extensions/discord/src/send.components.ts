@@ -182,7 +182,7 @@ async function buildDiscordComponentPayload(params: {
     ? { fail_if_not_exists: false, message_id: params.opts.replyTo }
     : undefined;
 
-  let {spec} = params;
+  let { spec } = params;
   let resolvedFileName: string | undefined;
   let files: MessagePayloadFile[] | undefined;
   if (params.opts.mediaUrl) {

@@ -262,9 +262,9 @@ export function normalizeLegacyNanoBananaSkill(
     legacyEnvApiKey ||
     (typeof rawLegacyEntry.apiKey === "string"
       ? normalizeOptionalString(rawLegacyEntry.apiKey)
-      : (rawLegacyEntry.apiKey && isRecord(rawLegacyEntry.apiKey)
+      : rawLegacyEntry.apiKey && isRecord(rawLegacyEntry.apiKey)
         ? structuredClone(rawLegacyEntry.apiKey)
-        : undefined));
+        : undefined);
 
   const rawModels = (
     isRecord(next.models) ? structuredClone(next.models) : {}

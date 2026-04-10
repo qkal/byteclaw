@@ -52,9 +52,9 @@ function setupBundleInstallFixture(params: {
     pluginDir,
     params.bundleFormat === "codex"
       ? ".codex-plugin"
-      : (params.bundleFormat === "cursor"
+      : params.bundleFormat === "cursor"
         ? ".cursor-plugin"
-        : ".claude-plugin"),
+        : ".claude-plugin",
   );
   fs.mkdirSync(manifestDir, { recursive: true });
   fs.writeFileSync(

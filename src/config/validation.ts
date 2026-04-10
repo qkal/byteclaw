@@ -92,7 +92,7 @@ function lookupJsonSchemaNode(
       return null;
     }
     if (typeof segment === "number") {
-      const {items} = current;
+      const { items } = current;
       if (Array.isArray(items)) {
         current = asJsonSchemaLike(items[segment] ?? items[0]);
         continue;
@@ -123,7 +123,7 @@ function collectAllowedValuesFromJsonSchemaNode(schema: unknown): AllowedValuesC
     return { hasValues: node.enum.length > 0, incomplete: false, values: node.enum };
   }
 
-  const {type} = node;
+  const { type } = node;
   if (type === "boolean") {
     return { hasValues: true, incomplete: false, values: [true, false] };
   }
@@ -133,9 +133,9 @@ function collectAllowedValuesFromJsonSchemaNode(schema: unknown): AllowedValuesC
 
   const unionBranches = Array.isArray(node.anyOf)
     ? node.anyOf
-    : (Array.isArray(node.oneOf)
+    : Array.isArray(node.oneOf)
       ? node.oneOf
-      : null);
+      : null;
   if (!unionBranches) {
     return { hasValues: false, incomplete: false, values: [] };
   }
@@ -192,7 +192,7 @@ function collectAllowedValuesFromIssue(issue: unknown): AllowedValuesCollection 
   const code = typeof record.code === "string" ? record.code : "";
 
   if (code === "invalid_value") {
-    const {values} = record;
+    const { values } = record;
     if (!Array.isArray(values)) {
       return { hasValues: false, incomplete: true, values: [] };
     }
@@ -235,9 +235,7 @@ function collectAllowedValuesFromIssue(issue: unknown): AllowedValuesCollection 
   return { hasValues: collected.length > 0, incomplete: false, values: collected };
 }
 
-function collectAllowedValuesFromIssueList(
-  issues: readonly unknown[],
-): AllowedValuesCollection {
+function collectAllowedValuesFromIssueList(issues: readonly unknown[]): AllowedValuesCollection {
   const collected: unknown[] = [];
   let hasValues = false;
   for (const issue of issues) {
@@ -668,11 +666,10 @@ function validateConfigObjectWithPluginsBase(
     return { issues: base.issues, ok: false, warnings: [] };
   }
 
-  const {config} = base;
+  const { config } = base;
   const issues: ConfigValidationIssue[] = [];
   const warnings: ConfigValidationIssue[] = [];
-  const hasExplicitPluginsConfig =
-    isRecord(raw) && Object.hasOwn(raw, "plugins");
+  const hasExplicitPluginsConfig = isRecord(raw) && Object.hasOwn(raw, "plugins");
 
   const resolvePluginConfigIssuePath = (pluginId: string, errorPath: string): string => {
     const base = `plugins.entries.${pluginId}.config`;
@@ -1056,8 +1053,7 @@ function validateConfigObjectWithPluginsBase(
 
   // The default memory slot is inferred; only a user-configured slot should block startup.
   const pluginSlots = pluginsConfig?.slots;
-  const hasExplicitMemorySlot =
-    pluginSlots !== undefined && Object.hasOwn(pluginSlots, "memory");
+  const hasExplicitMemorySlot = pluginSlots !== undefined && Object.hasOwn(pluginSlots, "memory");
   const memorySlot = normalizedPlugins.slots.memory;
   if (
     hasExplicitMemorySlot &&
@@ -1086,7 +1082,7 @@ function validateConfigObjectWithPluginsBase(
       rootConfig: effectiveConfig,
     });
     let enabled = activationState.activated;
-    let {reason} = activationState;
+    let { reason } = activationState;
 
     if (enabled) {
       const memoryDecision = resolveMemorySlotDecision({

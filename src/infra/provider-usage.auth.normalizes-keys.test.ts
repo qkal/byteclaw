@@ -182,9 +182,9 @@ const providerRuntimeMocks = vi.hoisted(() => ({
         });
         return token
           ? { token }
-          : (resolveLegacyZaiToken()
+          : resolveLegacyZaiToken()
             ? { token: resolveLegacyZaiToken()! }
-            : null);
+            : null;
       }
 
       if (params.provider === "minimax") {

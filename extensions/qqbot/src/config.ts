@@ -178,9 +178,9 @@ export function applyQQBotAccountConfig(
         ...(input.appId ? { appId: input.appId } : {}),
         ...(input.clientSecret
           ? { clientSecret: input.clientSecret, clientSecretFile: undefined }
-          : (input.clientSecretFile
+          : input.clientSecretFile
             ? { clientSecret: undefined, clientSecretFile: input.clientSecretFile }
-            : {})),
+            : {}),
         ...(input.name ? { name: input.name } : {}),
       },
     };
@@ -203,9 +203,9 @@ export function applyQQBotAccountConfig(
             ...(input.appId ? { appId: input.appId } : {}),
             ...(input.clientSecret
               ? { clientSecret: input.clientSecret, clientSecretFile: undefined }
-              : (input.clientSecretFile
+              : input.clientSecretFile
                 ? { clientSecretFile: input.clientSecretFile, clientSecret: undefined }
-                : {})),
+                : {}),
             ...(input.name ? { name: input.name } : {}),
           },
         },

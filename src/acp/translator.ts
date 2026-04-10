@@ -779,7 +779,7 @@ export class AcpGatewayAgent implements Agent {
       return;
     }
     // Capture runId before cancelActiveRun clears session.activeRunId.
-    const {activeRunId} = session;
+    const { activeRunId } = session;
 
     this.sessionStore.cancelActiveRun(params.sessionId);
     const pending = this.pendingPrompts.get(params.sessionId);
@@ -887,7 +887,7 @@ export class AcpGatewayAgent implements Agent {
 
     if (phase === "update") {
       const toolState = pending.toolCalls?.get(toolCallId);
-      const {partialResult} = data;
+      const { partialResult } = data;
       await this.connection.sessionUpdate({
         sessionId: pending.sessionId,
         update: {
@@ -1143,7 +1143,7 @@ export class AcpGatewayAgent implements Agent {
     pending: PendingPrompt,
     deadlineExpired: boolean,
   ): Promise<boolean> {
-    const {disconnectContext} = pending;
+    const { disconnectContext } = pending;
     if (!disconnectContext) {
       return false;
     }

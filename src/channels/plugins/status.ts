@@ -31,15 +31,15 @@ async function buildSnapshotFromAccount<ResolvedAccount>(params: {
   }
   const enabled = params.plugin.config.isEnabled
     ? params.plugin.config.isEnabled(params.account, params.cfg)
-    : (params.account && typeof params.account === "object"
+    : params.account && typeof params.account === "object"
       ? (params.account as { enabled?: boolean }).enabled
-      : undefined);
+      : undefined;
   const configured =
     params.account && typeof params.account === "object" && "configured" in params.account
       ? (params.account as { configured?: boolean }).configured
-      : (params.plugin.config.isConfigured
+      : params.plugin.config.isConfigured
         ? await params.plugin.config.isConfigured(params.account, params.cfg)
-        : undefined);
+        : undefined;
   return {
     accountId: params.accountId,
     configured,

@@ -70,37 +70,37 @@ export interface GatewaySessionList {
     contextTokens?: number | null;
   };
   sessions: (Pick<
-      SessionInfo,
-      | "thinkingLevel"
-      | "fastMode"
-      | "verboseLevel"
-      | "reasoningLevel"
-      | "model"
-      | "contextTokens"
-      | "inputTokens"
-      | "outputTokens"
-      | "totalTokens"
-      | "modelProvider"
-      | "displayName"
-    > & {
-      key: string;
-      sessionId?: string;
-      updatedAt?: number | null;
-      fastMode?: boolean;
-      sendPolicy?: string;
-      responseUsage?: ResponseUsageMode;
-      label?: string;
-      provider?: string;
-      groupChannel?: string;
-      space?: string;
-      subject?: string;
-      chatType?: string;
-      lastProvider?: string;
-      lastTo?: string;
-      lastAccountId?: string;
-      derivedTitle?: string;
-      lastMessagePreview?: string;
-    })[];
+    SessionInfo,
+    | "thinkingLevel"
+    | "fastMode"
+    | "verboseLevel"
+    | "reasoningLevel"
+    | "model"
+    | "contextTokens"
+    | "inputTokens"
+    | "outputTokens"
+    | "totalTokens"
+    | "modelProvider"
+    | "displayName"
+  > & {
+    key: string;
+    sessionId?: string;
+    updatedAt?: number | null;
+    fastMode?: boolean;
+    sendPolicy?: string;
+    responseUsage?: ResponseUsageMode;
+    label?: string;
+    provider?: string;
+    groupChannel?: string;
+    space?: string;
+    subject?: string;
+    chatType?: string;
+    lastProvider?: string;
+    lastTo?: string;
+    lastAccountId?: string;
+    derivedTitle?: string;
+    lastMessagePreview?: string;
+  })[];
 }
 
 export interface GatewayAgentsList {
@@ -264,7 +264,7 @@ export async function resolveGatewayConnection(
   opts: GatewayConnectionOptions,
 ): Promise<ResolvedGatewayConnection> {
   const config = loadConfig();
-  const {env} = process;
+  const { env } = process;
   const gatewayAuthMode = config.gateway?.auth?.mode;
   const isRemoteMode = config.gateway?.mode === "remote";
 
@@ -277,7 +277,7 @@ export async function resolveGatewayConnection(
     urlOverride,
     urlOverrideSource: "cli",
   });
-  const {url} = buildGatewayConnectionDetails({
+  const { url } = buildGatewayConnectionDetails({
     config,
     ...(urlOverride ? { url: urlOverride } : {}),
   });

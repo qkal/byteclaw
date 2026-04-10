@@ -242,7 +242,9 @@ function normalizeFixtureFlags(
   if (!Array.isArray(flags) || flags.length === 0) {
     return undefined;
   }
-  const normalized = [...new Set(flags.map((flag) => flag.trim()).filter((flag) => flag.length > 0))].toSorted((a, b) => a.localeCompare(b));
+  const normalized = [
+    ...new Set(flags.map((flag) => flag.trim()).filter((flag) => flag.length > 0)),
+  ].toSorted((a, b) => a.localeCompare(b));
   return normalized.length > 0 ? normalized : undefined;
 }
 

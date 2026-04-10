@@ -18,9 +18,9 @@ export function migrateLegacyCronPayload(payload: UnknownRecord): boolean {
   const nextChannel =
     typeof channelValue === "string" && channelValue.trim().length > 0
       ? normalizeChannel(channelValue)
-      : (typeof providerValue === "string" && providerValue.trim().length > 0
+      : typeof providerValue === "string" && providerValue.trim().length > 0
         ? normalizeChannel(providerValue)
-        : "");
+        : "";
 
   if (nextChannel) {
     if (channelValue !== nextChannel) {

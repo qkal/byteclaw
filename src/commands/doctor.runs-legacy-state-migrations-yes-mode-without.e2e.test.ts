@@ -90,7 +90,7 @@ describe("doctor command", () => {
     await doctorCommand(createDoctorRuntime(), { yes: true });
 
     const written = writeConfigFile.mock.calls.at(-1)?.[0] as Record<string, unknown>;
-    const {profiles} = (written.auth as { profiles: Record<string, unknown> });
+    const { profiles } = written.auth as { profiles: Record<string, unknown> };
     expect(profiles["anthropic:me@example.com"]).toBeTruthy();
     expect(profiles["anthropic:default"]).toBeUndefined();
   }, 30_000);

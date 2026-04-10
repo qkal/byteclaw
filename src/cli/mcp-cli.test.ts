@@ -26,7 +26,7 @@ const mocks = vi.hoisted(() => {
 const defaultRuntime = mocks.runtime;
 const mockLog = defaultRuntime.log;
 const mockError = defaultRuntime.error;
-const {serveOpenClawChannelMcp} = mocks;
+const { serveOpenClawChannelMcp } = mocks;
 
 vi.mock("../runtime.js", () => ({
   defaultRuntime: mocks.runtime,

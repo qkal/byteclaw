@@ -151,7 +151,7 @@ function isKnownPollToolCall(toolName: string, params: unknown): boolean {
   if (toolName !== "process" || !isPlainObject(params)) {
     return false;
   }
-  const {action} = params;
+  const { action } = params;
   return action === "poll" || action === "log";
 }
 
@@ -198,7 +198,7 @@ function hashToolOutcome(
   const details = isPlainObject(result.details) ? result.details : {};
   const text = extractTextContent(result);
   if (isKnownPollToolCall(toolName, params) && toolName === "process" && isPlainObject(params)) {
-    const {action} = params;
+    const { action } = params;
     if (action === "poll") {
       return digestStable({
         action,

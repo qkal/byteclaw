@@ -8,9 +8,7 @@ function extractSupportedValues(raw: string): string[] {
     return [];
   }
   const fragment = match[1];
-  const quoted = [...fragment.matchAll(/['"]([^'"]+)['"]/g)].map((entry) =>
-    entry[1]?.trim(),
-  );
+  const quoted = [...fragment.matchAll(/['"]([^'"]+)['"]/g)].map((entry) => entry[1]?.trim());
   if (quoted.length > 0) {
     return quoted.filter((entry): entry is string => Boolean(entry));
   }

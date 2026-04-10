@@ -264,7 +264,7 @@ async function resolveStickerMedia(params: {
   if (!msg.sticker) {
     return undefined;
   }
-  const {sticker} = msg;
+  const { sticker } = msg;
   // Skip animated (TGS) and video (WEBM) stickers - only static WEBP supported
   if (sticker.is_animated || sticker.is_video) {
     logVerbose("telegram: skipping animated/video sticker (only static stickers supported)");

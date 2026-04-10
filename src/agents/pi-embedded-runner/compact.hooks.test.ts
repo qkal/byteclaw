@@ -371,7 +371,7 @@ describe("compactEmbeddedPiSessionDirect hooks", () => {
 
   it("preserves tokensAfter when full-session context exceeds result.tokensBefore", async () => {
     estimateTokensMock.mockImplementation((message: unknown) => {
-      const {role} = (message as { role?: string });
+      const { role } = message as { role?: string };
       if (role === "user") {
         return 30;
       }
@@ -391,7 +391,7 @@ describe("compactEmbeddedPiSessionDirect hooks", () => {
 
   it("treats pre-compaction token estimation failures as a no-op sanity check", async () => {
     estimateTokensMock.mockImplementation((message: unknown) => {
-      const {role} = (message as { role?: string });
+      const { role } = message as { role?: string };
       if (role === "assistant") {
         throw new Error("legacy message");
       }

@@ -133,7 +133,7 @@ describe("browser chrome profile decoration", () => {
     const userDataDir = await createUserDataDir();
     decorateOpenClawProfile(userDataDir, { color: DEFAULT_OPENCLAW_BROWSER_COLOR });
 
-    const expectedSignedArgb = ((0xFF << 24) | 0xFF_45_00) >> 0;
+    const expectedSignedArgb = ((0xff << 24) | 0xff_45_00) >> 0;
 
     const def = await readDefaultProfileFromLocalState(userDataDir);
 
@@ -240,11 +240,12 @@ describe("browser chrome helpers", () => {
 
   it("picks the first existing Chrome candidate on Windows", () => {
     vi.stubEnv("LOCALAPPDATA", String.raw`C:\Users\Test\AppData\Local`);
-    const exists = mockExistsSync((pathStr) => (
+    const exists = mockExistsSync(
+      (pathStr) =>
         pathStr.includes(String.raw`Google\Chrome\Application\chrome.exe`) ||
         pathStr.includes(String.raw`BraveSoftware\Brave-Browser\Application\brave.exe`) ||
-        pathStr.includes(String.raw`Microsoft\Edge\Application\msedge.exe`)
-      ));
+        pathStr.includes(String.raw`Microsoft\Edge\Application\msedge.exe`),
+    );
     const exe = findChromeExecutableWindows();
     expect(exe?.kind).toBe("chrome");
     expect(exe?.path).toMatch(/chrome\.exe$/);

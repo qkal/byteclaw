@@ -7,13 +7,16 @@
 ## Git Best Practices for OpenClaw
 
 ### Commit Frequency
+
 - Commit after completing each logical task or feature
 - Commit before switching to a different task
 - Commit at least every 30-60 minutes during active development
 - Never leave uncommitted work at the end of a session
 
 ### Commit Message Format
+
 Use clear, descriptive commit messages:
+
 ```
 <type>: <short description>
 
@@ -21,6 +24,7 @@ Use clear, descriptive commit messages:
 ```
 
 Types:
+
 - `feat:` New feature
 - `fix:` Bug fix
 - `docs:` Documentation changes
@@ -31,6 +35,7 @@ Types:
 - `ci:` CI/CD changes
 
 Examples:
+
 ```
 feat: add oxlint linting to project
 fix: resolve variable redeclaration errors in catch blocks
@@ -38,12 +43,14 @@ docs: update git workflow documentation
 ```
 
 ### Branching Strategy
+
 - `main` - Stable, production-ready code
 - Feature branches - `feature/short-description` for new features
 - Bugfix branches - `fix/short-description` for bug fixes
 - Never commit directly to main for experimental changes
 
 ### Before Committing
+
 1. Run linting: `pnpm lint`
 2. Run tests: `pnpm test` (if applicable)
 3. Review your changes: `git diff --staged`
@@ -52,11 +59,13 @@ docs: update git workflow documentation
 ### Common Git Commands
 
 **Check status:**
+
 ```bash
 git status
 ```
 
 **Stage changes:**
+
 ```bash
 git add .                    # Stage all changes
 git add <file>               # Stage specific file
@@ -64,17 +73,20 @@ git add -p <file>            # Stage changes interactively
 ```
 
 **Commit:**
+
 ```bash
 git commit -m "feat: add new feature"
 ```
 
 **View history:**
+
 ```bash
 git log --oneline           # Compact history
 git log --graph --oneline   # Visual branch history
 ```
 
 **Undo changes:**
+
 ```bash
 git checkout -- <file>      # Discard unstaged changes
 git reset HEAD <file>       # Unstage changes
@@ -83,6 +95,7 @@ git reset --hard HEAD~1     # Undo last commit, discard changes
 ```
 
 **Branch operations:**
+
 ```bash
 git branch <name>           # Create branch
 git checkout <name>         # Switch branch
@@ -93,6 +106,7 @@ git branch -d <name>        # Delete branch
 ### Project-Specific Notes
 
 **Ignored Files:**
+
 - `.oxlintrc.jsonc` - Linting configuration (local preferences)
 - `node_modules/` - Dependencies
 - `dist/` - Build outputs
@@ -109,6 +123,7 @@ When resolving conflicts, carefully review both sides and test the merged code b
 ### Session Checklist
 
 Before ending a session:
+
 - [ ] Run `git status` to see uncommitted changes
 - [ ] Stage and commit all important work
 - [ ] Run `pnpm lint` to ensure code quality
@@ -119,6 +134,7 @@ Before ending a session:
 ### CI/CD Integration
 
 The project uses:
+
 - No GitHub Actions currently configured
 - Manual testing and validation required before merging
 - Consider adding CI in the future for automated testing

@@ -108,9 +108,9 @@ export class ToolExecutionComponent extends Container {
   private refresh() {
     const bg = this.isPartial
       ? theme.toolPendingBg
-      : (this.isError
+      : this.isError
         ? theme.toolErrorBg
-        : theme.toolSuccessBg);
+        : theme.toolSuccessBg;
     this.box.setBgFn((line) => bg(line));
 
     const display = resolveToolDisplay({

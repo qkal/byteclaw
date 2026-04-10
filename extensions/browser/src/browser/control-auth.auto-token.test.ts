@@ -32,9 +32,9 @@ const mocks = vi.hoisted(() => ({
       const token =
         typeof authConfig?.token === "string"
           ? authConfig.token
-          : (typeof authConfig?.token === "object"
+          : typeof authConfig?.token === "object"
             ? undefined
-            : undefined);
+            : undefined;
       const password = typeof authConfig?.password === "string" ? authConfig.password : undefined;
       return {
         password,

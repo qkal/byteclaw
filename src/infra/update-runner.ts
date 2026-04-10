@@ -445,7 +445,7 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
       return { code: res.code, stderr: res.stderr, stdout: res.stdout };
     });
   const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-  const {progress} = opts;
+  const { progress } = opts;
   const steps: UpdateStepResult[] = [];
   const candidates = buildStartDirs(opts);
 

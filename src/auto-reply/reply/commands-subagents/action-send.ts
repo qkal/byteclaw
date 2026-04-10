@@ -22,9 +22,9 @@ export async function handleSubagentsSendAction(
   if (!target || !message) {
     return stopWithText(
       steerRequested
-        ? (handledPrefix === COMMAND
+        ? handledPrefix === COMMAND
           ? "Usage: /subagents steer <id|#> <message>"
-          : `Usage: ${handledPrefix} <id|#> <message>`)
+          : `Usage: ${handledPrefix} <id|#> <message>`
         : "Usage: /subagents send <id|#> <message>",
     );
   }

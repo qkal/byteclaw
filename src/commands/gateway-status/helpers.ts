@@ -57,9 +57,9 @@ function parseIntOrNull(value: unknown): number | null {
   const s =
     typeof value === "string"
       ? value.trim()
-      : (typeof value === "number" || typeof value === "bigint"
+      : typeof value === "number" || typeof value === "bigint"
         ? String(value)
-        : "");
+        : "";
   if (!s) {
     return null;
   }

@@ -18,9 +18,7 @@ describe("input-validation", () => {
     });
 
     it("returns errors for invalid values", () => {
-      const result = validate(123, [
-        { name: "string", validate: ValidationRules.string },
-      ]);
+      const result = validate(123, [{ name: "string", validate: ValidationRules.string }]);
       expect(result.valid).toBe(false);
       expect(result.errors).toHaveLength(1);
     });

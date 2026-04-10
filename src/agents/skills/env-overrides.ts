@@ -13,7 +13,9 @@ import type { SkillEntry, SkillSnapshot } from "./types.js";
 
 const log = createSubsystemLogger("env-overrides");
 
-interface EnvUpdate { key: string }
+interface EnvUpdate {
+  key: string;
+}
 type SkillConfig = NonNullable<ReturnType<typeof resolveSkillConfig>>;
 interface ActiveSkillEnvEntry {
   baseline: string | undefined;

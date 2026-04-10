@@ -27,10 +27,18 @@ export interface SecurityHeadersOptions {
     includeSubDomains?: boolean;
     preload?: boolean;
   };
-  xFrameOptions?: 'DENY' | 'SAMEORIGIN' | 'ALLOW-FROM';
+  xFrameOptions?: "DENY" | "SAMEORIGIN" | "ALLOW-FROM";
   xContentTypeOptions?: boolean;
-  xXssProtection?: '1; mode=block' | '0';
-  referrerPolicy?: 'no-referrer' | 'no-referrer-when-downgrade' | 'origin' | 'origin-when-cross-origin' | 'same-origin' | 'strict-origin' | 'strict-origin-when-cross-origin' | 'unsafe-url';
+  xXssProtection?: "1; mode=block" | "0";
+  referrerPolicy?:
+    | "no-referrer"
+    | "no-referrer-when-downgrade"
+    | "origin"
+    | "origin-when-cross-origin"
+    | "same-origin"
+    | "strict-origin"
+    | "strict-origin-when-cross-origin"
+    | "unsafe-url";
   permissionsPolicy?: string[];
 }
 
@@ -42,73 +50,77 @@ export function generateCspHeader(options: CspOptions = {}): string {
 
   const addDirective = (name: string, values?: string[]) => {
     if (values && values.length > 0) {
-      directives.push(`${name} ${values.join(' ')}`);
+      directives.push(`${name} ${values.join(" ")}`);
     }
   };
 
-  addDirective('default-src', options.defaultSrc || ["'self'"]);
-  addDirective('script-src', options.scriptSrc || ["'self'", "'unsafe-inline'", "'unsafe-eval'"]);
-  addDirective('style-src', options.styleSrc || ["'self'", "'unsafe-inline'"]);
-  addDirective('img-src', options.imgSrc || ["'self'", 'data:', 'https:']);
-  addDirective('connect-src', options.connectSrc || ["'self'"]);
-  addDirective('font-src', options.fontSrc || ["'self'", 'data:']);
-  addDirective('object-src', options.objectSrc || ["'none'"]);
-  addDirective('media-src', options.mediaSrc || ["'self'"]);
-  addDirective('frame-src', options.frameSrc || ["'none'"]);
-  addDirective('frame-ancestors', options.frameAncestors || ["'none'"]);
-  addDirective('base-uri', options.baseUri || ["'self'"]);
-  addDirective('form-action', options.formAction || ["'self'"]);
+  addDirective("default-src", options.defaultSrc || ["'self'"]);
+  addDirective("script-src", options.scriptSrc || ["'self'", "'unsafe-inline'", "'unsafe-eval'"]);
+  addDirective("style-src", options.styleSrc || ["'self'", "'unsafe-inline'"]);
+  addDirective("img-src", options.imgSrc || ["'self'", "data:", "https:"]);
+  addDirective("connect-src", options.connectSrc || ["'self'"]);
+  addDirective("font-src", options.fontSrc || ["'self'", "data:"]);
+  addDirective("object-src", options.objectSrc || ["'none'"]);
+  addDirective("media-src", options.mediaSrc || ["'self'"]);
+  addDirective("frame-src", options.frameSrc || ["'none'"]);
+  addDirective("frame-ancestors", options.frameAncestors || ["'none'"]);
+  addDirective("base-uri", options.baseUri || ["'self'"]);
+  addDirective("form-action", options.formAction || ["'self'"]);
 
   if (options.reportUri) {
     directives.push(`report-uri ${options.reportUri}`);
   }
 
-  return directives.join('; ');
+  return directives.join("; ");
 }
 
 /**
  * Generate security headers object
  */
-export function generateSecurityHeaders(options: SecurityHeadersOptions = {}): Record<string, string> {
+export function generateSecurityHeaders(
+  options: SecurityHeadersOptions = {},
+): Record<string, string> {
   const headers: Record<string, string> = {};
 
   // Content Security Policy
   if (options.csp) {
-    const headerName = options.csp.reportOnly ? 'Content-Security-Policy-Report-Only' : 'Content-Security-Policy';
+    const headerName = options.csp.reportOnly
+      ? "Content-Security-Policy-Report-Only"
+      : "Content-Security-Policy";
     headers[headerName] = generateCspHeader(options.csp);
   }
 
   // HTTP Strict Transport Security
   if (options.hsts) {
     const hsts = `max-age=${options.hsts.maxAge}`;
-    const subDomains = options.hsts.includeSubDomains ? '; includeSubDomains' : '';
-    const preload = options.hsts.preload ? '; preload' : '';
-    headers['Strict-Transport-Security'] = `${hsts}${subDomains}${preload}`;
+    const subDomains = options.hsts.includeSubDomains ? "; includeSubDomains" : "";
+    const preload = options.hsts.preload ? "; preload" : "";
+    headers["Strict-Transport-Security"] = `${hsts}${subDomains}${preload}`;
   }
 
   // X-Frame-Options
   if (options.xFrameOptions) {
-    headers['X-Frame-Options'] = options.xFrameOptions;
+    headers["X-Frame-Options"] = options.xFrameOptions;
   }
 
   // X-Content-Type-Options
   if (options.xContentTypeOptions !== false) {
-    headers['X-Content-Type-Options'] = 'nosniff';
+    headers["X-Content-Type-Options"] = "nosniff";
   }
 
   // X-XSS-Protection
   if (options.xXssProtection) {
-    headers['X-XSS-Protection'] = options.xXssProtection;
+    headers["X-XSS-Protection"] = options.xXssProtection;
   }
 
   // Referrer-Policy
   if (options.referrerPolicy) {
-    headers['Referrer-Policy'] = options.referrerPolicy;
+    headers["Referrer-Policy"] = options.referrerPolicy;
   }
 
   // Permissions-Policy
   if (options.permissionsPolicy && options.permissionsPolicy.length > 0) {
-    headers['Permissions-Policy'] = options.permissionsPolicy.join(', ');
+    headers["Permissions-Policy"] = options.permissionsPolicy.join(", ");
   }
 
   return headers;
@@ -135,11 +147,11 @@ export const defaultSecurityHeaders: SecurityHeadersOptions = {
     defaultSrc: ["'self'"],
     scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
     styleSrc: ["'self'", "'unsafe-inline'"],
-    imgSrc: ["'self'", 'data:', 'https:', 'blob:'],
-    connectSrc: ["'self'", 'wss:', 'ws:'],
-    fontSrc: ["'self'", 'data:'],
+    imgSrc: ["'self'", "data:", "https:", "blob:"],
+    connectSrc: ["'self'", "wss:", "ws:"],
+    fontSrc: ["'self'", "data:"],
     objectSrc: ["'none'"],
-    mediaSrc: ["'self'", 'blob:'],
+    mediaSrc: ["'self'", "blob:"],
     frameSrc: ["'none'"],
     frameAncestors: ["'none'"],
     baseUri: ["'self'"],
@@ -150,16 +162,11 @@ export const defaultSecurityHeaders: SecurityHeadersOptions = {
     includeSubDomains: true,
     preload: true,
   },
-  xFrameOptions: 'DENY',
+  xFrameOptions: "DENY",
   xContentTypeOptions: true,
-  xXssProtection: '1; mode=block',
-  referrerPolicy: 'strict-origin-when-cross-origin',
-  permissionsPolicy: [
-    'geolocation=()',
-    'microphone=()',
-    'camera=()',
-    'payment=(self)',
-  ],
+  xXssProtection: "1; mode=block",
+  referrerPolicy: "strict-origin-when-cross-origin",
+  permissionsPolicy: ["geolocation=()", "microphone=()", "camera=()", "payment=(self)"],
 };
 
 /**
@@ -168,13 +175,13 @@ export const defaultSecurityHeaders: SecurityHeadersOptions = {
 export const devSecurityHeaders: SecurityHeadersOptions = {
   csp: {
     defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'http://localhost:*'],
+    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "http://localhost:*"],
     styleSrc: ["'self'", "'unsafe-inline'"],
-    imgSrc: ["'self'", 'data:', 'https:', 'blob:', 'http://localhost:*'],
-    connectSrc: ["'self'", 'wss:', 'ws:', 'http://localhost:*', 'https://localhost:*'],
-    fontSrc: ["'self'", 'data:'],
+    imgSrc: ["'self'", "data:", "https:", "blob:", "http://localhost:*"],
+    connectSrc: ["'self'", "wss:", "ws:", "http://localhost:*", "https://localhost:*"],
+    fontSrc: ["'self'", "data:"],
     objectSrc: ["'none'"],
-    mediaSrc: ["'self'", 'blob:'],
+    mediaSrc: ["'self'", "blob:"],
     frameSrc: ["'self'"],
     frameAncestors: ["'self'"],
     baseUri: ["'self'"],
@@ -185,9 +192,9 @@ export const devSecurityHeaders: SecurityHeadersOptions = {
     includeSubDomains: false,
     preload: false,
   },
-  xFrameOptions: 'SAMEORIGIN',
+  xFrameOptions: "SAMEORIGIN",
   xContentTypeOptions: true,
-  xXssProtection: '1; mode=block',
-  referrerPolicy: 'no-referrer-when-downgrade',
+  xXssProtection: "1; mode=block",
+  referrerPolicy: "no-referrer-when-downgrade",
   permissionsPolicy: [],
 };

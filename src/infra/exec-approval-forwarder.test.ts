@@ -188,9 +188,7 @@ const defaultRegistry = createTestRegistry([
 ]);
 
 function getFirstDeliveryText(deliver: ReturnType<typeof vi.fn>): string {
-  const firstCall = deliver.mock.calls[0]?.[0] as
-    | { payloads?: { text?: string }[] }
-    | undefined;
+  const firstCall = deliver.mock.calls[0]?.[0] as { payloads?: { text?: string }[] } | undefined;
   return firstCall?.payloads?.[0]?.text ?? "";
 }
 

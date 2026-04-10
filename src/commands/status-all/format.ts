@@ -412,9 +412,9 @@ export function buildStatusGatewaySurfaceValues(params: {
     `${gatewaySummary.modeLabel} · ${gatewaySummary.targetTextWithSource} · ${
       params.remoteUrlMissing
         ? decorateWarn(gatewaySummary.reachText)
-        : (params.gatewayReachable
+        : params.gatewayReachable
           ? decorateOk(gatewaySummary.reachText)
-          : decorateWarn(gatewaySummary.reachText))
+          : decorateWarn(gatewaySummary.reachText)
     }${
       params.gatewayReachable &&
       !params.remoteUrlMissing &&

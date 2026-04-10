@@ -381,7 +381,10 @@ describe("exec approvals shell analysis", () => {
         platform: "win32",
       });
       expect(res.ok).toBe(true);
-      expect(res.segments[0]?.argv).toEqual([String.raw`C:\Program Files\Tool\tool.exe`, "--version"]);
+      expect(res.segments[0]?.argv).toEqual([
+        String.raw`C:\Program Files\Tool\tool.exe`,
+        "--version",
+      ]);
     });
 
     it('unescapes "" inside powershell -Command double-quoted payload', () => {
@@ -797,7 +800,10 @@ describe("windowsEscapeArg", () => {
   });
 
   it("allows $ not followed by identifier (e.g. UNC admin share C$)", () => {
-    expect(windowsEscapeArg(String.raw`\\host\C$`)).toEqual({ escaped: '"\\\\host\\C$"', ok: true });
+    expect(windowsEscapeArg(String.raw`\\host\C$`)).toEqual({
+      escaped: '"\\\\host\\C$"',
+      ok: true,
+    });
     expect(windowsEscapeArg("trailing$")).toEqual({ escaped: '"trailing$"', ok: true });
   });
 });

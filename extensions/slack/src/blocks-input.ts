@@ -24,7 +24,7 @@ function assertBlocksArray(raw: unknown) {
     if (!block || typeof block !== "object" || Array.isArray(block)) {
       throw new Error("each block must be an object");
     }
-    const {type} = (block as { type?: unknown });
+    const { type } = block as { type?: unknown };
     if (typeof type !== "string" || type.trim().length === 0) {
       throw new Error("each block must include a non-empty string type");
     }

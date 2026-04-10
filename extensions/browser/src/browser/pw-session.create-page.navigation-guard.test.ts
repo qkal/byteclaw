@@ -18,7 +18,10 @@ import {
 const connectOverCdpSpy = vi.spyOn(chromium, "connectOverCDP");
 const getChromeWebSocketUrlSpy = vi.spyOn(chromeModule, "getChromeWebSocketUrl");
 
-interface MockRoute { continue: () => Promise<void>; abort: () => Promise<void> }
+interface MockRoute {
+  continue: () => Promise<void>;
+  abort: () => Promise<void>;
+}
 interface MockRequest {
   isNavigationRequest: () => boolean;
   frame: () => object;

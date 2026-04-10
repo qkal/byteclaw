@@ -103,9 +103,9 @@ export function sanitizeTaskStatusText(
   const raw =
     typeof sanitizedValue === "string"
       ? sanitizedValue
-      : (sanitizedValue == null
+      : sanitizedValue == null
         ? ""
-        : (JSON.stringify(sanitizedValue) ?? ""));
+        : (JSON.stringify(sanitizedValue) ?? "");
   const sanitized = raw.replace(/\s+/g, " ").trim();
   if (!sanitized) {
     return "";

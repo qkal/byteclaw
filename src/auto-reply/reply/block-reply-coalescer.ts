@@ -83,9 +83,9 @@ export function createBlockReplyCoalescer(params: {
       return;
     }
     const reply = resolveSendableOutboundReplyParts(payload);
-    const {hasMedia} = reply;
-    const {text} = reply;
-    const {hasText} = reply;
+    const { hasMedia } = reply;
+    const { text } = reply;
+    const { hasText } = reply;
     if (hasMedia) {
       void flush({ force: true });
       void onFlush(payload);

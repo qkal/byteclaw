@@ -236,7 +236,7 @@ export function patchCodexNativeWebSearchPayload(params: {
     return { status: "payload_not_object" };
   }
 
-  const {payload} = params;
+  const { payload } = params;
   if (hasCodexNativeWebSearchTool(payload.tools)) {
     return { status: "native_tool_already_present" };
   }

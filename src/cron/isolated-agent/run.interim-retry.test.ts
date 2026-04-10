@@ -27,17 +27,15 @@ describe("runCronIsolatedAgentTurn — interim ack retry", () => {
   };
 
   const usePayloadTextExtraction = () => {
-    pickLastNonEmptyTextFromPayloadsMock.mockImplementation(
-      (payloads?: { text?: string }[]) => {
-        for (let idx = (payloads?.length ?? 0) - 1; idx >= 0; idx -= 1) {
-          const text = payloads?.[idx]?.text;
-          if (typeof text === "string" && text.trim()) {
-            return text;
-          }
+    pickLastNonEmptyTextFromPayloadsMock.mockImplementation((payloads?: { text?: string }[]) => {
+      for (let idx = (payloads?.length ?? 0) - 1; idx >= 0; idx -= 1) {
+        const text = payloads?.[idx]?.text;
+        if (typeof text === "string" && text.trim()) {
+          return text;
         }
-        return "";
-      },
-    );
+      }
+      return "";
+    });
   };
 
   it("regression, retries once when cron returns interim acknowledgement and no descendants were spawned", async () => {

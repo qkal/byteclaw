@@ -104,7 +104,7 @@ export async function createSshSandboxBackend(
   if ((params.cfg.docker.binds?.length ?? 0) > 0) {
     throw new Error("SSH sandbox backend does not support sandbox.docker.binds.");
   }
-  const {target} = params.cfg.ssh;
+  const { target } = params.cfg.ssh;
   if (!target) {
     throw new Error('Sandbox backend "ssh" requires agents.defaults.sandbox.ssh.target.');
   }
@@ -296,9 +296,6 @@ function buildSshSandboxRuntimeId(scopeKey: string): string {
     .replace(/[^a-z0-9._-]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 32);
-  const hash = [...trimmed].reduce(
-    (acc, char) => ((acc * 33) ^ char.charCodeAt(0)) >>> 0,
-    5381,
-  );
+  const hash = [...trimmed].reduce((acc, char) => ((acc * 33) ^ char.charCodeAt(0)) >>> 0, 5381);
   return `openclaw-ssh-${safe || "session"}-${hash.toString(16).slice(0, 8)}`;
 }

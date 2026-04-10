@@ -15,7 +15,7 @@ export function resolveMatrixBaseConfig(cfg: CoreConfig): MatrixConfig {
 }
 
 function resolveMatrixAccountsMap(cfg: CoreConfig): Readonly<Record<string, MatrixAccountConfig>> {
-  const {accounts} = resolveMatrixBaseConfig(cfg);
+  const { accounts } = resolveMatrixBaseConfig(cfg);
   if (!accounts || typeof accounts !== "object") {
     return {};
   }
@@ -26,7 +26,7 @@ function selectInheritedMatrixRoomEntries(params: {
   entries: MatrixRoomEntries | undefined;
   accountId: string;
 }): MatrixRoomEntries | undefined {
-  const {entries} = params;
+  const { entries } = params;
   if (!entries) {
     return undefined;
   }

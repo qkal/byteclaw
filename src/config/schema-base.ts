@@ -91,11 +91,15 @@ function applyFieldDocumentation(
   if (node.items) {
     const itemsObj = asJsonSchemaObject(node.items);
     if (itemsObj) {
-      const itemPrefixes = [...new Set(prefixes.flatMap((prefix) => {
-	const arrayPath = prefix ? `${prefix}[]` : '[]';
-	const wildcardAlias = prefix ? `${prefix}.*` : '*';
-	return wildcardAlias === arrayPath ? [arrayPath] : [wildcardAlias, arrayPath];
-}))];
+      const itemPrefixes = [
+        ...new Set(
+          prefixes.flatMap((prefix) => {
+            const arrayPath = prefix ? `${prefix}[]` : "[]";
+            const wildcardAlias = prefix ? `${prefix}.*` : "*";
+            return wildcardAlias === arrayPath ? [arrayPath] : [wildcardAlias, arrayPath];
+          }),
+        ),
+      ];
       applyNodeDocumentation(itemsObj, documentation, itemPrefixes);
       applyFieldDocumentation(itemsObj, documentation, itemPrefixes);
     }

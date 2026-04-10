@@ -49,7 +49,7 @@ export function collectEnabledInsecureOrDangerousFlags(cfg: OpenClawConfig): str
   });
   const seenFlags = new Set<string>();
   for (const [pluginId, metadata] of configContracts.entries()) {
-    const {dangerousFlags} = metadata.configContracts;
+    const { dangerousFlags } = metadata.configContracts;
     if (!dangerousFlags?.length) {
       continue;
     }

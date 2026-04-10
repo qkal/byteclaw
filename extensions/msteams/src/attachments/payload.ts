@@ -1,8 +1,6 @@
 import { buildMediaPayload } from "../../runtime-api.js";
 
-export function buildMSTeamsMediaPayload(
-  mediaList: { path: string; contentType?: string }[],
-): {
+export function buildMSTeamsMediaPayload(mediaList: { path: string; contentType?: string }[]): {
   MediaPath?: string;
   MediaType?: string;
   MediaUrl?: string;

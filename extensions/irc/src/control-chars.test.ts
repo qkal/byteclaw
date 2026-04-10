@@ -4,8 +4,8 @@ import { hasIrcControlChars, isIrcControlChar, stripIrcControlChars } from "./co
 describe("irc control char helpers", () => {
   it("detects IRC control characters by codepoint", () => {
     expect(isIrcControlChar(0x00)).toBe(true);
-    expect(isIrcControlChar(0x1F)).toBe(true);
-    expect(isIrcControlChar(0x7F)).toBe(true);
+    expect(isIrcControlChar(0x1f)).toBe(true);
+    expect(isIrcControlChar(0x7f)).toBe(true);
     expect(isIrcControlChar(0x20)).toBe(false);
   });
 

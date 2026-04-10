@@ -73,7 +73,7 @@ export function collectUnsupportedSecretRefConfigCandidates(
       });
     }
 
-    const {mappings} = hooks;
+    const { mappings } = hooks;
     if (Array.isArray(mappings)) {
       for (const [index, mapping] of mappings.entries()) {
         if (!isRecord(mapping)) {

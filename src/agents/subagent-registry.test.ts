@@ -24,7 +24,9 @@ const mocks = vi.hoisted(() => ({
   onSubagentEnded: vi.fn(async () => {}),
   persistSubagentRunsToDisk: vi.fn(),
   resetAnnounceQueuesForTests: vi.fn(),
-  resolveAgentIdFromSessionKey: vi.fn((sessionKey: string) => sessionKey.match(/^agent:([^:]+)/)?.[1] ?? "main"),
+  resolveAgentIdFromSessionKey: vi.fn(
+    (sessionKey: string) => sessionKey.match(/^agent:([^:]+)/)?.[1] ?? "main",
+  ),
   resolveAgentTimeoutMs: vi.fn(() => 1000),
   resolveContextEngine: vi.fn(),
   resolveStorePath: vi.fn(() => "/tmp/test-session-store.json"),
@@ -112,7 +114,9 @@ describe("subagent registry seam flow", () => {
       agents: { defaults: { subagents: { archiveAfterMinutes: 0 } } },
       session: { mainKey: "main", scope: "per-sender" as const },
     });
-    mocks.resolveAgentIdFromSessionKey.mockImplementation((sessionKey: string) => sessionKey.match(/^agent:([^:]+)/)?.[1] ?? "main");
+    mocks.resolveAgentIdFromSessionKey.mockImplementation(
+      (sessionKey: string) => sessionKey.match(/^agent:([^:]+)/)?.[1] ?? "main",
+    );
     mocks.resolveStorePath.mockReturnValue("/tmp/test-session-store.json");
     mocks.loadSessionStore.mockReturnValue({
       "agent:main:subagent:child": {

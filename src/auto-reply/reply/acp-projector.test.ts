@@ -3,7 +3,10 @@ import { prefixSystemMessage } from "../../infra/system-message.js";
 import { createAcpReplyProjector } from "./acp-projector.js";
 import { createAcpTestConfig as createCfg } from "./test-fixtures/acp-runtime.js";
 
-interface Delivery { kind: string; text?: string }
+interface Delivery {
+  kind: string;
+  text?: string;
+}
 
 function createProjectorHarness(cfgOverrides?: Parameters<typeof createCfg>[0]) {
   const deliveries: Delivery[] = [];

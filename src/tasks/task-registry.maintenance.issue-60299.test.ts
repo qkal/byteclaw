@@ -32,7 +32,7 @@ async function loadMaintenanceModule(params: {
   vi.resetModules();
 
   const sessionStore = params.sessionStore ?? {};
-  const {acpEntry} = params;
+  const { acpEntry } = params;
   const activeCronJobIds = new Set(params.activeCronJobIds ?? []);
   const activeRunIds = new Set(params.activeRunIds ?? []);
   const currentTasks = new Map(params.tasks.map((task) => [task.taskId, { ...task }]));

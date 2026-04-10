@@ -117,7 +117,7 @@ export function formatTargetDisplay(params: {
   const display = params.display?.trim();
   const kind =
     params.kind ??
-    (lowered.startsWith("user:") ? "user" : (lowered.startsWith("channel:") ? "group" : undefined));
+    (lowered.startsWith("user:") ? "user" : lowered.startsWith("channel:") ? "group" : undefined);
 
   if (display) {
     if (display.startsWith("#") || display.startsWith("@")) {
@@ -242,12 +242,12 @@ async function listDirectoryEntries(params: {
   const useLive = params.source === "live";
   const fn =
     params.kind === "user"
-      ? (useLive
+      ? useLive
         ? (directory.listPeersLive ?? directory.listPeers)
-        : directory.listPeers)
-      : (useLive
+        : directory.listPeers
+      : useLive
         ? (directory.listGroupsLive ?? directory.listGroups)
-        : directory.listGroups);
+        : directory.listGroups;
   if (!fn) {
     return [];
   }
@@ -404,7 +404,7 @@ export async function resolveMessagingTarget(params: {
   });
   const match = resolveMatch({ channel: params.channel, entries, query });
   if (match.kind === "single") {
-    const {entry} = match;
+    const { entry } = match;
     return {
       ok: true,
       target: {

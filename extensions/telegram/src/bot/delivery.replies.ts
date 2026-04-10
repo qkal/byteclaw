@@ -624,9 +624,9 @@ export async function deliverReplies(params: {
     let reply = originalReply;
     const mediaList = reply?.mediaUrls?.length
       ? reply.mediaUrls
-      : (reply?.mediaUrl
+      : reply?.mediaUrl
         ? [reply.mediaUrl]
-        : []);
+        : [];
     const hasMedia = mediaList.length > 0;
     if (!reply?.text && !hasMedia) {
       if (reply?.audioAsVoice) {

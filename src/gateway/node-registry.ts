@@ -43,7 +43,7 @@ export class NodeRegistry {
   private pendingInvokes = new Map<string, PendingInvoke>();
 
   register(client: GatewayWsClient, opts: { remoteIp?: string | undefined }) {
-    const {connect} = client;
+    const { connect } = client;
     const nodeId = connect.device?.id ?? connect.client.id;
     const caps = Array.isArray(connect.caps) ? connect.caps : [];
     const commands = Array.isArray((connect as { commands?: string[] }).commands)

@@ -14,7 +14,10 @@ import {
   normalizeCompatibilityConfig as normalizeTelegramCompatibilityConfig,
 } from "./doctor-contract.js";
 
-interface TelegramAllowFromUsernameHit { path: string; entry: string }
+interface TelegramAllowFromUsernameHit {
+  path: string;
+  entry: string;
+}
 type DoctorAllowFromList = (string | number)[];
 type DoctorAccountRecord = Record<string, unknown>;
 

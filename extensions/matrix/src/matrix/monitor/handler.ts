@@ -513,8 +513,8 @@ export function createMatrixRoomMessageHandler(params: MatrixMonitorHandlerParam
         locationPayload: MatrixLocationPayload | null;
         selfUserId: string;
       }) => {
-        let {content} = params;
-        const {isDirectMessage} = params;
+        let { content } = params;
+        const { isDirectMessage } = params;
         const isRoom = !isDirectMessage;
         const { locationPayload, selfUserId } = params;
         if (isRoom && groupPolicy === "disabled") {
@@ -813,7 +813,7 @@ export function createMatrixRoomMessageHandler(params: MatrixMonitorHandlerParam
           hasControlCommand: hasControlCommandInMessage,
           useAccessGroups,
         });
-        const {commandAuthorized} = commandGate;
+        const { commandAuthorized } = commandGate;
         if (isRoom && commandGate.shouldBlock) {
           logInboundDrop({
             channel: "matrix",
@@ -1006,9 +1006,9 @@ export function createMatrixRoomMessageHandler(params: MatrixMonitorHandlerParam
           : undefined;
       const resolvedIngressResult =
         historyLimit > 0
-          ? (ingressResult?.deferredPrefix
+          ? ingressResult?.deferredPrefix
             ? await continueIngress(ingressResult.deferredPrefix)
-            : ingressResult?.ingressResult)
+            : ingressResult?.ingressResult
           : await (async () => {
               const prefix = await readIngressPrefix();
               if (!prefix) {
@@ -1128,7 +1128,7 @@ export function createMatrixRoomMessageHandler(params: MatrixMonitorHandlerParam
         ? _route.mainSessionKey || _route.sessionKey
         : _route.sessionKey;
       const sharedDmContextNotice = isDirectMessage
-        ? (hasExplicitSessionBinding
+        ? hasExplicitSessionBinding
           ? null
           : resolveMatrixSharedDmContextNotice({
               accountId: _route.accountId,
@@ -1138,7 +1138,7 @@ export function createMatrixRoomMessageHandler(params: MatrixMonitorHandlerParam
               sentRooms: sharedDmContextNoticeRooms,
               sessionKey: sharedDmNoticeSessionKey,
               storePath,
-            }))
+            })
         : null;
       const body = core.channel.reply.formatAgentEnvelope({
         body: textWithId,

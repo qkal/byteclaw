@@ -168,7 +168,7 @@ function containsControlCharacters(value: string): boolean {
     if (code === undefined) {
       continue;
     }
-    if (code <= 0x1F || (code >= 0x7F && code <= 0x9F)) {
+    if (code <= 0x1f || (code >= 0x7f && code <= 0x9f)) {
       return true;
     }
   }
@@ -258,9 +258,9 @@ async function prepareAgentCommandExecution(
   const timeoutSecondsRaw =
     opts.timeout !== undefined
       ? Number.parseInt(String(opts.timeout), 10)
-      : (isSubagentLane
+      : isSubagentLane
         ? 0
-        : undefined);
+        : undefined;
   if (
     timeoutSecondsRaw !== undefined &&
     (Number.isNaN(timeoutSecondsRaw) || timeoutSecondsRaw < 0)
@@ -376,7 +376,7 @@ async function agentCommandInternal(
     acpManager,
     acpResolution,
   } = prepared;
-  let {sessionEntry} = prepared;
+  let { sessionEntry } = prepared;
 
   try {
     if (opts.deliver === true) {
@@ -492,7 +492,7 @@ async function agentCommandInternal(
         startedAt,
         stopReason,
       });
-      const {payloads} = result;
+      const { payloads } = result;
 
       return await deliverAgentCommandResult({
         cfg,
@@ -666,12 +666,12 @@ async function agentCommandInternal(
     let providerForAuthProfileValidation = provider;
     if (hasExplicitRunOverride) {
       const explicitRef = explicitModelOverride
-        ? (explicitProviderOverride
+        ? explicitProviderOverride
           ? normalizeModelRef(explicitProviderOverride, explicitModelOverride)
-          : parseModelRef(explicitModelOverride, provider))
-        : (explicitProviderOverride
+          : parseModelRef(explicitModelOverride, provider)
+        : explicitProviderOverride
           ? normalizeModelRef(explicitProviderOverride, model)
-          : null);
+          : null;
       if (!explicitRef) {
         throw new Error("Invalid model override.");
       }
@@ -837,7 +837,7 @@ async function agentCommandInternal(
         fallbackProvider = fallbackResult.provider;
         fallbackModel = fallbackResult.model;
         if (!lifecycleEnded) {
-          const {stopReason} = result.meta;
+          const { stopReason } = result.meta;
           if (stopReason && stopReason !== "end_turn") {
             console.error(`[agent] run ${runId} ended with stopReason=${stopReason}`);
           }

@@ -54,8 +54,8 @@ export async function readLaunchAgentProgramArgumentsFromFile(plistPath: string)
     if (!programMatch) {
       return null;
     }
-    const args = [...programMatch[1].matchAll(/<string>([\s\S]*?)<\/string>/gi)].map(
-      (match) => plistUnescape(match[1] ?? "").trim(),
+    const args = [...programMatch[1].matchAll(/<string>([\s\S]*?)<\/string>/gi)].map((match) =>
+      plistUnescape(match[1] ?? "").trim(),
     );
     const workingDirMatch = plist.match(
       /<key>WorkingDirectory<\/key>\s*<string>([\s\S]*?)<\/string>/i,

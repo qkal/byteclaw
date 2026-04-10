@@ -22,7 +22,7 @@ export async function resolveMSTeamsSenderAccess(params: {
   cfg: OpenClawConfig;
   activity: MSTeamsTurnContext["activity"];
 }) {
-  const {activity} = params;
+  const { activity } = params;
   const msteamsCfg = params.cfg.channels?.msteams;
   const conversationId = normalizeMSTeamsConversationId(activity.conversation?.id ?? "unknown");
   const convType = normalizeOptionalLowercaseString(activity.conversation?.conversationType);
@@ -56,7 +56,7 @@ export async function resolveMSTeamsSenderAccess(params: {
     !isDirectMessage && msteamsCfg
       ? (msteamsCfg.groupPolicy ?? defaultGroupPolicy ?? "allowlist")
       : "disabled";
-  const {effectiveGroupAllowFrom} = resolvedAllowFromLists;
+  const { effectiveGroupAllowFrom } = resolvedAllowFromLists;
   const allowNameMatching = isDangerousNameMatchingEnabled(msteamsCfg);
   const channelGate = resolveMSTeamsRouteConfig({
     allowNameMatching,

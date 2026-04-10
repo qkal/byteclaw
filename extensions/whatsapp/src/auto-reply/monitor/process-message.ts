@@ -76,7 +76,7 @@ async function resolveWhatsAppCommandAuthorized(params: {
         provider: "whatsapp",
       });
   const dmAllowFrom =
-    configuredAllowFrom.length > 0 ? configuredAllowFrom : (self.e164 ? [self.e164] : []);
+    configuredAllowFrom.length > 0 ? configuredAllowFrom : self.e164 ? [self.e164] : [];
   const access = resolveDmGroupAccessWithCommandGate({
     allowFrom: dmAllowFrom,
     command: {
@@ -192,7 +192,8 @@ export async function processMessage(params: {
         currentMessage: combinedBody,
         entries: historyEntries,
         excludeLast: false,
-        formatEntry: (entry) => formatInboundEnvelope({
+        formatEntry: (entry) =>
+          formatInboundEnvelope({
             channel: "WhatsApp",
             from: conversationId,
             timestamp: entry.timestamp,

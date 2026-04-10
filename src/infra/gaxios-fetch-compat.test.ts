@@ -38,10 +38,13 @@ describe("gaxios fetch compat", () => {
     let MockGaxiosCtor!: new () => {
       request(config: MockRequestConfig): Promise<{ data: string } & object>;
     };
-    const fetchMock = vi.fn<FetchLike>(async () => new Response("ok", {
-        headers: { "content-type": "text/plain" },
-        status: 200,
-      }));
+    const fetchMock = vi.fn<FetchLike>(
+      async () =>
+        new Response("ok", {
+          headers: { "content-type": "text/plain" },
+          status: 200,
+        }),
+    );
 
     vi.stubGlobal("fetch", fetchMock);
     class MockGaxios {
@@ -93,10 +96,13 @@ describe("gaxios fetch compat", () => {
   });
 
   it("translates proxy-agent-like inputs into undici dispatchers for native fetch", async () => {
-    const fetchMock = vi.fn<FetchLike>(async () => new Response("ok", {
-        headers: { "content-type": "text/plain" },
-        status: 200,
-      }));
+    const fetchMock = vi.fn<FetchLike>(
+      async () =>
+        new Response("ok", {
+          headers: { "content-type": "text/plain" },
+          status: 200,
+        }),
+    );
     const compatFetch = createGaxiosCompatFetch(fetchMock);
     await compatFetch("https://example.com", {
       agent: { proxy: new URL("http://proxy.example:8080") },

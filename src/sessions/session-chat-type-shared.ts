@@ -23,7 +23,9 @@ function deriveBuiltInLegacySessionChatType(
 
 export function deriveSessionChatTypeFromScopedKey(
   scopedSessionKey: string,
-  deriveLegacySessionChatTypes: ((scopedSessionKey: string) => SessionKeyChatType | undefined)[] = [],
+  deriveLegacySessionChatTypes: ((
+    scopedSessionKey: string,
+  ) => SessionKeyChatType | undefined)[] = [],
 ): SessionKeyChatType {
   const tokens = new Set(scopedSessionKey.split(":").filter(Boolean));
   if (tokens.has("group")) {
@@ -53,7 +55,9 @@ export function deriveSessionChatTypeFromScopedKey(
  */
 export function deriveSessionChatTypeFromKey(
   sessionKey: string | undefined | null,
-  deriveLegacySessionChatTypes: ((scopedSessionKey: string) => SessionKeyChatType | undefined)[] = [],
+  deriveLegacySessionChatTypes: ((
+    scopedSessionKey: string,
+  ) => SessionKeyChatType | undefined)[] = [],
 ): SessionKeyChatType {
   const raw = normalizeLowercaseStringOrEmpty(sessionKey);
   if (!raw) {

@@ -632,7 +632,7 @@ export const sessionsHandlers: GatewayRequestHandlers = {
       const { entry, primaryKey } = migrateAndPruneGatewaySessionStoreKey({ cfg, key, store });
       return { entry, primaryKey };
     });
-    const {entry} = compactTarget;
+    const { entry } = compactTarget;
     const sessionId = entry?.sessionId;
     if (!sessionId) {
       respond(
@@ -1130,13 +1130,13 @@ export const sessionsHandlers: GatewayRequestHandlers = {
     }
     const loweredRequestedKey = normalizeOptionalLowercaseString(requestedKey);
     const key = requestedKey
-      ? (loweredRequestedKey === "global" || loweredRequestedKey === "unknown"
+      ? loweredRequestedKey === "global" || loweredRequestedKey === "unknown"
         ? loweredRequestedKey
         : toAgentStoreSessionKey({
             agentId,
             requestKey: requestedKey,
             mainKey: cfg.session?.mainKey,
-          }))
+          })
       : buildDashboardSessionKey(agentId);
     const target = resolveGatewaySessionStoreTarget({ cfg, key });
     const targetAgentId = resolveAgentIdFromSessionKey(target.canonicalKey);

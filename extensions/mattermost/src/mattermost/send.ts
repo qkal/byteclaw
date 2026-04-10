@@ -50,7 +50,10 @@ export interface MattermostSendResult {
   channelId: string;
 }
 
-export type MattermostReplyButtons = (MattermostInteractiveButtonInput | MattermostInteractiveButtonInput[])[];
+export type MattermostReplyButtons = (
+  | MattermostInteractiveButtonInput
+  | MattermostInteractiveButtonInput[]
+)[];
 
 type MattermostTarget =
   | { kind: "channel"; id: string }
@@ -344,9 +347,9 @@ async function resolveMattermostSendContext(
   const target =
     opaqueTarget?.kind === "user"
       ? { id: opaqueTarget.id, kind: "user" as const }
-      : (opaqueTarget?.kind === "channel"
+      : opaqueTarget?.kind === "channel"
         ? { id: opaqueTarget.id, kind: "channel" as const }
-        : parseMattermostTarget(trimmedTo));
+        : parseMattermostTarget(trimmedTo);
   // Build retry options from account config, allowing opts to override
   const accountRetryConfig: CreateDmChannelRetryOptions | undefined = account.config.dmChannelRetry
     ? {
@@ -396,7 +399,7 @@ export async function sendMessageMattermost(
     await resolveMattermostSendContext(to, opts);
 
   const client = createMattermostClient({ allowPrivateNetwork, baseUrl, botToken: token });
-  let {props} = opts;
+  let { props } = opts;
   if (!props && Array.isArray(opts.buttons) && opts.buttons.length > 0) {
     setInteractionSecret(accountId, token);
     props = buildButtonProps({

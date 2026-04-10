@@ -126,7 +126,7 @@ describe("createProductCarousel", () => {
     },
   ])("uses expected action type for product action", ({ expectedType, ...item }) => {
     const template = createProductCarousel([item]);
-    const {columns} = (template.template as { columns: { actions: Array<{ type: string }> }[] });
+    const { columns } = template.template as { columns: { actions: Array<{ type: string }> }[] };
     expect(columns[0].actions[0].type).toBe(expectedType);
   });
 });

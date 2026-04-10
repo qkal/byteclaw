@@ -453,7 +453,7 @@ async function checkReadableFile(pathname: string): Promise<{ exists: boolean; i
     await fs.access(pathname, fsSync.constants.R_OK);
     return { exists: true };
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code === "ENOENT") {
       return { exists: false };
     }
@@ -474,7 +474,7 @@ async function scanSessionFiles(agentId: string): Promise<SourceScan> {
     ).length;
     return { issues, source: "sessions", totalFiles };
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code === "ENOENT") {
       issues.push(`sessions directory missing (${shortenHomePath(sessionsDir)})`);
       return { issues, source: "sessions", totalFiles: 0 };
@@ -516,7 +516,7 @@ async function scanMemoryFiles(
         issues.push(extraCheck.issue);
       }
     } catch (error) {
-      const {code} = (error as NodeJS.ErrnoException);
+      const { code } = error as NodeJS.ErrnoException;
       if (code === "ENOENT") {
         issues.push(`additional memory path missing (${shortenHomePath(extraPath)})`);
       } else {
@@ -532,7 +532,7 @@ async function scanMemoryFiles(
     await fs.access(memoryDir, fsSync.constants.R_OK);
     dirReadable = true;
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code === "ENOENT") {
       issues.push(`memory directory missing (${shortenHomePath(memoryDir)})`);
       dirReadable = false;
@@ -550,7 +550,7 @@ async function scanMemoryFiles(
     listed = await listMemoryFiles(workspaceDir, resolvedExtraPaths);
     listedOk = true;
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (dirReadable !== null) {
       issues.push(
         `memory directory scan failed (${shortenHomePath(memoryDir)}): ${code ?? "error"}`,
@@ -595,7 +595,7 @@ async function summarizeQmdIndexArtifact(manager: MemoryManager): Promise<string
   try {
     stat = await fs.stat(dbPath);
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code === "ENOENT") {
       throw new Error(`QMD index file not found: ${shortenHomePath(dbPath)}`, { cause: error });
     }
@@ -712,7 +712,7 @@ export async function runMemoryStatus(opts: MemoryCommandOptions) {
         const sources = (
           status.sources?.length ? status.sources : ["memory"]
         ) as MemorySourceName[];
-        const {workspaceDir} = status;
+        const { workspaceDir } = status;
         const scan = workspaceDir
           ? await scanMemorySources({
               agentId,
@@ -829,9 +829,9 @@ export async function runMemoryStatus(opts: MemoryCommandOptions) {
       const vectorColor =
         vectorState === "ready"
           ? theme.success
-          : (vectorState === "unavailable"
+          : vectorState === "unavailable"
             ? theme.warn
-            : theme.muted);
+            : theme.muted;
       lines.push(`${label("Vector")} ${colorize(rich, vectorColor, vectorState)}`);
       if (status.vector.dims) {
         lines.push(`${label("Vector dims")} ${info(String(status.vector.dims))}`);
@@ -845,16 +845,16 @@ export async function runMemoryStatus(opts: MemoryCommandOptions) {
     }
     if (status.fts) {
       const ftsState = status.fts.enabled
-        ? (status.fts.available
+        ? status.fts.available
           ? "ready"
-          : "unavailable")
+          : "unavailable"
         : "disabled";
       const ftsColor =
         ftsState === "ready"
           ? theme.success
-          : (ftsState === "unavailable"
+          : ftsState === "unavailable"
             ? theme.warn
-            : theme.muted);
+            : theme.muted;
       lines.push(`${label("FTS")} ${colorize(rich, ftsColor, ftsState)}`);
       if (status.fts.error) {
         lines.push(`${label("FTS error")} ${warn(status.fts.error)}`);

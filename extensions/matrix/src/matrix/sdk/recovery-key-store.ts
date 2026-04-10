@@ -237,7 +237,7 @@ export class MatrixRecoveryKeyStore {
     } = {},
   ): Promise<void> {
     let status: MatrixSecretStorageStatus | null = null;
-    const {getSecretStorageStatus} = crypto; // Pragma: allowlist secret
+    const { getSecretStorageStatus } = crypto; // Pragma: allowlist secret
     if (typeof getSecretStorageStatus === "function") {
       try {
         status = await getSecretStorageStatus.call(crypto);
@@ -263,7 +263,7 @@ export class MatrixRecoveryKeyStore {
       : null;
 
     if (recoveryKey && status?.defaultKeyId) {
-      const {defaultKeyId} = status;
+      const { defaultKeyId } = status;
       this.rememberSecretStorageKey(defaultKeyId, recoveryKey.privateKey, recoveryKey.keyInfo);
       if (!stagedRecovery && storedRecovery && storedRecovery.keyId !== defaultKeyId) {
         this.saveRecoveryKeyToDisk({

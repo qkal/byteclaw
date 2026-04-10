@@ -164,9 +164,10 @@ describe("CronService - session reaper runs in finally block (#31946)", () => {
     await withCronServiceStateForTest(state, async () => {
       await expect(onTimer(state)).rejects.toThrow("Failed to parse cron store");
 
-      const updatedSessionStore = JSON.parse(
-        await fs.readFile(sessionStorePath, "utf8"),
-      ) as Record<string, unknown>;
+      const updatedSessionStore = JSON.parse(await fs.readFile(sessionStorePath, "utf8")) as Record<
+        string,
+        unknown
+      >;
       expect(updatedSessionStore).toEqual({});
       expect(state.running).toBe(false);
     });

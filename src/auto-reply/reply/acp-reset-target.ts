@@ -76,9 +76,9 @@ function resolveRawConfiguredAcpSessionKey(params: {
     const matchedConversationId =
       peerId === params.conversationId
         ? params.conversationId
-        : (peerId && peerId === params.parentConversationId
+        : peerId && peerId === params.parentConversationId
           ? params.parentConversationId
-          : undefined);
+          : undefined;
     if (!matchedConversationId) {
       continue;
     }

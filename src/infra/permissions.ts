@@ -25,28 +25,28 @@ export function hasPermissionModelEnabled(): boolean {
  */
 export function getPermissionConfig(): PermissionConfig {
   const config: PermissionConfig = {};
-  
+
   // File system read permissions
   if (process.env.OPENCLAW_ALLOW_FS_READ) {
     config.allowFsRead = process.env.OPENCLAW_ALLOW_FS_READ.split(",").map((p) => p.trim());
   }
-  
+
   // File system write permissions
   if (process.env.OPENCLAW_ALLOW_FS_WRITE) {
     config.allowFsWrite = process.env.OPENCLAW_ALLOW_FS_WRITE.split(",").map((p) => p.trim());
   }
-  
+
   // Child process permission
   config.allowChildProcess = process.env.OPENCLAW_ALLOW_CHILD_PROCESS === "1";
-  
+
   // Worker threads permission
   config.allowWorkerThreads = process.env.OPENCLAW_ALLOW_WORKER_THREADS === "1";
-  
+
   // Network permissions
   if (process.env.OPENCLAW_ALLOW_NET) {
     config.allowNet = process.env.OPENCLAW_ALLOW_NET.split(",").map((p) => p.trim());
   }
-  
+
   return config;
 }
 
@@ -59,40 +59,40 @@ export function validatePermissions(required: PermissionConfig): void {
     // If permission model is not enabled, permissions are not enforced
     return;
   }
-  
+
   const config = getPermissionConfig();
   const errors: string[] = [];
-  
+
   // Check file system read permissions
   if (required.allowFsRead) {
     const missing = required.allowFsRead.filter(
-      (path) => !config.allowFsRead?.includes(path) && !config.allowFsRead?.includes("*")
+      (path) => !config.allowFsRead?.includes(path) && !config.allowFsRead?.includes("*"),
     );
     if (missing.length > 0) {
       errors.push(`Missing file system read permissions for: ${missing.join(", ")}`);
     }
   }
-  
+
   // Check file system write permissions
   if (required.allowFsWrite) {
     const missing = required.allowFsWrite.filter(
-      (path) => !config.allowFsWrite?.includes(path) && !config.allowFsWrite?.includes("*")
+      (path) => !config.allowFsWrite?.includes(path) && !config.allowFsWrite?.includes("*"),
     );
     if (missing.length > 0) {
       errors.push(`Missing file system write permissions for: ${missing.join(", ")}`);
     }
   }
-  
+
   // Check child process permission
   if (required.allowChildProcess && !config.allowChildProcess) {
     errors.push("Child process permission is required but not granted");
   }
-  
+
   // Check worker threads permission
   if (required.allowWorkerThreads && !config.allowWorkerThreads) {
     errors.push("Worker threads permission is required but not granted");
   }
-  
+
   if (errors.length > 0) {
     throw new Error(`Permission validation failed:\n${errors.join("\n")}`);
   }

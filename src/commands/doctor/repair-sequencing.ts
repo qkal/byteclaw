@@ -23,7 +23,7 @@ export async function runDoctorRepairSequence(params: {
   changeNotes: string[];
   warningNotes: string[];
 }> {
-  let {state} = params;
+  let { state } = params;
   const changeNotes: string[] = [];
   const warningNotes: string[] = [];
   const sanitizeLines = (lines: string[]) => lines.map((line) => sanitizeForLog(line)).join("\n");

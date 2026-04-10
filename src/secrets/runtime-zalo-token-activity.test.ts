@@ -11,21 +11,21 @@ if (!zaloSecrets?.collectRuntimeConfigAssignments) {
 }
 
 vi.mock("../channels/plugins/bootstrap-registry.js", () => ({
-    getBootstrapChannelPlugin: (id: string) =>
-      id === "zalo"
-        ? {
-            secrets: {
-              collectRuntimeConfigAssignments: zaloSecrets.collectRuntimeConfigAssignments,
-            },
-          }
-        : undefined,
-    getBootstrapChannelSecrets: (id: string) =>
-      id === "zalo"
-        ? {
+  getBootstrapChannelPlugin: (id: string) =>
+    id === "zalo"
+      ? {
+          secrets: {
             collectRuntimeConfigAssignments: zaloSecrets.collectRuntimeConfigAssignments,
-          }
-        : undefined,
-  }));
+          },
+        }
+      : undefined,
+  getBootstrapChannelSecrets: (id: string) =>
+    id === "zalo"
+      ? {
+          collectRuntimeConfigAssignments: zaloSecrets.collectRuntimeConfigAssignments,
+        }
+      : undefined,
+}));
 
 function asConfig(value: unknown): OpenClawConfig {
   return value as OpenClawConfig;

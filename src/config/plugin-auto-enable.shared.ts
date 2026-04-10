@@ -58,19 +58,19 @@ function collectModelRefs(cfg: OpenClawConfig): string[] {
     if (!agent) {
       return;
     }
-    const {model} = agent;
+    const { model } = agent;
     if (typeof model === "string") {
       pushModelRef(model);
     } else if (isRecord(model)) {
       pushModelRef(model.primary);
-      const {fallbacks} = model;
+      const { fallbacks } = model;
       if (Array.isArray(fallbacks)) {
         for (const entry of fallbacks) {
           pushModelRef(entry);
         }
       }
     }
-    const {models} = agent;
+    const { models } = agent;
     if (isRecord(models)) {
       for (const key of Object.keys(models)) {
         pushModelRef(key);
@@ -511,7 +511,7 @@ function formatAutoEnableChange(entry: PluginAutoEnableCandidate): string {
   let reason = resolvePluginAutoEnableCandidateReason(entry).trim();
   const channelId = normalizeChatChannelId(entry.pluginId);
   if (channelId) {
-    const {label} = getChatChannelMeta(channelId);
+    const { label } = getChatChannelMeta(channelId);
     reason = reason.replace(new RegExp(`^${channelId}\\b`, "i"), label);
   }
   return `${reason}, enabled automatically.`;

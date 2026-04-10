@@ -50,8 +50,8 @@ export async function resolveCronModelSelection(
     defaultModel: DEFAULT_MODEL,
     defaultProvider: DEFAULT_PROVIDER,
   });
-  let {provider} = resolvedDefault;
-  let {model} = resolvedDefault;
+  let { provider } = resolvedDefault;
+  let { model } = resolvedDefault;
 
   let catalog: Awaited<ReturnType<typeof loadModelCatalog>> | undefined;
   const loadCatalogOnce = async () => {

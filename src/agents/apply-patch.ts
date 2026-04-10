@@ -90,7 +90,7 @@ export function createApplyPatchTool(
   options: { cwd?: string; sandbox?: SandboxApplyPatchConfig; workspaceOnly?: boolean } = {},
 ): AgentTool<typeof applyPatchSchema, ApplyPatchToolDetails> {
   const cwd = options.cwd ?? process.cwd();
-  const {sandbox} = options;
+  const { sandbox } = options;
   const workspaceOnly = options.workspaceOnly !== false;
 
   return {
@@ -409,7 +409,7 @@ function checkPatchBoundariesLenient(lines: string[]): string[] {
   const first = lines[0];
   const last = lines[lines.length - 1];
   if ((first === "<<EOF" || first === "<<'EOF'" || first === '<<"EOF"') && last.endsWith("EOF")) {
-    const inner = lines.slice(1, - 1);
+    const inner = lines.slice(1, -1);
     const innerError = checkPatchBoundariesStrict(inner);
     if (!innerError) {
       return inner;

@@ -411,7 +411,9 @@ describe("runPreparedReply media-only handling", () => {
         updatedAt: 1,
       },
     };
-    vi.mocked(resolveSessionAuthProfileOverride).mockImplementation(async ({ sessionEntry }) => sessionEntry?.authProfileOverride);
+    vi.mocked(resolveSessionAuthProfileOverride).mockImplementation(
+      async ({ sessionEntry }) => sessionEntry?.authProfileOverride,
+    );
     vi.mocked(queueSettings.resolveQueueSettings).mockReturnValueOnce({ mode: "interrupt" });
     const previousRun = createReplyOperation({
       resetTriggered: false,

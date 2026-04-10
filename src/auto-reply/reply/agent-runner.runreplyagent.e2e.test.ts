@@ -1110,7 +1110,7 @@ describe("runReplyAgent typing (heartbeat)", () => {
 
     const { run } = createMinimalRun();
     const res = await run();
-    const payloads = Array.isArray(res) ? res : (res ? [res] : []);
+    const payloads = Array.isArray(res) ? res : res ? [res] : [];
     expect(payloads.length).toBe(1);
     expect(payloads[0]?.text).toContain("LLM connection failed");
     expect(payloads[0]?.text).toContain("socket connection was closed unexpectedly");

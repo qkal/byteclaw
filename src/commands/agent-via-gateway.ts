@@ -112,7 +112,7 @@ export async function agentViaGatewayCommand(opts: AgentCliOpts, runtime: Runtim
       ? NO_GATEWAY_TIMEOUT_MS // No timeout (timer-safe max)
       : Math.max(10_000, (timeoutSeconds + 30) * 1000);
 
-  const {sessionKey} = resolveSessionKeyForRequest({
+  const { sessionKey } = resolveSessionKeyForRequest({
     agentId,
     cfg,
     sessionId: opts.sessionId,

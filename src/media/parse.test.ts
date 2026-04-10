@@ -46,7 +46,10 @@ describe("splitMediaFromOutput", () => {
     ["./screenshots/image.png", "MEDIA:./screenshots/image.png"],
     ["media/inbound/image.png", "MEDIA:media/inbound/image.png"],
     ["./screenshot.png", "  MEDIA:./screenshot.png"],
-    [String.raw`C:\Users\pete\Pictures\snap.png`, String.raw`MEDIA:C:\Users\pete\Pictures\snap.png`],
+    [
+      String.raw`C:\Users\pete\Pictures\snap.png`,
+      String.raw`MEDIA:C:\Users\pete\Pictures\snap.png`,
+    ],
     ["/tmp/tts-fAJy8C/voice-1770246885083.opus", "MEDIA:/tmp/tts-fAJy8C/voice-1770246885083.opus"],
     ["image.png", "MEDIA:image.png"],
   ] as const)("accepts supported media path variant: %s", (expectedPath, input) => {

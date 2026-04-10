@@ -438,7 +438,7 @@ async function invokeNodeCommand(params: {
 
   try {
     const raw = await params.client.request("node.invoke", invokeParams);
-    const {payload} = asRecord(raw);
+    const { payload } = asRecord(raw);
     return {
       command: params.command,
       durationMs: Math.max(1, Date.now() - startedAt),

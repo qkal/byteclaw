@@ -43,8 +43,8 @@ function parseInlineCodeSpans(
   initialState: InlineCodeState,
 ): InlineCodeSpansResult {
   const spans: [number, number][] = [];
-  let {open} = initialState;
-  let {ticks} = initialState;
+  let { open } = initialState;
+  let { ticks } = initialState;
   let openStart = open ? 0 : -1;
 
   let i = 0;

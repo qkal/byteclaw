@@ -580,7 +580,7 @@ function validatePluginConfig(params: {
   cacheKey?: string;
   value?: unknown;
 }): { ok: boolean; value?: Record<string, unknown>; errors?: string[] } {
-  const {schema} = params;
+  const { schema } = params;
   if (!schema) {
     return { ok: true, value: params.value as Record<string, unknown> | undefined };
   }
@@ -1276,13 +1276,15 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
     const manifestByRoot = new Map(
       manifestRegistry.plugins.map((record) => [record.rootDir, record]),
     );
-    const orderedCandidates = [...discovery.candidates].toSorted((left, right) => compareDuplicateCandidateOrder({
+    const orderedCandidates = [...discovery.candidates].toSorted((left, right) =>
+      compareDuplicateCandidateOrder({
         env,
         left,
         manifestByRoot,
         provenance,
         right,
-      }));
+      }),
+    );
 
     const seenIds = new Map<string, PluginRecord["origin"]>();
     const memorySlot = normalized.slots.memory;
@@ -1384,7 +1386,7 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
       };
 
       const registrationMode = enableState.enabled
-        ? (!validateOnly &&
+        ? !validateOnly &&
           shouldLoadChannelPluginInSetupRuntime({
             cfg,
             env,
@@ -1395,13 +1397,13 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
               manifestRecord.startupDeferConfiguredChannelFullLoadUntilAfterListen,
           })
           ? "setup-runtime"
-          : "full")
-        : (includeSetupOnlyChannelPlugins &&
+          : "full"
+        : includeSetupOnlyChannelPlugins &&
             !validateOnly &&
             onlyPluginIdSet &&
             manifestRecord.channels.length > 0
           ? "setup-only"
-          : null);
+          : null;
 
       if (!registrationMode) {
         record.status = "disabled";
@@ -1625,8 +1627,8 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
       }
 
       const resolved = resolvePluginModuleExport(mod);
-      const {definition} = resolved;
-      const {register} = resolved;
+      const { definition } = resolved;
+      const { register } = resolved;
 
       if (definition?.id && definition.id !== record.id) {
         pushPluginLoadError(
@@ -1873,13 +1875,15 @@ export async function loadOpenClawPluginCliRegistry(
   const manifestByRoot = new Map(
     manifestRegistry.plugins.map((record) => [record.rootDir, record]),
   );
-  const orderedCandidates = [...discovery.candidates].toSorted((left, right) => compareDuplicateCandidateOrder({
+  const orderedCandidates = [...discovery.candidates].toSorted((left, right) =>
+    compareDuplicateCandidateOrder({
       env,
       left,
       manifestByRoot,
       provenance,
       right,
-    }));
+    }),
+  );
 
   const seenIds = new Map<string, PluginRecord["origin"]>();
   const memorySlot = normalized.slots.memory;
@@ -2059,8 +2063,8 @@ export async function loadOpenClawPluginCliRegistry(
     }
 
     const resolved = resolvePluginModuleExport(mod);
-    const {definition} = resolved;
-    const {register} = resolved;
+    const { definition } = resolved;
+    const { register } = resolved;
 
     if (definition?.id && definition.id !== record.id) {
       pushPluginLoadError(

@@ -49,7 +49,7 @@ describe("downloadLineMedia", () => {
 
   it("does not derive temp file path from external messageId", async () => {
     const messageId = "a/../../../../etc/passwd";
-    const jpeg = Buffer.from([0xFF, 0xD8, 0xFF, 0x00]);
+    const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0x00]);
     getMessageContentMock.mockResolvedValueOnce(chunks([jpeg]));
 
     const writeSpy = vi.spyOn(fs.promises, "writeFile").mockResolvedValueOnce(undefined);
@@ -84,7 +84,7 @@ describe("downloadLineMedia", () => {
 
   it("classifies M4A ftyp major brand as audio/mp4", async () => {
     const m4aHeader = Buffer.from([
-      0x00, 0x00, 0x00, 0x1C, 0x66, 0x74, 0x79, 0x70, 0x4D, 0x34, 0x41, 0x20,
+      0x00, 0x00, 0x00, 0x1c, 0x66, 0x74, 0x79, 0x70, 0x4d, 0x34, 0x41, 0x20,
     ]);
     getMessageContentMock.mockResolvedValueOnce(chunks([m4aHeader]));
     const writeSpy = vi.spyOn(fs.promises, "writeFile").mockResolvedValueOnce(undefined);
@@ -99,7 +99,7 @@ describe("downloadLineMedia", () => {
 
   it("detects MP4 video from ftyp major brand (isom)", async () => {
     const mp4 = Buffer.from([
-      0x00, 0x00, 0x00, 0x1C, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D,
+      0x00, 0x00, 0x00, 0x1c, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6f, 0x6d,
     ]);
     getMessageContentMock.mockResolvedValueOnce(chunks([mp4]));
     vi.spyOn(fs.promises, "writeFile").mockResolvedValueOnce(undefined);

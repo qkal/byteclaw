@@ -21,9 +21,9 @@ function parseTelegramTargetForTest(raw: string): {
   const chatType =
     /^\d+$/.test(numericId) && !chatId.startsWith("-100")
       ? "direct"
-      : (chatId.startsWith("-")
+      : chatId.startsWith("-")
         ? "group"
-        : "unknown");
+        : "unknown";
   return { chatId, chatType, messageThreadId };
 }
 

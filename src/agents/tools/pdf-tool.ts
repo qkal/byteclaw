@@ -76,7 +76,10 @@ export { resolvePdfModelConfigForTool } from "./pdf-tool.model-config.js";
 // ---------------------------------------------------------------------------
 
 function buildPdfExtractionContext(prompt: string, extractions: PdfExtractedContent[]): Context {
-  const content: ({ type: "text"; text: string } | { type: "image"; data: string; mimeType: string })[] = [];
+  const content: (
+    | { type: "text"; text: string }
+    | { type: "image"; data: string; mimeType: string }
+  )[] = [];
 
   // Add extracted text and images
   for (let i = 0; i < extractions.length; i++) {
@@ -452,7 +455,12 @@ export function createPdfTool(options?: {
                 : {}),
             }
           : {
-              pdfs: loadedPdfs.map((p) => (Object.assign({pdf:p.resolvedPath}, p.rewrittenFrom?{rewrittenFrom:p.rewrittenFrom}:{}))),
+              pdfs: loadedPdfs.map((p) =>
+                Object.assign(
+                  { pdf: p.resolvedPath },
+                  p.rewrittenFrom ? { rewrittenFrom: p.rewrittenFrom } : {},
+                ),
+              ),
             };
 
       return buildTextToolResult(result, { native: result.native, ...pdfDetails });

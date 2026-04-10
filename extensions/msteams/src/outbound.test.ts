@@ -120,7 +120,7 @@ describe("msteamsOutbound cfg threading", () => {
   });
 
   it("chunks outbound text without requiring MSTeams runtime initialization", () => {
-    const {chunker} = msteamsOutbound;
+    const { chunker } = msteamsOutbound;
     if (!chunker) {
       throw new Error("msteams outbound.chunker unavailable");
     }

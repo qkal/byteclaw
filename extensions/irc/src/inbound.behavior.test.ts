@@ -13,13 +13,13 @@ const {
   shouldHandleTextCommandsMock,
   upsertPairingRequestMock,
 } = vi.hoisted(() => ({
-    buildMentionRegexesMock: vi.fn(() => []),
-    hasControlCommandMock: vi.fn(() => false),
-    matchesMentionPatternsMock: vi.fn(() => false),
-    readAllowFromStoreMock: vi.fn(async () => []),
-    shouldHandleTextCommandsMock: vi.fn(() => false),
-    upsertPairingRequestMock: vi.fn(async () => ({ code: "CODE", created: true })),
-  }));
+  buildMentionRegexesMock: vi.fn(() => []),
+  hasControlCommandMock: vi.fn(() => false),
+  matchesMentionPatternsMock: vi.fn(() => false),
+  readAllowFromStoreMock: vi.fn(async () => []),
+  shouldHandleTextCommandsMock: vi.fn(() => false),
+  upsertPairingRequestMock: vi.fn(async () => ({ code: "CODE", created: true })),
+}));
 
 function installIrcRuntime() {
   setIrcRuntime({

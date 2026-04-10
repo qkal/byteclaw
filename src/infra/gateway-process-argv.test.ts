@@ -24,8 +24,15 @@ describe("parseWindowsCmdline", () => {
 
   it("handles double-quoted paths with spaces", () => {
     expect(
-      parseWindowsCmdline(String.raw`"C:\Program Files\node.exe" "C:\my app\dist\index.js" gateway run`),
-    ).toEqual([String.raw`C:\Program Files\node.exe`, String.raw`C:\my app\dist\index.js`, "gateway", "run"]);
+      parseWindowsCmdline(
+        String.raw`"C:\Program Files\node.exe" "C:\my app\dist\index.js" gateway run`,
+      ),
+    ).toEqual([
+      String.raw`C:\Program Files\node.exe`,
+      String.raw`C:\my app\dist\index.js`,
+      "gateway",
+      "run",
+    ]);
   });
 
   it("returns empty array for empty input", () => {

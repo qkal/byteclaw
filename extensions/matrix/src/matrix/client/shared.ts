@@ -108,7 +108,7 @@ async function ensureSharedClientStarted(params: {
   }
 
   const startPromise = (async () => {
-    const {client} = params.state;
+    const { client } = params.state;
 
     // Initialize crypto if enabled
     if (params.encryption && !params.state.cryptoReady) {

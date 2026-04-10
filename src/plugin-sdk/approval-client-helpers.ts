@@ -121,7 +121,8 @@ export function createChannelExecApprovalProfile(params: {
     input: ApprovalProfileParams & { senderId?: string | null },
   ): boolean => isApprover(input) || (params.isTargetRecipient?.(input) ?? false);
 
-  const resolveTarget = (input: ApprovalProfileParams): ApprovalTarget => params.resolveConfig(input)?.target ?? "dm";
+  const resolveTarget = (input: ApprovalProfileParams): ApprovalTarget =>
+    params.resolveConfig(input)?.target ?? "dm";
 
   const shouldHandleRequest = (
     input: ApprovalProfileParams & { request: ApprovalRequest },

@@ -2,7 +2,10 @@ import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { AuthProfileCredential, AuthProfileStore } from "./auth-profiles.js";
 import { normalizeProviderId } from "./model-selection.js";
 
-export interface PiApiKeyCredential { type: "api_key"; key: string }
+export interface PiApiKeyCredential {
+  type: "api_key";
+  key: string;
+}
 export interface PiOAuthCredential {
   type: "oauth";
   access: string;

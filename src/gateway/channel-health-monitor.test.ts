@@ -261,7 +261,10 @@ describe("channel-health-monitor", () => {
         },
       },
       {
-        isHealthMonitorEnabled: vi.fn((channelId: ChannelId, accountId: string) => !(channelId === "discord" && accountId === "quiet")),
+        isHealthMonitorEnabled: vi.fn(
+          (channelId: ChannelId, accountId: string) =>
+            !(channelId === "discord" && accountId === "quiet"),
+        ),
       },
     );
     const monitor = await startAndRunCheck(manager);

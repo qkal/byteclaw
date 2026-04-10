@@ -166,11 +166,8 @@ const resolveSessionStoreLookup = (
   }
 };
 
-const createShouldEmitVerboseProgress = (params: {
-  sessionKey?: string;
-  storePath?: string;
-  fallbackLevel: string;
-}) => () => {
+const createShouldEmitVerboseProgress =
+  (params: { sessionKey?: string; storePath?: string; fallbackLevel: string }) => () => {
     if (params.sessionKey && params.storePath) {
       try {
         const store = loadSessionStore(params.storePath);
@@ -627,7 +624,7 @@ export async function dispatchReplyFromConfig(params: {
         },
       );
       if (beforeDispatchResult?.handled) {
-        const {text} = beforeDispatchResult;
+        const { text } = beforeDispatchResult;
         let queuedFinal = false;
         let routedFinalCount = 0;
         if (text) {
@@ -805,7 +802,7 @@ export async function dispatchReplyFromConfig(params: {
       }
       // Group/native flows intentionally suppress tool summary text, but media-only
       // Tool results (for example TTS audio) must still be delivered.
-      const {hasMedia} = resolveSendableOutboundReplyParts(payload);
+      const { hasMedia } = resolveSendableOutboundReplyParts(payload);
       if (!hasMedia) {
         return null;
       }

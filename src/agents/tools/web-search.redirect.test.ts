@@ -21,10 +21,13 @@ describe("web_search redirect resolution hardening", () => {
   });
 
   it("resolves redirects via SSRF-guarded HEAD requests", async () => {
-    withStrictWebToolsEndpointMock.mockImplementation(async (_params, run) => await run({
-        finalUrl: "https://example.com/final",
-        response: new Response(null, { status: 200 }),
-      }));
+    withStrictWebToolsEndpointMock.mockImplementation(
+      async (_params, run) =>
+        await run({
+          finalUrl: "https://example.com/final",
+          response: new Response(null, { status: 200 }),
+        }),
+    );
 
     const resolved = await resolveCitationRedirectUrl("https://example.com/start");
     expect(resolved).toBe("https://example.com/final");

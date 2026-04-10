@@ -462,9 +462,9 @@ describe("acp translator stop reason mapping", () => {
         }
         if (method === "agent.wait") {
           return params?.runId === acceptedRunId && acceptedRunId
-            ? (acceptedWaitCount++ === 0
+            ? acceptedWaitCount++ === 0
               ? { status: "timeout" }
-              : { status: "ok" })
+              : { status: "ok" }
             : { status: "timeout" };
         }
         return {};

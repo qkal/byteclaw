@@ -19,7 +19,7 @@ function extractMessageSenderLabel(entry: Record<string, unknown>): string | nul
       if (!item || typeof item !== "object") {
         continue;
       }
-      const {text} = (item as { text?: unknown });
+      const { text } = item as { text?: unknown };
       if (typeof text !== "string") {
         continue;
       }

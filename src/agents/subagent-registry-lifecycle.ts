@@ -9,12 +9,8 @@ import {
   setDetachedTaskDeliveryStatusByRunId,
 } from "../tasks/task-executor.js";
 import { normalizeDeliveryContext } from "../utils/delivery-context.js";
-import type {
-  runSubagentAnnounceFlow} from "./subagent-announce.js";
-import {
-  type SubagentRunOutcome,
-  captureSubagentCompletionReply,
-} from "./subagent-announce.js";
+import type { runSubagentAnnounceFlow } from "./subagent-announce.js";
+import { type SubagentRunOutcome, captureSubagentCompletionReply } from "./subagent-announce.js";
 import {
   SUBAGENT_ENDED_REASON_COMPLETE,
   type SubagentLifecycleEndedReason,

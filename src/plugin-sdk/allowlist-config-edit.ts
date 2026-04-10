@@ -11,7 +11,10 @@ interface AllowlistConfigPaths {
   cleanupPaths?: string[][];
 }
 
-export interface AllowlistGroupOverride { label: string; entries: string[] }
+export interface AllowlistGroupOverride {
+  label: string;
+  entries: string[];
+}
 export type AllowlistNameResolution = {
   input: string;
   resolved: boolean;

@@ -398,9 +398,9 @@ export async function runConfigureWizard(
           {
             hint: !remoteUrl
               ? "No remote URL configured yet"
-              : (remoteProbe?.ok
+              : remoteProbe?.ok
                 ? `Gateway reachable (${remoteUrl})`
-                : `Configured but unreachable (${remoteUrl})`),
+                : `Configured but unreachable (${remoteUrl})`,
             label: "Remote (info-only)",
             value: "remote",
           },

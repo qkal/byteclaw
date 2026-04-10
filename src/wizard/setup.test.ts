@@ -682,7 +682,7 @@ describe("runSetupWizard", () => {
       }
     }
 
-    const {calls} = (note as unknown as { mock: { calls: unknown[][] } }).mock;
+    const { calls } = (note as unknown as { mock: { calls: unknown[][] } }).mock;
     expect(
       calls.some(
         (call) =>

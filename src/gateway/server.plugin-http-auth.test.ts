@@ -41,7 +41,7 @@ function respondJsonRoute(res: ServerResponse, route: string): true {
 
 function createHealthzPluginHandler() {
   return vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-    const {pathname} = new URL(req.url ?? "/", "http://localhost");
+    const { pathname } = new URL(req.url ?? "/", "http://localhost");
     if (pathname !== "/healthz") {
       return false;
     }
@@ -190,7 +190,7 @@ describe("gateway plugin HTTP auth boundary", () => {
 
   test("requires gateway auth for protected plugin route space and allows authenticated pass-through", async () => {
     const handlePluginRequest = vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-      const {pathname} = new URL(req.url ?? "/", "http://localhost");
+      const { pathname } = new URL(req.url ?? "/", "http://localhost");
       if (pathname === "/api/channels") {
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -446,7 +446,7 @@ describe("gateway plugin HTTP auth boundary", () => {
 
   test("allows unauthenticated Mattermost slash callback routes while keeping other channel routes protected", async () => {
     const handlePluginRequest = vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-      const {pathname} = new URL(req.url ?? "/", "http://localhost");
+      const { pathname } = new URL(req.url ?? "/", "http://localhost");
       if (pathname === "/api/channels/mattermost/command") {
         res.statusCode = 200;
         res.end("ok:mm-callback");
@@ -487,7 +487,7 @@ describe("gateway plugin HTTP auth boundary", () => {
 
   test("does not bypass auth when mattermost callbackPath points to non-mattermost channel routes", async () => {
     const handlePluginRequest = vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-      const {pathname} = new URL(req.url ?? "/", "http://localhost");
+      const { pathname } = new URL(req.url ?? "/", "http://localhost");
       if (pathname === "/api/channels/nostr/default/profile") {
         res.statusCode = 200;
         res.end("ok:nostr");
@@ -519,7 +519,7 @@ describe("gateway plugin HTTP auth boundary", () => {
 
   test("keeps wildcard plugin handlers ungated when auth enforcement predicate excludes their paths", async () => {
     const handlePluginRequest = vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-      const {pathname} = new URL(req.url ?? "/", "http://localhost");
+      const { pathname } = new URL(req.url ?? "/", "http://localhost");
       if (pathname === "/plugin/routed") {
         return respondJsonRoute(res, "routed");
       }
@@ -558,7 +558,7 @@ describe("gateway plugin HTTP auth boundary", () => {
 
   test("uses /api/channels auth by default while keeping wildcard handlers ungated with no predicate", async () => {
     const handlePluginRequest = vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-      const {pathname} = new URL(req.url ?? "/", "http://localhost");
+      const { pathname } = new URL(req.url ?? "/", "http://localhost");
       if (canonicalizePluginPath(pathname) === "/api/channels/nostr/default/profile") {
         return respondJsonRoute(res, "channel-default");
       }
@@ -613,7 +613,7 @@ describe("gateway plugin HTTP auth boundary", () => {
 
   test("serves plugin routes before control ui spa fallback", async () => {
     const handlePluginRequest = vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-      const {pathname} = new URL(req.url ?? "/", "http://localhost");
+      const { pathname } = new URL(req.url ?? "/", "http://localhost");
       if (pathname === "/plugins/diffs/view/demo-id/demo-token") {
         res.statusCode = 200;
         res.setHeader("Content-Type", "text/html; charset=utf-8");
@@ -640,7 +640,7 @@ describe("gateway plugin HTTP auth boundary", () => {
 
   test("passes POST webhook routes through root-mounted control ui to plugins", async () => {
     const handlePluginRequest = vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-      const {pathname} = new URL(req.url ?? "/", "http://localhost");
+      const { pathname } = new URL(req.url ?? "/", "http://localhost");
       if (req.method !== "POST" || pathname !== "/bluebubbles-webhook") {
         return false;
       }
@@ -668,7 +668,7 @@ describe("gateway plugin HTTP auth boundary", () => {
 
   test("plugin routes take priority over control ui catch-all", async () => {
     const handlePluginRequest = vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-      const {pathname} = new URL(req.url ?? "/", "http://localhost");
+      const { pathname } = new URL(req.url ?? "/", "http://localhost");
       if (pathname === "/my-plugin/inbound") {
         res.statusCode = 200;
         res.setHeader("Content-Type", "text/plain; charset=utf-8");

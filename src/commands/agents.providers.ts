@@ -55,9 +55,9 @@ export async function buildProviderStatusIndex(
       const snapshot = plugin.config.describeAccount?.(account, cfg);
       const enabled = plugin.config.isEnabled
         ? plugin.config.isEnabled(account, cfg)
-        : (typeof snapshot?.enabled === "boolean"
+        : typeof snapshot?.enabled === "boolean"
           ? snapshot.enabled
-          : (account as { enabled?: boolean }).enabled);
+          : (account as { enabled?: boolean }).enabled;
       const configured = plugin.config.isConfigured
         ? await plugin.config.isConfigured(account, cfg)
         : snapshot?.configured;
@@ -71,12 +71,12 @@ export async function buildProviderStatusIndex(
           enabled: resolvedEnabled,
         }) ??
         (typeof snapshot?.linked === "boolean"
-          ? (snapshot.linked
+          ? snapshot.linked
             ? "linked"
-            : "not linked")
-          : (resolvedConfigured
+            : "not linked"
+          : resolvedConfigured
             ? "configured"
-            : "not configured"));
+            : "not configured");
       const name = snapshot?.name ?? (account as { name?: string }).name;
       map.set(providerAccountKey(plugin.id, accountId), {
         accountId,

@@ -66,16 +66,16 @@ async function executeCameraSnap({
 }: ExecuteNodeMediaActionParams): Promise<AgentToolResult<unknown>> {
   const node = requireString(params, "node");
   const resolvedNode = await resolveNode(gatewayOpts, node);
-  const {nodeId} = resolvedNode;
+  const { nodeId } = resolvedNode;
   const facingRaw = normalizeLowercaseStringOrEmpty(params.facing) || "front";
   const facings: CameraFacing[] =
     facingRaw === "both"
       ? ["front", "back"]
-      : (facingRaw === "front" || facingRaw === "back"
+      : facingRaw === "front" || facingRaw === "back"
         ? [facingRaw]
         : (() => {
             throw new Error("invalid facing (front|back|both)");
-          })());
+          })();
   const maxWidth =
     typeof params.maxWidth === "number" && Number.isFinite(params.maxWidth)
       ? params.maxWidth
@@ -169,7 +169,7 @@ async function executePhotosLatest({
 }: ExecuteNodeMediaActionParams): Promise<AgentToolResult<unknown>> {
   const node = requireString(params, "node");
   const resolvedNode = await resolveNode(gatewayOpts, node);
-  const {nodeId} = resolvedNode;
+  const { nodeId } = resolvedNode;
   const limitRaw =
     typeof params.limit === "number" && Number.isFinite(params.limit)
       ? Math.floor(params.limit)
@@ -276,7 +276,7 @@ async function executeCameraClip({
 }: ExecuteNodeMediaActionParams): Promise<AgentToolResult<unknown>> {
   const node = requireString(params, "node");
   const resolvedNode = await resolveNode(gatewayOpts, node);
-  const {nodeId} = resolvedNode;
+  const { nodeId } = resolvedNode;
   const facing = normalizeLowercaseStringOrEmpty(params.facing) || "front";
   if (facing !== "front" && facing !== "back") {
     throw new Error("invalid facing (front|back)");
@@ -284,9 +284,9 @@ async function executeCameraClip({
   const durationMs =
     typeof params.durationMs === "number" && Number.isFinite(params.durationMs)
       ? params.durationMs
-      : (typeof params.duration === "string"
+      : typeof params.duration === "string"
         ? parseDurationMs(params.duration)
-        : 3000);
+        : 3000;
   const includeAudio = typeof params.includeAudio === "boolean" ? params.includeAudio : true;
   const deviceId =
     typeof params.deviceId === "string" && params.deviceId.trim()
@@ -330,9 +330,9 @@ async function executeScreenRecord({
   const durationMs = Math.min(
     typeof params.durationMs === "number" && Number.isFinite(params.durationMs)
       ? params.durationMs
-      : (typeof params.duration === "string"
+      : typeof params.duration === "string"
         ? parseDurationMs(params.duration)
-        : 10_000),
+        : 10_000,
     300_000,
   );
   const fps = typeof params.fps === "number" && Number.isFinite(params.fps) ? params.fps : 10;

@@ -204,7 +204,7 @@ function getHooksForNameAndPlugin<K extends PluginHookName>(
  * Create a hook runner for a specific registry.
  */
 export function createHookRunner(registry: PluginRegistry, options: HookRunnerOptions = {}) {
-  const {logger} = options;
+  const { logger } = options;
   const catchErrors = options.catchErrors ?? true;
   const failurePolicyByHook = options.failurePolicyByHook ?? {};
 

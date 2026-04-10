@@ -173,7 +173,7 @@ export function splitMessagesByTokenShare(
 
     if (message.role === "assistant") {
       const toolCalls = extractToolCallsFromAssistant(message);
-      const {stopReason} = (message as { stopReason?: unknown });
+      const { stopReason } = message as { stopReason?: unknown };
       const keepsPending =
         stopReason !== "aborted" && stopReason !== "error" && toolCalls.length > 0;
       pendingToolCallIds = keepsPending ? new Set(toolCalls.map((t) => t.id)) : new Set();

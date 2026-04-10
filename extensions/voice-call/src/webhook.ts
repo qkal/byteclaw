@@ -156,7 +156,7 @@ export class VoiceCallWebhookServer {
    * Initialize media streaming with the selected realtime transcription provider.
    */
   private async initializeMediaStreaming(): Promise<void> {
-    const {streaming} = this.config;
+    const { streaming } = this.config;
     const pluginConfig =
       this.fullConfig ?? (this.coreConfig as unknown as OpenClawConfig | undefined);
     const { getRealtimeTranscriptionProvider, listRealtimeTranscriptionProviders } =
@@ -192,8 +192,8 @@ export class VoiceCallWebhookServer {
       );
       return;
     }
-    const {provider} = resolution;
-    const {providerConfig} = resolution;
+    const { provider } = resolution;
+    const { providerConfig } = resolution;
 
     const streamConfig: MediaStreamConfig = {
       maxConnections: streaming.maxConnections,
@@ -331,7 +331,7 @@ export class VoiceCallWebhookServer {
    */
   async start(): Promise<string> {
     const { port, bind, path: webhookPath } = this.config.serve;
-    const {streamPath} = this.config.streaming;
+    const { streamPath } = this.config.streaming;
 
     // Guard: if a server is already listening, return the existing URL.
     // This prevents EADDRINUSE when start() is called more than once on the
@@ -601,7 +601,7 @@ export class VoiceCallWebhookServer {
 
   private isRealtimeWebSocketUpgrade(req: http.IncomingMessage): boolean {
     try {
-      const {pathname} = buildRequestUrl(req.url, req.headers.host);
+      const { pathname } = buildRequestUrl(req.url, req.headers.host);
       const pattern = this.realtimeHandler?.getStreamPathPattern();
       return Boolean(pattern && pathname.startsWith(pattern));
     } catch {

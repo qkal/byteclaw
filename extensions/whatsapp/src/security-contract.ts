@@ -21,7 +21,7 @@ export function collectUnsupportedSecretRefConfigCandidates(
   }
 
   const candidates: UnsupportedSecretRefConfigCandidate[] = [];
-  const {whatsapp} = raw.channels;
+  const { whatsapp } = raw.channels;
   const creds = isRecord(whatsapp.creds) ? whatsapp.creds : null;
   if (creds) {
     candidates.push({

@@ -291,9 +291,9 @@ function formatStatus(state: ArmStateFile | null): string {
   const cmds = uniqSorted(
     state.version === 1
       ? state.removedFromDeny
-      : (state.armedCommands.length > 0
+      : state.armedCommands.length > 0
         ? state.armedCommands
-        : [...state.addedToAllow, ...state.removedFromDeny]),
+        : [...state.addedToAllow, ...state.removedFromDeny],
   );
   const cmdLabel = cmds.length > 0 ? cmds.join(", ") : "none";
   return `Phone control: armed (${until}).\nTemporarily allowed: ${cmdLabel}`;

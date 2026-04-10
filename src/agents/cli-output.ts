@@ -332,11 +332,11 @@ function parseClaudeCliStreamingDelta(params: {
   if (params.parsed.type !== "stream_event" || !isRecord(params.parsed.event)) {
     return null;
   }
-  const {event} = params.parsed;
+  const { event } = params.parsed;
   if (event.type !== "content_block_delta" || !isRecord(event.delta)) {
     return null;
   }
-  const {delta} = event;
+  const { delta } = event;
   if (delta.type !== "text_delta" || typeof delta.text !== "string") {
     return null;
   }

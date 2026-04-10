@@ -36,7 +36,7 @@ export function collectTtsApiKeyAssignments(params: {
   active?: boolean;
   inactiveReason?: string;
 }): void {
-  const {providers} = params.tts;
+  const { providers } = params.tts;
   if (isRecord(providers)) {
     for (const [providerId, providerConfig] of Object.entries(providers)) {
       if (!isRecord(providerConfig)) {

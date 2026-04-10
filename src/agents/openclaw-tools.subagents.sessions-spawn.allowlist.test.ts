@@ -57,7 +57,7 @@ function resolveSandboxRuntimeStatusFromConfig(params: {
     (cfg.agents as { defaults?: { sandbox?: unknown } } | undefined)?.defaults?.sandbox,
   );
   const sandboxed =
-    explicitMode === "all" ? true : (explicitMode === "off" ? false : defaultMode === "all");
+    explicitMode === "all" ? true : explicitMode === "off" ? false : defaultMode === "all";
   return { sandboxed };
 }
 

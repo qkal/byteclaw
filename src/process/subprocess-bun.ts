@@ -3,22 +3,19 @@
  * Uses Bun's subprocess API for improved performance.
  */
 
-import type {
-  ChildProcessWrapper,
-  SubprocessWrapperOptions,
-} from './child-process-wrapper.js';
-import { createBunChildProcessWrapper } from './child-process-wrapper-bun.js';
+import type { ChildProcessWrapper, SubprocessWrapperOptions } from "./child-process-wrapper.js";
+import { createBunChildProcessWrapper } from "./child-process-wrapper-bun.js";
 import type {
   SubprocessAbstraction,
   SubprocessOptions,
   SubprocessResult,
   SubprocessSpawnResult,
-} from './subprocess-abstraction.js';
+} from "./subprocess-abstraction.js";
 
 export class BunSubprocessAbstraction implements SubprocessAbstraction {
   isAvailable(): boolean {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return typeof (globalThis as any).Bun !== 'undefined';
+    return typeof (globalThis as any).Bun !== "undefined";
   }
 
   async exec(
@@ -29,15 +26,15 @@ export class BunSubprocessAbstraction implements SubprocessAbstraction {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Bun = (globalThis as any).Bun;
 
-    const fullCommand = command + (args.length > 0 ? ' ' + args.join(' ') : '');
+    const fullCommand = command + (args.length > 0 ? " " + args.join(" ") : "");
 
     try {
       const proc = Bun.spawn({
-        cmd: options?.shell ? ['sh', '-c', fullCommand] : [command, ...args],
+        cmd: options?.shell ? ["sh", "-c", fullCommand] : [command, ...args],
         cwd: options?.cwd,
         env: options?.env,
-        stdout: 'pipe',
-        stderr: 'pipe',
+        stdout: "pipe",
+        stderr: "pipe",
       });
 
       const stdout = await new Response(proc.stdout).arrayBuffer();
@@ -53,7 +50,7 @@ export class BunSubprocessAbstraction implements SubprocessAbstraction {
       if (error instanceof Error) {
         return {
           exitCode: 1,
-          stdout: '',
+          stdout: "",
           stderr: error.message,
         };
       }
@@ -61,36 +58,32 @@ export class BunSubprocessAbstraction implements SubprocessAbstraction {
     }
   }
 
-  spawn(
-    command: string,
-    args: string[],
-    options?: SubprocessOptions,
-  ): SubprocessSpawnResult {
+  spawn(command: string, args: string[], options?: SubprocessOptions): SubprocessSpawnResult {
     const wrapper = createBunChildProcessWrapper(
       command,
       args,
       options as SubprocessWrapperOptions,
     );
 
-    let stdout = '';
-    let stderr = '';
+    let stdout = "";
+    let stderr = "";
 
     if (wrapper.stdout) {
-      wrapper.stdout.on('data', (...args: unknown[]) => {
+      wrapper.stdout.on("data", (...args: unknown[]) => {
         const chunk = args[0] as Buffer;
         stdout += chunk.toString();
       });
     }
 
     if (wrapper.stderr) {
-      wrapper.stderr.on('data', (...args: unknown[]) => {
+      wrapper.stderr.on("data", (...args: unknown[]) => {
         const chunk = args[0] as Buffer;
         stderr += chunk.toString();
       });
     }
 
     const exitPromise = new Promise<SubprocessResult>((resolve) => {
-      wrapper.on('exit', (...args: unknown[]) => {
+      wrapper.on("exit", (...args: unknown[]) => {
         const code = args[0] as number | null;
         const signal = args[1] as NodeJS.Signals | null;
         resolve({

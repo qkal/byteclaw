@@ -23,17 +23,17 @@ const resolveStrictExistingPathsWithinRoot =
   vi.fn<typeof import("./paths.js").resolveStrictExistingPathsWithinRoot>();
 
 vi.mock("./pw-session.js", () => ({
-    ensurePageState,
-    forceDisconnectPlaywrightForTarget,
-    getPageForTargetId,
-    refLocator,
-    restoreRoleRefsForTarget,
-  }));
+  ensurePageState,
+  forceDisconnectPlaywrightForTarget,
+  getPageForTargetId,
+  refLocator,
+  restoreRoleRefsForTarget,
+}));
 
 vi.mock("./paths.js", () => ({
-    DEFAULT_UPLOAD_DIR: "/tmp/openclaw/uploads",
-    resolveStrictExistingPathsWithinRoot,
-  }));
+  DEFAULT_UPLOAD_DIR: "/tmp/openclaw/uploads",
+  resolveStrictExistingPathsWithinRoot,
+}));
 
 const { setInputFilesViaPlaywright } = await import("./pw-tools-core.interactions.js");
 

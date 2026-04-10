@@ -90,14 +90,18 @@ vi.mock("../infra/system-events.js", () => ({
   enqueueSystemEvent: mocks.enqueueSystemEvent,
 }));
 
-vi.mock("../infra/heartbeat-wake.js", async () => await mergeMockedModule(
-    await vi.importActual<typeof import("../infra/heartbeat-wake.js")>(
-      "../infra/heartbeat-wake.js",
+vi.mock(
+  "../infra/heartbeat-wake.js",
+  async () =>
+    await mergeMockedModule(
+      await vi.importActual<typeof import("../infra/heartbeat-wake.js")>(
+        "../infra/heartbeat-wake.js",
+      ),
+      () => ({
+        requestHeartbeatNow: mocks.requestHeartbeatNow,
+      }),
     ),
-    () => ({
-      requestHeartbeatNow: mocks.requestHeartbeatNow,
-    }),
-  ));
+);
 
 vi.mock("../logging/subsystem.js", () => ({
   createSubsystemLogger: vi.fn(() => ({

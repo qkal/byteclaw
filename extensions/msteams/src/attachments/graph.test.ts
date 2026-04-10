@@ -62,7 +62,10 @@ function mockBinaryResponse(data: Uint8Array, status = 200) {
   return new Response(Buffer.from(data) as BodyInit, { status });
 }
 
-interface GuardedFetchParams { url: string; init?: RequestInit }
+interface GuardedFetchParams {
+  url: string;
+  init?: RequestInit;
+}
 
 function guardedFetchResult(params: GuardedFetchParams, response: Response) {
   return {
@@ -81,7 +84,7 @@ function mockGraphMediaFetch(options: {
 }) {
   vi.mocked(fetchWithSsrFGuard).mockImplementation(async (params: GuardedFetchParams) => {
     options.fetchCalls?.push(params.url);
-    const {url} = params;
+    const { url } = params;
     if (url.endsWith(`/messages/${options.messageId}`) && !url.includes("hostedContents")) {
       return guardedFetchResult(
         params,
@@ -109,7 +112,7 @@ describe("downloadMSTeamsGraphMedia hosted content $value fallback", () => {
   });
 
   it("fetches $value endpoint when contentBytes is null but item.id exists", async () => {
-    const imageBytes = new Uint8Array([0x89, 0x50, 0x4E, 0x47]); // PNG magic bytes
+    const imageBytes = new Uint8Array([0x89, 0x50, 0x4e, 0x47]); // PNG magic bytes
 
     const fetchCalls: string[] = [];
 
@@ -160,7 +163,7 @@ describe("downloadMSTeamsGraphMedia hosted content $value fallback", () => {
       messageId: "msg-cl",
       valueResponses: {
         "/hostedContents/hosted-big/$value": new Response(
-          Buffer.from(new Uint8Array([0x89, 0x50, 0x4E, 0x47])) as BodyInit,
+          Buffer.from(new Uint8Array([0x89, 0x50, 0x4e, 0x47])) as BodyInit,
           {
             headers: { "content-length": "999999999" },
             status: 200,
@@ -183,7 +186,7 @@ describe("downloadMSTeamsGraphMedia hosted content $value fallback", () => {
 
   it("uses inline contentBytes when available instead of $value", async () => {
     const fetchCalls: string[] = [];
-    const base64Png = Buffer.from([0x89, 0x50, 0x4E, 0x47]).toString("base64");
+    const base64Png = Buffer.from([0x89, 0x50, 0x4e, 0x47]).toString("base64");
 
     mockGraphMediaFetch({
       fetchCalls,

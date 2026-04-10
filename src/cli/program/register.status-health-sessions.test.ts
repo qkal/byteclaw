@@ -24,21 +24,21 @@ const mocks = vi.hoisted(() => ({
   tasksShowCommand: vi.fn(),
 }));
 
-const {statusCommand} = mocks;
-const {healthCommand} = mocks;
-const {sessionsCommand} = mocks;
-const {sessionsCleanupCommand} = mocks;
-const {tasksListCommand} = mocks;
-const {tasksAuditCommand} = mocks;
-const {tasksMaintenanceCommand} = mocks;
-const {tasksShowCommand} = mocks;
-const {tasksNotifyCommand} = mocks;
-const {tasksCancelCommand} = mocks;
-const {flowsListCommand} = mocks;
-const {flowsShowCommand} = mocks;
-const {flowsCancelCommand} = mocks;
-const {setVerbose} = mocks;
-const {runtime} = mocks;
+const { statusCommand } = mocks;
+const { healthCommand } = mocks;
+const { sessionsCommand } = mocks;
+const { sessionsCleanupCommand } = mocks;
+const { tasksListCommand } = mocks;
+const { tasksAuditCommand } = mocks;
+const { tasksMaintenanceCommand } = mocks;
+const { tasksShowCommand } = mocks;
+const { tasksNotifyCommand } = mocks;
+const { tasksCancelCommand } = mocks;
+const { flowsListCommand } = mocks;
+const { flowsShowCommand } = mocks;
+const { flowsCancelCommand } = mocks;
+const { setVerbose } = mocks;
+const { runtime } = mocks;
 
 vi.mock("../../commands/status.js", () => ({
   statusCommand: mocks.statusCommand,

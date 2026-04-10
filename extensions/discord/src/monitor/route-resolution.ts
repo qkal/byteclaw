@@ -17,7 +17,7 @@ export function buildDiscordRoutePeer(params: {
     id: params.isDirectMessage
       ? params.directUserId?.trim() || params.conversationId
       : params.conversationId,
-    kind: params.isDirectMessage ? "direct" : (params.isGroupDm ? "group" : "channel"),
+    kind: params.isDirectMessage ? "direct" : params.isGroupDm ? "group" : "channel",
   };
 }
 

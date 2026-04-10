@@ -27,13 +27,15 @@ export function buildMediaLocalRoots(
   const resolvedStateDir = path.resolve(stateDir);
   const resolvedConfigDir = path.resolve(configDir);
   const preferredTmpDir = options.preferredTmpDir ?? resolveCachedPreferredTmpDir();
-  return [...new Set([
-	preferredTmpDir,
-	path.join(resolvedStateDir, 'media'),
-	path.join(resolvedStateDir, 'workspace'),
-	path.join(resolvedStateDir, 'sandboxes'),
-	path.join(resolvedConfigDir, 'media')
-])];
+  return [
+    ...new Set([
+      preferredTmpDir,
+      path.join(resolvedStateDir, "media"),
+      path.join(resolvedStateDir, "workspace"),
+      path.join(resolvedStateDir, "sandboxes"),
+      path.join(resolvedConfigDir, "media"),
+    ]),
+  ];
 }
 
 export function getDefaultMediaLocalRoots(): readonly string[] {

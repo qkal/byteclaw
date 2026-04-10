@@ -132,7 +132,7 @@ describe("qqbot setup", () => {
   });
 
   it("normalizes account ids to lowercase", () => {
-    const {setup} = qqbotSetupPlugin;
+    const { setup } = qqbotSetupPlugin;
     expect(setup).toBeDefined();
 
     expect(
@@ -143,7 +143,7 @@ describe("qqbot setup", () => {
   });
 
   it("uses configured defaultAccount when setup accountId is omitted", () => {
-    const {setup} = qqbotSetupPlugin;
+    const { setup } = qqbotSetupPlugin;
     expect(setup).toBeDefined();
 
     expect(

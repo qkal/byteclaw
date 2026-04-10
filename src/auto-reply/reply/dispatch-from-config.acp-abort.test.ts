@@ -196,7 +196,7 @@ describe("dispatchReplyFromConfig ACP abort", () => {
             sessionKey: input.sessionKey,
           }) as AcpRuntimeHandle,
       ),
-      runTurn: vi.fn(async function*  runTurn(params: { signal?: AbortSignal }) {
+      runTurn: vi.fn(async function* runTurn(params: { signal?: AbortSignal }) {
         await new Promise<void>((resolve) => {
           if (params.signal?.aborted) {
             resolve();

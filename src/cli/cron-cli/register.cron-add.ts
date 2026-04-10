@@ -221,7 +221,7 @@ export function registerCronAddCommand(cron: Command) {
 
           const params = {
             agentId,
-            deleteAfterRun: opts.deleteAfterRun ? true : (opts.keepAfterRun ? false : undefined),
+            deleteAfterRun: opts.deleteAfterRun ? true : opts.keepAfterRun ? false : undefined,
             delivery: deliveryMode
               ? {
                   accountId,

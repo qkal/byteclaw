@@ -19,7 +19,7 @@ export function loadMemoryEmbeddingCache(params: {
   hashes: string[];
   tableName?: string;
 }): Map<string, number[]> {
-  const {provider} = params;
+  const { provider } = params;
   if (!params.enabled || !provider || !params.providerKey || params.hashes.length === 0) {
     return new Map();
   }
@@ -65,7 +65,7 @@ export function upsertMemoryEmbeddingCache(params: {
   now?: number;
   tableName?: string;
 }): void {
-  const {provider} = params;
+  const { provider } = params;
   if (!params.enabled || !provider || !params.providerKey || params.entries.length === 0) {
     return;
   }

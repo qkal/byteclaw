@@ -306,7 +306,7 @@ async function resolveChatId(
     return numericChatId;
   }
   const lookupTarget = normalizeTelegramLookupTarget(to);
-  const {getChat} = params.api;
+  const { getChat } = params.api;
   if (!lookupTarget || typeof getChat !== "function") {
     throw new Error("Telegram recipient must be a numeric chat ID");
   }
@@ -674,7 +674,8 @@ export async function sendMessageTelegram(
   const sendTelegramTextChunk = async (
     chunk: TelegramTextChunk,
     params?: TelegramSendMessageParams,
-  ) => await withTelegramThreadFallback(
+  ) =>
+    await withTelegramThreadFallback(
       params,
       "message",
       opts.verbose,
@@ -699,7 +700,7 @@ export async function sendMessageTelegram(
         if (!chunk.htmlText) {
           return await requestPlain(label);
         }
-        const {htmlText} = chunk;
+        const { htmlText } = chunk;
         const htmlParams: TelegramSendMessageParams = {
           parse_mode: "HTML" as const,
           ...plainParams,
@@ -1602,7 +1603,7 @@ export async function sendPollTelegram(
     requestWithDiag,
   });
 
-  const {durationSeconds} = normalizedPoll;
+  const { durationSeconds } = normalizedPoll;
   if (durationSeconds === undefined && normalizedPoll.durationHours !== undefined) {
     throw new Error(
       "Telegram poll durationHours is not supported. Use durationSeconds (5-600) instead.",

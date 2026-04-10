@@ -283,9 +283,9 @@ export async function monitorTlonProvider(opts: MonitorTlonOpts = {}): Promise<v
     const raw =
       typeof whom === "string"
         ? whom
-        : (whom && typeof whom === "object" && "ship" in whom && typeof whom.ship === "string"
+        : whom && typeof whom === "object" && "ship" in whom && typeof whom.ship === "string"
           ? whom.ship
-          : "");
+          : "";
     const normalized = normalizeShip(raw);
     // Keep DM routing strict: accept only patp-like values.
     return /^~?[a-z-]+$/i.test(normalized) ? normalized : "";
@@ -317,7 +317,7 @@ export async function monitorTlonProvider(opts: MonitorTlonOpts = {}): Promise<v
       messageContent,
     } = params;
     const groupChannel = channelNest; // For compatibility
-    let {messageText} = params;
+    let { messageText } = params;
 
     // Download any images from the message content
     let attachments: { path: string; contentType: string }[] = [];
@@ -429,7 +429,7 @@ export async function monitorTlonProvider(opts: MonitorTlonOpts = {}): Promise<v
 
     // Warn if multiple users share a DM session (insecure dmScope configuration)
     if (!isGroup) {
-      const {sessionKey} = route;
+      const { sessionKey } = route;
       if (!dmSendersBySession.has(sessionKey)) {
         dmSendersBySession.set(sessionKey, new Set());
       }
@@ -541,7 +541,7 @@ export async function monitorTlonProvider(opts: MonitorTlonOpts = {}): Promise<v
 
     const dispatchStartTime = Date.now();
 
-    const {responsePrefix} = core.channel.reply.resolveEffectiveMessagesConfig(
+    const { responsePrefix } = core.channel.reply.resolveEffectiveMessagesConfig(
       cfg,
       route.agentId,
     );
@@ -894,7 +894,7 @@ export async function monitorTlonProvider(opts: MonitorTlonOpts = {}): Promise<v
         return;
       }
 
-      const {whom} = eventRecord; // DM partner ship or club ID
+      const { whom } = eventRecord; // DM partner ship or club ID
       const messageId = readString(eventRecord, "id");
       const response = asRecord(eventRecord.response);
       if (!messageId || !response) {
@@ -1239,7 +1239,9 @@ export async function monitorTlonProvider(opts: MonitorTlonOpts = {}): Promise<v
       runtime.log?.("[tlon] Subscribed to groups-ui for real-time channel detection");
     } catch (error) {
       // Groups-ui subscription is optional - channel discovery will still work via polling
-      runtime.log?.(`[tlon] Groups-ui subscription failed (will rely on polling): ${String(error)}`);
+      runtime.log?.(
+        `[tlon] Groups-ui subscription failed (will rely on polling): ${String(error)}`,
+      );
     }
 
     // Subscribe to foreigns for auto-accepting group invites

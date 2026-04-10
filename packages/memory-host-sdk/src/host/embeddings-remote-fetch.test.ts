@@ -20,9 +20,12 @@ describe("fetchRemoteEmbeddingVectors", () => {
   });
 
   it("maps remote embedding response data to vectors", async () => {
-    postJsonMock.mockImplementationOnce(async (params) => await params.parse({
-        data: [{ embedding: [0.1, 0.2] }, {}, { embedding: [0.3] }],
-      }));
+    postJsonMock.mockImplementationOnce(
+      async (params) =>
+        await params.parse({
+          data: [{ embedding: [0.1, 0.2] }, {}, { embedding: [0.3] }],
+        }),
+    );
 
     const vectors = await fetchRemoteEmbeddingVectors({
       body: { input: ["one", "two", "three"] },

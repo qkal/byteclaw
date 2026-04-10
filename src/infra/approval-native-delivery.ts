@@ -46,7 +46,7 @@ export async function resolveChannelNativeApprovalDeliveryPlan(params: {
   request: ApprovalRequest;
   adapter?: ChannelApprovalNativeAdapter | null;
 }): Promise<ChannelApprovalNativeDeliveryPlan> {
-  const {adapter} = params;
+  const { adapter } = params;
   if (!adapter) {
     return {
       notifyOriginWhenDmOnly: false,

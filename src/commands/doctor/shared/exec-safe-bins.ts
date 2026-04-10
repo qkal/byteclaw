@@ -40,7 +40,13 @@ function normalizeConfiguredSafeBins(entries: unknown): string[] {
   if (!Array.isArray(entries)) {
     return [];
   }
-  return [...new Set(entries.map((entry) => normalizeOptionalLowercaseString(entry) ?? '').filter((entry) => entry.length > 0))].toSorted();
+  return [
+    ...new Set(
+      entries
+        .map((entry) => normalizeOptionalLowercaseString(entry) ?? "")
+        .filter((entry) => entry.length > 0),
+    ),
+  ].toSorted();
 }
 
 function normalizeConfiguredTrustedSafeBinDirs(entries: unknown): string[] {

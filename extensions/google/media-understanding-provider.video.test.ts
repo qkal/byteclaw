@@ -72,12 +72,15 @@ describe("describeGeminiVideo", () => {
       }).allowPrivateNetwork,
     ).toBe(false);
 
-    const fetchFn = withFetchPreconnect(async () => new Response(
-        JSON.stringify({
-          candidates: [{ content: { parts: [{ text: "video ok" }] } }],
-        }),
-        { headers: { "content-type": "application/json" }, status: 200 },
-      ));
+    const fetchFn = withFetchPreconnect(
+      async () =>
+        new Response(
+          JSON.stringify({
+            candidates: [{ content: { parts: [{ text: "video ok" }] } }],
+          }),
+          { headers: { "content-type": "application/json" }, status: 200 },
+        ),
+    );
 
     await describeGeminiVideo({
       apiKey: "test-key",
@@ -127,9 +130,9 @@ describe("describeGeminiVideo", () => {
     const bodyText =
       typeof seenInit?.body === "string"
         ? seenInit.body
-        : (Buffer.isBuffer(seenInit?.body)
+        : Buffer.isBuffer(seenInit?.body)
           ? seenInit.body.toString("utf8")
-          : "");
+          : "";
     const body = JSON.parse(bodyText);
     expect(body.contents?.[0]?.parts?.[0]?.text).toBe("Describe the video.");
     expect(body.contents?.[0]?.parts?.[1]?.inline_data?.mime_type).toBe("video/mp4");

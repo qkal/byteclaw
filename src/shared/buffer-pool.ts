@@ -170,9 +170,9 @@ export function releaseBuffer(buffer: Buffer): void {
  * Get statistics for all buffer pools.
  */
 export function getBufferPoolStats(): {
-  small: ReturnType<BufferPool['getStats']>;
-  medium: ReturnType<BufferPool['getStats']>;
-  large: ReturnType<BufferPool['getStats']>;
+  small: ReturnType<BufferPool["getStats"]>;
+  medium: ReturnType<BufferPool["getStats"]>;
+  large: ReturnType<BufferPool["getStats"]>;
 } {
   return {
     small: SMALL_POOL.getStats(),

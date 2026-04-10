@@ -6,7 +6,7 @@ const hoisted = vi.hoisted((): { recordInboundSessionMock: AsyncUnknownMock } =>
   recordInboundSessionMock: vi.fn().mockResolvedValue(undefined),
 }));
 
-export const {recordInboundSessionMock} = hoisted;
+export const { recordInboundSessionMock } = hoisted;
 
 vi.mock("./bot-message-context.session.runtime.js", async () => {
   const actual = await vi.importActual<typeof import("./bot-message-context.session.runtime.js")>(

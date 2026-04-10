@@ -19,7 +19,7 @@ export interface ResolvedMcpTransport {
 }
 
 function attachStderrLogging(serverName: string, transport: StdioClientTransport) {
-  const {stderr} = transport;
+  const { stderr } = transport;
   if (!stderr || typeof stderr.on !== "function") {
     return undefined;
   }

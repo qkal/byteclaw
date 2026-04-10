@@ -33,7 +33,7 @@ const BASE_SLACK_SEND_CTX = {
 } as const;
 
 const sendSlackText = async (ctx: SlackSendTextCtx) => {
-  const {sendText} = slackOutbound;
+  const { sendText } = slackOutbound;
   if (!sendText) {
     throw new Error("slackOutbound.sendText is unavailable");
   }
@@ -45,7 +45,8 @@ const sendSlackText = async (ctx: SlackSendTextCtx) => {
 
 const sendSlackTextWithDefaults = async (
   overrides: Partial<SlackSendTextCtx> & Pick<SlackSendTextCtx, "text">,
-) => await sendSlackText({
+) =>
+  await sendSlackText({
     ...BASE_SLACK_SEND_CTX,
     ...overrides,
   });
@@ -148,7 +149,7 @@ describe("slack outbound hook wiring", () => {
     };
     getGlobalHookRunnerMock.mockReturnValue(mockRunner);
 
-    const {sendText} = slackOutbound;
+    const { sendText } = slackOutbound;
     if (!sendText) {
       throw new Error("slackOutbound.sendText is unavailable");
     }

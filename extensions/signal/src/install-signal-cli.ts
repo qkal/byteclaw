@@ -98,7 +98,7 @@ async function downloadToFile(url: string, dest: string, maxRedirects = 5): Prom
   await new Promise<void>((resolve, reject) => {
     const req = request(url, (res) => {
       if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400) {
-        const {location} = res.headers;
+        const { location } = res.headers;
         if (!location || maxRedirects <= 0) {
           reject(new Error("Redirect loop or missing Location header"));
           return;

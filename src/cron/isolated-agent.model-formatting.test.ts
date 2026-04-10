@@ -101,11 +101,11 @@ function resolveConfiguredModelForTest(cfg: Record<string, unknown>): {
   const rawModel =
     typeof modelValue === "string"
       ? modelValue
-      : (typeof modelValue === "object" &&
+      : typeof modelValue === "object" &&
           modelValue &&
           typeof (modelValue as { primary?: unknown }).primary === "string"
         ? (modelValue as { primary: string }).primary
-        : undefined);
+        : undefined;
 
   if (typeof rawModel === "string") {
     const parsed = parseModelRef(rawModel);

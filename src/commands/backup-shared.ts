@@ -100,9 +100,9 @@ export async function resolveBackupPlanFromPaths(params: {
 }): Promise<BackupPlan> {
   const includeWorkspace = params.includeWorkspace ?? true;
   const onlyConfig = params.onlyConfig ?? false;
-  const {stateDir} = params;
-  const {configPath} = params;
-  const {oauthDir} = params;
+  const { stateDir } = params;
+  const { configPath } = params;
+  const { oauthDir } = params;
   const archiveRoot = buildBackupArchiveRoot(params.nowMs);
   const workspaceDirs = includeWorkspace ? (params.workspaceDirs ?? []) : [];
   const configInsideState = params.configInsideState ?? false;

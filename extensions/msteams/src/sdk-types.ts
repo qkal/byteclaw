@@ -51,9 +51,7 @@ export interface MSTeamsActivity {
 export interface MSTeamsTurnContext {
   activity: MSTeamsActivity;
   sendActivity: (textOrActivity: string | object) => Promise<unknown>;
-  sendActivities: (
-    activities: ({ type: string } & Record<string, unknown>)[],
-  ) => Promise<unknown>;
+  sendActivities: (activities: ({ type: string } & Record<string, unknown>)[]) => Promise<unknown>;
   updateActivity: (activity: object) => Promise<{ id?: string } | void>;
   deleteActivity: (activityId: string) => Promise<void>;
 }

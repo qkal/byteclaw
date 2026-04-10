@@ -96,7 +96,7 @@ export const nextcloudTalkPlugin: ChannelPlugin<ResolvedNextcloudTalkAccount> =
       groups: {
         resolveRequireMention: ({ cfg, accountId, groupId }) => {
           const account = resolveNextcloudTalkAccount({ accountId, cfg: cfg as CoreConfig });
-          const {rooms} = account.config;
+          const { rooms } = account.config;
           if (!rooms || !groupId) {
             return true;
           }

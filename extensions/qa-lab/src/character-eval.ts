@@ -611,9 +611,9 @@ export async function runQaCharacterEval(params: QaCharacterEvalParams) {
   const judgeModels = normalizeModelRefs(
     params.judgeModels && params.judgeModels.length > 0
       ? params.judgeModels
-      : (params.judgeModel
+      : params.judgeModel
         ? [params.judgeModel]
-        : DEFAULT_JUDGE_MODELS),
+        : DEFAULT_JUDGE_MODELS,
   );
   const runJudge = params.runJudge ?? defaultRunJudge;
   const judgeConcurrency = normalizeConcurrency(

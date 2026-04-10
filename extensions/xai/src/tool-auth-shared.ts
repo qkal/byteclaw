@@ -29,7 +29,7 @@ function readLegacyGrokFallbackAuth(cfg?: OpenClawConfig): XaiFallbackAuth | und
   if (!search || typeof search !== "object") {
     return undefined;
   }
-  const {grok} = (search as Record<string, unknown>);
+  const { grok } = search as Record<string, unknown>;
   const apiKey = readConfiguredOrManagedApiKey(
     grok && typeof grok === "object" ? (grok as Record<string, unknown>).apiKey : undefined,
   );
@@ -41,7 +41,7 @@ export function readLegacyGrokApiKey(cfg?: OpenClawConfig): string | undefined {
   if (!search || typeof search !== "object") {
     return undefined;
   }
-  const {grok} = (search as Record<string, unknown>);
+  const { grok } = search as Record<string, unknown>;
   return readConfiguredSecretString(
     grok && typeof grok === "object" ? (grok as Record<string, unknown>).apiKey : undefined,
     "tools.web.search.grok.apiKey",

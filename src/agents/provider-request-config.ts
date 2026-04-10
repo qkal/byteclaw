@@ -310,7 +310,7 @@ export function sanitizeConfiguredModelProviderRequest(
 ): ModelProviderRequestTransportOverrides | undefined {
   const sanitized = sanitizeConfiguredProviderRequest(request);
   const rawAllow = request?.allowPrivateNetwork;
-  const allowPrivateNetwork = rawAllow === true ? true : (rawAllow === false ? false : undefined);
+  const allowPrivateNetwork = rawAllow === true ? true : rawAllow === false ? false : undefined;
   if (!sanitized && allowPrivateNetwork === undefined) {
     return undefined;
   }
@@ -484,8 +484,8 @@ export function sanitizeRuntimeProviderRequestOverrides(
   if (request.proxy || request.tls) {
     throw new Error(FORBIDDEN_RUNTIME_TRANSPORT_OVERRIDE_MESSAGE);
   }
-  const {headers} = request;
-  const {auth} = request;
+  const { headers } = request;
+  const { auth } = request;
   if (!headers && !auth) {
     return undefined;
   }

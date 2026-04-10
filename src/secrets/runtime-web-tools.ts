@@ -121,7 +121,7 @@ function inferExactBundledPluginScopedWebToolConfigOwner(params: {
 }
 
 function hasCustomWebSearchPluginRisk(config: OpenClawConfig): boolean {
-  const {plugins} = config;
+  const { plugins } = config;
   if (!plugins) {
     return false;
   }
@@ -322,9 +322,9 @@ async function resolveBundledWebSearchProviders(params: {
   const onlyPluginIds =
     params.configuredBundledPluginId !== undefined
       ? [params.configuredBundledPluginId]
-      : (params.onlyPluginIds && params.onlyPluginIds.length > 0
+      : params.onlyPluginIds && params.onlyPluginIds.length > 0
         ? [...new Set(params.onlyPluginIds)].toSorted((left, right) => left.localeCompare(right))
-        : undefined);
+        : undefined;
   if (onlyPluginIds && onlyPluginIds.length > 0) {
     const bundled = resolveBundledExplicitWebSearchProvidersFromPublicArtifacts({ onlyPluginIds });
     if (bundled && bundled.length > 0) {

@@ -22,7 +22,7 @@ function extractMessageId(payload: unknown): string | null {
   if (directId) {
     return directId;
   }
-  const {result} = (payload as { result?: unknown });
+  const { result } = payload as { result?: unknown };
   if (result && typeof result === "object") {
     const nested = (result as { messageId?: unknown }).messageId;
     const nestedId = normalizeOptionalString(nested);
@@ -155,7 +155,7 @@ function renderMessagesFromPayload(payload: unknown, opts: FormatOpts): string[]
   if (!payload || typeof payload !== "object") {
     return null;
   }
-  const {messages} = (payload as { messages?: unknown });
+  const { messages } = payload as { messages?: unknown };
   if (!Array.isArray(messages)) {
     return null;
   }
@@ -166,7 +166,7 @@ function renderPinsFromPayload(payload: unknown, opts: FormatOpts): string[] | n
   if (!payload || typeof payload !== "object") {
     return null;
   }
-  const {pins} = (payload as { pins?: unknown });
+  const { pins } = payload as { pins?: unknown };
   if (!Array.isArray(pins)) {
     return null;
   }
@@ -197,7 +197,7 @@ function renderReactions(payload: unknown, opts: FormatOpts): string[] | null {
   if (!payload || typeof payload !== "object") {
     return null;
   }
-  const {reactions} = (payload as { reactions?: unknown });
+  const { reactions } = payload as { reactions?: unknown };
   if (!Array.isArray(reactions)) {
     return null;
   }
@@ -345,12 +345,12 @@ export function formatMessageCliText(result: MessageActionRunResult): string[] {
   }
 
   // Channel actions (non-send/poll)
-  const {payload} = result;
+  const { payload } = result;
   const lines: string[] = [];
 
   if (result.action === "react") {
-    const {added} = (payload as { added?: unknown });
-    const {removed} = (payload as { removed?: unknown });
+    const { added } = payload as { added?: unknown };
+    const { removed } = payload as { removed?: unknown };
     if (typeof added === "string" && added.trim()) {
       lines.push(ok(`✅ Reaction added: ${added.trim()}`));
       return lines;
@@ -394,7 +394,7 @@ export function formatMessageCliText(result: MessageActionRunResult): string[] {
   }
 
   if (result.action === "search") {
-    const {results} = (payload as { results?: unknown });
+    const { results } = payload as { results?: unknown };
     const list = extractDiscordSearchResultsMessages(results);
     if (list) {
       lines.push(heading("Search results"));

@@ -89,9 +89,9 @@ export async function resolveSessionAuthProfileOverride(params: {
     sessionEntry.authProfileOverrideSource ??
     (typeof sessionEntry.authProfileOverrideCompactionCount === "number"
       ? "auto"
-      : (current
+      : current
         ? "user"
-        : undefined));
+        : undefined);
 
   if (current && !store.profiles[current]) {
     await clearSessionAuthProfileOverride({ sessionEntry, sessionKey, sessionStore, storePath });

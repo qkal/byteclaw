@@ -1,13 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createSubagentAnnounceDeliveryRuntimeMock } from "./subagent-announce.test-support.js";
 
-interface AgentCallRequest { method?: string; params?: Record<string, unknown> }
+interface AgentCallRequest {
+  method?: string;
+  params?: Record<string, unknown>;
+}
 
 const agentSpy = vi.fn(async (_req: AgentCallRequest) => ({ runId: "run-main", status: "ok" }));
 const sessionsDeleteSpy = vi.fn((_req: AgentCallRequest) => undefined);
 const callGatewayMock = vi.fn(async (_request: unknown) => ({}));
 const loadSessionStoreMock = vi.fn((_storePath: string) => ({}));
-const resolveAgentIdFromSessionKeyMock = vi.fn((sessionKey: string) => sessionKey.match(/^agent:([^:]+)/)?.[1] ?? "main");
+const resolveAgentIdFromSessionKeyMock = vi.fn(
+  (sessionKey: string) => sessionKey.match(/^agent:([^:]+)/)?.[1] ?? "main",
+);
 const resolveStorePathMock = vi.fn((_store: unknown, _options: unknown) => "/tmp/sessions.json");
 const resolveMainSessionKeyMock = vi.fn((_cfg: unknown) => "agent:main:main");
 const readLatestAssistantReplyMock = vi.fn(async (_params?: unknown) => "raw subagent reply");

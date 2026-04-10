@@ -11,16 +11,17 @@ function extractToolText(result: unknown): string {
   if (!result || typeof result !== "object") {
     return "";
   }
-  const {content} = (result as { content?: unknown });
+  const { content } = result as { content?: unknown };
   if (!Array.isArray(content)) {
     return "";
   }
-  const textBlock = content.find((block) => (
+  const textBlock = content.find(
+    (block) =>
       block &&
       typeof block === "object" &&
       (block as { type?: unknown }).type === "text" &&
-      typeof (block as { text?: unknown }).text === "string"
-    )) as { text?: string } | undefined;
+      typeof (block as { text?: unknown }).text === "string",
+  ) as { text?: string } | undefined;
   return textBlock?.text ?? "";
 }
 
@@ -120,7 +121,7 @@ describe("createOpenClawCodingTools read behavior", () => {
     );
     const result = await wrapped.execute("read-strip-1", { limit: 1, path: "demo.txt" });
 
-    const {details} = (result as { details?: { truncation?: Record<string, unknown> } });
+    const { details } = result as { details?: { truncation?: Record<string, unknown> } };
     expect(details?.truncation).toMatchObject({
       firstLineExceedsLimit: false,
       outputLines: 1,

@@ -100,7 +100,7 @@ export function buildMemoryFlushPlan(
 ): MemoryFlushPlan | null {
   const resolved = params;
   const nowMs = Number.isFinite(resolved.nowMs) ? (resolved.nowMs as number) : Date.now();
-  const {cfg} = resolved;
+  const { cfg } = resolved;
   const defaults = cfg?.agents?.defaults?.compaction?.memoryFlush;
   if (defaults?.enabled === false) {
     return null;

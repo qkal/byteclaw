@@ -4,9 +4,7 @@ const browserClientMocks = vi.hoisted(() => ({
   browserCloseTab: vi.fn(async (..._args: unknown[]) => ({})),
   browserFocusTab: vi.fn(async (..._args: unknown[]) => ({})),
   browserOpenTab: vi.fn(async (..._args: unknown[]) => ({})),
-  browserProfiles: vi.fn(
-    async (..._args: unknown[]): Promise<Record<string, unknown>[]> => [],
-  ),
+  browserProfiles: vi.fn(async (..._args: unknown[]): Promise<Record<string, unknown>[]> => []),
   browserSnapshot: vi.fn(
     async (..._args: unknown[]): Promise<Record<string, unknown>> => ({
       format: "ai",

@@ -23,23 +23,23 @@ const pluginApiMocks = vi.hoisted(() => ({
 }));
 
 vi.mock("./api.js", () => ({
-    PAIRING_SETUP_BOOTSTRAP_PROFILE: {
-      roles: ["node"],
-      scopes: [],
-    },
-    approveDevicePairing: vi.fn(),
-    clearDeviceBootstrapTokens: pluginApiMocks.clearDeviceBootstrapTokens,
-    definePluginEntry: vi.fn((entry) => entry),
-    issueDeviceBootstrapToken: pluginApiMocks.issueDeviceBootstrapToken,
-    listDevicePairing: vi.fn(async () => ({ pending: [] })),
-    renderQrPngBase64: pluginApiMocks.renderQrPngBase64,
-    resolveGatewayBindUrl: vi.fn(),
-    resolveGatewayPort: pluginApiMocks.resolveGatewayPort,
-    resolvePreferredOpenClawTmpDir: pluginApiMocks.resolvePreferredOpenClawTmpDir,
-    resolveTailnetHostWithRunner: vi.fn(),
-    revokeDeviceBootstrapToken: pluginApiMocks.revokeDeviceBootstrapToken,
-    runPluginCommandWithTimeout: vi.fn(),
-  }));
+  PAIRING_SETUP_BOOTSTRAP_PROFILE: {
+    roles: ["node"],
+    scopes: [],
+  },
+  approveDevicePairing: vi.fn(),
+  clearDeviceBootstrapTokens: pluginApiMocks.clearDeviceBootstrapTokens,
+  definePluginEntry: vi.fn((entry) => entry),
+  issueDeviceBootstrapToken: pluginApiMocks.issueDeviceBootstrapToken,
+  listDevicePairing: vi.fn(async () => ({ pending: [] })),
+  renderQrPngBase64: pluginApiMocks.renderQrPngBase64,
+  resolveGatewayBindUrl: vi.fn(),
+  resolveGatewayPort: pluginApiMocks.resolveGatewayPort,
+  resolvePreferredOpenClawTmpDir: pluginApiMocks.resolvePreferredOpenClawTmpDir,
+  resolveTailnetHostWithRunner: vi.fn(),
+  revokeDeviceBootstrapToken: pluginApiMocks.revokeDeviceBootstrapToken,
+  runPluginCommandWithTimeout: vi.fn(),
+}));
 
 vi.mock("./notify.js", () => ({
   armPairNotifyOnce: vi.fn(async () => false),

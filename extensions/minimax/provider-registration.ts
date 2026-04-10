@@ -64,7 +64,7 @@ function buildPortalProviderCatalog(params: { baseUrl: string; apiKey: string })
 }
 
 function resolveApiCatalog(ctx: ProviderCatalogContext) {
-  const {apiKey} = ctx.resolveProviderApiKey(API_PROVIDER_ID);
+  const { apiKey } = ctx.resolveProviderApiKey(API_PROVIDER_ID);
   if (!apiKey) {
     return null;
   }

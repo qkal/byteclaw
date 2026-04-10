@@ -239,7 +239,7 @@ export function computeJobNextRunAtMs(job: CronJob, nowMs: number): number | und
       return undefined;
     }
     const everyMs = Math.max(1, Math.floor(everyMsRaw));
-    const {lastRunAtMs} = job.state;
+    const { lastRunAtMs } = job.state;
     if (typeof lastRunAtMs === "number" && Number.isFinite(lastRunAtMs)) {
       const nextFromLastRun = Math.floor(lastRunAtMs) + everyMs;
       if (nextFromLastRun > nowMs) {
@@ -525,7 +525,7 @@ export function createJob(state: CronServiceState, input: CronJobCreate): CronJo
             schedule: input.schedule,
           }),
         }
-      : (input.schedule.kind === "cron"
+      : input.schedule.kind === "cron"
         ? (() => {
             const explicitStaggerMs = normalizeCronStaggerMs(input.schedule.staggerMs);
             if (explicitStaggerMs !== undefined) {
@@ -536,13 +536,13 @@ export function createJob(state: CronServiceState, input: CronJobCreate): CronJo
               ? { ...input.schedule, staggerMs: defaultStaggerMs }
               : input.schedule;
           })()
-        : input.schedule);
+        : input.schedule;
   const deleteAfterRun =
     typeof input.deleteAfterRun === "boolean"
       ? input.deleteAfterRun
-      : (schedule.kind === "at"
+      : schedule.kind === "at"
         ? true
-        : undefined);
+        : undefined;
   const enabled = typeof input.enabled === "boolean" ? input.enabled : true;
   const job: CronJob = {
     agentId: normalizeOptionalAgentId(input.agentId),

@@ -116,12 +116,12 @@ export async function collectChannelStatus(params: {
       const pluginEnabled =
         params.cfg.plugins?.entries?.[entry.pluginId ?? entry.id]?.enabled !== false;
       const statusLabel = configured
-        ? (pluginEnabled
+        ? pluginEnabled
           ? "configured"
-          : "configured (plugin disabled)")
-        : (pluginEnabled
+          : "configured (plugin disabled)"
+        : pluginEnabled
           ? "installed"
-          : "installed (plugin disabled)");
+          : "installed (plugin disabled)";
       return {
         channel: entry.id as ChannelChoice,
         configured,

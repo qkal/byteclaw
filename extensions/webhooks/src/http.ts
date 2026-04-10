@@ -687,7 +687,8 @@ export function createTaskFlowWebhookRequestHandler(params: {
       maxTrackedKeys: WEBHOOK_IN_FLIGHT_DEFAULTS.maxTrackedKeys,
     });
 
-  return async (req: IncomingMessage, res: ServerResponse): Promise<boolean> => await withResolvedWebhookRequestPipeline({
+  return async (req: IncomingMessage, res: ServerResponse): Promise<boolean> =>
+    await withResolvedWebhookRequestPipeline({
       allowMethods: ["POST"],
       handle: async ({ targets }) => {
         const presentedSecret = extractSharedSecret(req);

@@ -150,7 +150,8 @@ export async function createGatewayRuntimeState(params: {
       log: params.logPlugins,
       registry: params.pluginRegistry,
     });
-    const shouldEnforcePluginGatewayAuth = (pathContext: PluginRoutePathContext): boolean => shouldEnforceGatewayAuthForPluginPath(
+    const shouldEnforcePluginGatewayAuth = (pathContext: PluginRoutePathContext): boolean =>
+      shouldEnforceGatewayAuthForPluginPath(
         resolveActivePluginHttpRouteRegistry(params.pluginRegistry),
         pathContext,
       );

@@ -79,9 +79,9 @@ function resolveScopedAccount(
     enabled:
       typeof scoped?.enabled === "boolean"
         ? scoped.enabled
-        : (typeof channel?.enabled === "boolean"
+        : typeof channel?.enabled === "boolean"
           ? channel.enabled
-          : true),
+          : true,
   };
 }
 

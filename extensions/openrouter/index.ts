@@ -89,7 +89,7 @@ export default definePluginEntry({
       catalog: {
         order: "simple",
         run: async (ctx) => {
-          const {apiKey} = ctx.resolveProviderApiKey(PROVIDER_ID);
+          const { apiKey } = ctx.resolveProviderApiKey(PROVIDER_ID);
           if (!apiKey) {
             return null;
           }

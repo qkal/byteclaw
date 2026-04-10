@@ -111,7 +111,7 @@ export async function maybeConfigureDmPolicies(params: {
     return params.cfg;
   }
 
-  let {cfg} = params;
+  let { cfg } = params;
   for (const policy of dmPolicies) {
     const accountId = accountIdsByChannel?.get(policy.channel);
     const { policyKey, allowFromKey } = policy.resolveConfigKeys?.(cfg, accountId) ?? {

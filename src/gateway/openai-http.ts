@@ -177,8 +177,8 @@ function extractTextContent(content: unknown): string {
         if (!part || typeof part !== "object") {
           return "";
         }
-        const {type} = (part as { type?: unknown });
-        const {text} = (part as { text?: unknown });
+        const { type } = part as { type?: unknown };
+        const { text } = part as { text?: unknown };
         const inputText = (part as { input_text?: unknown }).input_text;
         if (type === "text" && typeof text === "string") {
           return text;
@@ -296,7 +296,7 @@ async function resolveImagesForRequest(
   activeTurnContext: Pick<ActiveTurnContext, "urls">,
   limits: ResolvedOpenAiChatCompletionsLimits,
 ): Promise<ImageContent[]> {
-  const {urls} = activeTurnContext;
+  const { urls } = activeTurnContext;
   if (urls.length === 0) {
     return [];
   }

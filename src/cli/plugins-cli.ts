@@ -109,9 +109,9 @@ function formatPluginLine(plugin: PluginRecord, verbose = false): string {
   const status =
     plugin.status === "loaded"
       ? theme.success("loaded")
-      : (plugin.status === "disabled"
+      : plugin.status === "disabled"
         ? theme.warn("disabled")
-        : theme.error("error"));
+        : theme.error("error");
   const name = theme.command(plugin.name || plugin.id);
   const idSuffix = plugin.name && plugin.name !== plugin.id ? theme.muted(` (${plugin.id})`) : "";
   const desc = plugin.description
@@ -294,9 +294,9 @@ export function registerPluginsCli(program: Command) {
             Status:
               plugin.status === "loaded"
                 ? theme.success("loaded")
-                : (plugin.status === "disabled"
+                : plugin.status === "disabled"
                   ? theme.warn("disabled")
-                  : theme.error("error")),
+                  : theme.error("error"),
             Version: plugin.version ?? "",
           };
         });
@@ -395,9 +395,9 @@ export function registerPluginsCli(program: Command) {
           Status:
             inspect.plugin.status === "loaded"
               ? theme.success("loaded")
-              : (inspect.plugin.status === "disabled"
+              : inspect.plugin.status === "disabled"
                 ? theme.warn("disabled")
-                : theme.error("error")),
+                : theme.error("error"),
         }));
         defaultRuntime.log(
           renderTable({

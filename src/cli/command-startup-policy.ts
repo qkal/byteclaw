@@ -9,7 +9,7 @@ export function shouldSkipRouteConfigGuardForCommandPath(params: {
   commandPath: string[];
   suppressDoctorStdout: boolean;
 }): boolean {
-  const {routeConfigGuard} = resolveCliCommandPathPolicy(params.commandPath);
+  const { routeConfigGuard } = resolveCliCommandPathPolicy(params.commandPath);
   return (
     routeConfigGuard === "always" ||
     (routeConfigGuard === "when-suppressed" && params.suppressDoctorStdout)
@@ -20,7 +20,7 @@ export function shouldLoadPluginsForCommandPath(params: {
   commandPath: string[];
   jsonOutputMode: boolean;
 }): boolean {
-  const {loadPlugins} = resolveCliCommandPathPolicy(params.commandPath);
+  const { loadPlugins } = resolveCliCommandPathPolicy(params.commandPath);
   return loadPlugins === "always" || (loadPlugins === "text-only" && !params.jsonOutputMode);
 }
 

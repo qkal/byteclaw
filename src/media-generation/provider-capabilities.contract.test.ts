@@ -46,8 +46,8 @@ describe("bundled media-generation provider capabilities", () => {
       ).toBeDefined();
 
       const supportedModes = listSupportedVideoGenerationModes(provider);
-      const {imageToVideo} = provider.capabilities;
-      const {videoToVideo} = provider.capabilities;
+      const { imageToVideo } = provider.capabilities;
+      const { videoToVideo } = provider.capabilities;
 
       if (imageToVideo?.enabled) {
         expect(
@@ -80,7 +80,7 @@ describe("bundled media-generation provider capabilities", () => {
       ).toBeDefined();
       expect(provider.capabilities.edit, `${provider.id} missing edit capabilities`).toBeDefined();
 
-      const {edit} = provider.capabilities;
+      const { edit } = provider.capabilities;
       if (!edit) {
         continue;
       }

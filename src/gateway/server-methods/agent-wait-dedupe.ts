@@ -84,9 +84,9 @@ export function readTerminalSnapshotFromDedupeEntry(
   const errorMessage =
     typeof payload?.error === "string"
       ? payload.error
-      : (typeof payload?.summary === "string"
+      : typeof payload?.summary === "string"
         ? payload.summary
-        : entry.error?.message);
+        : entry.error?.message;
 
   if (status === "ok" || status === "timeout") {
     return {

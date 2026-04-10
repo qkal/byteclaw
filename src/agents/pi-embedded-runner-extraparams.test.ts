@@ -147,7 +147,7 @@ function createTestOpenAIProviderWrapper(
   params: WrapProviderStreamFnParams,
   withDefaultTransport: boolean,
 ): StreamFn {
-  let {streamFn} = params.context;
+  let { streamFn } = params.context;
   if (withDefaultTransport) {
     streamFn = createOpenAIDefaultTransportWrapper(streamFn);
   }
@@ -241,7 +241,7 @@ beforeEach(() => {
         );
       }
       if (params.provider === "anthropic") {
-        let {streamFn} = params.context;
+        let { streamFn } = params.context;
         const anthropicBetas = resolveAnthropicBetas(
           params.context.extraParams,
           params.context.modelId,

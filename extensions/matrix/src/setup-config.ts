@@ -50,7 +50,7 @@ function cloneIfObject<T>(value: T): T {
 }
 
 function resolveSetupAvatarUrl(input: ChannelSetupInput): string | undefined {
-  const {avatarUrl} = input;
+  const { avatarUrl } = input;
   if (typeof avatarUrl !== "string") {
     return undefined;
   }
@@ -207,9 +207,9 @@ export function applyMatrixSetupAccountConfig(params: {
     allowPrivateNetwork:
       typeof params.input.dangerouslyAllowPrivateNetwork === "boolean"
         ? params.input.dangerouslyAllowPrivateNetwork
-        : (typeof params.input.allowPrivateNetwork === "boolean"
+        : typeof params.input.allowPrivateNetwork === "boolean"
           ? params.input.allowPrivateNetwork
-          : undefined),
+          : undefined,
     avatarUrl,
     deviceName: params.input.deviceName?.trim(),
     enabled: true,

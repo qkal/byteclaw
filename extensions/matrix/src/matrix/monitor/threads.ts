@@ -54,9 +54,9 @@ export function resolveMatrixThreadRouting(params: {
   const threadId =
     effectiveThreadReplies === "off"
       ? undefined
-      : (effectiveThreadReplies === "inbound"
+      : effectiveThreadReplies === "inbound"
         ? inboundThreadId
-        : (inboundThreadId ?? (messageId || undefined)));
+        : (inboundThreadId ?? (messageId || undefined));
 
   return {
     threadId,

@@ -336,7 +336,7 @@ function writeConfigHealthStateSync(deps: ObserveRecoveryDeps, state: ConfigHeal
 }
 
 function getConfigHealthEntry(state: ConfigHealthState, configPath: string): ConfigHealthEntry {
-  const {entries} = state;
+  const { entries } = state;
   if (!entries || !isRecord(entries)) {
     return {};
   }
@@ -366,7 +366,7 @@ function isUpdateChannelOnlyRoot(value: unknown): boolean {
   if (keys.length !== 1 || keys[0] !== "update") {
     return false;
   }
-  const {update} = value;
+  const { update } = value;
   if (!isRecord(update)) {
     return false;
   }

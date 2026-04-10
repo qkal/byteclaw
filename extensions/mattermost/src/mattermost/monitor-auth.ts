@@ -171,9 +171,9 @@ export function authorizeMattermostCommandInvocation(params: {
   const commandGroupAllowFrom =
     kind === "direct"
       ? effectiveGroupAllowFrom
-      : (configGroupAllowFrom.length > 0
+      : configGroupAllowFrom.length > 0
         ? configGroupAllowFrom
-        : configAllowFrom);
+        : configAllowFrom;
 
   const senderAllowedForCommands = isMattermostSenderAllowed({
     allowFrom: commandDmAllowFrom,

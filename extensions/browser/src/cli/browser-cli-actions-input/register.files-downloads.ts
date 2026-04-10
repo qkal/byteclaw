@@ -180,7 +180,7 @@ export function registerBrowserFilesAndDownloadsCommands(
     )
     .action(async (opts, cmd) => {
       const { parent, profile } = resolveBrowserActionContext(cmd, parentOpts);
-      const accept = opts.accept ? true : (opts.dismiss ? false : undefined);
+      const accept = opts.accept ? true : opts.dismiss ? false : undefined;
       if (accept === undefined) {
         defaultRuntime.error(danger("Specify --accept or --dismiss"));
         defaultRuntime.exit(1);

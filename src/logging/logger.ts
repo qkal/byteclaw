@@ -20,7 +20,7 @@ type ProcessWithBuiltinModule = NodeJS.Process & {
 };
 
 function canUseNodeFs(): boolean {
-  const {getBuiltinModule} = (process as ProcessWithBuiltinModule);
+  const { getBuiltinModule } = process as ProcessWithBuiltinModule;
   if (typeof getBuiltinModule !== "function") {
     return false;
   }

@@ -21,7 +21,7 @@ export interface CreateTypingCallbacksParams {
 }
 
 export function createTypingCallbacks(params: CreateTypingCallbacksParams): TypingCallbacks {
-  const {stop} = params;
+  const { stop } = params;
   const keepaliveIntervalMs = params.keepaliveIntervalMs ?? 3000;
   const maxConsecutiveFailures = Math.max(1, params.maxConsecutiveFailures ?? 2);
   const maxDurationMs = params.maxDurationMs ?? 60_000; // Default 60s TTL

@@ -62,7 +62,7 @@ function truncateTextToBudget(text: string, maxChars: number): string {
 }
 
 function replaceToolResultText(msg: AgentMessage, text: string): AgentMessage {
-  const {content} = (msg as { content?: unknown });
+  const { content } = msg as { content?: unknown };
   const replacementContent =
     typeof content === "string" || content === undefined ? text : [{ text, type: "text" }];
 

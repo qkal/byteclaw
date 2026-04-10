@@ -15,7 +15,9 @@ interface HandlerBtwPresenter {
   showResult: (...args: unknown[]) => void;
   clear: (...args: unknown[]) => void;
 }
-interface HandlerTui { requestRender: (...args: unknown[]) => void }
+interface HandlerTui {
+  requestRender: (...args: unknown[]) => void;
+}
 interface MockChatLog {
   startTool: MockFn;
   updateToolResult: MockFn;
@@ -28,7 +30,9 @@ interface MockBtwPresenter {
   showResult: MockFn;
   clear: MockFn;
 }
-interface MockTui { requestRender: MockFn }
+interface MockTui {
+  requestRender: MockFn;
+}
 
 function createMockChatLog(): MockChatLog & HandlerChatLog {
   return {

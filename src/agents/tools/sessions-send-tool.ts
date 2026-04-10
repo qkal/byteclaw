@@ -61,7 +61,7 @@ async function startAgentRun(params: {
     };
   } catch (error) {
     const messageText =
-      error instanceof Error ? error.message : (typeof error === "string" ? error : "error");
+      error instanceof Error ? error.message : typeof error === "string" ? error : "error";
     return {
       ok: false,
       result: jsonResult({
@@ -224,7 +224,7 @@ export function createSessionsSendTool(opts?: {
       }
       // Normalize sessionKey/sessionId input into a canonical session key.
       const resolvedKey = visibleSession.key;
-      const {displayKey} = visibleSession;
+      const { displayKey } = visibleSession;
       const timeoutSeconds =
         typeof params.timeoutSeconds === "number" && Number.isFinite(params.timeoutSeconds)
           ? Math.max(0, Math.floor(params.timeoutSeconds))

@@ -208,9 +208,9 @@ export function writeGatewayStatusText(params: {
       const wideArea =
         result.configSummary.discovery.wideAreaEnabled === true
           ? "enabled"
-          : (result.configSummary.discovery.wideAreaEnabled === false
+          : result.configSummary.discovery.wideAreaEnabled === false
             ? "disabled"
-            : "unknown");
+            : "unknown";
       params.runtime.log(
         `  ${colorize(params.rich, theme.info, "Wide-area discovery")}: ${wideArea}`,
       );

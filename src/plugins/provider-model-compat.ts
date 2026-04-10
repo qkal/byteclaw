@@ -9,7 +9,7 @@ function extractModelCompat(
     return undefined;
   }
   if ("compat" in modelOrCompat) {
-    const {compat} = (modelOrCompat as { compat?: unknown });
+    const { compat } = modelOrCompat as { compat?: unknown };
     return compat && typeof compat === "object" ? (compat as ModelCompatConfig) : undefined;
   }
   return modelOrCompat as ModelCompatConfig;

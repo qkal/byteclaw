@@ -92,7 +92,7 @@ function rewriteKimiTaggedToolCallsInMessage(message: unknown): void {
     return;
   }
 
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (!Array.isArray(content)) {
     return;
   }

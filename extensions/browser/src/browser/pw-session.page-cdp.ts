@@ -20,12 +20,16 @@ export async function withPageScopedCdpClient<T>(opts: {
   targetId?: string;
   fn: (send: PageCdpSend) => Promise<T>;
 }): Promise<T> {
-  return await withPlaywrightPageCdpSession(opts.page, async (session) => await opts.fn((method, params) =>
-      (
-        session.send as unknown as (
-          method: string,
-          params?: Record<string, unknown>,
-        ) => Promise<unknown>
-      )(method, params),
-    ));
+  return await withPlaywrightPageCdpSession(
+    opts.page,
+    async (session) =>
+      await opts.fn((method, params) =>
+        (
+          session.send as unknown as (
+            method: string,
+            params?: Record<string, unknown>,
+          ) => Promise<unknown>
+        )(method, params),
+      ),
+  );
 }

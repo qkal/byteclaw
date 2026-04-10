@@ -259,9 +259,7 @@ function formatResult(result: BackupVerifyResult): string {
   ].join("\n");
 }
 
-function findDuplicateNormalizedEntryPath(
-  entries: { normalized: string }[],
-): string | undefined {
+function findDuplicateNormalizedEntryPath(entries: { normalized: string }[]): string | undefined {
   const seen = new Set<string>();
   for (const entry of entries) {
     if (seen.has(entry.normalized)) {

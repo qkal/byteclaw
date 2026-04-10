@@ -1,5 +1,4 @@
-import type {
-  Client} from "@buape/carbon";
+import type { Client } from "@buape/carbon";
 import {
   type BaseCommand,
   type BaseMessageInteractiveComponent,

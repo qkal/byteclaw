@@ -3,7 +3,10 @@ import { parseQmdQueryJson } from "./qmd-query-parser.js";
 
 describe("parseQmdQueryJson", () => {
   it("parses clean qmd JSON output", () => {
-    const results = parseQmdQueryJson(String.raw`[{"docid":"abc","score":1,"snippet":"@@ -1,1\none"}]`, "");
+    const results = parseQmdQueryJson(
+      String.raw`[{"docid":"abc","score":1,"snippet":"@@ -1,1\none"}]`,
+      "",
+    );
     expect(results).toEqual([
       {
         docid: "abc",

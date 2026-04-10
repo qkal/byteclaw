@@ -309,7 +309,7 @@ export function startAcpSpawnParentStreamRelay(params: {
     }
 
     if (event.stream === "assistant") {
-      const {data} = event;
+      const { data } = event;
       const deltaCandidate =
         (data as { delta?: unknown } | undefined)?.delta ??
         (data as { text?: unknown } | undefined)?.text;

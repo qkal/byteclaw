@@ -88,7 +88,7 @@ function readMediaFetchErrorCode(error: unknown): MediaFetchErrorCode | undefine
   if (!error || typeof error !== "object") {
     return undefined;
   }
-  const {code} = (error as { code?: unknown });
+  const { code } = error as { code?: unknown };
   return code === "max_bytes" || code === "http_error" || code === "fetch_failed"
     ? code
     : undefined;
@@ -124,9 +124,9 @@ export async function downloadBlueBubblesAttachment(
       maxBytes,
       ssrfPolicy: allowPrivateNetwork
         ? { allowPrivateNetwork: true }
-        : (trustedHostname && (allowPrivateNetworkConfig !== false || !trustedHostnameIsPrivate)
+        : trustedHostname && (allowPrivateNetworkConfig !== false || !trustedHostnameIsPrivate)
           ? { allowedHostnames: [trustedHostname] }
-          : undefined),
+          : undefined,
       url,
     });
     return {

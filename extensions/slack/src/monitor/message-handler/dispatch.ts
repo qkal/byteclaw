@@ -180,8 +180,8 @@ function shouldUseStreaming(params: {
 
 export async function dispatchPreparedSlackMessage(prepared: PreparedSlackMessage) {
   const { ctx, account, message, route } = prepared;
-  const {cfg} = ctx;
-  const {runtime} = ctx;
+  const { cfg } = ctx;
+  const { runtime } = ctx;
 
   // Resolve agent identity for Slack chat:write.customize overrides.
   const outboundIdentity = resolveAgentOutboundIdentity(cfg, route.agentId);
@@ -300,7 +300,7 @@ export async function dispatchPreparedSlackMessage(prepared: PreparedSlackMessag
   });
 
   const typingTarget = statusThreadTs ? `${message.channel}/${statusThreadTs}` : message.channel;
-  const {typingReaction} = ctx;
+  const { typingReaction } = ctx;
   const { onModelSelected, ...replyPipeline } = createChannelReplyPipeline({
     accountId: route.accountId,
     agentId: route.agentId,
@@ -690,19 +690,19 @@ export async function dispatchPreparedSlackMessage(prepared: PreparedSlackMessag
         ...replyOptions,
         disableBlockStreaming: useStreaming
           ? true
-          : (typeof resolveChannelStreamingBlockEnabled(account.config) === "boolean"
+          : typeof resolveChannelStreamingBlockEnabled(account.config) === "boolean"
             ? !resolveChannelStreamingBlockEnabled(account.config)
-            : undefined),
+            : undefined,
         hasRepliedRef,
         onAssistantMessageStart: onDraftBoundary,
         onModelSelected,
         onPartialReply: useStreaming
           ? undefined
-          : (!previewStreamingEnabled
+          : !previewStreamingEnabled
             ? undefined
             : async (payload) => {
                 updateDraftFromPartial(payload.text);
-              }),
+              },
         onReasoningEnd: onDraftBoundary,
         onReasoningStream: statusReactionsEnabled
           ? async () => {

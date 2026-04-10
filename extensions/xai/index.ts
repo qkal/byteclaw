@@ -161,7 +161,7 @@ export default defineSingleProviderPluginEntry({
     },
     ...OPENAI_COMPATIBLE_REPLAY_HOOKS,
     prepareExtraParams: (ctx) => {
-      const {extraParams} = ctx;
+      const { extraParams } = ctx;
       if (extraParams && extraParams.tool_stream !== undefined) {
         return extraParams;
       }

@@ -6,7 +6,10 @@ import { log } from "./logger.js";
 type AssistantContentBlock = Extract<AgentMessage, { role: "assistant" }>["content"][number];
 type AssistantMessage = Extract<AgentMessage, { role: "assistant" }>;
 type RecoveryAssessment = "valid" | "incomplete-thinking" | "incomplete-text";
-interface RecoverySessionMeta { id: string; recoveredAnthropicThinking?: boolean }
+interface RecoverySessionMeta {
+  id: string;
+  recoveredAnthropicThinking?: boolean;
+}
 
 const THINKING_BLOCK_ERROR_PATTERN = /thinking or redacted_thinking blocks?.* cannot be modified/i;
 

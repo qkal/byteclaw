@@ -111,8 +111,8 @@ export async function processGatewayAllowlist(
     safeBins: params.safeBins,
     trustedSafeBinDirs: params.trustedSafeBinDirs,
   });
-  const {allowlistMatches} = allowlistEval;
-  const {analysisOk} = allowlistEval;
+  const { allowlistMatches } = allowlistEval;
+  const { analysisOk } = allowlistEval;
   const allowlistSatisfied =
     hostSecurity === "allowlist" && analysisOk ? allowlistEval.allowlistSatisfied : false;
   const durableApprovalSatisfied = hasDurableExecApproval({

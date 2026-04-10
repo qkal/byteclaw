@@ -149,7 +149,10 @@ describeGeminiLive("pi embedded extra params (gemini live)", () => {
     includeImage?: boolean;
     prompt: string;
   }): Record<string, unknown> {
-    const userContent: ({ type: "text"; text: string } | { type: "image"; mimeType: string; data: string })[] = [{ text: params.prompt, type: "text" }];
+    const userContent: (
+      | { type: "text"; text: string }
+      | { type: "image"; mimeType: string; data: string }
+    )[] = [{ text: params.prompt, type: "text" }];
     if (params.includeImage ?? true) {
       userContent.push({
         data: params.oneByOneRedPngBase64,

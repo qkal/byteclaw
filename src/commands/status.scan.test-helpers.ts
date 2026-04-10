@@ -271,9 +271,7 @@ export function createStatusSummary(
       defaults: {},
       paths: [],
       recent: [],
-      ...(Object.hasOwn(options, "byAgent")
-        ? { byAgent: options.byAgent ?? [] }
-        : {}),
+      ...(Object.hasOwn(options, "byAgent") ? { byAgent: options.byAgent ?? [] } : {}),
     },
     tasks: {
       active: 0,

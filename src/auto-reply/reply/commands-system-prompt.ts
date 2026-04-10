@@ -27,7 +27,7 @@ export interface CommandsSystemPromptBundle {
 export async function resolveCommandsSystemPromptBundle(
   params: HandleCommandsParams,
 ): Promise<CommandsSystemPromptBundle> {
-  const {workspaceDir} = params;
+  const { workspaceDir } = params;
   const { sessionAgentId } = resolveSessionAgentIds({
     agentId: params.agentId,
     config: params.cfg,

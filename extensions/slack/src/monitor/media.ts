@@ -285,7 +285,7 @@ export async function resolveSlackAttachmentContent(params: {
   token: string;
   maxBytes: number;
 }): Promise<{ text: string; media: SlackMediaResult[] } | null> {
-  const {attachments} = params;
+  const { attachments } = params;
   if (!attachments || attachments.length === 0) {
     return null;
   }

@@ -87,7 +87,7 @@ function okMSTeamsActionDetails(action: string, details?: Record<string, unknown
 }
 
 function requireMSTeamsHandleAction() {
-  const {handleAction} = msteamsActionsAdapter;
+  const { handleAction } = msteamsActionsAdapter;
   if (!handleAction) {
     throw new Error("msteams actions.handleAction unavailable");
   }

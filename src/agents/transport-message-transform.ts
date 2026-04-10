@@ -1,6 +1,9 @@
 import type { Api, Context, Model } from "@mariozechner/pi-ai";
 
-interface PendingToolCall { id: string; name: string }
+interface PendingToolCall {
+  id: string;
+  name: string;
+}
 
 function appendMissingToolResults(
   result: Context["messages"],

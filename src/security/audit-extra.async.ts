@@ -133,7 +133,7 @@ function readChannelCommandSetting(
   if (!channelCfg || typeof channelCfg !== "object" || Array.isArray(channelCfg)) {
     return undefined;
   }
-  const {commands} = (channelCfg as { commands?: unknown });
+  const { commands } = channelCfg as { commands?: unknown };
   if (!commands || typeof commands !== "object" || Array.isArray(commands)) {
     return undefined;
   }

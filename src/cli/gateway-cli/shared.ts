@@ -27,12 +27,12 @@ export function extractGatewayMiskeys(parsed: unknown): {
   if (!parsed || typeof parsed !== "object") {
     return { hasGatewayToken: false, hasRemoteToken: false };
   }
-  const {gateway} = (parsed as Record<string, unknown>);
+  const { gateway } = parsed as Record<string, unknown>;
   if (!gateway || typeof gateway !== "object") {
     return { hasGatewayToken: false, hasRemoteToken: false };
   }
   const hasGatewayToken = "token" in (gateway as Record<string, unknown>);
-  const {remote} = (gateway as Record<string, unknown>);
+  const { remote } = gateway as Record<string, unknown>;
   const hasRemoteToken =
     remote && typeof remote === "object" ? "token" in (remote as Record<string, unknown>) : false;
   return { hasGatewayToken, hasRemoteToken };

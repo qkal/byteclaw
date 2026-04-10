@@ -55,9 +55,9 @@ export function parseLogLine(raw: string): ParsedLogLine | null {
       time:
         typeof parsed.time === "string"
           ? parsed.time
-          : (typeof meta?.date === "string"
+          : typeof meta?.date === "string"
             ? meta.date
-            : undefined),
+            : undefined,
     };
   } catch {
     return null;

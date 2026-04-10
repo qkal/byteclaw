@@ -74,11 +74,11 @@ export async function handleNextcloudTalkInbound(params: {
     roomToken: message.roomToken,
     runtime,
   });
-  const isGroup = roomKind === "direct" ? false : (roomKind === "group" ? true : message.isGroupChat);
-  const {senderId} = message;
-  const {senderName} = message;
-  const {roomToken} = message;
-  const {roomName} = message;
+  const isGroup = roomKind === "direct" ? false : roomKind === "group" ? true : message.isGroupChat;
+  const { senderId } = message;
+  const { senderName } = message;
+  const { roomToken } = message;
+  const { roomName } = message;
 
   statusSink?.({ lastInboundAt: message.timestamp });
 
@@ -114,7 +114,7 @@ export async function handleNextcloudTalkInbound(params: {
     roomToken,
     rooms: account.config.rooms,
   });
-  const {roomConfig} = roomMatch;
+  const { roomConfig } = roomMatch;
   if (isGroup && !roomMatch.allowed) {
     runtime.log?.(`nextcloud-talk: drop room ${roomToken} (not allowlisted)`);
     return;
@@ -151,8 +151,8 @@ export async function handleNextcloudTalkInbound(params: {
       }).allowed,
     storeAllowFrom: storeAllowList,
   });
-  const {commandAuthorized} = access;
-  const {effectiveGroupAllowFrom} = access;
+  const { commandAuthorized } = access;
+  const { effectiveGroupAllowFrom } = access;
 
   if (isGroup) {
     if (access.decision !== "allow") {

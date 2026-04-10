@@ -110,7 +110,7 @@ export function classifySessionKind(params: {
   alias: string;
   mainKey: string;
 }): SessionKind {
-  const {key} = params;
+  const { key } = params;
   if (key === params.alias || key === params.mainKey) {
     return "main";
   }

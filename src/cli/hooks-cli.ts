@@ -268,9 +268,9 @@ export function formatHookInfo(
   const emoji = hook.emoji ?? "🔗";
   const status = hook.loadable
     ? theme.success("✓ Ready")
-    : (!hook.enabledByConfig
+    : !hook.enabledByConfig
       ? theme.warn("⏸ Disabled")
-      : theme.error("✗ Missing requirements"));
+      : theme.error("✗ Missing requirements");
 
   lines.push(`${emoji} ${theme.heading(hook.name)} ${status}`);
   lines.push("");
@@ -332,7 +332,9 @@ export function formatHookInfo(
       lines.push(`${theme.muted("  Environment:")} ${envStatus.join(", ")}`);
     }
     if (hook.requirements.config.length > 0) {
-      const configStatus = hook.configChecks.map((check) => check.satisfied ? theme.success(`✓ ${check.path}`) : theme.error(`✗ ${check.path}`));
+      const configStatus = hook.configChecks.map((check) =>
+        check.satisfied ? theme.success(`✓ ${check.path}`) : theme.error(`✗ ${check.path}`),
+      );
       lines.push(`${theme.muted("  Config:")} ${configStatus.join(", ")}`);
     }
     if (hook.requirements.os.length > 0) {

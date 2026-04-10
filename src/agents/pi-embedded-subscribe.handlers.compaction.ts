@@ -113,7 +113,7 @@ export async function reconcileSessionStoreCompactionCountAfterSuccess(params: {
 }
 
 function clearStaleAssistantUsageOnSessionMessages(ctx: EmbeddedPiSubscribeContext): void {
-  const {messages} = ctx.params.session;
+  const { messages } = ctx.params.session;
   if (!Array.isArray(messages)) {
     return;
   }

@@ -283,7 +283,7 @@ function normalizeObservedTokenCount(value: unknown): number | undefined {
 }
 
 function getMessageTextChars(msg: AgentMessage): number {
-  const {content} = (msg as { content?: unknown });
+  const { content } = msg as { content?: unknown };
   if (typeof content === "string") {
     return content.length;
   }
@@ -295,7 +295,7 @@ function getMessageTextChars(msg: AgentMessage): number {
     if (!block || typeof block !== "object") {
       continue;
     }
-    const {text} = (block as { text?: unknown });
+    const { text } = block as { text?: unknown };
     if (typeof text === "string") {
       total += text.length;
     }
@@ -379,7 +379,7 @@ export async function compactEmbeddedPiSessionDirect(
   });
   const provider = resolvedCompactionTarget.provider ?? DEFAULT_PROVIDER;
   const modelId = resolvedCompactionTarget.model ?? DEFAULT_MODEL;
-  const {authProfileId} = resolvedCompactionTarget;
+  const { authProfileId } = resolvedCompactionTarget;
   let thinkLevel: ThinkLevel = params.thinkLevel ?? "off";
   const attemptedThinking = new Set<ThinkLevel>();
   const fail = (reason: string): EmbeddedPiCompactResult => {
@@ -466,9 +466,9 @@ export async function compactEmbeddedPiSessionDirect(
     workspaceDir: resolvedWorkspace,
   });
   const effectiveWorkspace = sandbox?.enabled
-    ? (sandbox.workspaceAccess === "rw"
+    ? sandbox.workspaceAccess === "rw"
       ? resolvedWorkspace
-      : sandbox.workspaceDir)
+      : sandbox.workspaceDir
     : resolvedWorkspace;
   await fs.mkdir(effectiveWorkspace, { recursive: true });
   await ensureSessionHeader({

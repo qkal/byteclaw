@@ -19,7 +19,10 @@ import type { NodeOnlyGatewayInfo } from "../status.node-mode.js";
 import { formatTimeAgo, redactSecrets } from "./format.js";
 import { readFileTailLines, summarizeLogTail } from "./gateway.js";
 
-interface ConfigIssueLike { path: string; message: string }
+interface ConfigIssueLike {
+  path: string;
+  message: string;
+}
 interface ConfigSnapshotLike {
   exists: boolean;
   valid: boolean;
@@ -79,8 +82,8 @@ export async function appendStatusAllDiagnosis(params: {
   const { lines, muted, ok, warn, fail } = params;
 
   const emitCheck = (label: string, status: "ok" | "warn" | "fail") => {
-    const icon = status === "ok" ? ok("✓") : (status === "warn" ? warn("!") : fail("✗"));
-    const colored = status === "ok" ? ok(label) : (status === "warn" ? warn(label) : fail(label));
+    const icon = status === "ok" ? ok("✓") : status === "warn" ? warn("!") : fail("✗");
+    const colored = status === "ok" ? ok(label) : status === "warn" ? warn(label) : fail(label);
     lines.push(`${icon} ${colored}`);
   };
 
@@ -94,7 +97,7 @@ export async function appendStatusAllDiagnosis(params: {
 
   lines.push("");
   if (params.snap) {
-    const status = !params.snap.exists ? "fail" : (params.snap.valid ? "ok" : "warn");
+    const status = !params.snap.exists ? "fail" : params.snap.valid ? "ok" : "warn";
     emitCheck(`Config: ${params.snap.path ?? "(unknown)"}`, status);
     const issues = [...(params.snap.legacyIssues ?? []), ...(params.snap.issues ?? [])];
     const uniqueIssues = issues.filter(

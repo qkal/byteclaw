@@ -413,9 +413,11 @@ describe("runBtwSideQuestion", () => {
   });
 
   it("forces provider reasoning off even when the session think level is adaptive", async () => {
-    streamSimpleMock.mockImplementation((_model, _input, options?: { reasoning?: unknown }) => options?.reasoning === undefined
+    streamSimpleMock.mockImplementation((_model, _input, options?: { reasoning?: unknown }) =>
+      options?.reasoning === undefined
         ? makeAsyncEvents([createDoneEvent("Final answer.")])
-        : makeAsyncEvents([createThinkingOnlyDoneEvent("thinking only")]));
+        : makeAsyncEvents([createThinkingOnlyDoneEvent("thinking only")]),
+    );
 
     const result = await runSideQuestion({ resolvedThinkLevel: "adaptive" });
 
@@ -698,8 +700,7 @@ describe("runBtwSideQuestion", () => {
       ],
     });
     expect(
-      (context as { messages?: { role?: string; content?: { type?: string }[] }[] })
-        .messages,
+      (context as { messages?: { role?: string; content?: { type?: string }[] }[] }).messages,
     ).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -840,8 +841,7 @@ describe("runBtwSideQuestion", () => {
       ],
     });
     expect(
-      (context as { messages?: { role?: string; content?: { type?: string }[] }[] })
-        .messages,
+      (context as { messages?: { role?: string; content?: { type?: string }[] }[] }).messages,
     ).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({

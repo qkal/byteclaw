@@ -52,11 +52,8 @@ import {
   resolveInboundMediaFileId,
 } from "./bot-handlers.media.js";
 import type { TelegramMediaRef } from "./bot-message-context.js";
-import type {
-  RegisterTelegramHandlerParams} from "./bot-native-commands.js";
-import {
-  parseTelegramNativeCommandCallbackData
-} from "./bot-native-commands.js";
+import type { RegisterTelegramHandlerParams } from "./bot-native-commands.js";
+import { parseTelegramNativeCommandCallbackData } from "./bot-native-commands.js";
 import {
   MEDIA_GROUP_TIMEOUT_MS,
   type MediaGroupEntry,
@@ -404,9 +401,7 @@ export const registerTelegramHandlers = ({
           if (!isRecoverableMediaGroupError(error)) {
             throw error;
           }
-          runtime.log?.(
-            warn(`media group: skipping photo that failed to fetch: ${String(error)}`),
-          );
+          runtime.log?.(warn(`media group: skipping photo that failed to fetch: ${String(error)}`));
           continue;
         }
         if (media) {
@@ -788,7 +783,7 @@ export const registerTelegramHandlers = ({
 
       const chatId = reaction.chat.id;
       const messageId = reaction.message_id;
-      const {user} = reaction;
+      const { user } = reaction;
       const senderId = user?.id != null ? String(user.id) : "";
       const senderUsername = user?.username ?? "";
       const isGroup = reaction.chat.type === "group" || reaction.chat.type === "supergroup";
@@ -886,11 +881,11 @@ export const registerTelegramHandlers = ({
         parentPeer,
         peer: { id: peerId, kind: isGroup ? "group" : "direct" },
       });
-      const {sessionKey} = route;
+      const { sessionKey } = route;
 
       // Enqueue system event for each added reaction.
       for (const r of addedReactions) {
-        const {emoji} = r;
+        const { emoji } = r;
         const text = `Telegram reaction added: ${emoji} by ${senderLabel} on msg ${messageId}`;
         telegramDeps.enqueueSystemEvent(text, {
           contextKey: `telegram:reaction:add:${chatId}:${messageId}:${user?.id ?? "anon"}:${emoji}`,
@@ -1167,7 +1162,11 @@ export const registerTelegramHandlers = ({
         return await editCallbackMessage(messageText, replyMarkup);
       };
       const editCallbackButtons = async (
-        buttons: { text: string; callback_data: string; style?: "danger" | "success" | "primary" }[][],
+        buttons: {
+          text: string;
+          callback_data: string;
+          style?: "danger" | "success" | "primary";
+        }[][],
       ) => {
         const keyboard = buildInlineKeyboard(buttons) ?? { inline_keyboard: [] };
         const replyMarkup = { reply_markup: keyboard };
@@ -1582,7 +1581,7 @@ export const registerTelegramHandlers = ({
               selection.model === resolvedDefault.model;
 
             await updateSessionStore(storePath, (store) => {
-              const {sessionKey} = sessionState;
+              const { sessionKey } = sessionState;
               const entry = store[sessionKey] ?? {};
               store[sessionKey] = entry;
               applyModelOverrideToSessionEntry({
@@ -1865,9 +1864,9 @@ export const registerTelegramHandlers = ({
       senderId:
         post.sender_chat?.id != null
           ? String(post.sender_chat.id)
-          : (post.from?.id != null
+          : post.from?.id != null
             ? String(post.from.id)
-            : ""),
+            : "",
       senderUsername: post.sender_chat?.username ?? post.from?.username ?? "",
     });
   });

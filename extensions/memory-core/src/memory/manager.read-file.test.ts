@@ -138,7 +138,7 @@ describe("MemoryIndexManager.readFile", () => {
     try {
       await fs.symlink(path.join(extraDir, "extra.md"), linkPath, "file");
     } catch (error) {
-      const {code} = (error as NodeJS.ErrnoException);
+      const { code } = error as NodeJS.ErrnoException;
       if (code === "EPERM" || code === "EACCES") {
         symlinkOk = false;
       } else {

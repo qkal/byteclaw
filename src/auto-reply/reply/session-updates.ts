@@ -181,9 +181,9 @@ export async function ensureSkillSnapshot(params: {
     (nextEntry?.skillsSnapshot !== existingSnapshot || !shouldRefreshSnapshot);
   const skillsSnapshot = hasFreshSnapshotInEntry
     ? nextEntry?.skillsSnapshot
-    : (shouldRefreshSnapshot || !nextEntry?.skillsSnapshot
+    : shouldRefreshSnapshot || !nextEntry?.skillsSnapshot
       ? buildSnapshot()
-      : nextEntry.skillsSnapshot);
+      : nextEntry.skillsSnapshot;
   if (
     skillsSnapshot &&
     sessionStore &&

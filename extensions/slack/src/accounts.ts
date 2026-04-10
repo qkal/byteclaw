@@ -73,9 +73,9 @@ export function resolveSlackAccount(params: {
   const botToken = configBot ?? envBot;
   const appToken = configApp ?? envApp;
   const userToken = configUser ?? envUser;
-  const botTokenSource: SlackTokenSource = configBot ? "config" : (envBot ? "env" : "none");
-  const appTokenSource: SlackTokenSource = configApp ? "config" : (envApp ? "env" : "none");
-  const userTokenSource: SlackTokenSource = configUser ? "config" : (envUser ? "env" : "none");
+  const botTokenSource: SlackTokenSource = configBot ? "config" : envBot ? "env" : "none";
+  const appTokenSource: SlackTokenSource = configApp ? "config" : envApp ? "env" : "none";
+  const userTokenSource: SlackTokenSource = configUser ? "config" : envUser ? "env" : "none";
 
   return {
     accountId,

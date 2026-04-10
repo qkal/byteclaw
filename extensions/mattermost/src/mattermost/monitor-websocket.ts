@@ -140,7 +140,7 @@ export function createMattermostConnectOnce(
     const ws = webSocketFactory(opts.wsUrl);
     const onAbort = () => ws.terminate();
     opts.abortSignal?.addEventListener("abort", onAbort, { once: true });
-    const {getBotUpdateAt} = opts;
+    const { getBotUpdateAt } = opts;
 
     try {
       return await new Promise<void>((resolve, reject) => {

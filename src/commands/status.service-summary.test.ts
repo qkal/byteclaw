@@ -54,7 +54,9 @@ describe("readServiceStatusSummary", () => {
   });
 
   it("passes command environment to runtime and loaded checks", async () => {
-    const isLoaded = vi.fn(async ({ env }: GatewayServiceEnvArgs) => env?.OPENCLAW_GATEWAY_PORT === "18789");
+    const isLoaded = vi.fn(
+      async ({ env }: GatewayServiceEnvArgs) => env?.OPENCLAW_GATEWAY_PORT === "18789",
+    );
     const readRuntime = vi.fn(async (env?: NodeJS.ProcessEnv) => ({
       status: env?.OPENCLAW_GATEWAY_PORT === "18789" ? ("running" as const) : ("unknown" as const),
     }));

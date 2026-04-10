@@ -13,7 +13,11 @@ import { resolveDiscordChannelAllowlist } from "../resolve-channels.js";
 import { resolveDiscordUserAllowlist } from "../resolve-users.js";
 
 type GuildEntries = Record<string, DiscordGuildEntry>;
-interface ChannelResolutionInput { input: string; guildKey: string; channelKey?: string }
+interface ChannelResolutionInput {
+  input: string;
+  guildKey: string;
+  channelKey?: string;
+}
 interface DiscordChannelLogEntry {
   input: string;
   guildId?: string;
@@ -58,14 +62,14 @@ function formatDiscordChannelUnresolved(entry: DiscordChannelLogEntry): string {
   return formatResolutionLogDetails(entry.input, [
     entry.guildName
       ? `guild:${entry.guildName}`
-      : (entry.guildId
+      : entry.guildId
         ? `guildId:${entry.guildId}`
-        : undefined),
+        : undefined,
     entry.channelName
       ? `channel:${entry.channelName}`
-      : (entry.channelId
+      : entry.channelId
         ? `channelId:${entry.channelId}`
-        : undefined),
+        : undefined,
     entry.note,
   ]);
 }
@@ -282,7 +286,7 @@ async function resolveGuildEntriesByUserAllowlist(params: {
         continue;
       }
       const nextGuild = { ...guildConfig } as Record<string, unknown>;
-      const {users} = (guildConfig as { users?: string[] });
+      const { users } = guildConfig as { users?: string[] };
       if (Array.isArray(users) && users.length > 0) {
         nextGuild.users = canonicalizeAllowlistWithResolvedIds({
           existing: users,

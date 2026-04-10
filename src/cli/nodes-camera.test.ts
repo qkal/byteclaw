@@ -9,10 +9,10 @@ import { withTempDir } from "../test-utils/temp-dir.js";
 
 const fetchGuardMocks = vi.hoisted(() => ({
   fetchWithSsrFGuard: vi.fn(async (params: { url: string }) => ({
-      finalUrl: params.url,
-      release: async () => {},
-      response: await globalThis.fetch(params.url),
-    })),
+    finalUrl: params.url,
+    release: async () => {},
+    response: await globalThis.fetch(params.url),
+  })),
 }));
 
 vi.mock("../infra/net/fetch-guard.js", () => ({

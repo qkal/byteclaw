@@ -341,7 +341,7 @@ export function createExecApprovalHandlers(
         respond(false, undefined, errorShape(ErrorCodes.INVALID_REQUEST, "invalid decision"));
         return;
       }
-      const {decision} = p;
+      const { decision } = p;
       await handleApprovalResolve({
         buildResolvedEvent: ({ approvalId, decision, resolvedBy, snapshot, nowMs }) =>
           ({

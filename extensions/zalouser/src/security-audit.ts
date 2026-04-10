@@ -33,7 +33,7 @@ export function collectZalouserSecurityAuditFindings(params: {
       ? `channels.zalouser.accounts.${accountId}`
       : "channels.zalouser";
   const mutableGroupEntries = new Set<string>();
-  const {groups} = zalouserCfg;
+  const { groups } = zalouserCfg;
   if (groups && typeof groups === "object" && !Array.isArray(groups)) {
     for (const key of Object.keys(groups as Record<string, unknown>)) {
       if (!isZalouserMutableGroupEntry(key)) {

@@ -100,7 +100,7 @@ export function resolveRunWorkspaceDir(params: {
   }
 
   const fallbackReason: WorkspaceFallbackReason =
-    requested == null ? "missing" : (typeof requested === "string" ? "blank" : "invalid_type");
+    requested == null ? "missing" : typeof requested === "string" ? "blank" : "invalid_type";
   const fallbackWorkspace = resolveAgentWorkspaceDir(params.config ?? {}, agentId);
   const sanitizedFallback = sanitizeForPromptLiteral(fallbackWorkspace);
   if (sanitizedFallback !== fallbackWorkspace) {

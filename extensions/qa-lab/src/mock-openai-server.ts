@@ -352,9 +352,9 @@ function buildAssistantText(input: ResponsesInputItem[], body: Record<string, un
   const memorySnippet =
     typeof toolJson?.text === "string"
       ? toolJson.text
-      : (Array.isArray(toolJson?.results)
+      : Array.isArray(toolJson?.results)
         ? JSON.stringify(toolJson.results)
-        : toolOutput);
+        : toolOutput;
   const orbitCode = extractOrbitCode(memorySnippet);
   const mediaPath = /MEDIA:([^\n]+)/.exec(toolOutput)?.[1]?.trim();
   const exactReplyDirective = extractExactReplyDirective(allInputText);
@@ -550,9 +550,9 @@ async function buildResponsesPayload(body: Record<string, unknown>) {
       const from =
         typeof first.startLine === "number"
           ? Math.max(1, first.startLine)
-          : (typeof first.endLine === "number"
+          : typeof first.endLine === "number"
             ? Math.max(1, first.endLine)
-            : 1);
+            : 1;
       return buildToolCallEventsWithArgs("memory_get", {
         from,
         lines: 4,
@@ -584,9 +584,9 @@ async function buildResponsesPayload(body: Record<string, unknown>) {
       const from =
         typeof first.startLine === "number"
           ? Math.max(1, first.startLine)
-          : (typeof first.endLine === "number"
+          : typeof first.endLine === "number"
             ? Math.max(1, first.endLine)
-            : 1);
+            : 1;
       return buildToolCallEventsWithArgs("memory_get", {
         from,
         lines: 4,
@@ -612,9 +612,9 @@ async function buildResponsesPayload(body: Record<string, unknown>) {
       const from =
         typeof first.startLine === "number"
           ? Math.max(1, first.startLine)
-          : (typeof first.endLine === "number"
+          : typeof first.endLine === "number"
             ? Math.max(1, first.endLine)
-            : 1);
+            : 1;
       return buildToolCallEventsWithArgs("memory_get", {
         from,
         lines: 4,

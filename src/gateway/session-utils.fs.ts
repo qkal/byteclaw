@@ -214,7 +214,7 @@ export function readSessionTitleFieldsFromTranscript(
   let fd: number | null = null;
   try {
     fd = fs.openSync(filePath, "r");
-    const {size} = stat;
+    const { size } = stat;
 
     // Head (first user message)
     let firstUserMessage: string | null = null;
@@ -405,7 +405,7 @@ export function readLastMessagePreviewFromTranscript(
 
   return withOpenTranscriptFd(filePath, (fd) => {
     const stat = fs.fstatSync(fd);
-    const {size} = stat;
+    const { size } = stat;
     if (size === 0) {
       return null;
     }
@@ -429,11 +429,11 @@ function extractTranscriptUsageCost(raw: unknown): number | undefined {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
     return undefined;
   }
-  const {cost} = (raw as { cost?: unknown });
+  const { cost } = raw as { cost?: unknown };
   if (!cost || typeof cost !== "object" || Array.isArray(cost)) {
     return undefined;
   }
-  const {total} = (cost as { total?: unknown });
+  const { total } = cost as { total?: unknown };
   return typeof total === "number" && Number.isFinite(total) && total >= 0 ? total : undefined;
 }
 
@@ -475,24 +475,24 @@ function extractLatestUsageFromTranscriptChunk(
       const usageRaw =
         message.usage && typeof message.usage === "object" && !Array.isArray(message.usage)
           ? message.usage
-          : (parsed.usage && typeof parsed.usage === "object" && !Array.isArray(parsed.usage)
+          : parsed.usage && typeof parsed.usage === "object" && !Array.isArray(parsed.usage)
             ? parsed.usage
-            : undefined);
+            : undefined;
       const usage = normalizeUsage(usageRaw);
       const totalTokens = resolvePositiveUsageNumber(deriveSessionTotalTokens({ usage }));
       const costUsd = extractTranscriptUsageCost(usageRaw);
       const modelProvider =
         typeof message.provider === "string"
           ? message.provider.trim()
-          : (typeof parsed.provider === "string"
+          : typeof parsed.provider === "string"
             ? parsed.provider.trim()
-            : undefined);
+            : undefined;
       const model =
         typeof message.model === "string"
           ? message.model.trim()
-          : (typeof parsed.model === "string"
+          : typeof parsed.model === "string"
             ? parsed.model.trim()
-            : undefined);
+            : undefined;
       const isDeliveryMirror = modelProvider === "openclaw" && model === "delivery-mirror";
       const hasMeaningfulUsage =
         hasNonzeroUsage(usage) ||
@@ -742,7 +742,7 @@ function readRecentMessagesFromTranscript(
   try {
     fd = fs.openSync(filePath, "r");
     const stat = fs.fstatSync(fd);
-    const {size} = stat;
+    const { size } = stat;
     if (size === 0) {
       return [];
     }

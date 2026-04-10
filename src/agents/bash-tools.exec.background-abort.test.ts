@@ -74,7 +74,7 @@ async function expectBackgroundSessionSurvivesAbort(params: {
     abortController.signal,
   );
   expect(result.details.status).toBe("running");
-  const {sessionId} = (result.details as { sessionId: string });
+  const { sessionId } = result.details as { sessionId: string };
 
   abortController.abort();
   const startedAt = Date.now();
@@ -109,7 +109,7 @@ async function expectBackgroundSessionTimesOut(params: {
   const signal = params.signal ?? abortController.signal;
   const result = await params.tool.execute("toolcall", params.executeParams, signal);
   expect(result.details.status).toBe("running");
-  const {sessionId} = (result.details as { sessionId: string });
+  const { sessionId } = result.details as { sessionId: string };
 
   if (params.abortAfterStart) {
     abortController.abort();
@@ -161,7 +161,7 @@ test("background exec without explicit timeout ignores default timeout", async (
   });
   const result = await tool.execute("toolcall", { background: true, command: BACKGROUND_HOLD_CMD });
   expect(result.details.status).toBe("running");
-  const {sessionId} = (result.details as { sessionId: string });
+  const { sessionId } = result.details as { sessionId: string };
   const waitMs = Math.max(ABORT_SETTLE_MS + 80, BACKGROUND_TIMEOUT_SEC * 1000 + 80);
 
   const startedAt = Date.now();

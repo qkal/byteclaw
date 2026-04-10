@@ -8,8 +8,7 @@ import { emitAgentEvent, registerAgentRunContext } from "../infra/agent-events.j
 import { createChannelTestPluginBase } from "../test-utils/channel-plugins.js";
 import { setRegistry } from "./server.agent.gateway-server-agent.mocks.js";
 import { createRegistry } from "./server.e2e-registry-helpers.js";
-import type {
-  startServerWithClient} from "./test-helpers.js";
+import type { startServerWithClient } from "./test-helpers.js";
 import {
   agentCommand,
   connectOk,
@@ -113,7 +112,7 @@ function expectChannels(call: Record<string, unknown>, channel: string) {
 }
 
 function readAgentCommandCall(fromEnd = 1) {
-  const {calls} = vi.mocked(agentCommand).mock;
+  const { calls } = vi.mocked(agentCommand).mock;
   return (calls.at(-fromEnd)?.[0] ?? {}) as Record<string, unknown>;
 }
 
@@ -382,7 +381,7 @@ describe("gateway server agent", () => {
     async () => {
       await writeMainSessionEntry({ sessionId: "sess-main-before-reset" });
       const spy = vi.mocked(agentCommand);
-      const {calls} = spy.mock;
+      const { calls } = spy.mock;
       const callsBefore = calls.length;
       const res = await rpcReq(
         ws,

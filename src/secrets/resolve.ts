@@ -277,7 +277,7 @@ async function readFileProviderPayload(params: {
   cache?: SecretRefResolveCache;
 }): Promise<unknown> {
   const cacheKey = params.providerName;
-  const {cache} = params;
+  const { cache } = params;
   if (cache?.filePayloadByProvider?.has(cacheKey)) {
     return await (cache.filePayloadByProvider.get(cacheKey) as Promise<unknown>);
   }
@@ -532,7 +532,7 @@ async function runExecResolver(params: {
         signal,
         stderr,
         stdout,
-        termination: noOutputTimedOut ? "no-output-timeout" : (timedOut ? "timeout" : "exit"),
+        termination: noOutputTimedOut ? "no-output-timeout" : timedOut ? "timeout" : "exit",
       });
     });
 
@@ -915,7 +915,7 @@ export async function resolveSecretRefValue(
   ref: SecretRef,
   options: ResolveSecretRefOptions,
 ): Promise<unknown> {
-  const {cache} = options;
+  const { cache } = options;
   const key = secretRefKey(ref);
   if (cache?.resolvedByRefKey?.has(key)) {
     return await (cache.resolvedByRefKey.get(key) as Promise<unknown>);

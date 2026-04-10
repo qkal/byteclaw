@@ -91,10 +91,7 @@ export function resolveSessionStoreEntry(params: {
   const trimmedKey = params.sessionKey.trim();
   const normalizedKey = normalizeStoreSessionKey(trimmedKey);
   const legacyKeySet = new Set<string>();
-  if (
-    trimmedKey !== normalizedKey &&
-    Object.hasOwn(params.store, trimmedKey)
-  ) {
+  if (trimmedKey !== normalizedKey && Object.hasOwn(params.store, trimmedKey)) {
     legacyKeySet.add(trimmedKey);
   }
   let existing =
@@ -685,7 +682,7 @@ export async function updateSessionStoreEntry(params: {
   return await withSessionStoreLock(storePath, async () => {
     const store = loadSessionStore(storePath, { skipCache: true });
     const resolved = resolveSessionStoreEntry({ sessionKey, store });
-    const {existing} = resolved;
+    const { existing } = resolved;
     if (!existing) {
       return null;
     }
@@ -716,7 +713,7 @@ export async function recordSessionMetaFromInbound(params: {
     storePath,
     (store) => {
       const resolved = resolveSessionStoreEntry({ sessionKey, store });
-      const {existing} = resolved;
+      const { existing } = resolved;
       const patch = deriveSessionMetaPatch({
         ctx,
         existing,
@@ -765,7 +762,7 @@ export async function updateLastRoute(params: {
   return await withSessionStoreLock(storePath, async () => {
     const store = loadSessionStore(storePath);
     const resolved = resolveSessionStoreEntry({ sessionKey, store });
-    const {existing} = resolved;
+    const { existing } = resolved;
     const now = Date.now();
     const explicitContext = normalizeDeliveryContext(params.deliveryContext);
     const inlineContext = normalizeDeliveryContext({
@@ -777,8 +774,7 @@ export async function updateLastRoute(params: {
     const mergedInput = mergeDeliveryContext(explicitContext, inlineContext);
     const explicitDeliveryContext = params.deliveryContext;
     const explicitThreadFromDeliveryContext =
-      explicitDeliveryContext != null &&
-      Object.hasOwn(explicitDeliveryContext, "threadId")
+      explicitDeliveryContext != null && Object.hasOwn(explicitDeliveryContext, "threadId")
         ? explicitDeliveryContext.threadId
         : undefined;
     const explicitThreadValue =

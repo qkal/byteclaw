@@ -198,12 +198,12 @@ function normalizeStickerItems(value: unknown): APIStickerItem[] {
 }
 
 export function resolveDiscordMessageStickers(message: Message): APIStickerItem[] {
-  const {stickers} = (message as { stickers?: unknown });
+  const { stickers } = message as { stickers?: unknown };
   const normalized = normalizeStickerItems(stickers);
   if (normalized.length > 0) {
     return normalized;
   }
-  const {rawData} = (message as { rawData?: { sticker_items?: unknown; stickers?: unknown } });
+  const { rawData } = message as { rawData?: { sticker_items?: unknown; stickers?: unknown } };
   return normalizeStickerItems(rawData?.sticker_items ?? rawData?.stickers);
 }
 
@@ -377,7 +377,7 @@ async function appendResolvedMediaFromAttachments(params: {
   totalTimeoutMs?: number;
   abortSignal?: AbortSignal;
 }) {
-  const {attachments} = params;
+  const { attachments } = params;
   if (!attachments || attachments.length === 0) {
     return;
   }
@@ -499,7 +499,7 @@ async function appendResolvedMediaFromStickers(params: {
   totalTimeoutMs?: number;
   abortSignal?: AbortSignal;
 }) {
-  const {stickers} = params;
+  const { stickers } = params;
   if (!stickers || stickers.length === 0) {
     return;
   }
@@ -685,7 +685,7 @@ function resolveDiscordForwardedMessagesText(message: Message): string {
 }
 
 function resolveDiscordMessageSnapshots(message: Message): DiscordMessageSnapshot[] {
-  const {rawData} = (message as { rawData?: { message_snapshots?: unknown } });
+  const { rawData } = message as { rawData?: { message_snapshots?: unknown } };
   return normalizeDiscordMessageSnapshots(
     rawData?.message_snapshots ??
       (message as { message_snapshots?: unknown }).message_snapshots ??
@@ -767,9 +767,7 @@ function formatDiscordSnapshotAuthor(
   return undefined;
 }
 
-export function buildDiscordMediaPayload(
-  mediaList: { path: string; contentType?: string }[],
-): {
+export function buildDiscordMediaPayload(mediaList: { path: string; contentType?: string }[]): {
   MediaPath?: string;
   MediaType?: string;
   MediaUrl?: string;

@@ -362,7 +362,11 @@ function extractUsageFromResult(result: unknown): Usage {
   );
 }
 
-interface PendingToolCall { id: string; name: string; arguments: string }
+interface PendingToolCall {
+  id: string;
+  name: string;
+  arguments: string;
+}
 
 function resolveStopReasonAndPendingToolCalls(meta: unknown): {
   stopReason: string | undefined;
@@ -477,8 +481,8 @@ export async function handleOpenResponsesHttpRequest(
 
   const payload: CreateResponseBody = parseResult.data;
   const stream = Boolean(payload.stream);
-  const {model} = payload;
-  const {user} = payload;
+  const { model } = payload;
+  const { user } = payload;
   const agentId = resolveAgentIdForRequest({ model, req });
   const { modelOverride, errorMessage: modelError } = await resolveOpenAiCompatModelOverride({
     agentId,
@@ -644,7 +648,7 @@ export async function handleOpenResponsesHttpRequest(
     responseSessionScope,
   );
   const sessionKey = previousSessionKey ?? resolved.sessionKey;
-  const {messageChannel} = resolved;
+  const { messageChannel } = resolved;
 
   // Build prompt from input
   const prompt = buildAgentPrompt(payload.input);
@@ -983,7 +987,7 @@ export async function handleOpenResponsesHttpRequest(
       // Check for pending client tool calls BEFORE maybeFinalize() because the
       // Lifecycle:end event may already have requested finalization.
       const resultAny = result as { payloads?: { text?: string }[]; meta?: unknown };
-      const {meta} = resultAny;
+      const { meta } = resultAny;
       const { stopReason, pendingToolCalls } = resolveStopReasonAndPendingToolCalls(meta);
 
       if (
@@ -1080,7 +1084,7 @@ export async function handleOpenResponsesHttpRequest(
 
       // Fallback: if no streaming deltas were received, send the full response as text
       if (!sawAssistantDelta) {
-        const {payloads} = resultAny;
+        const { payloads } = resultAny;
         const content =
           Array.isArray(payloads) && payloads.length > 0
             ? payloads

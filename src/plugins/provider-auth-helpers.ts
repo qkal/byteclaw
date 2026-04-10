@@ -200,12 +200,12 @@ export function applyAuthProfileConfig(
             ? reorderedProviderOrder
             : [...(reorderedProviderOrder ?? []), params.profileId],
         }
-      : (derivedProviderOrder
+      : derivedProviderOrder
         ? {
             ...baseOrder,
             [normalizedProvider]: derivedProviderOrder,
           }
-        : baseOrder);
+        : baseOrder;
   return {
     ...cfg,
     auth: {

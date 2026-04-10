@@ -112,7 +112,7 @@ function buildAcpTargetFactory(params: {
       cfg: params.cfg,
     });
   const backend = bindingOverrides.backend ?? runtimeDefaults.backend;
-  const {label} = bindingOverrides;
+  const { label } = bindingOverrides;
   const acpAgentId = normalizeText(runtimeDefaults.acpAgentId);
 
   return {

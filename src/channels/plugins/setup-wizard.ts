@@ -326,7 +326,7 @@ function applySetupInput(params: {
   accountId: string;
   input: ChannelSetupInput;
 }) {
-  const {setup} = params.plugin;
+  const { setup } = params.plugin;
   if (!setup?.applyAccountConfig) {
     throw new Error(`${params.plugin.id} does not support setup`);
   }
@@ -792,7 +792,7 @@ export function buildChannelSetupWizardAdapterFromSetupWizard(params: {
       }
 
       if (forceAllowFrom && wizard.allowFrom) {
-        const {allowFrom} = wizard;
+        const { allowFrom } = wizard;
         const allowFromCredentialValue = normalizeOptionalString(
           credentialValues[allowFrom.credentialInputKey ?? wizard.credentials[0]?.inputKey],
         );

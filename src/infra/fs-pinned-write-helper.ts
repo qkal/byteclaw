@@ -196,7 +196,7 @@ export async function runPinnedWriteHelper(params: {
     }
 
     if (params.input.kind === "buffer") {
-      const {input} = params;
+      const { input } = params;
       await new Promise<void>((resolve, reject) => {
         child.stdin.once("error", reject);
         if (typeof input.data === "string") {

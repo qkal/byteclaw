@@ -1,4 +1,7 @@
-export interface PortRange { start: number; end: number }
+export interface PortRange {
+  start: number;
+  end: number;
+}
 
 function isValidPort(port: number): boolean {
   return Number.isFinite(port) && port > 0 && port <= 65_535;

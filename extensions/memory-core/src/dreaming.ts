@@ -39,8 +39,15 @@ const RUNTIME_CRON_RECONCILE_INTERVAL_MS = 60_000;
 
 type Logger = Pick<OpenClawPluginApi["logger"], "info" | "warn" | "error">;
 
-interface CronSchedule { kind: "cron"; expr: string; tz?: string }
-interface CronPayload { kind: "systemEvent"; text: string }
+interface CronSchedule {
+  kind: "cron";
+  expr: string;
+  tz?: string;
+}
+interface CronPayload {
+  kind: "systemEvent";
+  text: string;
+}
 interface ManagedCronJobCreate {
   name: string;
   description: string;
@@ -369,7 +376,7 @@ export async function reconcileShortTermDreamingCronJob(params: {
   config: ShortTermPromotionDreamingConfig;
   logger: Logger;
 }): Promise<ReconcileResult> {
-  const {cron} = params;
+  const { cron } = params;
   if (!cron) {
     return { removed: 0, status: "unavailable" };
   }

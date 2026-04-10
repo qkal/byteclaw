@@ -131,7 +131,7 @@ function estimateTextAndImageChars(content: readonly (TextContent | ImageContent
 
 function estimateMessageChars(message: AgentMessage): number {
   if (message.role === "user") {
-    const {content} = message;
+    const { content } = message;
     if (typeof content === "string") {
       return estimateWeightedTextChars(content);
     }
@@ -149,11 +149,11 @@ function estimateMessageChars(message: AgentMessage): number {
       }
       const blockType = (b as { type?: unknown }).type;
       if (blockType === "thinking" || blockType === "redacted_thinking") {
-        const {thinking} = (b as { thinking?: unknown });
+        const { thinking } = b as { thinking?: unknown };
         if (typeof thinking === "string") {
           chars += estimateWeightedTextChars(thinking);
         }
-        const {data} = (b as { data?: unknown });
+        const { data } = b as { data?: unknown };
         if (blockType === "redacted_thinking" && typeof data === "string") {
           chars += estimateWeightedTextChars(data);
         }

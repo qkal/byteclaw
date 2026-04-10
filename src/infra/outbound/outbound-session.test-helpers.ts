@@ -100,7 +100,7 @@ function parseTelegramTargetForTest(raw: string): {
   }
   return {
     chatId: trimmed,
-    chatType: trimmed.startsWith("-") ? "group" : (trimmed.startsWith("@") ? "unknown" : "direct"),
+    chatType: trimmed.startsWith("-") ? "group" : trimmed.startsWith("@") ? "unknown" : "direct",
   };
 }
 
@@ -186,18 +186,18 @@ function resolveSlackOutboundSessionRouteForTest(params: ChannelOutboundSessionR
     params.cfg.channels?.slack?.dm?.groupChannels?.some(
       (candidate) => normalizeLowercaseStringOrEmpty(String(candidate)) === normalizedId,
     ) === true;
-  const peerKind: RoutePeer["kind"] = isDm ? "direct" : (isGroupChannel ? "group" : "channel");
+  const peerKind: RoutePeer["kind"] = isDm ? "direct" : isGroupChannel ? "group" : "channel";
   return buildThreadedChannelRoute({
     accountId: params.accountId,
     agentId: params.agentId,
     cfg: params.cfg,
     channel: "slack",
-    chatType: peerKind === "direct" ? "direct" : (peerKind === "group" ? "group" : "channel"),
+    chatType: peerKind === "direct" ? "direct" : peerKind === "group" ? "group" : "channel",
     from: isDm
       ? `slack:${rawId}`
-      : (isGroupChannel
+      : isGroupChannel
         ? `slack:group:${rawId}`
-        : `slack:channel:${rawId}`),
+        : `slack:channel:${rawId}`,
     peer: { id: normalizedId, kind: peerKind },
     threadId: params.replyToId ?? params.threadId ?? undefined,
     to: isDm ? `user:${rawId}` : `channel:${rawId}`,
@@ -322,7 +322,7 @@ function resolveMSTeamsOutboundSessionRouteForTest(params: ChannelOutboundSessio
   const conversationId = rawId.split(";")[0] ?? rawId;
   const isUser = lower.startsWith("user:");
   const isChannel = !isUser && /@thread\.tacv2/i.test(conversationId);
-  const peerKind: RoutePeer["kind"] = isUser ? "direct" : (isChannel ? "channel" : "group");
+  const peerKind: RoutePeer["kind"] = isUser ? "direct" : isChannel ? "channel" : "group";
   return buildChannelOutboundSessionRoute({
     accountId: params.accountId,
     agentId: params.agentId,
@@ -331,9 +331,9 @@ function resolveMSTeamsOutboundSessionRouteForTest(params: ChannelOutboundSessio
     chatType: peerKind,
     from: isUser
       ? `msteams:${conversationId}`
-      : (isChannel
+      : isChannel
         ? `msteams:channel:${conversationId}`
-        : `msteams:group:${conversationId}`),
+        : `msteams:group:${conversationId}`,
     peer: { id: conversationId, kind: peerKind },
     to: isUser ? `user:${conversationId}` : `conversation:${conversationId}`,
   });

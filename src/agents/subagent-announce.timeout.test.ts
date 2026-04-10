@@ -246,7 +246,7 @@ function findFinalDirectAgentCall(): GatewayCall | undefined {
 
 function setupParentSessionFallback(parentSessionKey: string): void {
   requesterDepthResolver = (sessionKey?: string) =>
-    sessionKey === parentSessionKey ? 1 : (sessionKey?.includes(":subagent:") ? 1 : 0);
+    sessionKey === parentSessionKey ? 1 : sessionKey?.includes(":subagent:") ? 1 : 0;
   subagentSessionRunActive = false;
   shouldIgnorePostCompletion = false;
   fallbackRequesterResolution = {
@@ -447,8 +447,7 @@ describe("subagent announce timeout config", () => {
     });
 
     const directAgentCall = findFinalDirectAgentCall();
-    const internalEvents =
-      (directAgentCall?.params?.internalEvents as { result?: string }[]) ?? [];
+    const internalEvents = (directAgentCall?.params?.internalEvents as { result?: string }[]) ?? [];
     expect(internalEvents[0]?.result).toContain("3 tool call(s)");
     expect(internalEvents[0]?.result).not.toContain("data");
   });
@@ -498,8 +497,7 @@ describe("subagent announce timeout config", () => {
     });
 
     const directAgentCall = findFinalDirectAgentCall();
-    const internalEvents =
-      (directAgentCall?.params?.internalEvents as { result?: string }[]) ?? [];
+    const internalEvents = (directAgentCall?.params?.internalEvents as { result?: string }[]) ?? [];
     expect(internalEvents[0]?.result).toContain("Read 12 files");
     expect(internalEvents[0]?.result).not.toContain("grep output");
   });
@@ -538,8 +536,7 @@ describe("subagent announce timeout config", () => {
     });
 
     const directAgentCall = findFinalDirectAgentCall();
-    const internalEvents =
-      (directAgentCall?.params?.internalEvents as { result?: string }[]) ?? [];
+    const internalEvents = (directAgentCall?.params?.internalEvents as { result?: string }[]) ?? [];
     expect(internalEvents[0]?.result).toContain(
       "A longer partial summary that should stay silent.",
     );

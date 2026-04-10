@@ -379,7 +379,7 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
           "openclaw.provider": evt.provider ?? "unknown",
         };
 
-        const {usage} = evt;
+        const { usage } = evt;
         if (usage.input) {
           tokensCounter.add(usage.input, { ...attrs, "openclaw.token": "input" });
         }

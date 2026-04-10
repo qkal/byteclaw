@@ -175,7 +175,7 @@ function resolveExecApprovalButtonsExplicitlyDisabled(params: {
   cfg: OpenClawConfig;
   accountId?: string | null;
 }): boolean {
-  const {capabilities} = resolveTelegramAccount(params).config;
+  const { capabilities } = resolveTelegramAccount(params).config;
   return resolveTelegramInlineButtonsConfigScope(capabilities) === "off";
 }
 

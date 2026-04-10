@@ -27,7 +27,7 @@ function normalizeChannel(value: unknown): CronMessageChannel | undefined {
 }
 
 export function resolveCronDeliveryPlan(job: CronJob): CronDeliveryPlan {
-  const {delivery} = job;
+  const { delivery } = job;
   const hasDelivery = delivery && typeof delivery === "object";
   const rawMode = hasDelivery ? (delivery as { mode?: unknown }).mode : undefined;
   const normalizedMode =
@@ -111,7 +111,7 @@ export function resolveFailureDestination(
   job: CronJob,
   globalConfig?: CronFailureDestinationConfig,
 ): CronFailureDeliveryPlan | null {
-  const {delivery} = job;
+  const { delivery } = job;
   const jobFailureDest = delivery?.failureDestination as CronFailureDestinationInput | undefined;
   const hasJobFailureDest = jobFailureDest && typeof jobFailureDest === "object";
 

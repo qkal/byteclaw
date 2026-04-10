@@ -482,7 +482,7 @@ export function resolveProviderRequestPolicy(
   const provider = normalizeProviderId(input.provider ?? "");
   const policy = resolveProviderAttributionPolicy(provider, env);
   const endpointResolution = resolveProviderEndpoint(input.baseUrl);
-  const {endpointClass} = endpointResolution;
+  const { endpointClass } = endpointResolution;
   const api = normalizeOptionalLowercaseString(input.api);
   const usesConfiguredBaseUrl = endpointClass !== "default";
   const usesKnownNativeOpenAIEndpoint =
@@ -552,10 +552,10 @@ export function resolveProviderRequestCapabilities(
   env: RuntimeVersionEnv = process.env as RuntimeVersionEnv,
 ): ProviderRequestCapabilities {
   const policy = resolveProviderRequestPolicy(input, env);
-  const {provider} = policy;
+  const { provider } = policy;
   const api = normalizeOptionalLowercaseString(input.api);
   const normalizedModelId = normalizeOptionalLowercaseString(input.modelId);
-  const {endpointClass} = policy;
+  const { endpointClass } = policy;
   const isKnownNativeEndpoint =
     endpointClass === "anthropic-public" ||
     endpointClass === "cerebras-native" ||

@@ -236,7 +236,7 @@ export interface LaunchctlPrintInfo {
 export function parseLaunchctlPrint(output: string): LaunchctlPrintInfo {
   const entries = parseKeyValueOutput(output, "=");
   const info: LaunchctlPrintInfo = {};
-  const {state} = entries;
+  const { state } = entries;
   if (state) {
     info.state = state;
   }
@@ -303,7 +303,7 @@ export async function readLaunchAgentRuntime(
   const parsed = parseLaunchctlPrint(res.stdout || res.stderr || "");
   const plistExists = await launchAgentPlistExists(env);
   const state = normalizeLowercaseStringOrEmpty(parsed.state);
-  const status = state === "running" || parsed.pid ? "running" : (state ? "stopped" : "unknown");
+  const status = state === "running" || parsed.pid ? "running" : state ? "stopped" : "unknown";
   return {
     cachedLabel: !plistExists,
     lastExitReason: parsed.lastExitReason,

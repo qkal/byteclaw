@@ -28,7 +28,13 @@ export function normalizeMetaSources(meta: MemoryIndexMeta): MemorySource[] {
     // Backward compatibility for older indexes that did not persist sources.
     return ["memory"];
   }
-  const normalized = [...new Set(meta.sources.filter((source): source is MemorySource => source === 'memory' || source === 'sessions'))].toSorted();
+  const normalized = [
+    ...new Set(
+      meta.sources.filter(
+        (source): source is MemorySource => source === "memory" || source === "sessions",
+      ),
+    ),
+  ].toSorted();
   return normalized.length > 0 ? normalized : ["memory"];
 }
 

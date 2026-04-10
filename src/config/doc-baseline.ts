@@ -93,10 +93,7 @@ let cachedDocBaselineRuntimePromise: Promise<typeof import("./doc-baseline.runti
   null;
 const uiHintIndexCache = new WeakMap<
   ConfigSchemaResponse["uiHints"],
-  Map<
-    number,
-    { path: string; parts: string[]; hint: ConfigSchemaResponse["uiHints"][string] }[]
-  >
+  Map<number, { path: string; parts: string[]; hint: ConfigSchemaResponse["uiHints"][string] }[]>
 >();
 const schemaHasChildrenCache = new WeakMap<JsonSchemaObject, boolean>();
 

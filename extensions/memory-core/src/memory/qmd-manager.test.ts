@@ -771,7 +771,7 @@ describe("QmdMemoryManager", () => {
         const globIdx = args.indexOf("--glob");
         const maskIdx = args.indexOf("--mask");
         const pattern =
-          (globIdx !== -1 ? args[globIdx + 1] : (maskIdx !== -1 ? args[maskIdx + 1] : "")) ?? "";
+          (globIdx !== -1 ? args[globIdx + 1] : maskIdx !== -1 ? args[maskIdx + 1] : "") ?? "";
         const hasConflict = [...legacyCollections.entries()].some(
           ([existingName, info]) =>
             existingName !== name && info.path === pathArg && info.pattern === pattern,
@@ -852,7 +852,7 @@ describe("QmdMemoryManager", () => {
         const globIdx = args.indexOf("--glob");
         const maskIdx = args.indexOf("--mask");
         const pattern =
-          (globIdx !== -1 ? args[globIdx + 1] : (maskIdx !== -1 ? args[maskIdx + 1] : "")) ?? "";
+          (globIdx !== -1 ? args[globIdx + 1] : maskIdx !== -1 ? args[maskIdx + 1] : "") ?? "";
         const hasConflict = [...listedCollections.entries()].some(
           ([existingName, info]) =>
             existingName !== name && info.path === pathArg && info.pattern === pattern,
@@ -4002,7 +4002,7 @@ describe("QmdMemoryManager", () => {
 
   it("sets busy_timeout on qmd sqlite connections", async () => {
     const { manager } = await createManager();
-    const {indexPath} = (manager as unknown as { indexPath: string });
+    const { indexPath } = manager as unknown as { indexPath: string };
     await fs.mkdir(path.dirname(indexPath), { recursive: true });
     const { DatabaseSync } = requireNodeSqlite();
     const seedDb = new DatabaseSync(indexPath);

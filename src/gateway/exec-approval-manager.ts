@@ -163,7 +163,7 @@ export class ExecApprovalManager<TPayload = ExecApprovalRequestPayload> {
     if (!entry) {
       return false;
     }
-    const {record} = entry;
+    const { record } = entry;
     if (record.decision !== "allow-once") {
       return false;
     }

@@ -100,7 +100,7 @@ export function buildAgentSessionKey(params: {
   identityLinks?: Record<string, string[]>;
 }): string {
   const channel = normalizeToken(params.channel) || "unknown";
-  const {peer} = params;
+  const { peer } = params;
   return buildAgentPeerSessionKey({
     accountId: params.accountId,
     agentId: params.agentId,

@@ -27,7 +27,7 @@ const bootstrapExtraFilesHook: HookHandler = async (event) => {
     return;
   }
 
-  const {context} = event;
+  const { context } = event;
   const hookConfig = resolveHookConfig(context.cfg, HOOK_KEY);
   if (!hookConfig || hookConfig.enabled === false) {
     return;

@@ -65,9 +65,9 @@ export function getUsedPorts(
       const port =
         parsed.port && Number.parseInt(parsed.port, 10) > 0
           ? Number.parseInt(parsed.port, 10)
-          : (parsed.protocol === "https:"
+          : parsed.protocol === "https:"
             ? 443
-            : 80);
+            : 80;
       if (!Number.isNaN(port) && port > 0 && port <= 65_535) {
         used.add(port);
       }

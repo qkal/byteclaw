@@ -46,9 +46,9 @@ export function validateUrbitBaseUrl(raw: string): UrbitBaseUrlValidation {
   const isIpv6 = hostname.includes(":");
   const host = parsed.port
     ? `${isIpv6 ? `[${hostname}]` : hostname}:${parsed.port}`
-    : (isIpv6
+    : isIpv6
       ? `[${hostname}]`
-      : hostname);
+      : hostname;
 
   return { baseUrl: `${parsed.protocol}//${host}`, hostname, ok: true };
 }

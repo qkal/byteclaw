@@ -661,9 +661,9 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
       From:
         params.kind === "direct"
           ? `mattermost:${params.senderId}`
-          : (params.kind === "group"
+          : params.kind === "group"
             ? `mattermost:group:${params.channelId}`
-            : `mattermost:channel:${params.channelId}`),
+            : `mattermost:channel:${params.channelId}`,
       GroupChannel: params.channelName ? `#${params.channelName}` : undefined,
       GroupSpace: params.teamId,
       GroupSubject:
@@ -807,9 +807,9 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
     const pickerCommandText =
       pickerState.action === "select"
         ? `/model ${pickerState.provider}/${pickerState.model}`
-        : (pickerState.action === "list"
+        : pickerState.action === "list"
           ? `/models ${pickerState.provider}`
-          : "/models");
+          : "/models";
     const allowTextCommands = core.channel.commands.shouldHandleTextCommands({
       cfg,
       surface: "mattermost",
@@ -863,12 +863,12 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
         ephemeral_text: denyText,
       };
     }
-    const {kind} = auth;
-    const {chatType} = auth;
+    const { kind } = auth;
+    const { chatType } = auth;
     const teamId = auth.channelInfo.team_id ?? params.payload.team_id ?? undefined;
     const channelName = auth.channelName || undefined;
     const channelDisplay = auth.channelDisplay || auth.channelName || params.payload.channel_id;
-    const {roomLabel} = auth;
+    const { roomLabel } = auth;
     const route = core.channel.routing.resolveAgentRoute({
       accountId: account.accountId,
       cfg,
@@ -1008,7 +1008,7 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
       return;
     }
 
-    const allMessageIds = messageIds?.length ? messageIds : (post.id ? [post.id] : []);
+    const allMessageIds = messageIds?.length ? messageIds : post.id ? [post.id] : [];
     if (allMessageIds.length === 0) {
       logVerboseMessage("mattermost: drop post (missing message id)");
       return;
@@ -1075,8 +1075,8 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
         }),
       storeAllowFrom,
     });
-    const {effectiveAllowFrom} = accessDecision;
-    const {effectiveGroupAllowFrom} = accessDecision;
+    const { effectiveAllowFrom } = accessDecision;
+    const { effectiveGroupAllowFrom } = accessDecision;
     const allowTextCommands = core.channel.commands.shouldHandleTextCommands({
       cfg,
       surface: "mattermost",
@@ -1109,7 +1109,7 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
       hasControlCommand,
       useAccessGroups,
     });
-    const {commandAuthorized} = commandGate;
+    const { commandAuthorized } = commandGate;
 
     if (accessDecision.decision !== "allow") {
       if (kind === "direct") {
@@ -1136,7 +1136,9 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
               );
               opts.statusSink?.({ lastOutboundAt: Date.now() });
             } catch (error) {
-              logVerboseMessage(`mattermost: pairing reply failed for ${senderId}: ${String(error)}`);
+              logVerboseMessage(
+                `mattermost: pairing reply failed for ${senderId}: ${String(error)}`,
+              );
             }
           }
           return;
@@ -1364,9 +1366,9 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
       From:
         kind === "direct"
           ? `mattermost:${senderId}`
-          : (kind === "group"
+          : kind === "group"
             ? `mattermost:group:${channelId}`
-            : `mattermost:channel:${channelId}`),
+            : `mattermost:channel:${channelId}`,
       GroupChannel: channelName ? `#${channelName}` : undefined,
       GroupSpace: teamId,
       GroupSubject: kind !== "direct" ? channelDisplay || roomLabel : undefined,
@@ -1603,7 +1605,7 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
       },
       teamId,
     });
-    const {sessionKey} = route;
+    const { sessionKey } = route;
 
     const eventText = `Mattermost reaction ${action}: :${emojiName}: by @${senderName} on post ${postId} in channel ${channelId}`;
 

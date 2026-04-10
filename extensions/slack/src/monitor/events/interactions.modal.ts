@@ -66,7 +66,10 @@ interface SlackModalEventBase {
 }
 
 export type SlackModalInteractionKind = "view_submission" | "view_closed";
-export interface SlackModalEventHandlerArgs { ack: () => Promise<void>; body: unknown }
+export interface SlackModalEventHandlerArgs {
+  ack: () => Promise<void>;
+  body: unknown;
+}
 export type RegisterSlackModalHandler = (
   matcher: RegExp,
   handler: (args: SlackModalEventHandlerArgs) => Promise<void>,
@@ -79,7 +82,7 @@ function resolveModalSessionRouting(params: {
   metadata: ReturnType<typeof parseSlackModalPrivateMetadata>;
   userId?: string;
 }): { sessionKey: string; channelId?: string; channelType?: string } {
-  const {metadata} = params;
+  const { metadata } = params;
   if (metadata.sessionKey) {
     return {
       channelId: metadata.channelId,

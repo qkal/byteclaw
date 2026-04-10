@@ -170,7 +170,7 @@ export function installSessionToolResultGuard(
 
   const guardedAppend = (message: AgentMessage) => {
     let nextMessage = message;
-    const {role} = (message as { role?: unknown });
+    const { role } = message as { role?: unknown };
     if (role === "assistant") {
       const sanitized = sanitizeToolCallInputs([message], {
         allowedToolNames: opts?.allowedToolNames,
@@ -214,7 +214,7 @@ export function installSessionToolResultGuard(
     // For incomplete tool calls causes API 400 errors:
     // "unexpected tool_use_id found in tool_result blocks"
     // This matches the behavior in repairToolUseResultPairing (session-transcript-repair.ts)
-    const {stopReason} = (nextMessage as { stopReason?: string });
+    const { stopReason } = nextMessage as { stopReason?: string };
     const toolCalls =
       nextRole === "assistant" && stopReason !== "aborted" && stopReason !== "error"
         ? extractToolCallsFromAssistant(nextMessage as Extract<AgentMessage, { role: "assistant" }>)

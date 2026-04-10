@@ -103,7 +103,7 @@ export class TelnyxProvider implements VoiceCallProvider {
   ): ProviderWebhookParseResult {
     try {
       const payload = JSON.parse(ctx.rawBody);
-      const {data} = payload;
+      const { data } = payload;
 
       if (!data || !data.event_type) {
         return { events: [], statusCode: 200 };

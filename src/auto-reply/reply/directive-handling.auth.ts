@@ -176,9 +176,9 @@ export const resolveAuthLabel = async (
       const suffix =
         display === profileId
           ? ""
-          : (display.startsWith(profileId)
+          : display.startsWith(profileId)
             ? display.slice(profileId.length).trim()
-            : `(${display})`);
+            : `(${display})`;
       const expirationFlag = formatExpirationLabel(profile.expires, now, formatUntil, "expired");
       if (expirationFlag) {
         flags.push(expirationFlag);

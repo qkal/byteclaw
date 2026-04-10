@@ -36,7 +36,7 @@ export function resolveOutboundTargetWithPlugin(params: {
     };
   }
 
-  const {plugin} = params;
+  const { plugin } = params;
   if (!plugin) {
     return params.onMissingPlugin?.();
   }

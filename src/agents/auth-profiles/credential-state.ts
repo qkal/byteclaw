@@ -36,7 +36,7 @@ export function evaluateStoredCredentialEligibility(params: {
   now?: number;
 }): { eligible: boolean; reasonCode: AuthCredentialReasonCode } {
   const now = params.now ?? Date.now();
-  const {credential} = params;
+  const { credential } = params;
 
   if (credential.type === "api_key") {
     const hasKey = hasConfiguredSecretString(credential.key);

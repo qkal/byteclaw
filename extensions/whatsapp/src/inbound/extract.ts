@@ -425,7 +425,7 @@ export function extractLocationData(
           latitude,
           longitude,
           name: location.name ?? undefined,
-          source: isLive ? "live" : (location.name || location.address ? "place" : "pin"),
+          source: isLive ? "live" : location.name || location.address ? "place" : "pin",
         };
       }
     }

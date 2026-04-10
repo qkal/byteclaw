@@ -1,6 +1,9 @@
 import { expect } from "vitest";
 
-interface TextResultBlock { type: string; text?: string }
+interface TextResultBlock {
+  type: string;
+  text?: string;
+}
 
 export function getTextContent(result?: { content?: TextResultBlock[] }) {
   const textBlock = result?.content?.find((block) => block.type === "text");

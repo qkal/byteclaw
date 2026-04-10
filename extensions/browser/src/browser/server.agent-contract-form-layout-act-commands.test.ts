@@ -162,17 +162,14 @@ describe("browser control server", () => {
     async () => {
       const base = await startServerAndBase();
 
-      const batchRes = await postJson<{ ok: boolean; results?: { ok: boolean }[] }>(
-        `${base}/act`,
-        {
-          actions: [
-            { delayMs: "25", doubleClick: "true", kind: "click", selector: "button.save" },
-            { fn: " () => window.ready === true ", kind: "wait" },
-          ],
-          kind: "batch",
-          stopOnError: "false",
-        },
-      );
+      const batchRes = await postJson<{ ok: boolean; results?: { ok: boolean }[] }>(`${base}/act`, {
+        actions: [
+          { delayMs: "25", doubleClick: "true", kind: "click", selector: "button.save" },
+          { fn: " () => window.ready === true ", kind: "wait" },
+        ],
+        kind: "batch",
+        stopOnError: "false",
+      });
 
       expect(batchRes.ok).toBe(true);
       expect(pwMocks.batchViaPlaywright).toHaveBeenCalledWith(

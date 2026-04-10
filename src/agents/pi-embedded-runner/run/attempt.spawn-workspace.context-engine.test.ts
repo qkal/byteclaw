@@ -29,7 +29,9 @@ const embeddedSessionId = "embedded-session";
 const sessionFile = "/tmp/session.jsonl";
 const seedMessage = { content: "seed", role: "user", timestamp: 1 } as AgentMessage;
 const doneMessage = { content: "done", role: "assistant", timestamp: 2 } as unknown as AgentMessage;
-interface AfterTurnPromptCacheCall { runtimeContext?: { promptCache?: Record<string, unknown> } }
+interface AfterTurnPromptCacheCall {
+  runtimeContext?: { promptCache?: Record<string, unknown> };
+}
 
 function createTestContextEngine(params: Partial<AttemptContextEngine>): AttemptContextEngine {
   return {

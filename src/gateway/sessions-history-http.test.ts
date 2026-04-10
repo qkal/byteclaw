@@ -364,8 +364,8 @@ describe("session history HTTP endpoints", () => {
       const historyEvent = await readSseEvent(reader!, streamState);
       expect(historyEvent.event).toBe("history");
       expect(
-        (historyEvent.data as { messages?: { content?: { text?: string }[] }[] })
-          .messages?.[0]?.content?.[0]?.text,
+        (historyEvent.data as { messages?: { content?: { text?: string }[] }[] }).messages?.[0]
+          ?.content?.[0]?.text,
       ).toBe("second message");
 
       const thirdMessageId = await appendTranscriptMessage({
@@ -415,8 +415,8 @@ describe("session history HTTP endpoints", () => {
       const historyEvent = await readSseEvent(reader!, streamState);
       expect(historyEvent.event).toBe("history");
       expect(
-        (historyEvent.data as { messages?: { content?: { text?: string }[] }[] })
-          .messages?.[0]?.content?.[0]?.text,
+        (historyEvent.data as { messages?: { content?: { text?: string }[] }[] }).messages?.[0]
+          ?.content?.[0]?.text,
       ).toBe("second message");
 
       await appendTranscriptMessage({
@@ -517,8 +517,8 @@ describe("session history HTTP endpoints", () => {
       const historyEvent = await readSseEvent(reader!, streamState);
       expect(historyEvent.event).toBe("history");
       expect(
-        (historyEvent.data as { messages?: { content?: { text?: string }[] }[] })
-          .messages?.[0]?.content?.[0]?.text,
+        (historyEvent.data as { messages?: { content?: { text?: string }[] }[] }).messages?.[0]
+          ?.content?.[0]?.text,
       ).toBe("first message");
 
       const appended = await appendAssistantMessageToSessionTranscript({
@@ -539,8 +539,8 @@ describe("session history HTTP endpoints", () => {
         ).sessionKey,
       ).toBe("agent:main:main");
       expect(
-        (messageEvent.data as { message?: { content?: { text?: string }[] } }).message
-          ?.content?.[0]?.text,
+        (messageEvent.data as { message?: { content?: { text?: string }[] } }).message?.content?.[0]
+          ?.text,
       ).toBe("second message");
       expect((messageEvent.data as { messageSeq?: number }).messageSeq).toBe(2);
       if (!appended.ok) {
@@ -582,9 +582,9 @@ describe("session history HTTP endpoints", () => {
       const historyEvent = await readSseEvent(reader!, streamState);
       expect(historyEvent.event).toBe("history");
       expect(
-        (
-          historyEvent.data as { messages?: { content?: { text?: string }[] }[] }
-        ).messages?.map((message) => message.content?.[0]?.text),
+        (historyEvent.data as { messages?: { content?: { text?: string }[] }[] }).messages?.map(
+          (message) => message.content?.[0]?.text,
+        ),
       ).toEqual(["first message"]);
 
       const visible = await appendAssistantMessageToSessionTranscript({
@@ -597,8 +597,8 @@ describe("session history HTTP endpoints", () => {
       const messageEvent = await readSseEvent(reader!, streamState);
       expect(messageEvent.event).toBe("message");
       expect(
-        (messageEvent.data as { message?: { content?: { text?: string }[] } }).message
-          ?.content?.[0]?.text,
+        (messageEvent.data as { message?: { content?: { text?: string }[] } }).message?.content?.[0]
+          ?.text,
       ).toBe("third visible message");
       expect((messageEvent.data as { messageSeq?: number }).messageSeq).toBe(3);
 
@@ -637,8 +637,8 @@ describe("session history HTTP endpoints", () => {
       const messageEvent = await readSseEvent(reader!, streamState);
       expect(messageEvent.event).toBe("message");
       expect(
-        (messageEvent.data as { message?: { content?: { text?: string }[] } }).message
-          ?.content?.[0]?.text,
+        (messageEvent.data as { message?: { content?: { text?: string }[] } }).message?.content?.[0]
+          ?.text,
       ).toBe("third visible message");
       expect((messageEvent.data as { messageSeq?: number }).messageSeq).toBe(3);
       expect(
@@ -694,9 +694,9 @@ describe("session history HTTP endpoints", () => {
       const refreshEvent = await readSseEvent(reader!, streamState);
       expect(refreshEvent.event).toBe("history");
       expect(
-        (
-          refreshEvent.data as { messages?: { content?: { text?: string }[] }[] }
-        ).messages?.map((message) => message.content?.[0]?.text),
+        (refreshEvent.data as { messages?: { content?: { text?: string }[] }[] }).messages?.map(
+          (message) => message.content?.[0]?.text,
+        ),
       ).toEqual(["first message", "second visible message"]);
 
       const third = await appendAssistantMessageToSessionTranscript({
@@ -709,8 +709,8 @@ describe("session history HTTP endpoints", () => {
       const thirdEvent = await readSseEvent(reader!, streamState);
       expect(thirdEvent.event).toBe("message");
       expect(
-        (thirdEvent.data as { message?: { content?: { text?: string }[] } }).message
-          ?.content?.[0]?.text,
+        (thirdEvent.data as { message?: { content?: { text?: string }[] } }).message?.content?.[0]
+          ?.text,
       ).toBe("third visible message");
       expect((thirdEvent.data as { messageSeq?: number }).messageSeq).toBe(4);
       expect(

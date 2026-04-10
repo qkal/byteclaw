@@ -11,10 +11,10 @@ const graphUploadMockState = vi.hoisted(() => ({
 }));
 
 vi.mock("./graph-upload.js", () => ({
-    getDriveItemProperties: graphUploadMockState.getDriveItemProperties,
-    uploadAndShareOneDrive: graphUploadMockState.uploadAndShareOneDrive,
-    uploadAndShareSharePoint: graphUploadMockState.uploadAndShareSharePoint,
-  }));
+  getDriveItemProperties: graphUploadMockState.getDriveItemProperties,
+  uploadAndShareOneDrive: graphUploadMockState.uploadAndShareOneDrive,
+  uploadAndShareSharePoint: graphUploadMockState.uploadAndShareSharePoint,
+}));
 
 import {
   buildActivity,

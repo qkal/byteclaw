@@ -344,7 +344,7 @@ export async function inspectPortUsage(port: number): Promise<PortUsage> {
   const result =
     process.platform === "win32" ? await readWindowsListeners(port) : await readUnixListeners(port);
   errors.push(...result.errors);
-  let {listeners} = result;
+  let { listeners } = result;
   let status: PortUsageStatus = listeners.length > 0 ? "busy" : "unknown";
   if (listeners.length === 0) {
     status = await checkPortInUse(port);

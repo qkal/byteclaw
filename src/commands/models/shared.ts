@@ -171,7 +171,10 @@ export function resolveKnownAgentId(params: {
   return agentId;
 }
 
-export interface PrimaryFallbackConfig { primary?: string; fallbacks?: string[] }
+export interface PrimaryFallbackConfig {
+  primary?: string;
+  fallbacks?: string[];
+}
 
 export function upsertCanonicalModelConfigEntry(
   models: Record<string, AgentModelEntryConfig>,

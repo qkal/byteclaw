@@ -46,7 +46,7 @@ export async function startZaloGatewayAccount(
     NonNullable<NonNullable<ChannelPlugin<ResolvedZaloAccount>["gateway"]>["startAccount"]>
   >[0],
 ) {
-  const {account} = ctx;
+  const { account } = ctx;
   const token = account.token.trim();
   const mode = account.config.webhookUrl ? "webhook" : "polling";
   let zaloBotLabel = "";

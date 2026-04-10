@@ -234,9 +234,9 @@ export async function handleMatrixAction(
         const audioAsVoice =
           typeof readRawParam(params, "audioAsVoice") === "boolean"
             ? (readRawParam(params, "audioAsVoice") as boolean)
-            : (typeof readRawParam(params, "asVoice") === "boolean"
+            : typeof readRawParam(params, "asVoice") === "boolean"
               ? (readRawParam(params, "asVoice") as boolean)
-              : undefined);
+              : undefined;
         const result = await sendMatrixMessage(to, content, {
           audioAsVoice,
           mediaLocalRoots: opts.mediaLocalRoots,

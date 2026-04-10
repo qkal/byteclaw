@@ -1566,11 +1566,7 @@ export interface ProviderPlugin {
    */
   resolveExternalAuthProfiles?: (
     ctx: ProviderResolveExternalAuthProfilesContext,
-  ) =>
-    | ProviderExternalAuthProfile[]
-    | readonly ProviderExternalAuthProfile[]
-    | null
-    | undefined;
+  ) => ProviderExternalAuthProfile[] | readonly ProviderExternalAuthProfile[] | null | undefined;
   /**
    * @deprecated Use `resolveExternalAuthProfiles`.
    *
@@ -1578,11 +1574,7 @@ export interface ProviderPlugin {
    */
   resolveExternalOAuthProfiles?: (
     ctx: ProviderResolveExternalOAuthProfilesContext,
-  ) =>
-    | ProviderExternalOAuthProfile[]
-    | readonly ProviderExternalOAuthProfile[]
-    | null
-    | undefined;
+  ) => ProviderExternalOAuthProfile[] | readonly ProviderExternalOAuthProfile[] | null | undefined;
   /**
    * Provider-owned precedence rule for stored synthetic auth profiles.
    *

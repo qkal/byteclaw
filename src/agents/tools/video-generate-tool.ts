@@ -234,7 +234,7 @@ function validateVideoGenerationCapabilities(params: {
   audio?: boolean;
   watermark?: boolean;
 }) {
-  const {provider} = params;
+  const { provider } = params;
   if (!provider) {
     return;
   }
@@ -372,7 +372,7 @@ async function loadReferenceAssets(params: {
 
     const resolvedPathInfo: { resolved: string; rewrittenFrom?: string } = isDataUrl
       ? { resolved: "" }
-      : (params.sandboxConfig
+      : params.sandboxConfig
         ? await resolveSandboxedBridgeMediaPath({
             inboundFallbackDir: "media/inbound",
             mediaPath: resolvedInput,
@@ -382,7 +382,7 @@ async function loadReferenceAssets(params: {
             resolved: resolvedInput.startsWith("file://")
               ? resolvedInput.slice("file://".length)
               : resolvedInput,
-          });
+          };
     const resolvedPath = isDataUrl ? null : resolvedPathInfo.resolved;
     const localRoots = resolveMediaToolLocalRoots(
       params.workspaceDir,
@@ -392,12 +392,12 @@ async function loadReferenceAssets(params: {
       resolvedPath ? [resolvedPath] : undefined,
     );
     const media = isDataUrl
-      ? (params.expectedKind === "image"
+      ? params.expectedKind === "image"
         ? decodeDataUrl(resolvedInput)
         : (() => {
             throw new ToolInputError("Video data: URLs are not supported for video_generate.");
-          })())
-      : (params.sandboxConfig
+          })()
+      : params.sandboxConfig
         ? await loadWebMedia(resolvedPath ?? resolvedInput, {
             maxBytes: params.maxBytes,
             readFile: createSandboxBridgeReadFile({ sandbox: params.sandboxConfig }),
@@ -406,7 +406,7 @@ async function loadReferenceAssets(params: {
         : await loadWebMedia(resolvedPath ?? resolvedInput, {
             localRoots,
             maxBytes: params.maxBytes,
-          }));
+          });
     if (media.kind !== params.expectedKind) {
       throw new ToolInputError(`Unsupported media type: ${media.kind ?? "unknown"}`);
     }

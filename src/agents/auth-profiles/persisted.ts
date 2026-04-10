@@ -18,7 +18,10 @@ import type {
 export type LegacyAuthStore = Record<string, AuthProfileCredential>;
 
 type CredentialRejectReason = "non_object" | "invalid_type" | "missing_provider";
-interface RejectedCredentialEntry { key: string; reason: CredentialRejectReason }
+interface RejectedCredentialEntry {
+  key: string;
+  reason: CredentialRejectReason;
+}
 
 const AUTH_PROFILE_TYPES = new Set<AuthProfileCredential["type"]>(["api_key", "oauth", "token"]);
 

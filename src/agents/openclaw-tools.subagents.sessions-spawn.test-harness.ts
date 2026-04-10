@@ -12,8 +12,14 @@ type RunSubagentAnnounceFlow = (typeof import("./subagent-announce.js"))["runSub
 type CreateSessionsSpawnTool =
   (typeof import("./tools/sessions-spawn-tool.js"))["createSessionsSpawnTool"];
 export type CreateOpenClawToolsOpts = Parameters<CreateSessionsSpawnTool>[0];
-export interface GatewayRequest { method?: string; params?: unknown }
-export interface AgentWaitCall { runId?: string; timeoutMs?: number }
+export interface GatewayRequest {
+  method?: string;
+  params?: unknown;
+}
+export interface AgentWaitCall {
+  runId?: string;
+  timeoutMs?: number;
+}
 interface SessionsSpawnGatewayMockOptions {
   includeSessionsList?: boolean;
   includeChatHistory?: boolean;

@@ -13,7 +13,9 @@ afterEach(() => {
 
 describe("normalizeWindowsInstallRoot", () => {
   it("normalizes validated local Windows roots", () => {
-    expect(normalizeWindowsInstallRoot(" D:/Apps/Program Files/ ")).toBe(String.raw`D:\Apps\Program Files`);
+    expect(normalizeWindowsInstallRoot(" D:/Apps/Program Files/ ")).toBe(
+      String.raw`D:\Apps\Program Files`,
+    );
   });
 
   it("rejects invalid or overly broad values", () => {

@@ -282,9 +282,9 @@ export function createReplyOperation(params: {
       if (result) {
         handle.cancel(
           result.kind === "aborted"
-            ? (result.code === "aborted_for_restart"
+            ? result.code === "aborted_for_restart"
               ? "restart"
-              : "user_abort")
+              : "user_abort"
             : "superseded",
         );
         return;

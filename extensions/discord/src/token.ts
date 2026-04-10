@@ -26,8 +26,7 @@ export function resolveDiscordToken(
   const discordCfg = cfg?.channels?.discord;
   const accountCfg = resolveAccountEntry(discordCfg?.accounts, accountId);
   const hasAccountToken = Boolean(
-    accountCfg &&
-    Object.hasOwn(accountCfg as Record<string, unknown>, "token"),
+    accountCfg && Object.hasOwn(accountCfg as Record<string, unknown>, "token"),
   );
   const accountToken = normalizeDiscordToken(
     (accountCfg as { token?: unknown } | undefined)?.token ?? undefined,

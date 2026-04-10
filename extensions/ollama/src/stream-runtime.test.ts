@@ -433,10 +433,13 @@ function createControlledNdjsonFetch(): {
       }
       controller.close();
     },
-    fetchMock: vi.fn(async () => new Response(body, {
-        status: 200,
-        headers: { "Content-Type": "application/x-ndjson" },
-      })),
+    fetchMock: vi.fn(
+      async () =>
+        new Response(body, {
+          status: 200,
+          headers: { "Content-Type": "application/x-ndjson" },
+        }),
+    ),
     pushLine(line: string) {
       if (!controller) {
         throw new Error("NDJSON controller not initialized");
@@ -701,7 +704,7 @@ describe("createOllamaStreamFn", () => {
         '{"model":"m","created_at":"t","message":{"role":"assistant","content":""},"done":true,"prompt_eval_count":1,"eval_count":1}',
       ],
       async (fetchMock) => {
-        const {signal} = new AbortController();
+        const { signal } = new AbortController();
         const stream = await createOllamaTestStream({
           baseUrl: "http://ollama-host:11434/v1/",
           options: { maxTokens: 123, signal },
@@ -829,10 +832,13 @@ describe("createOllamaStreamFn", () => {
 
   it("surfaces non-2xx HTTP response as status-prefixed error", async () => {
     const originalFetch = globalThis.fetch;
-    const fetchMock = vi.fn(async () => new Response("Service Unavailable", {
-        status: 503,
-        statusText: "Service Unavailable",
-      }));
+    const fetchMock = vi.fn(
+      async () =>
+        new Response("Service Unavailable", {
+          status: 503,
+          statusText: "Service Unavailable",
+        }),
+    );
     globalThis.fetch = fetchMock as unknown as typeof fetch;
     try {
       const stream = await createOllamaTestStream({ baseUrl: "http://ollama-host:11434" });

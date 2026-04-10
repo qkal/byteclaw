@@ -52,8 +52,8 @@ export function createChannelReplyPipeline(params: {
     ...(transformReplyPayload ? { transformReplyPayload } : {}),
     ...(params.typingCallbacks
       ? { typingCallbacks: params.typingCallbacks }
-      : (params.typing
+      : params.typing
         ? { typingCallbacks: createTypingCallbacks(params.typing) }
-        : {})),
+        : {}),
   };
 }

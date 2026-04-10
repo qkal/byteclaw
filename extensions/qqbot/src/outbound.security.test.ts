@@ -255,7 +255,7 @@ describe("qqbot outbound local media path security", () => {
     const existsSpy = vi.spyOn(fs, "existsSync");
     existsSpy.mockImplementation((candidate: fs.PathLike) => {
       const candidateText = typeof candidate === "string" ? candidate : candidate.toString();
-      const {root} = path.parse(candidateText);
+      const { root } = path.parse(candidateText);
       if (candidateText === root) {
         return false;
       }
@@ -265,7 +265,7 @@ describe("qqbot outbound local media path security", () => {
     const realpathSpy = vi.spyOn(fs, "realpathSync");
     realpathSpy.mockImplementation(((candidate: fs.PathLike) => {
       const candidateText = typeof candidate === "string" ? candidate : candidate.toString();
-      const {root} = path.parse(candidateText);
+      const { root } = path.parse(candidateText);
       if (candidateText === root) {
         throw new Error("missing-root");
       }

@@ -152,7 +152,9 @@ describe("/bot-logs framework command hardening", () => {
 
   it("allows /bot-logs when allowFrom contains numeric sender ids", async () => {
     const handler = getBotLogsHandler();
-    const accountConfig = { allowFrom: [12_345] } as unknown as SlashCommandContext["accountConfig"];
+    const accountConfig = {
+      allowFrom: [12_345],
+    } as unknown as SlashCommandContext["accountConfig"];
     const result = await handler(buildCtx({ accountConfig }));
     expect(result).not.toBeNull();
     expect(result).not.toBe(

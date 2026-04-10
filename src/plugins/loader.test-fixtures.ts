@@ -8,7 +8,11 @@ import { clearPluginLoaderCache, loadOpenClawPlugins } from "./loader.js";
 import { clearPluginManifestRegistryCache } from "./manifest-registry.js";
 import { resetPluginRuntimeStateForTest } from "./runtime.js";
 
-export interface TempPlugin { dir: string; file: string; id: string }
+export interface TempPlugin {
+  dir: string;
+  file: string;
+  id: string;
+}
 export type PluginLoadConfig = NonNullable<Parameters<typeof loadOpenClawPlugins>[0]>["config"];
 export type PluginRegistry = ReturnType<typeof loadOpenClawPlugins>;
 

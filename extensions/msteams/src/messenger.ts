@@ -115,7 +115,7 @@ export function buildConversationReference(
   if (agent == null || !agent.id) {
     throw new Error("Invalid stored reference: missing agent.id");
   }
-  const {user} = ref;
+  const { user } = ref;
   if (!user?.id) {
     throw new Error("Invalid stored reference: missing user.id");
   }

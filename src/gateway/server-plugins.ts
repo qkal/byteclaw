@@ -411,7 +411,7 @@ export function loadGatewayPlugins(params: {
           changes: activationAutoEnabled?.changes ?? [],
           config: params.cfg,
         }
-      : (params.autoEnabledReasons !== undefined
+      : params.autoEnabledReasons !== undefined
         ? {
             autoEnabledReasons: params.autoEnabledReasons,
             changes: [],
@@ -420,7 +420,7 @@ export function loadGatewayPlugins(params: {
         : applyPluginAutoEnable({
             config: params.cfg,
             env: process.env,
-          }));
+          });
   const resolvedConfig = autoEnabled.config;
   const pluginIds =
     params.pluginIds ??

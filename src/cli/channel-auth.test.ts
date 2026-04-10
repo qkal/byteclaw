@@ -220,9 +220,9 @@ describe("channel-auth", () => {
     mocks.getChannelPlugin.mockImplementation((value) =>
       value === "whatsapp"
         ? plugin
-        : (value === "zalouser"
+        : value === "zalouser"
           ? (zaloPlugin as typeof plugin)
-          : undefined),
+          : undefined,
     );
 
     await expect(runChannelLogin({}, runtime)).rejects.toThrow(

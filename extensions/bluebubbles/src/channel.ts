@@ -118,7 +118,7 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount, BlueBu
       gateway: {
         startAccount: async (ctx) => {
           const runtime = await loadBlueBubblesChannelRuntime();
-          const {account} = ctx;
+          const { account } = ctx;
           const conversationBindings = createBlueBubblesConversationBindingManager({
             accountId: ctx.accountId,
             cfg: ctx.cfg,

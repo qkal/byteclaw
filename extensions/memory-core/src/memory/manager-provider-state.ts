@@ -79,7 +79,7 @@ export function resolveMemoryFallbackProviderRequest(params: {
   fallback: "none";
   local: ResolvedMemorySearchConfig["local"];
 } | null {
-  const {fallback} = params.settings;
+  const { fallback } = params.settings;
   if (
     !fallback ||
     fallback === "none" ||

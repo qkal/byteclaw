@@ -65,10 +65,10 @@ export function splitTextToUtf8ByteLimit(text: string, maxUtf8Bytes: number): st
     if (
       best < text.length &&
       best > cursor &&
-      text.charCodeAt(best - 1) >= 0xD8_00 &&
-      text.charCodeAt(best - 1) <= 0xDB_FF &&
-      text.charCodeAt(best) >= 0xDC_00 &&
-      text.charCodeAt(best) <= 0xDF_FF
+      text.charCodeAt(best - 1) >= 0xd8_00 &&
+      text.charCodeAt(best - 1) <= 0xdb_ff &&
+      text.charCodeAt(best) >= 0xdc_00 &&
+      text.charCodeAt(best) <= 0xdf_ff
     ) {
       best -= 1;
     }

@@ -45,7 +45,7 @@ function extractAgentDefaultModelFallbacks(model: unknown): string[] | undefined
   if (!("fallbacks" in model)) {
     return undefined;
   }
-  const {fallbacks} = (model as { fallbacks?: unknown });
+  const { fallbacks } = model as { fallbacks?: unknown };
   return Array.isArray(fallbacks) ? fallbacks.map((value) => String(value)) : undefined;
 }
 
@@ -249,16 +249,16 @@ export function applyProviderConfigWithDefaultModels(
   },
 ): OpenClawConfig {
   const providerState = resolveProviderModelMergeState(cfg, params.providerId);
-  const {defaultModels} = params;
+  const { defaultModels } = params;
   const defaultModelId = params.defaultModelId ?? defaultModels[0]?.id;
   const hasDefaultModel = defaultModelId
     ? providerState.existingModels.some((model) => model.id === defaultModelId)
     : true;
   const mergedModels =
     providerState.existingModels.length > 0
-      ? (hasDefaultModel || defaultModels.length === 0
+      ? hasDefaultModel || defaultModels.length === 0
         ? providerState.existingModels
-        : [...providerState.existingModels, ...defaultModels])
+        : [...providerState.existingModels, ...defaultModels]
       : defaultModels;
   return applyProviderConfigWithMergedModels(cfg, {
     agentModels: params.agentModels,
@@ -387,7 +387,7 @@ export function applyProviderConfigWithModelCatalog(
   },
 ): OpenClawConfig {
   const providerState = resolveProviderModelMergeState(cfg, params.providerId);
-  const {catalogModels} = params;
+  const { catalogModels } = params;
   const mergedModels =
     providerState.existingModels.length > 0
       ? [

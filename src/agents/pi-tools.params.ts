@@ -64,7 +64,7 @@ function isValidEditReplacement(value: unknown): value is EditReplacement {
 }
 
 function hasValidEditReplacements(record: Record<string, unknown>): boolean {
-  const {edits} = record;
+  const { edits } = record;
   return (
     Array.isArray(edits) &&
     edits.length > 0 &&

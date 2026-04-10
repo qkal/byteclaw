@@ -93,7 +93,7 @@ export async function readTelegramUpdateOffset(params: {
     }
     return parsed?.lastUpdateId ?? null;
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return null;
     }
@@ -127,7 +127,7 @@ export async function deleteTelegramUpdateOffset(params: {
   try {
     await fs.unlink(filePath);
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return;
     }

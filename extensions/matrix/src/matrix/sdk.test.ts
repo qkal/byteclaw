@@ -217,10 +217,13 @@ describe("MatrixClient request hardening", () => {
   });
 
   it("blocks absolute endpoints unless explicitly allowed", async () => {
-    const fetchMock = vi.fn(async () => new Response("{}", {
-        headers: { "content-type": "application/json" },
-        status: 200,
-      }));
+    const fetchMock = vi.fn(
+      async () =>
+        new Response("{}", {
+          headers: { "content-type": "application/json" },
+          status: 200,
+        }),
+    );
     vi.stubGlobal("fetch", fetchMock as unknown as typeof fetch);
 
     const client = new MatrixClient("https://matrix.example.org", "token");
@@ -445,12 +448,15 @@ describe("MatrixClient request hardening", () => {
   });
 
   it("blocks cross-protocol redirects when absolute endpoints are allowed", async () => {
-    const fetchMock = vi.fn(async () => new Response("", {
-        headers: {
-          location: "https://127.0.0.2:8008/next",
-        },
-        status: 302,
-      }));
+    const fetchMock = vi.fn(
+      async () =>
+        new Response("", {
+          headers: {
+            location: "https://127.0.0.2:8008/next",
+          },
+          status: 302,
+        }),
+    );
     vi.stubGlobal("fetch", fetchMock as unknown as typeof fetch);
 
     const client = new MatrixClient("http://127.0.0.1:8008", "token", {
@@ -500,11 +506,14 @@ describe("MatrixClient request hardening", () => {
 
   it("aborts requests after timeout", async () => {
     vi.useFakeTimers();
-    const fetchMock = vi.fn((_: URL | string, init?: RequestInit) => new Promise<Response>((_, reject) => {
-        init?.signal?.addEventListener("abort", () => {
-          reject(new Error("aborted"));
-        });
-      }));
+    const fetchMock = vi.fn(
+      (_: URL | string, init?: RequestInit) =>
+        new Promise<Response>((_, reject) => {
+          init?.signal?.addEventListener("abort", () => {
+            reject(new Error("aborted"));
+          });
+        }),
+    );
     vi.stubGlobal("fetch", fetchMock as unknown as typeof fetch);
 
     const client = new MatrixClient("http://127.0.0.1:8008", "token", {
@@ -1316,7 +1325,7 @@ describe("MatrixClient crypto bootstrapping", () => {
       "m.cross_signing.master",
     );
     expect(resolved?.[0]).toBe("SSSSKEY");
-    expect([...resolved?.[1] ?? []]).toEqual([1, 2, 3, 4]);
+    expect([...(resolved?.[1] ?? [])]).toEqual([1, 2, 3, 4]);
   });
 
   it("provides a matrix-js-sdk logger to createClient", () => {

@@ -40,8 +40,8 @@ describe("config backup rotation", () => {
       const readName = async (suffix = "") => {
         const raw = await fs.readFile(`${configPath}${suffix}`, "utf8");
         return (
-          (JSON.parse(raw) as { agents?: { list?: { id?: string }[] } }).agents?.list?.[0]
-            ?.id ?? null
+          (JSON.parse(raw) as { agents?: { list?: { id?: string }[] } }).agents?.list?.[0]?.id ??
+          null
         );
       };
 

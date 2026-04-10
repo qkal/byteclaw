@@ -565,8 +565,7 @@ function createPdfScreenshotter(
 }
 
 function readTextContent(result: unknown, index: number): string {
-  const content = (result as { content?: { type?: string; text?: string }[] } | undefined)
-    ?.content;
+  const content = (result as { content?: { type?: string; text?: string }[] } | undefined)?.content;
   const entry = content?.[index];
   return entry?.type === "text" ? (entry.text ?? "") : "";
 }

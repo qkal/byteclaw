@@ -45,9 +45,9 @@ function extractFailure(error: unknown): {
   const message =
     typeof rootCause?.message === "string"
       ? rootCause.message
-      : (typeof root?.message === "string"
+      : typeof root?.message === "string"
         ? root.message
-        : String(error));
+        : String(error);
   const isTlsCertError =
     (code ? TLS_CERT_ERROR_CODES.has(code) : false) ||
     TLS_CERT_ERROR_PATTERNS.some((pattern) => pattern.test(message));

@@ -48,7 +48,7 @@ export async function monitorMSTeamsProvider(
 ): Promise<MonitorMSTeamsResult> {
   const core = getMSTeamsRuntime();
   const log = core.logging.getChildLogger({ name: "msteams" });
-  let {cfg} = opts;
+  let { cfg } = opts;
   let msteamsCfg = cfg.channels?.msteams;
   if (!msteamsCfg?.enabled) {
     log.debug?.("msteams provider disabled");
@@ -60,7 +60,7 @@ export async function monitorMSTeamsProvider(
     log.error("msteams credentials not configured");
     return { app: null, shutdown: async () => {} };
   }
-  const {appId} = creds; // Extract for use in closures
+  const { appId } = creds; // Extract for use in closures
 
   const runtime: RuntimeEnv = opts.runtime ?? {
     error: console.error,
@@ -70,8 +70,8 @@ export async function monitorMSTeamsProvider(
     log: console.log,
   };
 
-  let {allowFrom} = msteamsCfg;
-  let {groupAllowFrom} = msteamsCfg;
+  let { allowFrom } = msteamsCfg;
+  let { groupAllowFrom } = msteamsCfg;
   let teamsConfig = msteamsCfg.teams;
 
   const cleanAllowEntry = (entry: string) =>

@@ -48,7 +48,9 @@ const GEMINI_EMBEDDING_2_VALID_DIMENSIONS = [768, 1536, 3072] as const;
 
 export type { GeminiTaskType } from "./embeddings.types.js";
 
-export interface GeminiTextPart { text: string }
+export interface GeminiTextPart {
+  text: string;
+}
 export interface GeminiInlinePart {
   inlineData: { mimeType: string; data: string };
 }
@@ -223,7 +225,7 @@ export async function createGeminiEmbeddingProvider(
   const embedUrl = `${baseUrl}/${client.modelPath}:embedContent`;
   const batchUrl = `${baseUrl}/${client.modelPath}:batchEmbedContents`;
   const isV2 = isGeminiEmbedding2Model(client.model);
-  const {outputDimensionality} = client;
+  const { outputDimensionality } = client;
 
   const embedQuery = async (text: string): Promise<number[]> => {
     if (!text.trim()) {
@@ -263,7 +265,8 @@ export async function createGeminiEmbeddingProvider(
     return inputs.map((_, index) => sanitizeAndNormalizeEmbedding(embeddings[index]?.values ?? []));
   };
 
-  const embedBatch = async (texts: string[]): Promise<number[][]> => await embedBatchInputs(
+  const embedBatch = async (texts: string[]): Promise<number[][]> =>
+    await embedBatchInputs(
       texts.map((text) => ({
         text,
       })),
@@ -285,7 +288,7 @@ export async function createGeminiEmbeddingProvider(
 export async function resolveGeminiEmbeddingClient(
   options: EmbeddingProviderOptions,
 ): Promise<GeminiEmbeddingClient> {
-  const {remote} = options;
+  const { remote } = options;
   const remoteApiKey = resolveRemoteApiKey(remote?.apiKey);
   const remoteBaseUrl = remote?.baseUrl?.trim();
 
@@ -307,7 +310,7 @@ export async function resolveGeminiEmbeddingClient(
     DEFAULT_GOOGLE_API_BASE_URL;
   const baseUrl = normalizeGeminiBaseUrl(rawBaseUrl);
   const ssrfPolicy = buildRemoteBaseUrlPolicy(baseUrl);
-  const headerOverrides = { ...providerConfig?.headers, ...remote?.headers};
+  const headerOverrides = { ...providerConfig?.headers, ...remote?.headers };
   const headers: Record<string, string> = {
     ...headerOverrides,
   };

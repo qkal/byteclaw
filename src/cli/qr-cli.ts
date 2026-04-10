@@ -194,9 +194,9 @@ export function registerQrCli(program: Command) {
         const explicitUrl =
           typeof opts.url === "string" && opts.url.trim()
             ? opts.url.trim()
-            : (typeof opts.publicUrl === "string" && opts.publicUrl.trim()
+            : typeof opts.publicUrl === "string" && opts.publicUrl.trim()
               ? opts.publicUrl.trim()
-              : undefined);
+              : undefined;
         const publicUrl =
           explicitUrl ?? (wantsRemote ? undefined : readDevicePairPublicUrlFromConfig(cfg));
 

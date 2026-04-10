@@ -866,15 +866,27 @@ export function collectExecRuntimeFindings(cfg: OpenClawConfig): SecurityAuditFi
     });
   }
 
-  const effectiveExecScopes = [...new Map([{
-	host: cfg.tools?.exec?.host ?? 'auto',
-	id: DEFAULT_AGENT_ID,
-	security: cfg.tools?.exec?.security ?? 'deny'
-}, ...agents.filter((entry): entry is NonNullable<(typeof agents)[number]> => Boolean(entry) && typeof entry === 'object' && typeof entry.id === 'string').map((entry) => ({
-	host: entry.tools?.exec?.host ?? cfg.tools?.exec?.host ?? 'auto',
-	id: entry.id,
-	security: entry.tools?.exec?.security ?? cfg.tools?.exec?.security ?? 'deny'
-}))].map((entry) => [entry.id, entry] as const)).values()];
+  const effectiveExecScopes = [
+    ...new Map(
+      [
+        {
+          host: cfg.tools?.exec?.host ?? "auto",
+          id: DEFAULT_AGENT_ID,
+          security: cfg.tools?.exec?.security ?? "deny",
+        },
+        ...agents
+          .filter(
+            (entry): entry is NonNullable<(typeof agents)[number]> =>
+              Boolean(entry) && typeof entry === "object" && typeof entry.id === "string",
+          )
+          .map((entry) => ({
+            host: entry.tools?.exec?.host ?? cfg.tools?.exec?.host ?? "auto",
+            id: entry.id,
+            security: entry.tools?.exec?.security ?? cfg.tools?.exec?.security ?? "deny",
+          })),
+      ].map((entry) => [entry.id, entry] as const),
+    ).values(),
+  ];
   const fullExecScopes = effectiveExecScopes.filter((entry) => entry.security === "full");
   const execEnabledScopes = effectiveExecScopes.filter((entry) => entry.security !== "deny");
   const openExecSurfacePaths = collectOpenExecSurfacePaths(cfg);
@@ -946,7 +958,13 @@ export function collectExecRuntimeFindings(cfg: OpenClawConfig): SecurityAuditFi
     if (!Array.isArray(entries)) {
       return [];
     }
-    return [...new Set(entries.map((entry) => normalizeOptionalLowercaseString(entry) ?? '').filter((entry) => entry.length > 0))].toSorted();
+    return [
+      ...new Set(
+        entries
+          .map((entry) => normalizeOptionalLowercaseString(entry) ?? "")
+          .filter((entry) => entry.length > 0),
+      ),
+    ].toSorted();
   };
   const normalizeConfiguredTrustedDirs = (entries: unknown): string[] => {
     if (!Array.isArray(entries)) {
@@ -1189,7 +1207,7 @@ async function maybeProbeGateway(params: {
   const { buildGatewayConnectionDetails, resolveGatewayProbeAuthSafe, resolveGatewayProbeTarget } =
     await loadGatewayProbeDeps();
   const connection = buildGatewayConnectionDetails({ config: params.cfg });
-  const {url} = connection;
+  const { url } = connection;
   const probeTarget = resolveGatewayProbeTarget(params.cfg);
 
   const authResolution = resolveGatewayProbeAuthSafe({
@@ -1245,9 +1263,9 @@ async function createAuditExecutionContext(
   const configPath = opts.configPath ?? resolveConfigPath(env, stateDir);
   const { readConfigSnapshotForAudit } = await loadAuditNonDeepModule();
   const configSnapshot = includeFilesystem
-    ? (opts.configSnapshot !== undefined
+    ? opts.configSnapshot !== undefined
       ? opts.configSnapshot
-      : await readConfigSnapshotForAudit({ configPath, env }).catch(() => null))
+      : await readConfigSnapshotForAudit({ configPath, env }).catch(() => null)
     : null;
   return {
     cfg,

@@ -72,7 +72,7 @@ function shouldEnableOpenAIResponsesServerCompaction(
 }
 
 function stripDisabledOpenAIReasoningPayload(payloadObj: Record<string, unknown>): void {
-  const {reasoning} = payloadObj;
+  const { reasoning } = payloadObj;
   if (reasoning === "none") {
     delete payloadObj.reasoning;
     return;
@@ -93,7 +93,7 @@ export function resolveOpenAIResponsesPayloadPolicy(
   model: OpenAIResponsesPayloadModel,
   options: OpenAIResponsesPayloadPolicyOptions = {},
 ): OpenAIResponsesPayloadPolicy {
-  const {capabilities} = resolveProviderRequestPolicyConfig({
+  const { capabilities } = resolveProviderRequestPolicyConfig({
     api: readStringValue(model.api),
     baseUrl: readStringValue(model.baseUrl),
     capability: "llm",

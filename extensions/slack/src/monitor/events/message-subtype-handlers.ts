@@ -86,7 +86,7 @@ const SUBTYPE_HANDLER_REGISTRY: Record<SupportedSubtype, SlackMessageSubtypeHand
 export function resolveSlackMessageSubtypeHandler(
   event: SlackMessageEvent,
 ): SlackMessageSubtypeHandler | undefined {
-  const {subtype} = event;
+  const { subtype } = event;
   if (
     subtype !== "message_changed" &&
     subtype !== "message_deleted" &&

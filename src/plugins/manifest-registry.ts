@@ -417,7 +417,9 @@ function matchesInstalledPluginRecord(params: {
   if (trackedPaths.length === 0) {
     return false;
   }
-  return trackedPaths.some((trackedPath) => candidateSource === trackedPath || isPathInside(trackedPath, candidateSource));
+  return trackedPaths.some(
+    (trackedPath) => candidateSource === trackedPath || isPathInside(trackedPath, candidateSource),
+  );
 }
 
 function resolveDuplicatePrecedenceRank(params: {
@@ -484,7 +486,7 @@ export function loadPluginManifestRegistry(
         workspaceDir: params.workspaceDir,
       });
   const diagnostics: PluginDiagnostic[] = [...discovery.diagnostics];
-  const {candidates} = discovery;
+  const { candidates } = discovery;
   const records: PluginManifestRecord[] = [];
   const seenIds = new Map<string, SeenIdEntry>();
   const realpathCache = new Map<string, string>();
@@ -503,13 +505,13 @@ export function loadPluginManifestRegistry(
             manifestPath: candidate.bundledManifestPath,
             ok: true,
           }
-        : (isBundleRecord && candidate.bundleFormat
+        : isBundleRecord && candidate.bundleFormat
           ? loadBundleManifest({
               bundleFormat: candidate.bundleFormat,
               rejectHardlinks,
               rootDir: candidate.rootDir,
             })
-          : loadPluginManifest(candidate.rootDir, rejectHardlinks));
+          : loadPluginManifest(candidate.rootDir, rejectHardlinks);
     if (!manifestRes.ok) {
       diagnostics.push({
         level: "error",
@@ -518,7 +520,7 @@ export function loadPluginManifestRegistry(
       });
       continue;
     }
-    const {manifest} = manifestRes;
+    const { manifest } = manifestRes;
     const minHostVersionCheck = checkMinHostVersion({
       currentVersion: currentHostVersion,
       minHostVersion: candidate.packageManifest?.install?.minHostVersion,
@@ -533,9 +535,9 @@ export function loadPluginManifestRegistry(
         message:
           minHostVersionCheck.kind === "invalid"
             ? `plugin manifest invalid | ${minHostVersionCheck.error}`
-            : (minHostVersionCheck.kind === "unknown_host_version"
+            : minHostVersionCheck.kind === "unknown_host_version"
               ? `plugin requires OpenClaw >=${minHostVersionCheck.requirement.minimumLabel}, but this host version could not be determined; skipping load`
-              : `plugin requires OpenClaw >=${minHostVersionCheck.requirement.minimumLabel}, but this host is ${minHostVersionCheck.currentVersion}; skipping load`),
+              : `plugin requires OpenClaw >=${minHostVersionCheck.requirement.minimumLabel}, but this host is ${minHostVersionCheck.currentVersion}; skipping load`,
         pluginId: manifest.id,
         source: packageManifestSource,
       });

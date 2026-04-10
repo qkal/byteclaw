@@ -39,7 +39,7 @@ export const wizardHandlers: GatewayRequestHandlers = {
     if (!assertValidParams(params, validateWizardCancelParams, "wizard.cancel", respond)) {
       return;
     }
-    const {sessionId} = params;
+    const { sessionId } = params;
     const session = findWizardSessionOrRespond({ context, respond, sessionId });
     if (!session) {
       return;
@@ -53,7 +53,7 @@ export const wizardHandlers: GatewayRequestHandlers = {
     if (!assertValidParams(params, validateWizardNextParams, "wizard.next", respond)) {
       return;
     }
-    const {sessionId} = params;
+    const { sessionId } = params;
     const session = findWizardSessionOrRespond({ context, respond, sessionId });
     if (!session) {
       return;
@@ -105,7 +105,7 @@ export const wizardHandlers: GatewayRequestHandlers = {
     if (!assertValidParams(params, validateWizardStatusParams, "wizard.status", respond)) {
       return;
     }
-    const {sessionId} = params;
+    const { sessionId } = params;
     const session = findWizardSessionOrRespond({ context, respond, sessionId });
     if (!session) {
       return;

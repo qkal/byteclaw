@@ -50,9 +50,7 @@ const invokeDoctorMemoryStatus = async (
   respond: ReturnType<typeof vi.fn>,
   context?: { cron?: { list?: ReturnType<typeof vi.fn> } },
 ) => {
-  const cronList =
-    context?.cron?.list ??
-    vi.fn(async () => []);
+  const cronList = context?.cron?.list ?? vi.fn(async () => []);
   await doctorHandlers["doctor.memory.status"]({
     client: null,
     context: {

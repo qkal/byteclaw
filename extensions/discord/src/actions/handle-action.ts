@@ -211,7 +211,7 @@ export async function handleDiscordMessageAction(
     return await handleDiscordAction(
       {
         accountId: accountId ?? undefined,
-        action: action === "pin" ? "pinMessage" : (action === "unpin" ? "unpinMessage" : "listPins"),
+        action: action === "pin" ? "pinMessage" : action === "unpin" ? "unpinMessage" : "listPins",
         channelId: resolveChannelId(),
         messageId,
       },

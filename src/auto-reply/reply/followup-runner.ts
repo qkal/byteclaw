@@ -138,7 +138,7 @@ export function createFollowupRunner(params: {
       runtimeConfig === queued.run.config
         ? queued
         : { ...queued, run: { ...queued.run, config: runtimeConfig } };
-    const {run} = effectiveQueued;
+    const { run } = effectiveQueued;
     const replyOperation = createReplyOperation({
       resetTriggered: false,
       sessionId: run.sessionId,
@@ -324,12 +324,12 @@ export function createFollowupRunner(params: {
         return;
       }
       const sanitizedPayloads = payloadArray.flatMap((payload) => {
-        const {text} = payload;
+        const { text } = payload;
         if (!text || !text.includes("HEARTBEAT_OK")) {
           return [payload];
         }
         const stripped = stripHeartbeatToken(text, { mode: "message" });
-        const {hasMedia} = resolveSendableOutboundReplyParts(payload);
+        const { hasMedia } = resolveSendableOutboundReplyParts(payload);
         if (stripped.shouldSkip && !hasMedia) {
           return [];
         }

@@ -117,7 +117,7 @@ export async function readNostrBusState(params: {
     const raw = await fs.readFile(filePath, "utf8");
     return safeParseState(raw);
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return null;
     }
@@ -190,7 +190,7 @@ export async function readNostrProfileState(params: {
     const raw = await fs.readFile(filePath, "utf8");
     return safeParseProfileState(raw);
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return null;
     }

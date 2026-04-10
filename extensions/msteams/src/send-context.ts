@@ -169,7 +169,7 @@ export async function resolveMSTeamsSendContext(params: {
   }
 
   // Get SharePoint site ID from config (required for file uploads in group chats/channels)
-  const {sharePointSiteId} = msteamsCfg;
+  const { sharePointSiteId } = msteamsCfg;
 
   // Resolve media max bytes from config
   const mediaMaxBytes = resolveChannelMediaMaxBytes({

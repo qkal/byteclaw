@@ -113,8 +113,8 @@ export const handleTtsCommands: CommandHandler = async (params, allowTextCommand
 
   const config = resolveTtsConfig(params.cfg);
   const prefsPath = resolveTtsPrefsPath(config);
-  const {action} = parsed;
-  const {args} = parsed;
+  const { action } = parsed;
+  const { args } = parsed;
 
   if (action === "help") {
     return { reply: ttsUsage(), shouldContinue: false };

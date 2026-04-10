@@ -122,7 +122,7 @@ export async function scheduleRestartSentinelWake(params: { deps: CliDeps }) {
   if (!sentinel) {
     return;
   }
-  const {payload} = sentinel;
+  const { payload } = sentinel;
   const sessionKey = payload.sessionKey?.trim();
   const message = formatRestartSentinelMessage(payload);
   const summary = summarizeRestartSentinel(payload);
@@ -193,9 +193,9 @@ export async function scheduleRestartSentinelWake(params: { deps: CliDeps }) {
   const replyToId = replyTransport?.replyToId ?? undefined;
   const resolvedThreadId =
     replyTransport && Object.hasOwn(replyTransport, "threadId")
-      ? (replyTransport.threadId != null
+      ? replyTransport.threadId != null
         ? String(replyTransport.threadId)
-        : undefined)
+        : undefined
       : threadId;
   const outboundSession = buildOutboundSessionContext({
     cfg,

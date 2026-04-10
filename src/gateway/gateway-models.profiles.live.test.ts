@@ -823,7 +823,7 @@ async function getFreePort(): Promise<number> {
         reject(new Error("failed to acquire free port"));
         return;
       }
-      const {port} = addr;
+      const { port } = addr;
       srv.close((err) => {
         if (err) {
           reject(err);
@@ -884,7 +884,9 @@ function sanitizeAuthProfileStoreForLiveGateway(store: AuthProfileStore): AuthPr
   }
 
   const profiles = Object.fromEntries(
-    Object.entries(store.profiles).filter(([, profile]) => !envBackedProviders.has(normalizeProviderId(profile.provider))),
+    Object.entries(store.profiles).filter(
+      ([, profile]) => !envBackedProviders.has(normalizeProviderId(profile.provider)),
+    ),
   );
   const keepProfileIds = new Set(Object.keys(profiles));
 
@@ -899,7 +901,10 @@ function sanitizeAuthProfileStoreForLiveGateway(store: AuthProfileStore): AuthPr
 
   const lastGood = store.lastGood
     ? Object.fromEntries(
-        Object.entries(store.lastGood).filter(([provider, id]) => !envBackedProviders.has(normalizeProviderId(provider)) && keepProfileIds.has(id)),
+        Object.entries(store.lastGood).filter(
+          ([provider, id]) =>
+            !envBackedProviders.has(normalizeProviderId(provider)) && keepProfileIds.has(id),
+        ),
       )
     : undefined;
 
@@ -1068,7 +1073,7 @@ function extractTranscriptMessageText(message: unknown): string {
       if (!entry || typeof entry !== "object") {
         return "";
       }
-      const {text} = (entry as { text?: unknown });
+      const { text } = entry as { text?: unknown };
       return typeof text === "string" && text.trim() ? text.trim() : "";
     })
     .filter(Boolean)
@@ -1087,7 +1092,7 @@ function readSessionAssistantTexts(sessionKey: string, modelKey?: string): strin
     if (!message || typeof message !== "object") {
       continue;
     }
-    const {role} = (message as { role?: unknown });
+    const { role } = message as { role?: unknown };
     if (role !== "assistant") {
       continue;
     }
@@ -1230,7 +1235,7 @@ function sanitizeAuthConfig(params: {
   cfg: OpenClawConfig;
   agentDir: string;
 }): OpenClawConfig["auth"] | undefined {
-  const {auth} = params.cfg;
+  const { auth } = params.cfg;
   if (!auth) {
     return auth;
   }

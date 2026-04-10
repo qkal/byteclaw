@@ -134,7 +134,7 @@ async function expectVerifiedRoute(params: {
   const res = await dispatchWebhookRequest(params.request);
   expect(res.statusCode).toBe(params.expectedStatus);
   const expectedCounts =
-    params.expectedSink === "A" ? [1, 0] : (params.expectedSink === "B" ? [0, 1] : [0, 0]);
+    params.expectedSink === "A" ? [1, 0] : params.expectedSink === "B" ? [0, 1] : [0, 0];
   expect(params.sinkA).toHaveBeenCalledTimes(expectedCounts[0]);
   expect(params.sinkB).toHaveBeenCalledTimes(expectedCounts[1]);
 }

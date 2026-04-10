@@ -220,7 +220,7 @@ class SandboxFsBridgeImpl implements SandboxFsBridge {
     script: string,
     options: RunCommandOptions = {},
   ): Promise<SandboxBackendCommandResult> {
-    const {backend} = this.sandbox;
+    const { backend } = this.sandbox;
     if (backend) {
       return await backend.runShellCommand({
         allowFailure: options.allowFailure,

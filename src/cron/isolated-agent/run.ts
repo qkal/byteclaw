@@ -218,9 +218,9 @@ async function prepareCronRunContext(params: {
   const requestedAgentId =
     typeof input.agentId === "string" && input.agentId.trim()
       ? input.agentId
-      : (typeof input.job.agentId === "string" && input.job.agentId.trim()
+      : typeof input.job.agentId === "string" && input.job.agentId.trim()
         ? input.job.agentId
-        : undefined);
+        : undefined;
   const normalizedRequested = requestedAgentId ? normalizeAgentId(requestedAgentId) : undefined;
   const agentConfigOverride = normalizedRequested
     ? resolveAgentConfig(input.cfg, normalizedRequested)
@@ -232,7 +232,7 @@ async function prepareCronRunContext(params: {
   });
   const cfgWithAgentDefaults: OpenClawConfig = {
     ...input.cfg,
-    agents: { ...input.cfg.agents, defaults: agentCfg},
+    agents: { ...input.cfg.agents, defaults: agentCfg },
   };
   let catalog: Awaited<ReturnType<typeof loadModelCatalog>> | undefined;
   const loadCatalog = async () => {
@@ -312,8 +312,8 @@ async function prepareCronRunContext(params: {
       result: withRunSession({ error: resolvedModelSelection.error, status: "error" }),
     };
   }
-  const {provider} = resolvedModelSelection;
-  const {model} = resolvedModelSelection;
+  const { provider } = resolvedModelSelection;
+  const { model } = resolvedModelSelection;
   if (resolvedModelSelection.warning) {
     logWarn(resolvedModelSelection.warning);
   }

@@ -3,19 +3,16 @@
  * Uses Node's child_process module for subprocess management.
  */
 
-import { exec, spawn } from 'node:child_process';
-import { promisify } from 'node:util';
-import type {
-  ChildProcessWrapper,
-  SubprocessWrapperOptions,
-} from './child-process-wrapper.js';
-import { createNodeChildProcessWrapper } from './child-process-wrapper-node.js';
+import { exec, spawn } from "node:child_process";
+import { promisify } from "node:util";
+import type { ChildProcessWrapper, SubprocessWrapperOptions } from "./child-process-wrapper.js";
+import { createNodeChildProcessWrapper } from "./child-process-wrapper-node.js";
 import type {
   SubprocessAbstraction,
   SubprocessOptions,
   SubprocessResult,
   SubprocessSpawnResult,
-} from './subprocess-abstraction.js';
+} from "./subprocess-abstraction.js";
 
 const execAsync = promisify(exec);
 
@@ -29,16 +26,13 @@ export class NodeSubprocessAbstraction implements SubprocessAbstraction {
     args: string[],
     options?: SubprocessOptions,
   ): Promise<SubprocessResult> {
-    const fullCommand = command + (args.length > 0 ? ' ' + args.join(' ') : '');
+    const fullCommand = command + (args.length > 0 ? " " + args.join(" ") : "");
 
     try {
       const { stdout, stderr } = await execAsync(fullCommand, {
         cwd: options?.cwd,
         env: options?.env,
-        shell:
-          options?.shell === true
-            ? undefined
-            : (options?.shell as string | undefined),
+        shell: options?.shell === true ? undefined : (options?.shell as string | undefined),
         windowsHide: options?.windowsHide,
       });
 
@@ -48,23 +42,18 @@ export class NodeSubprocessAbstraction implements SubprocessAbstraction {
         stderr: stderr.toString(),
       };
     } catch (error: unknown) {
-      if (error instanceof Error && 'code' in error) {
+      if (error instanceof Error && "code" in error) {
         return {
           exitCode: (error as { code: number | null }).code as number,
-          stdout: (error as { stdout?: string }).stdout?.toString() ?? '',
-          stderr:
-            (error as { stderr?: string }).stderr?.toString() ?? error.message,
+          stdout: (error as { stdout?: string }).stdout?.toString() ?? "",
+          stderr: (error as { stderr?: string }).stderr?.toString() ?? error.message,
         };
       }
       throw error;
     }
   }
 
-  spawn(
-    command: string,
-    args: string[],
-    options?: SubprocessOptions,
-  ): SubprocessSpawnResult {
+  spawn(command: string, args: string[], options?: SubprocessOptions): SubprocessSpawnResult {
     const wrapper = createNodeChildProcessWrapper(
       command,
       args,
@@ -72,17 +61,14 @@ export class NodeSubprocessAbstraction implements SubprocessAbstraction {
     );
 
     const exitPromise = new Promise<SubprocessResult>((resolve) => {
-      wrapper.on(
-        'exit',
-        (code: number | null, signal: NodeJS.Signals | null) => {
-          resolve({
-            exitCode: code ?? null,
-            stdout: '',
-            stderr: '',
-            signal: signal ?? undefined,
-          });
-        },
-      );
+      wrapper.on("exit", (code: number | null, signal: NodeJS.Signals | null) => {
+        resolve({
+          exitCode: code ?? null,
+          stdout: "",
+          stderr: "",
+          signal: signal ?? undefined,
+        });
+      });
     });
 
     return {

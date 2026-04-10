@@ -144,9 +144,9 @@ export async function prepareCliRunContext(
         extraSystemPromptHash,
         mcpConfigHash: preparedBackend.mcpConfigHash,
       })
-    : (params.cliSessionId
+    : params.cliSessionId
       ? { sessionId: params.cliSessionId }
-      : {});
+      : {};
   if (reusableCliSession.invalidatedReason) {
     cliBackendLog.info(
       `cli session reset: provider=${params.provider} reason=${reusableCliSession.invalidatedReason}`,

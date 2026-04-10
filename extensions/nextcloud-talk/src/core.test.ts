@@ -19,17 +19,19 @@ import {
 const fetchWithSsrFGuard = vi.hoisted(() => vi.fn());
 const readFileSync = vi.hoisted(() => vi.fn());
 
-vi.mock("../runtime-api.js", () => vi
-    .importActual<typeof import("../runtime-api.js")>("../runtime-api.js")
-    .then((actual) => ({
-      ...actual,
-      fetchWithSsrFGuard,
-    })));
+vi.mock("../runtime-api.js", () =>
+  vi.importActual<typeof import("../runtime-api.js")>("../runtime-api.js").then((actual) => ({
+    ...actual,
+    fetchWithSsrFGuard,
+  })),
+);
 
-vi.mock("node:fs", () => vi.importActual<typeof import("node:fs")>("node:fs").then((actual) => ({
+vi.mock("node:fs", () =>
+  vi.importActual<typeof import("node:fs")>("node:fs").then((actual) => ({
     ...actual,
     readFileSync,
-  })));
+  })),
+);
 
 const tempDirs: string[] = [];
 let resolveNextcloudTalkRoomKind: typeof import("./room-info.js").resolveNextcloudTalkRoomKind;

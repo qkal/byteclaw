@@ -65,9 +65,7 @@ export async function resolvePromptBuildHookResult(params: {
             params.hookCtx,
           )
           .catch((error: unknown) => {
-            log.warn(
-              `before_agent_start hook (legacy prompt build path) failed: ${String(error)}`,
-            );
+            log.warn(`before_agent_start hook (legacy prompt build path) failed: ${String(error)}`);
             return undefined;
           })
       : undefined);

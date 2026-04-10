@@ -34,7 +34,8 @@ export function guardSessionManager(
 
   const hookRunner = getGlobalHookRunner();
   const beforeMessageWrite = hookRunner?.hasHooks("before_message_write")
-    ? (event: { message: import("@mariozechner/pi-agent-core").AgentMessage }) => hookRunner.runBeforeMessageWrite(event, {
+    ? (event: { message: import("@mariozechner/pi-agent-core").AgentMessage }) =>
+        hookRunner.runBeforeMessageWrite(event, {
           agentId: opts?.agentId,
           sessionKey: opts?.sessionKey,
         })

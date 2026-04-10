@@ -56,7 +56,7 @@ export const telegramActionRuntime = {
 
 const TELEGRAM_BUTTON_STYLES: readonly TelegramButtonStyle[] = ["danger", "success", "primary"];
 const TELEGRAM_FORUM_TOPIC_ICON_COLORS = [
-  0x6F_B9_F0, 0xFF_D6_7E, 0xCB_86_DB, 0x8E_EE_98, 0xFF_93_B2, 0xFB_6F_5F,
+  0x6f_b9_f0, 0xff_d6_7e, 0xcb_86_db, 0x8e_ee_98, 0xff_93_b2, 0xfb_6f_5f,
 ] as const;
 const TELEGRAM_ACTION_ALIASES = {
   createForumTopic: "createForumTopic",
@@ -253,7 +253,7 @@ export async function handleTelegramAction(
     const { emoji, remove, isEmpty } = readReactionParams(params, {
       removeErrorMessage: "Emoji is required to remove a Telegram reaction.",
     });
-    const {token} = resolveTelegramToken(cfg, { accountId });
+    const { token } = resolveTelegramToken(cfg, { accountId });
     if (!token) {
       return jsonResult({
         hint: "Telegram bot token missing. Do not retry.",
@@ -345,7 +345,7 @@ export async function handleTelegramAction(
     const replyToMessageId = readTelegramReplyToMessageId(params);
     const messageThreadId = readTelegramThreadId(params);
     const quoteText = readStringParam(params, "quoteText");
-    const {token} = resolveTelegramToken(cfg, { accountId });
+    const { token } = resolveTelegramToken(cfg, { accountId });
     if (!token) {
       throw new Error(
         "Telegram bot token missing. Set TELEGRAM_BOT_TOKEN or channels.telegram.botToken.",
@@ -414,7 +414,7 @@ export async function handleTelegramAction(
         pollPublic: readBooleanParam(params, "pollPublic"),
       });
     const silent = readBooleanParam(params, "silent");
-    const {token} = resolveTelegramToken(cfg, { accountId });
+    const { token } = resolveTelegramToken(cfg, { accountId });
     if (!token) {
       throw new Error(
         "Telegram bot token missing. Set TELEGRAM_BOT_TOKEN or channels.telegram.botToken.",
@@ -456,7 +456,7 @@ export async function handleTelegramAction(
       integer: true,
       required: true,
     });
-    const {token} = resolveTelegramToken(cfg, { accountId });
+    const { token } = resolveTelegramToken(cfg, { accountId });
     if (!token) {
       throw new Error(
         "Telegram bot token missing. Set TELEGRAM_BOT_TOKEN or channels.telegram.botToken.",
@@ -494,7 +494,7 @@ export async function handleTelegramAction(
         );
       }
     }
-    const {token} = resolveTelegramToken(cfg, { accountId });
+    const { token } = resolveTelegramToken(cfg, { accountId });
     if (!token) {
       throw new Error(
         "Telegram bot token missing. Set TELEGRAM_BOT_TOKEN or channels.telegram.botToken.",
@@ -533,7 +533,7 @@ export async function handleTelegramAction(
     }
     const replyToMessageId = readTelegramReplyToMessageId(params);
     const messageThreadId = readTelegramThreadId(params);
-    const {token} = resolveTelegramToken(cfg, { accountId });
+    const { token } = resolveTelegramToken(cfg, { accountId });
     if (!token) {
       throw new Error(
         "Telegram bot token missing. Set TELEGRAM_BOT_TOKEN or channels.telegram.botToken.",
@@ -587,7 +587,7 @@ export async function handleTelegramAction(
     const name = readStringParam(params, "name", { required: true });
     const iconColor = readTelegramForumTopicIconColor(params);
     const iconCustomEmojiId = readStringParam(params, "iconCustomEmojiId");
-    const {token} = resolveTelegramToken(cfg, { accountId });
+    const { token } = resolveTelegramToken(cfg, { accountId });
     if (!token) {
       throw new Error(
         "Telegram bot token missing. Set TELEGRAM_BOT_TOKEN or channels.telegram.botToken.",
@@ -619,7 +619,7 @@ export async function handleTelegramAction(
     }
     const name = readStringParam(params, "name");
     const iconCustomEmojiId = readStringParam(params, "iconCustomEmojiId");
-    const {token} = resolveTelegramToken(cfg, { accountId });
+    const { token } = resolveTelegramToken(cfg, { accountId });
     if (!token) {
       throw new Error(
         "Telegram bot token missing. Set TELEGRAM_BOT_TOKEN or channels.telegram.botToken.",

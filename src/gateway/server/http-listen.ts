@@ -39,7 +39,7 @@ export async function listenGatewayHttpServer(params: {
       });
       return; // Bound successfully
     } catch (error) {
-      const {code} = (error as NodeJS.ErrnoException);
+      const { code } = error as NodeJS.ErrnoException;
       if (code === "EADDRINUSE" && attempt < EADDRINUSE_MAX_RETRIES) {
         // Port may still be in TIME_WAIT after a recent process exit; retry.
         await closeServerQuietly(httpServer);

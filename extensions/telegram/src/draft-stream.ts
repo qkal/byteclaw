@@ -62,7 +62,7 @@ function allocateTelegramDraftId(): number {
 }
 
 function resolveSendMessageDraftApi(api: Bot["api"]): TelegramSendMessageDraft | undefined {
-  const {sendMessageDraft} = (api as Bot["api"] & { sendMessageDraft?: TelegramSendMessageDraft });
+  const { sendMessageDraft } = api as Bot["api"] & { sendMessageDraft?: TelegramSendMessageDraft };
   if (typeof sendMessageDraft !== "function") {
     return undefined;
   }
@@ -136,15 +136,15 @@ export function createTelegramDraftStream(params: {
     TELEGRAM_STREAM_MAX_CHARS,
   );
   const throttleMs = Math.max(250, params.throttleMs ?? DEFAULT_THROTTLE_MS);
-  const {minInitialChars} = params;
-  const {chatId} = params;
+  const { minInitialChars } = params;
+  const { chatId } = params;
   const requestedPreviewTransport = params.previewTransport ?? "auto";
   const prefersDraftTransport =
     requestedPreviewTransport === "draft"
       ? true
-      : (requestedPreviewTransport === "message"
+      : requestedPreviewTransport === "message"
         ? false
-        : params.thread?.scope === "dm");
+        : params.thread?.scope === "dm";
   const threadParams = buildTelegramThreadParams(params.thread);
   const replyToMessageId = normalizeTelegramReplyToMessageId(params.replyToMessageId);
   const replyParams =

@@ -85,7 +85,10 @@ export interface ZaloAuthStatus {
   message: string;
 }
 
-export interface ZalouserToolConfig { allow?: string[]; deny?: string[] }
+export interface ZalouserToolConfig {
+  allow?: string[];
+  deny?: string[];
+}
 
 export interface ZalouserGroupConfig {
   enabled?: boolean;

@@ -24,8 +24,8 @@ describe("browser screenshot normalization", () => {
     const meta = await sharp(normalized.buffer).metadata();
     expect(Number(meta.width)).toBeLessThanOrEqual(2000);
     expect(Number(meta.height)).toBeLessThanOrEqual(2000);
-    expect(normalized.buffer[0]).toBe(0xFF);
-    expect(normalized.buffer[1]).toBe(0xD8);
+    expect(normalized.buffer[0]).toBe(0xff);
+    expect(normalized.buffer[1]).toBe(0xd8);
   }, 120_000);
 
   it("keeps already-small screenshots unchanged", async () => {

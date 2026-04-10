@@ -277,7 +277,7 @@ describe("applyMediaUnderstanding – echo transcript", () => {
     // Image-only context — no audio attachment
     const dir = await fs.mkdtemp(path.join(suiteTempMediaRootDir, "img-"));
     const imgPath = path.join(dir, "photo.jpg");
-    await fs.writeFile(imgPath, Buffer.from([0xFF, 0xD8, 0xFF, 0xE0]));
+    await fs.writeFile(imgPath, Buffer.from([0xff, 0xd8, 0xff, 0xe0]));
 
     const ctx: MsgContext = {
       Body: "<media:image>",

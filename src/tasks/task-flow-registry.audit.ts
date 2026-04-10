@@ -228,9 +228,9 @@ export function listTaskFlowAuditFindings(
       ageMs >=
         (flow.status === "running"
           ? staleRunningMs
-          : (flow.status === "waiting"
+          : flow.status === "waiting"
             ? staleWaitingMs
-            : staleBlockedMs)) &&
+            : staleBlockedMs) &&
       linkedTasks.length === 0 &&
       !hasBlockingMetadata(flow)
     ) {

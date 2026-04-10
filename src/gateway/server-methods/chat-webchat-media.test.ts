@@ -18,7 +18,7 @@ describe("buildWebchatAudioContentBlocksFromReplyPayloads", () => {
   it("embeds a local audio file as a base64 gateway chat block", () => {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-webchat-audio-"));
     const audioPath = path.join(tmpDir, "clip.mp3");
-    fs.writeFileSync(audioPath, Buffer.from([0xFF, 0xFB, 0x90, 0x00]));
+    fs.writeFileSync(audioPath, Buffer.from([0xff, 0xfb, 0x90, 0x00]));
 
     const blocks = buildWebchatAudioContentBlocksFromReplyPayloads([{ mediaUrl: audioPath }]);
 
@@ -32,7 +32,7 @@ describe("buildWebchatAudioContentBlocksFromReplyPayloads", () => {
     expect(block.source?.media_type).toBe("audio/mpeg");
     expect(block.source?.data?.includes("data:")).toBe(false);
     expect(Buffer.from(block.source?.data ?? "", "base64")).toEqual(
-      Buffer.from([0xFF, 0xFB, 0x90, 0x00]),
+      Buffer.from([0xff, 0xfb, 0x90, 0x00]),
     );
   });
 
@@ -46,7 +46,7 @@ describe("buildWebchatAudioContentBlocksFromReplyPayloads", () => {
   it("skips non-audio local files", () => {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-webchat-audio-"));
     const imagePath = path.join(tmpDir, "clip.png");
-    fs.writeFileSync(imagePath, Buffer.from([0x89, 0x50, 0x4E, 0x47]));
+    fs.writeFileSync(imagePath, Buffer.from([0x89, 0x50, 0x4e, 0x47]));
 
     const blocks = buildWebchatAudioContentBlocksFromReplyPayloads([{ mediaUrl: imagePath }]);
 

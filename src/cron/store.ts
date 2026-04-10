@@ -32,8 +32,8 @@ function parseCronStoreForBackupComparison(raw: string): CronStoreFile | null {
     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
       return null;
     }
-    const {version} = (parsed as { version?: unknown });
-    const {jobs} = (parsed as { jobs?: unknown });
+    const { version } = parsed as { version?: unknown };
+    const { jobs } = parsed as { jobs?: unknown };
     if (version !== 1 || !Array.isArray(jobs)) {
       return null;
     }
@@ -169,7 +169,7 @@ async function renameWithRetry(src: string, dest: string): Promise<void> {
       await fs.promises.rename(src, dest);
       return;
     } catch (error) {
-      const {code} = (error as { code?: string });
+      const { code } = error as { code?: string };
       if (code === "EBUSY" && attempt < RENAME_MAX_RETRIES) {
         await new Promise((resolve) => setTimeout(resolve, RENAME_BASE_DELAY_MS * 2 ** attempt));
         continue;

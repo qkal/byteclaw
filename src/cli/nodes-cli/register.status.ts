@@ -146,9 +146,9 @@ export function registerNodesStatusCommands(nodes: Command) {
               const lastConnectedAtMs =
                 typeof paired?.lastConnectedAtMs === "number"
                   ? paired.lastConnectedAtMs
-                  : (typeof n.connectedAtMs === "number"
+                  : typeof n.connectedAtMs === "number"
                     ? n.connectedAtMs
-                    : undefined);
+                    : undefined;
               if (typeof lastConnectedAtMs !== "number") {
                 return false;
               }
@@ -349,9 +349,9 @@ export function registerNodesStatusCommands(nodes: Command) {
               const lastConnectedAtMs =
                 typeof node.lastConnectedAtMs === "number"
                   ? node.lastConnectedAtMs
-                  : (typeof live?.connectedAtMs === "number"
+                  : typeof live?.connectedAtMs === "number"
                     ? live.connectedAtMs
-                    : undefined);
+                    : undefined;
               if (typeof lastConnectedAtMs !== "number") {
                 return false;
               }
@@ -390,9 +390,9 @@ export function registerNodesStatusCommands(nodes: Command) {
               const lastConnectedAtMs =
                 typeof n.lastConnectedAtMs === "number"
                   ? n.lastConnectedAtMs
-                  : (typeof live?.connectedAtMs === "number"
+                  : typeof live?.connectedAtMs === "number"
                     ? live.connectedAtMs
-                    : undefined);
+                    : undefined;
               return {
                 IP: n.remoteIp ?? "",
                 Id: n.nodeId,

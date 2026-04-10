@@ -554,9 +554,9 @@ export async function startGateway(ctx: GatewayContext): Promise<void> {
         const peerId =
           event.type === "guild"
             ? (event.channelId ?? "unknown")
-            : (event.type === "group"
+            : event.type === "group"
               ? (event.groupOpenid ?? "unknown")
-              : event.senderId);
+              : event.senderId;
 
         const route = pluginRuntime.channel.routing.resolveAgentRoute({
           accountId: account.accountId,
@@ -694,12 +694,12 @@ export async function startGateway(ctx: GatewayContext): Promise<void> {
           );
         }
         const qualifiedTarget = isGroupChat
-          ? (event.type === "guild"
+          ? event.type === "guild"
             ? `qqbot:channel:${event.channelId}`
-            : `qqbot:group:${event.groupOpenid}`)
-          : (event.type === "dm"
+            : `qqbot:group:${event.groupOpenid}`
+          : event.type === "dm"
             ? `qqbot:dm:${event.guildId}`
-            : `qqbot:c2c:${event.senderId}`);
+            : `qqbot:c2c:${event.senderId}`;
 
         const hasTTS =
           Boolean(resolveTTSConfig(cfg as Record<string, unknown>)) || isGlobalTTSAvailable(cfg);
@@ -742,9 +742,9 @@ export async function startGateway(ctx: GatewayContext): Promise<void> {
         const fromAddress =
           event.type === "guild"
             ? `qqbot:channel:${event.channelId}`
-            : (event.type === "group"
+            : event.type === "group"
               ? `qqbot:group:${event.groupOpenid}`
-              : `qqbot:c2c:${event.senderId}`);
+              : `qqbot:c2c:${event.senderId}`;
         const toAddress = fromAddress;
 
         const rawAllowFrom = account.config?.allowFrom ?? [];
@@ -1129,9 +1129,9 @@ export async function startGateway(ctx: GatewayContext): Promise<void> {
                   const errMsg =
                     err instanceof Error
                       ? err.message
-                      : (typeof err === "string"
+                      : typeof err === "string"
                         ? err
-                        : JSON.stringify(err));
+                        : JSON.stringify(err);
                   log?.error(`[qqbot:${account.accountId}] Dispatch error: ${errMsg}`);
                   hasResponse = true;
                   if (timeoutId) {
@@ -1177,9 +1177,9 @@ export async function startGateway(ctx: GatewayContext): Promise<void> {
           const errMsg =
             error instanceof Error
               ? error.message
-              : (typeof error === "string"
+              : typeof error === "string"
                 ? error
-                : JSON.stringify(error));
+                : JSON.stringify(error);
           log?.error(`[qqbot:${account.accountId}] Message processing failed: ${errMsg}`);
         } finally {
           typing.keepAlive?.stop();
@@ -1225,7 +1225,8 @@ export async function startGateway(ctx: GatewayContext): Promise<void> {
           log?.debug?.(`[qqbot:${account.accountId}] Received op=${op} t=${t}`);
 
           switch (op) {
-            case 10: { // Hello
+            case 10: {
+              // Hello
               log?.info(`[qqbot:${account.accountId}] Hello received`);
 
               if (sessionId && lastSeq !== null) {
@@ -1269,7 +1270,8 @@ export async function startGateway(ctx: GatewayContext): Promise<void> {
               break;
             }
 
-            case 0: { // Dispatch
+            case 0: {
+              // Dispatch
               log?.info(
                 `[qqbot:${account.accountId}] 📩 Dispatch event: t=${t}, d=${JSON.stringify(d)}`,
               );
@@ -1378,19 +1380,22 @@ export async function startGateway(ctx: GatewayContext): Promise<void> {
               break;
             }
 
-            case 11: { // Heartbeat ACK
+            case 11: {
+              // Heartbeat ACK
               log?.debug?.(`[qqbot:${account.accountId}] Heartbeat ACK`);
               break;
             }
 
-            case 7: { // Reconnect
+            case 7: {
+              // Reconnect
               log?.info(`[qqbot:${account.accountId}] Server requested reconnect`);
               cleanup();
               scheduleReconnect();
               break;
             }
 
-            case 9: { // Invalid Session
+            case 9: {
+              // Invalid Session
               const canResume = d as boolean;
               log?.error(
                 `[qqbot:${account.accountId}] Invalid session (${FULL_INTENTS_DESC}), can resume: ${canResume}, raw: ${rawData}`,
@@ -1513,7 +1518,8 @@ export async function startGateway(ctx: GatewayContext): Promise<void> {
       });
     } catch (error) {
       isConnecting = false;
-      const errMsg = error instanceof Error ? error.message : (JSON.stringify(error) ?? "Unknown error");
+      const errMsg =
+        error instanceof Error ? error.message : (JSON.stringify(error) ?? "Unknown error");
       log?.error(`[qqbot:${account.accountId}] Connection failed: ${errMsg}`);
       // Back off more aggressively after rate-limit failures.
       if (errMsg.includes("Too many requests") || errMsg.includes("100001")) {

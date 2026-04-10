@@ -302,8 +302,8 @@ export async function applyGoogleChatInboundAccessPolicy(params: {
       isSenderAllowed(senderId, senderEmail, allowFrom, allowNameMatching),
     storeAllowFrom,
   });
-  const {effectiveAllowFrom} = access;
-  const {effectiveGroupAllowFrom} = access;
+  const { effectiveAllowFrom } = access;
+  const { effectiveGroupAllowFrom } = access;
   warnDeprecatedUsersEmailEntries(logVerbose, effectiveAllowFrom);
   const commandAllowFrom = isGroup ? effectiveGroupAllowFrom : effectiveAllowFrom;
   const useAccessGroups = config.commands?.useAccessGroups !== false;

@@ -1297,7 +1297,7 @@ describe("doctor config flow", () => {
         };
       };
     };
-    const {toolsBySender} = cfg.channels.whatsapp.groups["123@g.us"];
+    const { toolsBySender } = cfg.channels.whatsapp.groups["123@g.us"];
     expect(toolsBySender.owner).toBeUndefined();
     expect(toolsBySender.alice).toBeUndefined();
     expect(toolsBySender["id:owner"]).toEqual({ deny: ["exec"] });

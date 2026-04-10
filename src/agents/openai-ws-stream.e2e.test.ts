@@ -136,7 +136,7 @@ function parseReasoningSignature(value: string | undefined) {
 }
 
 function extractReasoningText(item: { summary?: unknown; content?: unknown }): string {
-  const {summary} = item;
+  const { summary } = item;
   if (typeof summary === "string") {
     return summary.trim();
   }

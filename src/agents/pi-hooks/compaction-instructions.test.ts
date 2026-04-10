@@ -73,17 +73,23 @@ describe("resolveCompactionInstructions", () => {
       expect(resolveCompactionInstructions("  ", "\t\n")).toBe(DEFAULT_COMPACTION_INSTRUCTIONS);
     });
 
-    it(String.raw`non-breaking space (\u00A0) IS trimmed by ES2015+ trim() -- falls through`, () => {
-      const nbsp = "\u00A0";
-      const result = resolveCompactionInstructions(nbsp, "runtime");
-      expect(result).toBe("runtime");
-    });
+    it(
+      String.raw`non-breaking space (\u00A0) IS trimmed by ES2015+ trim() -- falls through`,
+      () => {
+        const nbsp = "\u00A0";
+        const result = resolveCompactionInstructions(nbsp, "runtime");
+        expect(result).toBe("runtime");
+      },
+    );
 
-    it(String.raw`KNOWN_EDGE: zero-width space (\u200B) survives normalization -- invisible string used as instructions`, () => {
-      const zws = "\u200B";
-      const result = resolveCompactionInstructions(zws, "runtime");
-      expect(result).toBe(zws);
-    });
+    it(
+      String.raw`KNOWN_EDGE: zero-width space (\u200B) survives normalization -- invisible string used as instructions`,
+      () => {
+        const zws = "\u200B";
+        const result = resolveCompactionInstructions(zws, "runtime");
+        expect(result).toBe(zws);
+      },
+    );
   });
 
   describe("precedence", () => {
@@ -157,7 +163,7 @@ describe("resolveCompactionInstructions", () => {
       // Every code point in the truncated result must be a complete character (no lone surrogates)
       for (const cp of codePoints) {
         const code = cp.codePointAt(0)!;
-        const isLoneSurrogate = code >= 0xD8_00 && code <= 0xDF_FF;
+        const isLoneSurrogate = code >= 0xd8_00 && code <= 0xdf_ff;
         expect(isLoneSurrogate).toBe(false);
       }
     });

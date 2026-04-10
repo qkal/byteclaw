@@ -153,10 +153,10 @@ function createFixedChoiceProvider(params: {
 }
 
 function createDefaultProviderPlugins() {
-  const {buildApiKeyCredential} = providerApiKeyAuthRuntime;
-  const {ensureApiKeyFromOptionEnvOrPrompt} = providerApiKeyAuthRuntime;
-  const {normalizeApiKeyInput} = providerApiKeyAuthRuntime;
-  const {validateApiKeyInput} = providerApiKeyAuthRuntime;
+  const { buildApiKeyCredential } = providerApiKeyAuthRuntime;
+  const { ensureApiKeyFromOptionEnvOrPrompt } = providerApiKeyAuthRuntime;
+  const { normalizeApiKeyInput } = providerApiKeyAuthRuntime;
+  const { validateApiKeyInput } = providerApiKeyAuthRuntime;
 
   const createZaiMethod = (choiceId: "zai-api-key" | "zai-coding-global"): ProviderAuthMethod => ({
     id: choiceId === "zai-api-key" ? "api-key" : "coding-global",

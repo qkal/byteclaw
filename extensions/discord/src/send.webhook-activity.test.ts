@@ -35,10 +35,13 @@ describe("sendWebhookMessageDiscord activity", () => {
     loadConfigMock.mockClear();
     vi.stubGlobal(
       "fetch",
-      vi.fn(async () => new Response(JSON.stringify({ channel_id: "thread-1", id: "msg-1" }), {
-          headers: { "content-type": "application/json" },
-          status: 200,
-        })),
+      vi.fn(
+        async () =>
+          new Response(JSON.stringify({ channel_id: "thread-1", id: "msg-1" }), {
+            headers: { "content-type": "application/json" },
+            status: 200,
+          }),
+      ),
     );
   });
 

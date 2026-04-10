@@ -77,7 +77,7 @@ export function resolveVisibleWhatsAppReplyContext(params: {
   if (!replyTo) {
     return null;
   }
-  const {include} = evaluateSupplementalContextVisibility({
+  const { include } = evaluateSupplementalContextVisibility({
     kind: "quote",
     mode: params.mode,
     senderAllowed:

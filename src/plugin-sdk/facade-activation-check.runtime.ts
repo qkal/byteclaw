@@ -128,7 +128,7 @@ function getFacadeBoundaryResolvedConfig() {
         autoEnabledReasons: {} as Record<string, string[]>,
         config: rawConfig,
       };
-  const {config} = autoEnabled;
+  const { config } = autoEnabled;
   const resolved = {
     activationSource: createPluginActivationSource({ config: rawConfig }),
     autoEnabledReasons: autoEnabled.autoEnabledReasons,

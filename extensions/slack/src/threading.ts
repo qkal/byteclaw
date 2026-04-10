@@ -22,9 +22,9 @@ export function resolveSlackThreadContext(params: {
   const replyToId = incomingThreadTs ?? messageTs;
   const messageThreadId = isThreadReply
     ? incomingThreadTs
-    : (params.replyToMode === "all"
+    : params.replyToMode === "all"
       ? messageTs
-      : undefined);
+      : undefined;
   return {
     incomingThreadTs,
     isThreadReply,
@@ -50,9 +50,9 @@ export function resolveSlackThreadTargets(params: {
   const { incomingThreadTs, messageTs, isThreadReply } = ctx;
   const replyThreadTs = isThreadReply
     ? incomingThreadTs
-    : (params.replyToMode === "all"
+    : params.replyToMode === "all"
       ? messageTs
-      : undefined);
+      : undefined;
   const statusThreadTs = replyThreadTs;
   return { isThreadReply, replyThreadTs, statusThreadTs };
 }

@@ -80,7 +80,8 @@ describe("gateway server chat", () => {
 
   const loadChatHistoryWithMessages = async (
     messages: Record<string, unknown>[],
-  ): Promise<unknown[]> => withMainSessionStore(async (dir) => {
+  ): Promise<unknown[]> =>
+    withMainSessionStore(async (dir) => {
       const lines = messages.map((message) => JSON.stringify({ message }));
       await fs.writeFile(path.join(dir, "sess-main.jsonl"), lines.join("\n"), "utf8");
 

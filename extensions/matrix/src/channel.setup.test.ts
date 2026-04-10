@@ -213,7 +213,8 @@ describe("matrix setup post-write bootstrap", () => {
     );
   });
 
-  it("rejects default useEnv setup when no Matrix auth env vars are available", () => withSavedEnv(
+  it("rejects default useEnv setup when no Matrix auth env vars are available", () =>
+    withSavedEnv(
       {
         MATRIX_ACCESS_TOKEN: undefined,
         MATRIX_DEFAULT_ACCESS_TOKEN: undefined,

@@ -50,7 +50,7 @@ export function checkTwitchAccessControl(params: {
   }
 
   if (account.allowFrom !== undefined) {
-    const {allowFrom} = account;
+    const { allowFrom } = account;
     if (allowFrom.length === 0) {
       return {
         allowed: false,
@@ -81,7 +81,7 @@ export function checkTwitchAccessControl(params: {
   }
 
   if (account.allowedRoles && account.allowedRoles.length > 0) {
-    const {allowedRoles} = account;
+    const { allowedRoles } = account;
 
     // "all" grants access to everyone
     if (allowedRoles.includes("all")) {

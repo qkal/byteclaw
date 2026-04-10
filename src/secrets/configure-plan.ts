@@ -97,7 +97,20 @@ export function buildConfigureCandidatesForScope(params: {
       const refPathExists = entry.refPathSegments
         ? hasPathInAuthoredConfig(entry.refPathSegments)
         : false;
-      return Object.assign({type:entry.entry.targetType,path:entry.path,pathSegments:[...entry.pathSegments],label:entry.path,configFile:`openclaw.json` as const,expectedResolvedValue:entry.entry.expectedResolvedValue}, resolved.ref?{existingRef:resolved.ref}:{}, pathExists||refPathExists?{}:{isDerived:true}, entry.providerId?{providerId:entry.providerId}:{}, entry.accountId?{accountId:entry.accountId}:{});
+      return Object.assign(
+        {
+          type: entry.entry.targetType,
+          path: entry.path,
+          pathSegments: [...entry.pathSegments],
+          label: entry.path,
+          configFile: `openclaw.json` as const,
+          expectedResolvedValue: entry.entry.expectedResolvedValue,
+        },
+        resolved.ref ? { existingRef: resolved.ref } : {},
+        pathExists || refPathExists ? {} : { isDerived: true },
+        entry.providerId ? { providerId: entry.providerId } : {},
+        entry.accountId ? { accountId: entry.accountId } : {},
+      );
     });
 
   const authCandidates =
@@ -106,7 +119,7 @@ export function buildConfigureCandidatesForScope(params: {
       : discoverAuthProfileSecretTargets(params.authProfiles.store)
           .filter((entry) => entry.entry.includeInConfigure)
           .map((entry) => {
-            const {authProfiles} = params;
+            const { authProfiles } = params;
             if (!authProfiles) {
               throw new Error("Missing auth profile scope for configure candidate discovery.");
             }
@@ -119,7 +132,19 @@ export function buildConfigureCandidatesForScope(params: {
               refValue: entry.refValue,
               value: entry.value,
             });
-            return Object.assign({type:entry.entry.targetType,path:entry.path,pathSegments:[...entry.pathSegments],label:`${entry.path} (auth profile, agent ${authProfiles.agentId})`,configFile:`auth-profiles.json` as const,expectedResolvedValue:entry.entry.expectedResolvedValue}, resolved.ref?{existingRef:resolved.ref}:{}, {agentId:authProfiles.agentId}, authProfileProvider?{authProfileProvider}:{});
+            return Object.assign(
+              {
+                type: entry.entry.targetType,
+                path: entry.path,
+                pathSegments: [...entry.pathSegments],
+                label: `${entry.path} (auth profile, agent ${authProfiles.agentId})`,
+                configFile: `auth-profiles.json` as const,
+                expectedResolvedValue: entry.entry.expectedResolvedValue,
+              },
+              resolved.ref ? { existingRef: resolved.ref } : {},
+              { agentId: authProfiles.agentId },
+              authProfileProvider ? { authProfileProvider } : {},
+            );
           });
 
   return [...openclawCandidates, ...authCandidates].toSorted((a, b) =>
@@ -151,7 +176,7 @@ function hasPath(root: unknown, segments: string[]): boolean {
     if (!isRecord(cursor)) {
       return false;
     }
-    if (! Object.hasOwn(cursor, segment)) {
+    if (!Object.hasOwn(cursor, segment)) {
       return false;
     }
     if (index === segments.length - 1) {
@@ -181,7 +206,7 @@ export function collectConfigureProviderChanges(params: {
   }
 
   for (const providerAlias of Object.keys(originalProviders)) {
-    if (! Object.hasOwn(nextProviders, providerAlias)) {
+    if (!Object.hasOwn(nextProviders, providerAlias)) {
       deletes.push(providerAlias);
     }
   }
@@ -213,7 +238,20 @@ export function buildSecretsConfigurePlan(params: {
     protocolVersion: 1,
     generatedAt: params.generatedAt ?? new Date().toISOString(),
     generatedBy: "openclaw secrets configure",
-    targets: [...params.selectedTargets.values()].map((entry) => ((Object.assign({type:entry.type,path:entry.path,pathSegments:[...entry.pathSegments],ref:entry.ref}, entry.agentId?{agentId:entry.agentId}:{}, entry.providerId?{providerId:entry.providerId}:{}, entry.accountId?{accountId:entry.accountId}:{}, entry.authProfileProvider?{authProfileProvider:entry.authProfileProvider}:{})))),
+    targets: [...params.selectedTargets.values()].map((entry) =>
+      Object.assign(
+        {
+          type: entry.type,
+          path: entry.path,
+          pathSegments: [...entry.pathSegments],
+          ref: entry.ref,
+        },
+        entry.agentId ? { agentId: entry.agentId } : {},
+        entry.providerId ? { providerId: entry.providerId } : {},
+        entry.accountId ? { accountId: entry.accountId } : {},
+        entry.authProfileProvider ? { authProfileProvider: entry.authProfileProvider } : {},
+      ),
+    ),
     ...(Object.keys(params.providerChanges.upserts).length > 0
       ? { providerUpserts: params.providerChanges.upserts }
       : {}),

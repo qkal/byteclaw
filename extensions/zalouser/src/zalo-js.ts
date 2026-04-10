@@ -202,7 +202,7 @@ function normalizeAccountInfoUser(info: AccountInfoResponse): User | null {
     return null;
   }
   if ("profile" in info) {
-    const {profile} = (info as { profile?: unknown });
+    const { profile } = info as { profile?: unknown };
     if (profile && typeof profile === "object") {
       return profile as User;
     }
@@ -216,7 +216,7 @@ function toInteger(value: unknown, fallback = 0): number {
     return Math.trunc(value);
   }
   const parsed = Number.parseInt(
-    typeof value === "string" ? value : (typeof value === "number" ? String(value) : ""),
+    typeof value === "string" ? value : typeof value === "number" ? String(value) : "",
     10,
   );
   if (!Number.isFinite(parsed)) {
@@ -252,7 +252,7 @@ function resolveInboundTimestamp(rawTs: unknown): number {
     return rawTs > 1_000_000_000_000 ? rawTs : rawTs * 1000;
   }
   const parsed = Number.parseInt(
-    typeof rawTs === "string" ? rawTs : (typeof rawTs === "number" ? String(rawTs) : ""),
+    typeof rawTs === "string" ? rawTs : typeof rawTs === "number" ? String(rawTs) : "",
     10,
   );
   if (!Number.isFinite(parsed) || parsed <= 0) {
@@ -787,7 +787,7 @@ function extractGroupMembersFromInfo(
 }
 
 function toInboundMessage(message: Message, ownUserId?: string): ZaloInboundMessage | null {
-  const {data} = message;
+  const { data } = message;
   const isGroup = message.type === ThreadType.Group;
   const senderId = toNumberId(data.uidFrom);
   const threadId = isGroup
@@ -810,9 +810,9 @@ function toInboundMessage(message: Message, ownUserId?: string): ZaloInboundMess
   );
   const commandContent = wasExplicitlyMentioned
     ? stripOwnMentionsForCommandBody(content, data.mentions, normalizedOwnUserId)
-    : (hasAnyMention && !canResolveExplicitMention
+    : hasAnyMention && !canResolveExplicitMention
       ? stripLeadingAtMentionForCommand(content)
-      : content);
+      : content;
   const implicitMention = Boolean(
     normalizedOwnUserId && quoteOwnerId && quoteOwnerId === normalizedOwnUserId,
   );
@@ -974,11 +974,7 @@ export async function listZaloGroupMembers(
     });
   }
 
-  const uniqueIds = [...new Set<string>([
-	...memberIds,
-	...memVerIds,
-	...currentById.keys()
-])];
+  const uniqueIds = [...new Set<string>([...memberIds, ...memVerIds, ...currentById.keys()])];
 
   const profileMap = new Map<string, { displayName?: string; avatar?: string }>();
   if (uniqueIds.length > 0) {

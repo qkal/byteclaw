@@ -205,7 +205,7 @@ export const createXaiToolCallArgumentDecodingWrapper =
   createHtmlEntityToolCallArgumentDecodingWrapper;
 
 export function wrapXaiProviderStream(ctx: ProviderWrapStreamFnContext): StreamFn | undefined {
-  const {extraParams} = ctx;
+  const { extraParams } = ctx;
   const fastMode = extraParams?.fastMode;
   const toolStreamEnabled = extraParams?.tool_stream !== false;
   return composeProviderStreamWrappers(ctx.streamFn, (streamFn) => {

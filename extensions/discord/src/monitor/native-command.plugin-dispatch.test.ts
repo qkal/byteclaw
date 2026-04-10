@@ -108,7 +108,7 @@ function createConfiguredAcpCase(params: {
       },
       ...(params.includeChannelAccess === false
         ? {}
-        : (params.channelType === ChannelType.DM
+        : params.channelType === ChannelType.DM
           ? {
               channels: {
                 discord: {
@@ -128,7 +128,7 @@ function createConfiguredAcpCase(params: {
                   },
                 },
               },
-            })),
+            }),
       bindings: [
         createConfiguredAcpBinding({
           agentId: params.agentId,

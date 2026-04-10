@@ -16,7 +16,7 @@ describe("tool image sanitizing", () => {
   const createWidePng = async () => {
     const width = 2600;
     const height = 400;
-    const raw = Buffer.alloc(width * height * 3, 0x7F);
+    const raw = Buffer.alloc(width * height * 3, 0x7f);
     return sharp(raw, {
       raw: { channels: 3, height, width },
     })
@@ -27,7 +27,7 @@ describe("tool image sanitizing", () => {
   it("shrinks oversized images to <=5MB", async () => {
     const width = 2800;
     const height = 2800;
-    const raw = Buffer.alloc(width * height * 3, 0xFF);
+    const raw = Buffer.alloc(width * height * 3, 0xff);
     const bigPng = await sharp(raw, {
       raw: { channels: 3, height, width },
     })

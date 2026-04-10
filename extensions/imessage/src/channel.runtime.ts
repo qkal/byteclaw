@@ -61,7 +61,7 @@ export async function startIMessageGatewayAccount(
     NonNullable<NonNullable<ChannelPlugin<ResolvedIMessageAccount>["gateway"]>["startAccount"]>
   >[0],
 ) {
-  const {account} = ctx;
+  const { account } = ctx;
   const cliPath = account.config.cliPath?.trim() || "imsg";
   const dbPath = account.config.dbPath?.trim();
   ctx.setStatus({

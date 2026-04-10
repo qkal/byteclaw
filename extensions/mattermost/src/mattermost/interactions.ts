@@ -465,7 +465,7 @@ export function createMattermostInteractionHandler(params: {
       return;
     }
 
-    const {context} = payload;
+    const { context } = payload;
     if (!context) {
       res.statusCode = 400;
       res.setHeader("Content-Type", "application/json");

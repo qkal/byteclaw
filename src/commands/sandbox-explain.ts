@@ -143,9 +143,9 @@ export async function sandboxExplainCommand(
   const resolvedAgentId = normalizeAgentId(
     opts.agent?.trim()
       ? opts.agent
-      : (opts.session?.trim()
+      : opts.session?.trim()
         ? resolveAgentIdFromSessionKey(opts.session)
-        : defaultAgentId),
+        : defaultAgentId,
   );
 
   const sessionKey = normalizeExplainSessionKey({
@@ -163,9 +163,9 @@ export async function sandboxExplainCommand(
   const sessionIsSandboxed =
     sandboxCfg.mode === "all"
       ? true
-      : (sandboxCfg.mode === "off"
+      : sandboxCfg.mode === "off"
         ? false
-        : sessionKey.trim() !== mainSessionKey.trim());
+        : sessionKey.trim() !== mainSessionKey.trim();
 
   const channel = resolveActiveChannel({
     agentId: resolvedAgentId,

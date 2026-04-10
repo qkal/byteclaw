@@ -102,7 +102,7 @@ function setMSTeamsTeamsAllowlist(
   const baseTeams = cfg.channels?.msteams?.teams ?? {};
   const teams: Record<string, { channels?: Record<string, unknown> }> = { ...baseTeams };
   for (const entry of entries) {
-    const {teamKey} = entry;
+    const { teamKey } = entry;
     if (!teamKey) {
       continue;
     }

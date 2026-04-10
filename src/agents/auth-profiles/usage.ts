@@ -107,10 +107,12 @@ function resolveWhamResetMs(window: WhamUsageWindow | undefined, now: number): n
 }
 
 function isWhamWindowExhausted(window: WhamUsageWindow | undefined): boolean {
-  return Boolean(window &&
+  return Boolean(
+    window &&
     typeof window.used_percent === "number" &&
     Number.isFinite(window.used_percent) &&
-    window.used_percent >= 100);
+    window.used_percent >= 100,
+  );
 }
 
 function applyWhamCooldownResult(params: {
@@ -396,11 +398,13 @@ function shouldBypassModelScopedCooldown(
   now: number,
   forModel?: string,
 ): boolean {
-  return Boolean(forModel &&
+  return Boolean(
+    forModel &&
     stats.cooldownReason === "rate_limit" &&
     stats.cooldownModel &&
     stats.cooldownModel !== forModel &&
-    !isActiveUnusableWindow(stats.disabledUntil, now));
+    !isActiveUnusableWindow(stats.disabledUntil, now),
+  );
 }
 
 /**
@@ -422,7 +426,7 @@ function shouldBypassModelScopedCooldown(
  * @returns `true` if any profile was modified.
  */
 export function clearExpiredCooldowns(store: AuthProfileStore, now?: number): boolean {
-  const {usageStats} = store;
+  const { usageStats } = store;
   if (!usageStats) {
     return false;
   }

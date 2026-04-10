@@ -102,7 +102,9 @@ export function hasResolvedCredentialValue(account: unknown): boolean {
     return false;
   }
   return (
-    ["token", "botToken", "appToken", "signingSecret", "userToken"].some((key) => normalizeOptionalString(record[key]) !== undefined) || CREDENTIAL_STATUS_KEYS.some((key) => readCredentialStatus(record, key) === "available")
+    ["token", "botToken", "appToken", "signingSecret", "userToken"].some(
+      (key) => normalizeOptionalString(record[key]) !== undefined,
+    ) || CREDENTIAL_STATUS_KEYS.some((key) => readCredentialStatus(record, key) === "available")
   );
 }
 

@@ -86,7 +86,11 @@ interface ApnsRequestParams {
   priority: "10" | "5";
 }
 
-interface ApnsRequestResponse { status: number; apnsId?: string; body: string }
+interface ApnsRequestResponse {
+  status: number;
+  apnsId?: string;
+  body: string;
+}
 
 type ApnsRequestSender = (params: ApnsRequestParams) => Promise<ApnsRequestResponse>;
 

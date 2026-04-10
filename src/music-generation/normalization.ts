@@ -35,10 +35,10 @@ export function resolveMusicGenerationOverrides(params: {
   });
   const ignoredOverrides: MusicGenerationIgnoredOverride[] = [];
   const normalization: MusicGenerationNormalization = {};
-  let {lyrics} = params;
-  let {instrumental} = params;
-  let {durationSeconds} = params;
-  let {format} = params;
+  let { lyrics } = params;
+  let { instrumental } = params;
+  let { durationSeconds } = params;
+  let { format } = params;
 
   if (!caps) {
     return {

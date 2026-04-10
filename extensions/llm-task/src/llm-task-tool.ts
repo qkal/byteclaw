@@ -147,7 +147,7 @@ export function createLlmTaskTool(api: OpenClawPluginApi) {
         temperature: typeof params.temperature === "number" ? params.temperature : undefined,
       };
 
-      const {input} = params;
+      const { input } = params;
       let inputJson: string;
       try {
         inputJson = JSON.stringify(input ?? null, null, 2);
@@ -207,7 +207,7 @@ export function createLlmTaskTool(api: OpenClawPluginApi) {
           throw new Error("LLM returned invalid JSON");
         }
 
-        const {schema} = params;
+        const { schema } = params;
         if (schema && typeof schema === "object" && !Array.isArray(schema)) {
           const ajv = new AjvCtor({ allErrors: true, strict: false });
           const validate = ajv.compile(schema);

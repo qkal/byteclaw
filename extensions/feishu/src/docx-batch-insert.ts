@@ -13,7 +13,9 @@ import type { FeishuDocxBlock, FeishuDocxBlockChild } from "./docx-types.js";
 
 export const BATCH_SIZE = 1000; // Feishu API limit per request
 
-interface Logger { info?: (msg: string) => void }
+interface Logger {
+  info?: (msg: string) => void;
+}
 
 type DocxDescendantCreatePayload = NonNullable<
   Parameters<Lark.Client["docx"]["documentBlockDescendant"]["create"]>[0]
@@ -63,7 +65,7 @@ function collectDescendants(
     result.push(block);
 
     // Recursively collect children
-    const {children} = block;
+    const { children } = block;
     if (Array.isArray(children)) {
       for (const childId of children) {
         collect(childId);

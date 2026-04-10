@@ -403,7 +403,17 @@ function resolveOwnerAuthorizationState(params: {
   const ownerAllowAll = hasWildcardAllowFrom(configOwnerAllowFromList);
   const explicitOwners = stripWildcardAllowFrom(configOwnerAllowFromList);
   const explicitOverrides = stripWildcardAllowFrom(contextOwnerAllowFromList);
-  const ownerList = [...new Set(explicitOwners.length > 0 ? explicitOwners : ownerAllowAll ? [] : explicitOverrides.length > 0 ? explicitOverrides : ownerCandidatesForCommands)];
+  const ownerList = [
+    ...new Set(
+      explicitOwners.length > 0
+        ? explicitOwners
+        : ownerAllowAll
+          ? []
+          : explicitOverrides.length > 0
+            ? explicitOverrides
+            : ownerCandidatesForCommands,
+    ),
+  ];
   return {
     allowAll,
     explicitOwners,
@@ -425,7 +435,7 @@ function resolveCommandSenderAuthorization(params: {
     params.commandsAllowFromList !== null ||
     (params.providerResolutionError && params.commandsAllowFromConfigured)
   ) {
-    const {commandsAllowFromList} = params;
+    const { commandsAllowFromList } = params;
     const commandsAllowAll =
       !params.providerResolutionError &&
       Boolean(commandsAllowFromList && hasWildcardAllowFrom(commandsAllowFromList));

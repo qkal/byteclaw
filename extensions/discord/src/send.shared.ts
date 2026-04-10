@@ -1,5 +1,4 @@
-import type {
-  RequestClient} from "@buape/carbon";
+import type { RequestClient } from "@buape/carbon";
 import {
   Embed,
   type MessagePayloadFile,
@@ -103,9 +102,9 @@ function getDiscordErrorCode(err: unknown) {
   const candidate =
     "code" in err && err.code !== undefined
       ? err.code
-      : ("rawError" in err && err.rawError && typeof err.rawError === "object"
+      : "rawError" in err && err.rawError && typeof err.rawError === "object"
         ? (err.rawError as { code?: unknown }).code
-        : undefined);
+        : undefined;
   if (typeof candidate === "number") {
     return candidate;
   }

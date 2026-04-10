@@ -61,7 +61,13 @@ function normalizeHostnameAllowlist(values?: string[]): string[] {
   if (!values || values.length === 0) {
     return [];
   }
-  return [...new Set(values.map((value) => normalizeHostname(value)).filter((value) => value !== '*' && value !== '*.' && value.length > 0))];
+  return [
+    ...new Set(
+      values
+        .map((value) => normalizeHostname(value))
+        .filter((value) => value !== "*" && value !== "*." && value.length > 0),
+    ),
+  ];
 }
 
 export function isPrivateNetworkAllowedByPolicy(policy?: SsrFPolicy): boolean {
@@ -248,7 +254,7 @@ export function createPinnedLookup(params: {
         ? (options as { all?: boolean; family?: number })
         : {};
     const requestedFamily =
-      typeof options === "number" ? options : (typeof opts.family === "number" ? opts.family : 0);
+      typeof options === "number" ? options : typeof opts.family === "number" ? opts.family : 0;
     const candidates =
       requestedFamily === 4 || requestedFamily === 6
         ? records.filter((entry) => entry.family === requestedFamily)

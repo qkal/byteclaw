@@ -15,7 +15,11 @@ function normalizeOptionIndexes(indexes: number[]): number[] {
 }
 
 function normalizeOptionIds(optionIds: string[]): string[] {
-  return [...new Set(optionIds.map((optionId) => optionId.trim()).filter((optionId) => optionId.length > 0))];
+  return [
+    ...new Set(
+      optionIds.map((optionId) => optionId.trim()).filter((optionId) => optionId.length > 0),
+    ),
+  ];
 }
 
 function resolveSelectedAnswerIds(params: {

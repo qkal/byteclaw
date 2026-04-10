@@ -15,7 +15,7 @@ export function listSupportedMusicGenerationModes(
   provider: Pick<MusicGenerationProvider, "capabilities">,
 ): MusicGenerationMode[] {
   const modes: MusicGenerationMode[] = ["generate"];
-  const {edit} = provider.capabilities;
+  const { edit } = provider.capabilities;
   if (edit?.enabled) {
     modes.push("edit");
   }

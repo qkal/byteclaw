@@ -47,7 +47,7 @@ async function readTailLines(file: string, limit: number): Promise<string[]> {
   if (!stat) {
     return [];
   }
-  const {size} = stat;
+  const { size } = stat;
   const start = Math.max(0, size - MAX_BYTES);
   const handle = await fs.open(file, "r");
   try {
@@ -85,7 +85,7 @@ export async function channelsLogsCommand(
       ? Math.floor(limitRaw)
       : DEFAULT_LIMIT;
 
-  const {file} = getResolvedLoggerSettings();
+  const { file } = getResolvedLoggerSettings();
   const rawLines = await readTailLines(file, limit * 4);
   const parsed = rawLines
     .map(parseLogLine)

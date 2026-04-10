@@ -42,7 +42,7 @@ describe("resolveNpmChannelTag", () => {
       "fetch",
       vi.fn(async (input: RequestInfo | URL) => {
         const url =
-          typeof input === "string" ? input : (input instanceof URL ? input.toString() : input.url);
+          typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
         const tag = decodeURIComponent(url.split("/").pop() ?? "");
         const version = versionByTag[tag] ?? null;
         return {

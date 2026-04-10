@@ -117,7 +117,7 @@ export function normalizeActRequest(
     case "type": {
       const ref = toStringOrEmpty(body.ref) || undefined;
       const selector = toStringOrEmpty(body.selector) || undefined;
-      const {text} = body;
+      const { text } = body;
       if (!ref && !selector) {
         throw new Error("type requires ref or selector");
       }

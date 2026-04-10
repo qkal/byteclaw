@@ -85,9 +85,7 @@ export class SignalHandler {
           this.onShutdown(signal),
           new Promise<void>((resolve) =>
             setTimeout(() => {
-              this.logger.error(
-                `Shutdown timed out after ${this.timeout}ms, forcing exit`,
-              );
+              this.logger.error(`Shutdown timed out after ${this.timeout}ms, forcing exit`);
               timedOut = true;
               resolve();
             }, this.timeout),
@@ -95,7 +93,7 @@ export class SignalHandler {
         ]);
       } catch (err) {
         error = err instanceof Error ? err : new Error(String(err));
-        this.logger.error('Error during shutdown:', error);
+        this.logger.error("Error during shutdown:", error);
       } finally {
         const endTime = Date.now();
         this.shutdownStats = {
@@ -107,11 +105,9 @@ export class SignalHandler {
           error,
         };
 
-        this.logger.info(
-          `Shutdown completed in ${this.shutdownStats.durationMs}ms`,
-        );
+        this.logger.info(`Shutdown completed in ${this.shutdownStats.durationMs}ms`);
         this.unregister();
-        process.exit(signal === 'SIGTERM' ? 0 : 1);
+        process.exit(signal === "SIGTERM" ? 0 : 1);
       }
     };
   }
@@ -136,9 +132,9 @@ export class SignalHandler {
  */
 export function createSignalHandler(
   onShutdown: (signal: NodeJS.Signals) => Promise<void> | void,
-  options?: Omit<SignalHandlerOptions, 'onShutdown'>,
+  options?: Omit<SignalHandlerOptions, "onShutdown">,
 ): SignalHandler {
   const handler = new SignalHandler({ ...options, onShutdown });
-  handler.register(['SIGTERM', 'SIGINT']);
+  handler.register(["SIGTERM", "SIGINT"]);
   return handler;
 }

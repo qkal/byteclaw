@@ -11,21 +11,21 @@ if (!discordSecrets?.collectRuntimeConfigAssignments) {
 }
 
 vi.mock("../channels/plugins/bootstrap-registry.js", () => ({
-    getBootstrapChannelPlugin: (id: string) =>
-      id === "discord"
-        ? {
-            secrets: {
-              collectRuntimeConfigAssignments: discordSecrets.collectRuntimeConfigAssignments,
-            },
-          }
-        : undefined,
-    getBootstrapChannelSecrets: (id: string) =>
-      id === "discord"
-        ? {
+  getBootstrapChannelPlugin: (id: string) =>
+    id === "discord"
+      ? {
+          secrets: {
             collectRuntimeConfigAssignments: discordSecrets.collectRuntimeConfigAssignments,
-          }
-        : undefined,
-  }));
+          },
+        }
+      : undefined,
+  getBootstrapChannelSecrets: (id: string) =>
+    id === "discord"
+      ? {
+          collectRuntimeConfigAssignments: discordSecrets.collectRuntimeConfigAssignments,
+        }
+      : undefined,
+}));
 
 function asConfig(value: unknown): OpenClawConfig {
   return value as OpenClawConfig;

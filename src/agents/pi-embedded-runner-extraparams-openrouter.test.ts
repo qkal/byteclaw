@@ -22,7 +22,7 @@ beforeEach(() => {
         typeof params.context.extraParams.provider === "object"
           ? (params.context.extraParams.provider as Record<string, unknown>)
           : undefined;
-      let {streamFn} = params.context;
+      let { streamFn } = params.context;
       if (providerRouting) {
         const underlying = streamFn;
         streamFn = (model, context, options) =>

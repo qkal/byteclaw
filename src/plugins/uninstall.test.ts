@@ -180,9 +180,9 @@ function expectChannelCleanupResult(params: {
     params.config,
     params.pluginId,
     params.options
-      ? (params.options.channelIds
+      ? params.options.channelIds
         ? { channelIds: [...params.options.channelIds] }
-        : {})
+        : {}
       : undefined,
   );
   expectRemainingChannels(result.channels, params.expectedChannels);

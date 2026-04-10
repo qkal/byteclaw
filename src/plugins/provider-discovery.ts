@@ -56,7 +56,7 @@ export function normalizePluginDiscoveryResult(params: {
     | null
     | undefined;
 }): Record<string, ModelProviderConfig> {
-  const {result} = params;
+  const { result } = params;
   if (!result) {
     return {};
   }

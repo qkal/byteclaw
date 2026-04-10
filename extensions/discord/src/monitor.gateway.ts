@@ -1,10 +1,9 @@
 import type { DiscordGatewayHandle } from "./monitor/gateway-handle.js";
 import type {
   DiscordGatewayEvent,
-  DiscordGatewaySupervisor} from "./monitor/gateway-supervisor.js";
-import {
-  DiscordGatewayLifecycleError
+  DiscordGatewaySupervisor,
 } from "./monitor/gateway-supervisor.js";
+import { DiscordGatewayLifecycleError } from "./monitor/gateway-supervisor.js";
 
 export { getDiscordGatewayEmitter } from "./monitor/gateway-supervisor.js";
 

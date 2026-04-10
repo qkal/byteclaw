@@ -64,7 +64,7 @@ function resolveFlushTimer(setTimeoutSpy: ReturnType<typeof vi.spyOn>) {
 function createImageFetchSpy(params?: { body?: Uint8Array; contentType?: string }) {
   return vi.spyOn(globalThis, "fetch").mockImplementation(
     async () =>
-      new Response(Buffer.from(params?.body ?? [0x89, 0x50, 0x4E, 0x47]), {
+      new Response(Buffer.from(params?.body ?? [0x89, 0x50, 0x4e, 0x47]), {
         headers: { "content-type": params?.contentType ?? "image/png" },
         status: 200,
       }),
@@ -81,7 +81,7 @@ function createChannelPostContext(params: {
   photoFileId?: string;
   getFileResult?: Record<string, unknown>;
 }) {
-  const {photoFileId} = params;
+  const { photoFileId } = params;
   return {
     channelPost: {
       chat: { id: -100_777_111_222, title: params.title ?? "Wake Channel", type: "channel" },
@@ -229,7 +229,7 @@ describe("createTelegramBot channel_post media", () => {
     setOpenChannelPostConfig();
 
     const fetchSpy = createImageFetchSpy({
-      body: new Uint8Array([0xFF, 0xD8, 0xFF, 0x00]),
+      body: new Uint8Array([0xff, 0xd8, 0xff, 0x00]),
       contentType: "image/jpeg",
     });
 
@@ -304,7 +304,7 @@ describe("createTelegramBot channel_post media", () => {
       if (fetchCallIndex === 2) {
         throw new Error("MediaFetchError: Failed to fetch media");
       }
-      return new Response(new Uint8Array([0x89, 0x50, 0x4E, 0x47]), {
+      return new Response(new Uint8Array([0x89, 0x50, 0x4e, 0x47]), {
         headers: { "content-type": "image/png" },
         status: 200,
       });

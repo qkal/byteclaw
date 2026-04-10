@@ -79,7 +79,7 @@ vi.mock("../plugins/provider-runtime.js", async () => {
       if (params.provider !== "ollama") {
         return undefined;
       }
-      const {providerConfig} = params.context;
+      const { providerConfig } = params.context;
       const hasMeaningfulOllamaConfig =
         (Array.isArray(providerConfig?.models) && providerConfig.models.length > 0) ||
         Boolean(providerConfig?.api?.trim() && providerConfig.api.trim() !== "ollama") ||

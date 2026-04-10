@@ -11,7 +11,7 @@ export async function resolveRemoteEmbeddingBearerClient(params: {
   options: EmbeddingProviderOptions;
   defaultBaseUrl: string;
 }): Promise<{ baseUrl: string; headers: Record<string, string>; ssrfPolicy?: SsrFPolicy }> {
-  const {remote} = params.options;
+  const { remote } = params.options;
   const remoteApiKey = resolveMemorySecretInputString({
     path: "agents.*.memorySearch.remote.apiKey",
     value: remote?.apiKey,
@@ -29,7 +29,7 @@ export async function resolveRemoteEmbeddingBearerClient(params: {
         params.provider,
       );
   const baseUrl = remoteBaseUrl || providerConfig?.baseUrl?.trim() || params.defaultBaseUrl;
-  const headerOverrides = { ...providerConfig?.headers, ...remote?.headers};
+  const headerOverrides = { ...providerConfig?.headers, ...remote?.headers };
   const headers: Record<string, string> = {
     Authorization: `Bearer ${apiKey}`,
     "Content-Type": "application/json",

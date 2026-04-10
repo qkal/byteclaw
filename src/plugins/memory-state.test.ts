@@ -70,7 +70,7 @@ function registerMemoryState(params: {
     registerMemoryPromptSection(() => params.promptSection ?? []);
   }
   if (params.relativePath) {
-    const {relativePath} = params;
+    const { relativePath } = params;
     registerMemoryFlushPlanResolver(() => createMemoryFlushPlan(relativePath));
   }
   if (params.runtime) {

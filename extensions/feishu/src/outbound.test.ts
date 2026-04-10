@@ -64,7 +64,7 @@ describe("feishuOutbound.sendText local-image auto-convert", () => {
   });
 
   it("chunks outbound text without requiring Feishu runtime initialization", () => {
-    const {chunker} = feishuOutbound;
+    const { chunker } = feishuOutbound;
     if (!chunker) {
       throw new Error("feishuOutbound.chunker missing");
     }

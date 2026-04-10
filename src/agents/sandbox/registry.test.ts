@@ -212,10 +212,10 @@ describe("registry race safety", () => {
 
     const registry = await readRegistry();
     expect(registry.entries).toHaveLength(2);
-    expect(
-      registry.entries.map((entry) => entry.containerName)
-        .toSorted(),
-    ).toEqual(["container-a", "container-b"]);
+    expect(registry.entries.map((entry) => entry.containerName).toSorted()).toEqual([
+      "container-a",
+      "container-b",
+    ]);
   });
 
   it("prevents concurrent container remove/update from resurrecting deleted entries", async () => {
@@ -242,10 +242,10 @@ describe("registry race safety", () => {
 
     const registry = await readBrowserRegistry();
     expect(registry.entries).toHaveLength(2);
-    expect(
-      registry.entries.map((entry) => entry.containerName)
-        .toSorted(),
-    ).toEqual(["browser-a", "browser-b"]);
+    expect(registry.entries.map((entry) => entry.containerName).toSorted()).toEqual([
+      "browser-a",
+      "browser-b",
+    ]);
   });
 
   it("prevents concurrent browser remove/update from resurrecting deleted entries", async () => {

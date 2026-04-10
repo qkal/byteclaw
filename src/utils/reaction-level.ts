@@ -40,9 +40,9 @@ export function resolveReactionLevel(params: {
   const effective =
     parsed.kind === "ok"
       ? parsed.value
-      : (parsed.kind === "missing"
+      : parsed.kind === "missing"
         ? params.defaultLevel
-        : params.invalidFallback);
+        : params.invalidFallback;
 
   switch (effective) {
     case "off": {

@@ -510,7 +510,9 @@ describe("security: path traversal protection (CWE-22)", () => {
           expect(error, includePath).toHaveProperty("name", "ConfigIncludeError");
           expect((error as ConfigIncludeError).includePath, includePath).toBe(includePath);
           for (const messagePart of expectedMessageIncludes) {
-            expect((error as Error).message, `${includePath}: ${messagePart}`).toContain(messagePart);
+            expect((error as Error).message, `${includePath}: ${messagePart}`).toContain(
+              messagePart,
+            );
           }
         }
       },

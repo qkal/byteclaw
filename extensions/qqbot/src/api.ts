@@ -927,7 +927,7 @@ export function startBackgroundTokenRefresh(
 
   const controller = new AbortController();
   backgroundRefreshControllers.set(appId, controller);
-  const {signal} = controller;
+  const { signal } = controller;
 
   const refreshLoop = async () => {
     log?.info?.(`[qqbot-api:${appId}] Background token refresh started`);

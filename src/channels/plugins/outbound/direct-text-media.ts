@@ -24,7 +24,10 @@ interface DirectSendOptions {
   maxBytes?: number;
 }
 
-interface DirectSendResult { messageId: string; [key: string]: unknown }
+interface DirectSendResult {
+  messageId: string;
+  [key: string]: unknown;
+}
 
 type DirectSendFn<TOpts extends Record<string, unknown>, TResult extends DirectSendResult> = (
   to: string,
@@ -124,7 +127,8 @@ export function createDirectTextMediaOutbound<
       accountId,
       deps,
       replyToId,
-    }) => await sendDirect({
+    }) =>
+      await sendDirect({
         cfg,
         to,
         text,
@@ -144,7 +148,8 @@ export function createDirectTextMediaOutbound<
       }),
     sendPayload: async (ctx) =>
       await sendTextMediaPayload({ adapter: outbound, channel: params.channel, ctx }),
-    sendText: async ({ cfg, to, text, accountId, deps, replyToId }) => await sendDirect({
+    sendText: async ({ cfg, to, text, accountId, deps, replyToId }) =>
+      await sendDirect({
         cfg,
         to,
         text,

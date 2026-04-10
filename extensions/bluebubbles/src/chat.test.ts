@@ -529,7 +529,7 @@ describe("chat", () => {
         text: () => Promise.resolve(""),
       });
 
-      const buffer = new Uint8Array([0x89, 0x50, 0x4E, 0x47]); // PNG magic bytes
+      const buffer = new Uint8Array([0x89, 0x50, 0x4e, 0x47]); // PNG magic bytes
       await setGroupIconBlueBubbles("iMessage;-;chat-guid", buffer, "icon.png", {
         contentType: "image/png",
         password: "test-password",

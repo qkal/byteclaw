@@ -6,7 +6,10 @@ export function quoteCmdScriptArg(value: string): string {
   if (!value) {
     return '""';
   }
-  const escaped = value.replace(/"/g, String.raw`\"`).replace(/%/g, "%%").replace(/!/g, "^!");
+  const escaped = value
+    .replace(/"/g, String.raw`\"`)
+    .replace(/%/g, "%%")
+    .replace(/!/g, "^!");
   if (!/[ \t"&|<>^()%!]/g.test(value)) {
     return escaped;
   }

@@ -158,7 +158,10 @@ export interface ChannelApprovalNativeTransportAdapter<
   ) => Promise<void>;
 }
 
-export interface ChannelApprovalNativeInteractionAdapter<TPendingEntry = unknown, TBinding = unknown> {
+export interface ChannelApprovalNativeInteractionAdapter<
+  TPendingEntry = unknown,
+  TBinding = unknown,
+> {
   bindPending?: (
     params: ChannelApprovalCapabilityHandlerContext & {
       entry: TPendingEntry;
@@ -1010,7 +1013,8 @@ export async function createChannelApprovalHandlerFromCapability(params: {
         activeEntries.set(request.id, activeRequest);
         return wrapped;
       },
-      prepareTarget: async ({ plannedTarget, request, approvalKind, pendingContent }) => await nativeRuntime.transport.prepareTarget({
+      prepareTarget: async ({ plannedTarget, request, approvalKind, pendingContent }) =>
+        await nativeRuntime.transport.prepareTarget({
           ...baseContext,
           plannedTarget,
           request,

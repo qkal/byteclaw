@@ -371,7 +371,7 @@ export async function updateNpmInstalledPlugins(params: {
                 }),
                 spec: effectiveSpec!,
               })
-            : (record.source === "clawhub"
+            : record.source === "clawhub"
               ? await installPluginFromClawHub({
                   baseUrl: record.clawhubUrl,
                   dangerouslyForceUnsafeInstall: params.dangerouslyForceUnsafeInstall,
@@ -389,7 +389,7 @@ export async function updateNpmInstalledPlugins(params: {
                   marketplace: record.marketplaceSource!,
                   mode: "update",
                   plugin: record.marketplacePlugin!,
-                }));
+                });
       } catch (error) {
         outcomes.push({
           message: `Failed to check ${pluginId}: ${String(error)}`,
@@ -408,7 +408,7 @@ export async function updateNpmInstalledPlugins(params: {
                   result: probe,
                   spec: effectiveSpec!,
                 })
-              : (record.source === "clawhub"
+              : record.source === "clawhub"
                 ? formatClawHubInstallFailure({
                     pluginId,
                     spec: effectiveSpec ?? `clawhub:${record.clawhubPackage!}`,
@@ -421,7 +421,7 @@ export async function updateNpmInstalledPlugins(params: {
                     marketplacePlugin: record.marketplacePlugin!,
                     phase: "check",
                     error: probe.error,
-                  })),
+                  }),
           pluginId,
           status: "error",
         });
@@ -471,7 +471,7 @@ export async function updateNpmInstalledPlugins(params: {
               }),
               spec: effectiveSpec!,
             })
-          : (record.source === "clawhub"
+          : record.source === "clawhub"
             ? await installPluginFromClawHub({
                 baseUrl: record.clawhubUrl,
                 dangerouslyForceUnsafeInstall: params.dangerouslyForceUnsafeInstall,
@@ -487,7 +487,7 @@ export async function updateNpmInstalledPlugins(params: {
                 marketplace: record.marketplaceSource!,
                 mode: "update",
                 plugin: record.marketplacePlugin!,
-              }));
+              });
     } catch (error) {
       outcomes.push({
         message: `Failed to update ${pluginId}: ${String(error)}`,
@@ -506,7 +506,7 @@ export async function updateNpmInstalledPlugins(params: {
                 result: result,
                 spec: effectiveSpec!,
               })
-            : (record.source === "clawhub"
+            : record.source === "clawhub"
               ? formatClawHubInstallFailure({
                   pluginId,
                   spec: effectiveSpec ?? `clawhub:${record.clawhubPackage!}`,
@@ -519,7 +519,7 @@ export async function updateNpmInstalledPlugins(params: {
                   marketplacePlugin: record.marketplacePlugin!,
                   phase: "update",
                   error: result.error,
-                })),
+                }),
         pluginId,
         status: "error",
       });

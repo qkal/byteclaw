@@ -35,9 +35,9 @@ export async function callBrowserRequest<T>(
   const resolvedTimeoutMs =
     typeof extra?.timeoutMs === "number" && Number.isFinite(extra.timeoutMs)
       ? Math.max(1, Math.floor(extra.timeoutMs))
-      : (typeof opts.timeout === "string"
+      : typeof opts.timeout === "string"
         ? Number.parseInt(opts.timeout, 10)
-        : undefined);
+        : undefined;
   const resolvedTimeout =
     typeof resolvedTimeoutMs === "number" && Number.isFinite(resolvedTimeoutMs)
       ? resolvedTimeoutMs

@@ -88,7 +88,7 @@ function extractTextFromToolResult(result: unknown): string | null {
   if (!result || typeof result !== "object") {
     return null;
   }
-  const {content} = (result as { content?: unknown });
+  const { content } = result as { content?: unknown };
   if (typeof content === "string") {
     const trimmed = content.trim();
     return trimmed ? trimmed : null;
@@ -193,14 +193,14 @@ export async function handleInlineActions(params: {
   const skillCommands =
     shouldLoadSkillCommands && params.skillCommands
       ? params.skillCommands
-      : (shouldLoadSkillCommands
+      : shouldLoadSkillCommands
         ? (await import("../skill-commands.runtime.js")).listSkillCommandsForWorkspace({
             agentId,
             cfg,
             skillFilter,
             workspaceDir,
           })
-        : []);
+        : [];
 
   const skillInvocation =
     allowTextCommands && skillCommands.length > 0
@@ -218,7 +218,7 @@ export async function handleInlineActions(params: {
       return { kind: "reply", reply: undefined };
     }
 
-    const {dispatch} = skillInvocation.command;
+    const { dispatch } = skillInvocation.command;
     if (dispatch?.kind === "tool") {
       const rawArgs = (skillInvocation.args ?? "").trim();
       const channel =

@@ -210,7 +210,7 @@ export interface ExecProcessHandle {
 }
 
 export function renderExecHostLabel(host: ExecHost) {
-  return host === "sandbox" ? "sandbox" : (host === "gateway" ? "gateway" : "node");
+  return host === "sandbox" ? "sandbox" : host === "gateway" ? "gateway" : "node";
 }
 
 export function renderExecTargetLabel(target: ExecTarget) {
@@ -250,7 +250,13 @@ export function resolveExecTarget(params: {
       sandboxAvailable: params.sandboxAvailable,
     })
   ) {
-    const allowedConfig = [...new Set(requestedTarget === 'gateway' && !params.sandboxAvailable ? ['gateway', 'auto'] : [renderExecTargetLabel(requestedTarget), 'auto'])].join(" or ");
+    const allowedConfig = [
+      ...new Set(
+        requestedTarget === "gateway" && !params.sandboxAvailable
+          ? ["gateway", "auto"]
+          : [renderExecTargetLabel(requestedTarget), "auto"],
+      ),
+    ].join(" or ");
     throw new Error(
       `exec host not allowed (requested ${renderExecTargetLabel(requestedTarget)}; ` +
         `configured host is ${renderExecTargetLabel(configuredTarget)}; ` +
@@ -259,9 +265,9 @@ export function resolveExecTarget(params: {
   }
   const selectedTarget = requestedTarget ?? configuredTarget;
   const resolvedTarget = params.elevatedRequested
-    ? (selectedTarget === "node"
+    ? selectedTarget === "node"
       ? "node"
-      : "gateway")
+      : "gateway"
     : selectedTarget;
   const effectiveHost =
     resolvedTarget === "auto" ? (params.sandboxAvailable ? "sandbox" : "gateway") : resolvedTarget;

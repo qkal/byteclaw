@@ -9,11 +9,29 @@ import { rememberDiscordDirectoryUser } from "./directory-cache.js";
 import { normalizeDiscordSlug } from "./monitor/allow-list.js";
 import { normalizeDiscordToken } from "./token.js";
 
-interface DiscordGuild { id: string; name: string }
-interface DiscordUser { id: string; username: string; global_name?: string; bot?: boolean }
-interface DiscordMember { user: DiscordUser; nick?: string | null }
-interface DiscordChannel { id: string; name?: string | null }
-interface DiscordDirectoryAccess { token: string; query: string; accountId: string }
+interface DiscordGuild {
+  id: string;
+  name: string;
+}
+interface DiscordUser {
+  id: string;
+  username: string;
+  global_name?: string;
+  bot?: boolean;
+}
+interface DiscordMember {
+  user: DiscordUser;
+  nick?: string | null;
+}
+interface DiscordChannel {
+  id: string;
+  name?: string | null;
+}
+interface DiscordDirectoryAccess {
+  token: string;
+  query: string;
+  accountId: string;
+}
 
 function normalizeQuery(value?: string | null): string {
   return normalizeOptionalLowercaseString(value) ?? "";
@@ -102,7 +120,7 @@ export async function listDiscordDirectoryPeersLive(
       token,
     );
     for (const member of members) {
-      const {user} = member;
+      const { user } = member;
       if (!user?.id) {
         continue;
       }

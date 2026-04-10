@@ -48,7 +48,9 @@ export function startGatewayCronWithLogging(params: {
   cron: { start: () => Promise<void> };
   logCron: { error: (message: string) => void };
 }): void {
-  void params.cron.start().catch((error) => params.logCron.error(`failed to start: ${String(error)}`));
+  void params.cron
+    .start()
+    .catch((error) => params.logCron.error(`failed to start: ${String(error)}`));
 }
 
 function recoverPendingOutboundDeliveries(params: {

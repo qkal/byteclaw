@@ -46,10 +46,12 @@ const mockLog = defaultRuntime.log;
 const mockError = defaultRuntime.error;
 const mockExit = defaultRuntime.exit;
 
-vi.mock("../runtime.js", async () => mockRuntimeModule(
+vi.mock("../runtime.js", async () =>
+  mockRuntimeModule(
     () => vi.importActual<typeof import("../runtime.js")>("../runtime.js"),
     defaultRuntime,
-  ));
+  ),
+);
 
 function buildSnapshot(params: {
   resolved: OpenClawConfig;

@@ -21,7 +21,7 @@ function formatGitStatusLine(params: {
 }): string {
   const shortSha = params.sha ? params.sha.slice(0, 8) : null;
   const branch = params.branch && params.branch !== "HEAD" ? params.branch : null;
-  const {tag} = params;
+  const { tag } = params;
   const parts = [
     branch ?? (tag ? "detached" : "git"),
     tag ? `tag ${tag}` : null,
@@ -87,9 +87,9 @@ export async function updateStatusCommand(opts: UpdateStatusOptions): Promise<vo
   const installLabel =
     update.installKind === "git"
       ? `git (${update.root ?? "unknown"})`
-      : (update.installKind === "package"
+      : update.installKind === "package"
         ? update.packageManager
-        : "unknown");
+        : "unknown";
 
   const rows = [
     { Item: "Install", Value: installLabel },

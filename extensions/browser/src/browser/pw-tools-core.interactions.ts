@@ -625,9 +625,9 @@ export async function fillFormViaPlaywright(opts: {
     const value =
       typeof rawValue === "string"
         ? rawValue
-        : (typeof rawValue === "number" || typeof rawValue === "boolean"
+        : typeof rawValue === "number" || typeof rawValue === "boolean"
           ? String(rawValue)
-          : "");
+          : "";
     if (!ref) {
       continue;
     }
@@ -677,7 +677,7 @@ export async function evaluateViaPlaywright(opts: {
   let evaluateTimeout = Math.max(1000, Math.min(120_000, outerTimeout - 500));
   evaluateTimeout = Math.min(evaluateTimeout, outerTimeout);
 
-  const {signal} = opts;
+  const { signal } = opts;
   const { abortPromise, cleanup } = createAbortPromiseWithListener(signal, () => {
     void forceDisconnectPlaywrightForTarget({
       cdpUrl: opts.cdpUrl,

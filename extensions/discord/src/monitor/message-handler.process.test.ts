@@ -33,9 +33,9 @@ const deliveryMocks = vi.hoisted(() => ({
     ) => Promise<import("discord-api-types/v10").APIMessage>
   >(async () => ({ id: "m1" }) as import("discord-api-types/v10").APIMessage),
 }));
-const {editMessageDiscord} = deliveryMocks;
-const {deliverDiscordReply} = deliveryMocks;
-const {createDiscordDraftStream} = deliveryMocks;
+const { editMessageDiscord } = deliveryMocks;
+const { deliverDiscordReply } = deliveryMocks;
+const { createDiscordDraftStream } = deliveryMocks;
 interface DispatchInboundParams {
   dispatcher: {
     sendBlockReply: (payload: ReplyPayload) => boolean | Promise<boolean>;
@@ -70,8 +70,8 @@ const configSessionsMocks = vi.hoisted(() => ({
     () => "/tmp/openclaw-discord-process-test-sessions.json",
   ),
 }));
-const {readSessionUpdatedAt} = configSessionsMocks;
-const {resolveStorePath} = configSessionsMocks;
+const { readSessionUpdatedAt } = configSessionsMocks;
+const { resolveStorePath } = configSessionsMocks;
 let createBaseDiscordMessageContext: typeof import("./message-handler.test-harness.js").createBaseDiscordMessageContext;
 let createDiscordDirectMessageContextOverrides: typeof import("./message-handler.test-harness.js").createDiscordDirectMessageContextOverrides;
 let threadBindingTesting: typeof import("./thread-bindings.js").__testing;
@@ -264,9 +264,9 @@ async function runInPartialStreamMode(): Promise<void> {
 }
 
 function getReactionEmojis(): string[] {
-  return (
-    sendMocks.reactMessageDiscord.mock.calls as unknown as [unknown, unknown, string][]
-  ).map((call) => call[2]);
+  return (sendMocks.reactMessageDiscord.mock.calls as unknown as [unknown, unknown, string][]).map(
+    (call) => call[2],
+  );
 }
 
 function expectAckReactionRuntimeOptions(params?: {

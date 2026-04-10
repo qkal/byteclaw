@@ -4,7 +4,10 @@ import {
   loadSubagentSpawnModuleForTest,
 } from "./subagent-spawn.test-helpers.js";
 
-interface GatewayRequest { method?: string; params?: Record<string, unknown> }
+interface GatewayRequest {
+  method?: string;
+  params?: Record<string, unknown>;
+}
 
 const hoisted = vi.hoisted(() => ({
   callGatewayMock: vi.fn(),

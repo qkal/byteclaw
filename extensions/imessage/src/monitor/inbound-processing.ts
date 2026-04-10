@@ -280,7 +280,7 @@ export function resolveIMessageInboundDecision(params: {
     storeAllowFrom: params.storeAllowFrom,
   });
   const effectiveDmAllowFrom = accessDecision.effectiveAllowFrom;
-  const {effectiveGroupAllowFrom} = accessDecision;
+  const { effectiveGroupAllowFrom } = accessDecision;
 
   if (accessDecision.decision !== "allow") {
     if (isGroup) {
@@ -387,7 +387,7 @@ export function resolveIMessageInboundDecision(params: {
   const replySenderAllowed =
     !isGroup || effectiveGroupAllowFrom.length === 0
       ? true
-      : (replyContext?.sender
+      : replyContext?.sender
         ? isAllowedIMessageSender({
             allowFrom: effectiveGroupAllowFrom,
             chatGuid,
@@ -395,7 +395,7 @@ export function resolveIMessageInboundDecision(params: {
             chatIdentifier,
             sender: replyContext.sender,
           })
-        : false);
+        : false;
   const filteredReplyContext =
     !replyContext ||
     evaluateSupplementalContextVisibility({
@@ -483,7 +483,7 @@ export function resolveIMessageInboundDecision(params: {
       requireMention,
     },
   });
-  const {effectiveWasMentioned} = mentionDecision;
+  const { effectiveWasMentioned } = mentionDecision;
   if (isGroup && requireMention && canDetectMention && mentionDecision.shouldSkip) {
     params.logVerbose?.(`imessage: skipping group message (no mention)`);
     recordPendingHistoryEntryIfEnabled({
@@ -547,7 +547,7 @@ export function buildIMessageInboundContext(params: {
 } {
   const envelopeOptions = params.envelopeOptions ?? resolveEnvelopeFormatOptions(params.cfg);
   const { decision } = params;
-  const {chatId} = decision;
+  const { chatId } = decision;
   const chatTarget =
     decision.isGroup && chatId != null ? formatIMessageChatTarget(chatId) : undefined;
 

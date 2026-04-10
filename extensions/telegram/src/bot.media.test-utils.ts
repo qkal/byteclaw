@@ -8,7 +8,7 @@ export const cacheStickerSpy: StickerSpy = vi.fn();
 export const getCachedStickerSpy: StickerSpy = vi.fn();
 export const describeStickerImageSpy: StickerSpy = vi.fn();
 
-const {resolvePinnedHostname} = ssrf;
+const { resolvePinnedHostname } = ssrf;
 const lookupMock = vi.fn();
 let resolvePinnedHostnameSpy: ReturnType<typeof vi.spyOn> = null;
 
@@ -98,13 +98,13 @@ export function mockTelegramFileDownload(params: {
 
 export function mockTelegramPngDownload(): FetchMockHandle {
   undiciFetchSpyRef.mockResolvedValue(
-    new Response(Buffer.from(new Uint8Array([0x89, 0x50, 0x4E, 0x47])), {
+    new Response(Buffer.from(new Uint8Array([0x89, 0x50, 0x4e, 0x47])), {
       headers: { "content-type": "image/png" },
       status: 200,
     }),
   );
   fetchRemoteMediaSpyRef.mockResolvedValue({
-    buffer: Buffer.from(new Uint8Array([0x89, 0x50, 0x4E, 0x47])),
+    buffer: Buffer.from(new Uint8Array([0x89, 0x50, 0x4e, 0x47])),
     contentType: "image/png",
     fileName: "mock-file.png",
   });

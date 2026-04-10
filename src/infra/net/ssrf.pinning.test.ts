@@ -44,9 +44,7 @@ describe("ssrf pinning", () => {
       });
     });
     expect(Array.isArray(all)).toBe(true);
-    expect((all as { address: string }[]).map((entry) => entry.address)).toEqual(
-      pinned.addresses,
-    );
+    expect((all as { address: string }[]).map((entry) => entry.address)).toEqual(pinned.addresses);
   });
 
   it.each([

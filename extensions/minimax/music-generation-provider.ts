@@ -176,7 +176,7 @@ export function buildMinimaxMusicGenerationProvider(): MusicGenerationProvider {
         model,
         prompt: buildPrompt(req),
         ...(req.instrumental === true ? { is_instrumental: true } : {}),
-        ...(lyrics ? { lyrics } : (req.instrumental === true ? {} : { lyrics_optimizer: true })),
+        ...(lyrics ? { lyrics } : req.instrumental === true ? {} : { lyrics_optimizer: true }),
         output_format: "url",
         audio_setting: {
           bitrate: 256_000,
@@ -216,13 +216,13 @@ export function buildMinimaxMusicGenerationProvider(): MusicGenerationProvider {
               timeoutMs: req.timeoutMs,
               url: audioUrl,
             })
-          : (inlineAudio
+          : inlineAudio
             ? {
                 buffer: decodePossibleBinary(inlineAudio),
                 mimeType: "audio/mpeg",
                 fileName: "track-1.mp3",
               }
-            : null);
+            : null;
         if (!track) {
           throw new Error("MiniMax music generation response missing audio output");
         }

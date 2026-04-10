@@ -87,8 +87,8 @@ export function comparableChannelTargetsMatch(params: {
   left?: ComparableChannelTarget | null;
   right?: ComparableChannelTarget | null;
 }): boolean {
-  const {left} = params;
-  const {right} = params;
+  const { left } = params;
+  const { right } = params;
   if (!left || !right) {
     return false;
   }
@@ -99,8 +99,8 @@ export function comparableChannelTargetsShareRoute(params: {
   left?: ComparableChannelTarget | null;
   right?: ComparableChannelTarget | null;
 }): boolean {
-  const {left} = params;
-  const {right} = params;
+  const { left } = params;
+  const { right } = params;
   if (!left || !right) {
     return false;
   }

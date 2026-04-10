@@ -23,7 +23,10 @@ export interface SecurityAuditFinding {
 
 const SMALL_MODEL_PARAM_B_MAX = 300;
 
-interface ModelRef { id: string; source: string }
+interface ModelRef {
+  id: string;
+  source: string;
+}
 
 function summarizeGroupPolicy(cfg: OpenClawConfig): {
   open: number;
@@ -91,12 +94,12 @@ function collectModels(cfg: OpenClawConfig): ModelRef[] {
     }
     const id =
       typeof (agent as { id?: unknown }).id === "string" ? (agent as { id: string }).id : "";
-    const {model} = (agent as { model?: unknown });
+    const { model } = agent as { model?: unknown };
     if (typeof model === "string") {
       addModel(out, model, `agents.list.${id}.model`);
     } else if (model && typeof model === "object") {
       addModel(out, (model as { primary?: unknown }).primary, `agents.list.${id}.model.primary`);
-      const {fallbacks} = (model as { fallbacks?: unknown });
+      const { fallbacks } = model as { fallbacks?: unknown };
       if (Array.isArray(fallbacks)) {
         for (const fallback of fallbacks) {
           addModel(out, fallback, `agents.list.${id}.model.fallbacks`);

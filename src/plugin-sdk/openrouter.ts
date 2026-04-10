@@ -20,4 +20,4 @@ export const buildOpenrouterProvider: FacadeModule["buildOpenrouterProvider"] = 
   loadFacadeModule()["buildOpenrouterProvider"](
     ...args,
   )) as FacadeModule["buildOpenrouterProvider"];
-export const {OPENROUTER_DEFAULT_MODEL_REF} = loadFacadeModule();
+export const { OPENROUTER_DEFAULT_MODEL_REF } = loadFacadeModule();

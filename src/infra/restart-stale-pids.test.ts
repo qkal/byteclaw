@@ -407,11 +407,11 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       mockedResolveLsof.mockImplementationOnce(() => "lsof");
 
       mockSpawnSync.mockImplementationOnce(() => ({
-          error: null,
-          status: 0,
-          stderr: "",
-          stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
-        }));
+        error: null,
+        status: 0,
+        stderr: "",
+        stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+      }));
 
       // Second call: poll — resolveLsofCommandSync throws
       mockedResolveLsof.mockImplementationOnce(() => {
@@ -920,10 +920,12 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       // The port may be held by an unrelated process. From our perspective
       // (we only kill openclaw pids) it is effectively free.
       const stalePid = process.pid + 800;
-      const getCallCount = installInitialBusyPoll(stalePid, () => createLsofResult({
+      const getCallCount = installInitialBusyPoll(stalePid, () =>
+        createLsofResult({
           status: 1,
           stdout: lsofOutput([{ cmd: "caddy", pid: process.pid + 801 }]),
-        }));
+        }),
+      );
       vi.spyOn(process, "kill").mockReturnValue(true);
       // Should complete cleanly — no openclaw pids in status-1 output → free
       expect(() => cleanStaleGatewayProcessesSync()).not.toThrow();

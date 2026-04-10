@@ -139,7 +139,9 @@ describe("resolveAndValidateIP", () => {
 
 describe("safeFetch", () => {
   it("fetches a URL directly when no redirect occurs", async () => {
-    const fetchMock = vi.fn(async (_url: string, _init?: RequestInit) => new Response("ok", { status: 200 }));
+    const fetchMock = vi.fn(
+      async (_url: string, _init?: RequestInit) => new Response("ok", { status: 200 }),
+    );
     await expectSafeFetchStatus({
       allowHosts: ["sharepoint.com"],
       expectedStatus: 200,
@@ -379,7 +381,9 @@ describe("attachment fetch auth helpers", () => {
   });
 
   it("safeFetchWithPolicy forwards policy allowlists", async () => {
-    const fetchMock = vi.fn(async (_url: string, _init?: RequestInit) => new Response("ok", { status: 200 }));
+    const fetchMock = vi.fn(
+      async (_url: string, _init?: RequestInit) => new Response("ok", { status: 200 }),
+    );
     const res = await safeFetchWithPolicy({
       fetchFn: fetchMock as unknown as typeof fetch,
       policy: resolveAttachmentFetchPolicy({

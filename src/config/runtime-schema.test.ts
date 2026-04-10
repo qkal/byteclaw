@@ -17,9 +17,9 @@ let readBestEffortRuntimeConfigSchema: typeof import("./runtime-schema.js").read
 let loadGatewayRuntimeConfigSchema: typeof import("./runtime-schema.js").loadGatewayRuntimeConfigSchema;
 
 vi.mock("./config.js", () => ({
-    loadConfig: () => mockLoadConfig(),
-    readConfigFileSnapshot: () => mockReadConfigFileSnapshot(),
-  }));
+  loadConfig: () => mockLoadConfig(),
+  readConfigFileSnapshot: () => mockReadConfigFileSnapshot(),
+}));
 
 vi.mock("../plugins/manifest-registry.js", () => ({
   loadPluginManifestRegistry: (...args: unknown[]) => mockLoadPluginManifestRegistry(...args),

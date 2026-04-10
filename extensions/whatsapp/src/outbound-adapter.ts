@@ -28,7 +28,7 @@ export const whatsappOutbound: ChannelOutboundAdapter = {
   sanitizeText: ({ text }) => sanitizeForPlainText(text),
   sendPayload: async (ctx) => {
     const text = trimLeadingWhitespace(ctx.payload.text);
-    const {hasMedia} = resolveSendableOutboundReplyParts(ctx.payload);
+    const { hasMedia } = resolveSendableOutboundReplyParts(ctx.payload);
     if (!text && !hasMedia) {
       return createEmptyChannelResult("whatsapp");
     }

@@ -37,12 +37,14 @@ interface GroupEventOpts {
   message?: string;
   attachments?: unknown[];
   quoteText?: string;
-  mentions?: {
-    uuid?: string;
-    number?: string;
-    start?: number;
-    length?: number;
-  }[] | null;
+  mentions?:
+    | {
+        uuid?: string;
+        number?: string;
+        start?: number;
+        length?: number;
+      }[]
+    | null;
 }
 
 function makeGroupEvent(opts: GroupEventOpts) {

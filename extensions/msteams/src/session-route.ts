@@ -25,15 +25,15 @@ export function resolveMSTeamsOutboundSessionRoute(params: ChannelOutboundSessio
     agentId: params.agentId,
     cfg: params.cfg,
     channel: "msteams",
-    chatType: isUser ? "direct" : (isChannel ? "channel" : "group"),
+    chatType: isUser ? "direct" : isChannel ? "channel" : "group",
     from: isUser
       ? `msteams:${conversationId}`
-      : (isChannel
+      : isChannel
         ? `msteams:channel:${conversationId}`
-        : `msteams:group:${conversationId}`),
+        : `msteams:group:${conversationId}`,
     peer: {
       id: conversationId,
-      kind: isUser ? "direct" : (isChannel ? "channel" : "group"),
+      kind: isUser ? "direct" : isChannel ? "channel" : "group",
     },
     to: isUser ? `user:${conversationId}` : `conversation:${conversationId}`,
   });

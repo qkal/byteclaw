@@ -92,7 +92,7 @@ describe("exec approval reply helpers", () => {
   });
 
   it("mentions Matrix in the fallback native approval guidance", () => {
-    const {text} = buildExecApprovalUnavailableReplyPayload({
+    const { text } = buildExecApprovalUnavailableReplyPayload({
       reason: "no-approval-route",
     });
     expect(text).toContain("native chat approval client such as");
@@ -103,7 +103,7 @@ describe("exec approval reply helpers", () => {
   });
 
   it("avoids repeating allowFrom guidance in the no-route fallback", () => {
-    const {text} = buildExecApprovalUnavailableReplyPayload({
+    const { text } = buildExecApprovalUnavailableReplyPayload({
       reason: "no-approval-route",
     });
 
@@ -116,7 +116,7 @@ describe("exec approval reply helpers", () => {
   });
 
   it("explains how to enable Matrix native approvals when Matrix is the initiating platform", () => {
-    const {text} = buildExecApprovalUnavailableReplyPayload({
+    const { text } = buildExecApprovalUnavailableReplyPayload({
       channel: "matrix",
       channelLabel: "Matrix",
       reason: "initiating-platform-disabled",
@@ -150,7 +150,7 @@ describe("exec approval reply helpers", () => {
   ])(
     "uses channel-specific disabled setup guidance for $channelLabel",
     ({ channel, channelLabel, expected, unexpected }) => {
-      const {text} = buildExecApprovalUnavailableReplyPayload({
+      const { text } = buildExecApprovalUnavailableReplyPayload({
         channel,
         channelLabel,
         reason: "initiating-platform-disabled",
@@ -193,7 +193,7 @@ describe("exec approval reply helpers", () => {
   ])(
     "uses account-scoped disabled setup guidance for $channelLabel named account",
     ({ channel, channelLabel, accountId, expected, unexpected }) => {
-      const {text} = buildExecApprovalUnavailableReplyPayload({
+      const { text } = buildExecApprovalUnavailableReplyPayload({
         accountId,
         channel,
         channelLabel,

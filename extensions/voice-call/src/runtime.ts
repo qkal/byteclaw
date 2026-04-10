@@ -180,7 +180,7 @@ async function resolveRealtimeProvider(params: {
     throw new Error(`Realtime voice provider "${resolution.provider?.id}" is not configured`);
   }
 
-  const {provider} = resolution;
+  const { provider } = resolution;
   return {
     provider,
     providerConfig: resolution.providerConfig,

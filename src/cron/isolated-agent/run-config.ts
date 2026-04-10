@@ -44,7 +44,7 @@ export function buildCronAgentDefaultsConfig(params: {
   // Copying the agent sandbox into defaults clobbers global defaults and can
   // Double-apply nested agent overrides during isolated cron runs.
   return mergeCronAgentModelOverride({
-    defaults: { ...params.defaults, ...definedOverrides},
+    defaults: { ...params.defaults, ...definedOverrides },
     overrideModel,
   });
 }

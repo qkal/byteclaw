@@ -327,9 +327,9 @@ function normalizeManifestConfigContracts(
       ? ({
           ...(rawSecretInputs?.bundledDefaultEnabled === true
             ? { bundledDefaultEnabled: true }
-            : (rawSecretInputs?.bundledDefaultEnabled === false
+            : rawSecretInputs?.bundledDefaultEnabled === false
               ? { bundledDefaultEnabled: false }
-              : {})),
+              : {}),
           paths: secretInputPaths,
         } satisfies PluginManifestSecretInputContracts)
       : undefined;

@@ -34,7 +34,8 @@ import type { CoreConfig, IrcInboundMessage } from "./types.js";
 
 const CHANNEL_ID = "irc" as const;
 
-const escapeIrcRegexLiteral = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
+const escapeIrcRegexLiteral = (value: string) =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
 
 function resolveIrcEffectiveAllowlists(params: {
   configAllowFrom: string[];
@@ -184,7 +185,7 @@ export async function handleIrcInbound(params: {
     hasControlCommand,
     useAccessGroups,
   });
-  const {commandAuthorized} = commandGate;
+  const { commandAuthorized } = commandGate;
 
   if (message.isGroup) {
     const senderAllowed = resolveIrcGroupSenderAllowed({

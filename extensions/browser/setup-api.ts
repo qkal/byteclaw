@@ -41,10 +41,7 @@ export default definePluginEntry({
       if (Object.hasOwn(config, "browser")) {
         return "browser configured";
       }
-      if (
-        config.plugins?.entries &&
-        Object.hasOwn(config.plugins.entries, "browser")
-      ) {
+      if (config.plugins?.entries && Object.hasOwn(config.plugins.entries, "browser")) {
         return "browser plugin configured";
       }
       if (hasBrowserToolReference(config)) {

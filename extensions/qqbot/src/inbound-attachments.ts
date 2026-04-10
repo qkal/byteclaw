@@ -78,9 +78,9 @@ export async function processAttachments(
     const isVoice = isVoiceAttachment(att);
     const wavUrl =
       isVoice && att.voice_wav_url
-        ? (att.voice_wav_url.startsWith("//")
+        ? att.voice_wav_url.startsWith("//")
           ? `https:${att.voice_wav_url}`
-          : att.voice_wav_url)
+          : att.voice_wav_url
         : "";
 
     let localPath: string | null = null;
@@ -114,9 +114,9 @@ export async function processAttachments(
       const asrReferText = normalizeOptionalString(att.asr_refer_text) ?? "";
       const wavUrl =
         isVoice && att.voice_wav_url
-          ? (att.voice_wav_url.startsWith("//")
+          ? att.voice_wav_url.startsWith("//")
             ? `https:${att.voice_wav_url}`
-            : att.voice_wav_url)
+            : att.voice_wav_url
           : "";
       const voiceSourceUrl = wavUrl || attUrl;
 
@@ -266,9 +266,9 @@ async function processVoiceAttachment(
   prefix: string,
 ): Promise<VoiceResult> {
   const wavUrl = att.voice_wav_url
-    ? (att.voice_wav_url.startsWith("//")
+    ? att.voice_wav_url.startsWith("//")
       ? `https:${att.voice_wav_url}`
-      : att.voice_wav_url)
+      : att.voice_wav_url
     : "";
   const attUrl = att.url?.startsWith("//") ? `https:${att.url}` : att.url;
   const voiceSourceUrl = wavUrl || attUrl;

@@ -87,7 +87,7 @@ function getSentMessages(): SentMessageStore {
 
 function persistSentMessages(): void {
   const state = getSentMessageState();
-  const {store} = state;
+  const { store } = state;
   const filePath = state.persistedPath;
   if (!store || !filePath) {
     return;

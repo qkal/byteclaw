@@ -67,7 +67,7 @@ function collectMattermostSlashCallbackPaths(
   const paths = new Set<string>([callbackPath]);
   if (callbackUrl) {
     try {
-      const {pathname} = new URL(callbackUrl);
+      const { pathname } = new URL(callbackUrl);
       if (pathname) {
         paths.add(pathname);
       }
@@ -197,9 +197,9 @@ const mattermostMessageActions: ChannelMessageActionAdapter = {
     const to =
       typeof params.to === "string"
         ? params.to.trim()
-        : (typeof params.target === "string"
+        : typeof params.target === "string"
           ? params.target.trim()
-          : "");
+          : "";
     if (!to) {
       throw new Error("Mattermost send requires a target (to).");
     }
@@ -325,7 +325,7 @@ export const mattermostPlugin: ChannelPlugin<ResolvedMattermostAccount> = create
         return [...callbackPaths];
       },
       startAccount: async (ctx) => {
-        const {account} = ctx;
+        const { account } = ctx;
         const statusSink = createAccountStatusSink({
           accountId: ctx.accountId,
           setStatus: ctx.setStatus,

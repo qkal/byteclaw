@@ -330,9 +330,9 @@ export async function ensurePairedTestGatewayClientIdentity(): Promise<DeviceIde
   const paired = await getPairedDevice(identity.deviceId);
   const pairedScopes = Array.isArray(paired?.approvedScopes)
     ? paired.approvedScopes
-    : (Array.isArray(paired?.scopes)
+    : Array.isArray(paired?.scopes)
       ? paired.scopes
-      : []);
+      : [];
   if (
     paired?.publicKey === publicKey &&
     requiredScopes.every((scope) => pairedScopes.includes(scope))

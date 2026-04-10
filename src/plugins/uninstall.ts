@@ -106,7 +106,7 @@ export function removePluginFromConfig(
   const pluginsConfig = cfg.plugins ?? {};
 
   // Remove from entries
-  let {entries} = pluginsConfig;
+  let { entries } = pluginsConfig;
   if (entries && pluginId in entries) {
     const { [pluginId]: _, ...rest } = entries;
     entries = Object.keys(rest).length > 0 ? rest : undefined;
@@ -114,7 +114,7 @@ export function removePluginFromConfig(
   }
 
   // Remove from installs
-  let {installs} = pluginsConfig;
+  let { installs } = pluginsConfig;
   const installRecord = installs?.[pluginId];
   if (installs && pluginId in installs) {
     const { [pluginId]: _, ...rest } = installs;
@@ -123,7 +123,7 @@ export function removePluginFromConfig(
   }
 
   // Remove from allowlist
-  let {allow} = pluginsConfig;
+  let { allow } = pluginsConfig;
   if (Array.isArray(allow) && allow.includes(pluginId)) {
     allow = allow.filter((id) => id !== pluginId);
     if (allow.length === 0) {
@@ -133,9 +133,9 @@ export function removePluginFromConfig(
   }
 
   // Remove linked path from load.paths (for source === "path" plugins)
-  let {load} = pluginsConfig;
+  let { load } = pluginsConfig;
   if (installRecord?.source === "path" && installRecord.sourcePath) {
-    const {sourcePath} = installRecord;
+    const { sourcePath } = installRecord;
     const loadPaths = load?.paths;
     if (Array.isArray(loadPaths) && loadPaths.includes(sourcePath)) {
       const nextLoadPaths = loadPaths.filter((p) => p !== sourcePath);
@@ -145,7 +145,7 @@ export function removePluginFromConfig(
   }
 
   // Reset memory slot if this plugin was selected
-  let {slots} = pluginsConfig;
+  let { slots } = pluginsConfig;
   if (slots?.memory === pluginId) {
     slots = {
       ...slots,

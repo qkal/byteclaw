@@ -664,86 +664,86 @@ describe("provider-runtime", () => {
       windows: [{ label: "Day", usedPercent: 25 }],
     }));
     resolvePluginProvidersMock.mockImplementation((_params: unknown) => [
-        {
-          applyNativeStreamingUsageCompat: ({ providerConfig }) => ({
-            ...providerConfig,
-            compat: { supportsUsageInStreaming: true },
-          }),
-          auth: [],
-          buildAuthDoctorHint: ({ provider, profileId }) =>
-            provider === "demo" ? `Repair ${profileId}` : undefined,
-          buildReplayPolicy,
-          createEmbeddingProvider,
-          createStreamFn,
-          fetchUsageSnapshot,
-          formatApiKey: (cred) =>
-            cred.type === "oauth" ? JSON.stringify({ token: cred.access }) : "",
-          id: DEMO_PROVIDER_ID,
-          inspectToolSchemas,
-          isBinaryThinking: () => true,
-          isCacheTtlEligible: ({ modelId }) => modelId.startsWith("anthropic/"),
-          isModernModelRef: ({ modelId }) => modelId.startsWith("gpt-5"),
-          label: "Demo",
-          normalizeConfig: ({ providerConfig }) => ({
-            ...providerConfig,
-            baseUrl: "https://normalized.example.com/v1",
-          }),
-          normalizeModelId: ({ modelId }) => modelId.replace("-legacy", ""),
-          normalizeResolvedModel: ({ model }) => ({
-            ...model,
-            api: "openai-codex-responses",
-          }),
-          normalizeToolSchemas,
-          normalizeTransport: ({ api, baseUrl }) => ({
-            api,
-            baseUrl: baseUrl ? `${baseUrl}/normalized` : undefined,
-          }),
-          prepareDynamicModel,
-          prepareExtraParams: ({ extraParams }) => ({
-            ...extraParams,
-            transport: "auto",
-          }),
-          prepareRuntimeAuth,
-          refreshOAuth,
-          resolveConfigApiKey: () => "DEMO_PROFILE",
-          resolveDefaultThinkingLevel: ({ reasoning }) => (reasoning ? "low" : "off"),
-          resolveDynamicModel: () => MODEL,
-          resolveExternalAuthProfiles: ({ store }): ProviderExternalAuthProfile[] =>
-            store.profiles["demo:managed"]
-              ? []
-              : [
-                  {
-                    persistence: "runtime-only",
-                    profileId: "demo:managed",
-                    credential: {
-                      type: "oauth",
-                      provider: DEMO_PROVIDER_ID,
-                      access: "external-access",
-                      refresh: "external-refresh",
-                      expires: Date.now() + 60_000,
-                    },
+      {
+        applyNativeStreamingUsageCompat: ({ providerConfig }) => ({
+          ...providerConfig,
+          compat: { supportsUsageInStreaming: true },
+        }),
+        auth: [],
+        buildAuthDoctorHint: ({ provider, profileId }) =>
+          provider === "demo" ? `Repair ${profileId}` : undefined,
+        buildReplayPolicy,
+        createEmbeddingProvider,
+        createStreamFn,
+        fetchUsageSnapshot,
+        formatApiKey: (cred) =>
+          cred.type === "oauth" ? JSON.stringify({ token: cred.access }) : "",
+        id: DEMO_PROVIDER_ID,
+        inspectToolSchemas,
+        isBinaryThinking: () => true,
+        isCacheTtlEligible: ({ modelId }) => modelId.startsWith("anthropic/"),
+        isModernModelRef: ({ modelId }) => modelId.startsWith("gpt-5"),
+        label: "Demo",
+        normalizeConfig: ({ providerConfig }) => ({
+          ...providerConfig,
+          baseUrl: "https://normalized.example.com/v1",
+        }),
+        normalizeModelId: ({ modelId }) => modelId.replace("-legacy", ""),
+        normalizeResolvedModel: ({ model }) => ({
+          ...model,
+          api: "openai-codex-responses",
+        }),
+        normalizeToolSchemas,
+        normalizeTransport: ({ api, baseUrl }) => ({
+          api,
+          baseUrl: baseUrl ? `${baseUrl}/normalized` : undefined,
+        }),
+        prepareDynamicModel,
+        prepareExtraParams: ({ extraParams }) => ({
+          ...extraParams,
+          transport: "auto",
+        }),
+        prepareRuntimeAuth,
+        refreshOAuth,
+        resolveConfigApiKey: () => "DEMO_PROFILE",
+        resolveDefaultThinkingLevel: ({ reasoning }) => (reasoning ? "low" : "off"),
+        resolveDynamicModel: () => MODEL,
+        resolveExternalAuthProfiles: ({ store }): ProviderExternalAuthProfile[] =>
+          store.profiles["demo:managed"]
+            ? []
+            : [
+                {
+                  persistence: "runtime-only",
+                  profileId: "demo:managed",
+                  credential: {
+                    type: "oauth",
+                    provider: DEMO_PROVIDER_ID,
+                    access: "external-access",
+                    refresh: "external-refresh",
+                    expires: Date.now() + 60_000,
                   },
-                ],
-          resolveReasoningOutputMode,
-          resolveSyntheticAuth,
-          resolveUsageAuth,
-          sanitizeReplayHistory,
-          shouldDeferSyntheticProfileAuth,
-          supportsXHighThinking: ({ modelId }) => modelId === "gpt-5.4",
-          validateReplayTurns,
-          wrapStreamFn: ({ streamFn, model }) => {
-            expect(model).toMatchObject(MODEL);
-            return streamFn;
-          },
+                },
+              ],
+        resolveReasoningOutputMode,
+        resolveSyntheticAuth,
+        resolveUsageAuth,
+        sanitizeReplayHistory,
+        shouldDeferSyntheticProfileAuth,
+        supportsXHighThinking: ({ modelId }) => modelId === "gpt-5.4",
+        validateReplayTurns,
+        wrapStreamFn: ({ streamFn, model }) => {
+          expect(model).toMatchObject(MODEL);
+          return streamFn;
         },
-        {
-          ...createOpenAiCatalogProviderPlugin({
-            buildMissingAuthMessage: () =>
-              'No API key found for provider "openai". Use openai-codex/gpt-5.4.',
-            buildUnknownModelHint,
-          }),
-        } as ProviderPlugin,
-      ]);
+      },
+      {
+        ...createOpenAiCatalogProviderPlugin({
+          buildMissingAuthMessage: () =>
+            'No API key found for provider "openai". Use openai-codex/gpt-5.4.',
+          buildUnknownModelHint,
+        }),
+      } as ProviderPlugin,
+    ]);
 
     expect(
       runProviderDynamicModel({

@@ -246,7 +246,10 @@ describe("sanitizeSessionHistory", () => {
     });
 
   const getAssistantMessages = (messages: AgentMessage[]) =>
-    messages.filter((message) => message.role === "assistant") as (AgentMessage & { usage?: unknown; content?: unknown })[];
+    messages.filter((message) => message.role === "assistant") as (AgentMessage & {
+      usage?: unknown;
+      content?: unknown;
+    })[];
 
   const getSingleAssistantUsage = async (messages: AgentMessage[]) => {
     vi.mocked(mockedHelpers.isGoogleModelApi).mockReturnValue(false);

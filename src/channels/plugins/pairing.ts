@@ -33,9 +33,9 @@ export function resolvePairingChannel(raw: unknown): ChannelId {
   const value =
     typeof raw === "string"
       ? raw
-      : (typeof raw === "number" || typeof raw === "boolean"
+      : typeof raw === "number" || typeof raw === "boolean"
         ? String(raw)
-        : "");
+        : "";
   const normalizedValue = normalizeLowercaseStringOrEmpty(value);
   const normalized = normalizeChannelId(normalizedValue);
   const channels = listPairingChannels();

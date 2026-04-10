@@ -108,9 +108,9 @@ function parseClaudeCliOauthCredential(claudeOauth: unknown): ClaudeCliCredentia
   if (!claudeOauth || typeof claudeOauth !== "object") {
     return null;
   }
-  const {accessToken} = (claudeOauth as Record<string, unknown>);
-  const {refreshToken} = (claudeOauth as Record<string, unknown>);
-  const {expiresAt} = (claudeOauth as Record<string, unknown>);
+  const { accessToken } = claudeOauth as Record<string, unknown>;
+  const { refreshToken } = claudeOauth as Record<string, unknown>;
+  const { expiresAt } = claudeOauth as Record<string, unknown>;
 
   if (typeof accessToken !== "string" || !accessToken) {
     return null;

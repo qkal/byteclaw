@@ -59,7 +59,7 @@ export function createMatrixDraftStream(params: {
   let stopped = false;
   let sendFailed = false;
   let finalizeInPlaceBlocked = false;
-  let {replyToId} = params;
+  let { replyToId } = params;
 
   const sendOrEdit = async (text: string): Promise<boolean> => {
     const trimmed = text.trimEnd();
@@ -113,7 +113,8 @@ export function createMatrixDraftStream(params: {
     } catch (error) {
       log?.(`draft-stream: send/edit failed: ${String(error)}`);
       const isPreviewLimitError =
-        error instanceof Error && error.message.startsWith("Matrix single-message text exceeds limit");
+        error instanceof Error &&
+        error.message.startsWith("Matrix single-message text exceeds limit");
       if (isPreviewLimitError) {
         finalizeInPlaceBlocked = true;
       }

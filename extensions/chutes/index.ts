@@ -18,7 +18,7 @@ import { buildChutesProvider } from "./provider-catalog.js";
 const PROVIDER_ID = "chutes";
 
 async function runChutesOAuth(ctx: ProviderAuthContext): Promise<ProviderAuthResult> {
-  const {isRemote} = ctx;
+  const { isRemote } = ctx;
   const redirectUri =
     process.env.CHUTES_OAUTH_REDIRECT_URI?.trim() || "http://127.0.0.1:1456/oauth-callback";
   const scopes = process.env.CHUTES_OAUTH_SCOPES?.trim() || "openid profile chutes:invoke";

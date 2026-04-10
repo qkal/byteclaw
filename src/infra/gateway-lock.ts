@@ -88,7 +88,7 @@ function readWindowsCmdline(pid: number): string[] | null {
       { stdio: ["ignore", "pipe", "ignore"], timeout: CMDLINE_EXEC_TIMEOUT_MS, windowsHide: true },
     ) as Buffer;
     const raw =
-      buf.length >= 2 && buf[0] === 0xFF && buf[1] === 0xFE
+      buf.length >= 2 && buf[0] === 0xff && buf[1] === 0xfe
         ? buf.toString("utf16le")
         : buf.toString("utf8");
     const match = raw.match(/CommandLine=(.+)/);
@@ -259,7 +259,7 @@ export async function acquireGatewayLock(
   const pollIntervalMs = opts.pollIntervalMs ?? DEFAULT_POLL_INTERVAL_MS;
   const staleMs = opts.staleMs ?? DEFAULT_STALE_MS;
   const platform = opts.platform ?? process.platform;
-  const {port} = opts;
+  const { port } = opts;
   const now = opts.now ?? Date.now;
   const sleep =
     opts.sleep ?? (async (ms: number) => await new Promise((resolve) => setTimeout(resolve, ms)));
@@ -291,7 +291,7 @@ export async function acquireGatewayLock(
         },
       };
     } catch (error) {
-      const {code} = (error as { code?: unknown });
+      const { code } = error as { code?: unknown };
       if (code !== "EEXIST") {
         throw new GatewayLockError(`failed to acquire gateway lock at ${lockPath}`, error);
       }

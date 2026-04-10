@@ -3,22 +3,19 @@
  * Delegates to the actual Node.js ChildProcess.
  */
 
-import { spawn as nodeSpawn } from 'node:child_process';
-import type { ChildProcess as NodeChildProcess } from 'node:child_process';
-import { EventEmitter } from 'node:events';
+import { spawn as nodeSpawn } from "node:child_process";
+import type { ChildProcess as NodeChildProcess } from "node:child_process";
+import { EventEmitter } from "node:events";
 import type {
   ChildProcessWrapper,
   SubprocessStream,
   SubprocessWrapperOptions,
-} from './child-process-wrapper.js';
+} from "./child-process-wrapper.js";
 
 /**
  * Node.js ChildProcess wrapper that delegates to the actual ChildProcess
  */
-export class NodeChildProcessWrapper
-  extends EventEmitter
-  implements ChildProcessWrapper
-{
+export class NodeChildProcessWrapper extends EventEmitter implements ChildProcessWrapper {
   readonly #child: NodeChildProcess;
 
   constructor(child: NodeChildProcess) {
@@ -26,12 +23,12 @@ export class NodeChildProcessWrapper
     this.#child = child;
 
     // Forward all events from the actual child process
-    this.#child.on('close', (...args) => this.emit('close', ...args));
-    this.#child.on('disconnect', (...args) => this.emit('disconnect', ...args));
-    this.#child.on('error', (...args) => this.emit('error', ...args));
-    this.#child.on('exit', (...args) => this.emit('exit', ...args));
-    this.#child.on('message', (...args) => this.emit('message', ...args));
-    this.#child.on('spawn', (...args) => this.emit('spawn', ...args));
+    this.#child.on("close", (...args) => this.emit("close", ...args));
+    this.#child.on("disconnect", (...args) => this.emit("disconnect", ...args));
+    this.#child.on("error", (...args) => this.emit("error", ...args));
+    this.#child.on("exit", (...args) => this.emit("exit", ...args));
+    this.#child.on("message", (...args) => this.emit("message", ...args));
+    this.#child.on("spawn", (...args) => this.emit("spawn", ...args));
   }
 
   get pid(): number | undefined {
@@ -143,7 +140,7 @@ export function createNodeChildProcessWrapper(
   const child = nodeSpawn(command, args, {
     cwd: options.cwd,
     env: options.env,
-    stdio: options.stdio ?? 'pipe',
+    stdio: options.stdio ?? "pipe",
     detached: options.detached ?? false,
     shell: options.shell ?? false,
     windowsHide: options.windowsHide,

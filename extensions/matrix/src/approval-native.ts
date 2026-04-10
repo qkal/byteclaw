@@ -33,7 +33,10 @@ import type { CoreConfig } from "./types.js";
 
 type ApprovalRequest = ExecApprovalRequest | PluginApprovalRequest;
 type ApprovalKind = "exec" | "plugin";
-interface MatrixOriginTarget { to: string; threadId?: string }
+interface MatrixOriginTarget {
+  to: string;
+  threadId?: string;
+}
 
 function normalizeComparableTarget(value: string): string {
   const target = resolveMatrixTargetIdentity(value);

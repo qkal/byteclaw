@@ -14,8 +14,7 @@ export function registerGroupIntroPromptCases(): void {
       defaultActivation?: "always" | "mention";
       setup?: (cfg: ReturnType<typeof makeCfg>) => void;
     }
-    const groupParticipationNote =
-      String.raw`Be a good group participant: mostly lurk and follow the conversation; reply only when directly addressed or you can add clear value. Emoji reactions are welcome when available. Write like a human. Avoid Markdown tables. Don't type literal \n sequences; use real line breaks sparingly.`;
+    const groupParticipationNote = String.raw`Be a good group participant: mostly lurk and follow the conversation; reply only when directly addressed or you can add clear value. Emoji reactions are welcome when available. Write like a human. Avoid Markdown tables. Don't type literal \n sequences; use real line breaks sparingly.`;
     const cases: GroupIntroCase[] = [
       {
         expected: [

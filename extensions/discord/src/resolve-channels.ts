@@ -203,10 +203,10 @@ export async function resolveDiscordChannelAllowlist(params: {
     }
 
     if (parsed.channelId) {
-      const {channelId} = parsed;
+      const { channelId } = parsed;
       const result = await fetchChannel(token, fetcher, channelId);
       if (result.status === "found") {
-        const {channel} = result;
+        const { channel } = result;
         if (parsed.guildId && parsed.guildId !== channel.guildId) {
           const expectedGuild = guilds.find((entry) => entry.id === parsed.guildId);
           const actualGuild = guilds.find((entry) => entry.id === channel.guildId);

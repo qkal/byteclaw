@@ -244,9 +244,9 @@ async function runRepeatedLane(params: {
   const suffixBase = `${params.providerTag}-${params.lane}`;
   const systemPromptBase =
     params.providerTag === "openai"
-      ? (params.lane === "mcp"
+      ? params.lane === "mcp"
         ? OPENAI_MCP_PREFIX
-        : OPENAI_PREFIX)
+        : OPENAI_PREFIX
       : ANTHROPIC_PREFIX;
   const systemPrompt = `${systemPromptBase}\nRun token: ${params.runToken}\nLane: ${params.providerTag}-${params.lane}\n`;
 
@@ -264,7 +264,7 @@ async function runRepeatedLane(params: {
             suffix,
             systemPrompt,
           })
-      : (params.lane === "image"
+      : params.lane === "image"
         ? (suffix: string) =>
             completeCacheProbe({
               apiKey: params.fixture.apiKey,
@@ -321,7 +321,7 @@ async function runRepeatedLane(params: {
               systemPrompt,
               tools: [tool],
             });
-          });
+          };
 
   const warmup = await run(`${suffixBase}-warmup`);
   const hitA = await run(`${suffixBase}-hit-a`);
@@ -366,7 +366,7 @@ function assertAgainstBaseline(params: {
   }
 
   if (params.result.best) {
-    const {usage} = params.result.best;
+    const { usage } = params.result.best;
     if ((usage.cacheRead ?? 0) < (floor.minCacheRead ?? 0)) {
       params.regressions.push(
         `${params.provider}:${params.lane} cacheRead=${usage.cacheRead ?? 0} < min=${floor.minCacheRead}`,
@@ -389,7 +389,7 @@ function assertAgainstBaseline(params: {
   }
 
   if (params.result.disabled) {
-    const {usage} = params.result.disabled;
+    const { usage } = params.result.disabled;
     if ((usage.cacheRead ?? 0) > (floor.maxCacheRead ?? Number.POSITIVE_INFINITY)) {
       params.regressions.push(
         `${params.provider}:${params.lane} cacheRead=${usage.cacheRead ?? 0} > max=${floor.maxCacheRead}`,

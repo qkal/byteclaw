@@ -4,6 +4,6 @@ const contract = createLegacyPrivateNetworkDoctorContract({
   channelKey: "tlon",
 });
 
-export const {legacyConfigRules} = contract;
+export const { legacyConfigRules } = contract;
 
-export const {normalizeCompatibilityConfig} = contract;
+export const { normalizeCompatibilityConfig } = contract;

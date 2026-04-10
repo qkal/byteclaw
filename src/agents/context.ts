@@ -14,15 +14,29 @@ import { normalizeProviderId } from "./model-selection.js";
 
 export { resetContextWindowCacheForTest } from "./context-runtime-state.js";
 
-interface ModelEntry { id: string; contextWindow?: number; contextTokens?: number }
+interface ModelEntry {
+  id: string;
+  contextWindow?: number;
+  contextTokens?: number;
+}
 interface ModelRegistryLike {
   getAvailable?: () => ModelEntry[];
   getAll: () => ModelEntry[];
 }
-interface ConfigModelEntry { id?: string; contextWindow?: number; contextTokens?: number }
-interface ProviderConfigEntry { models?: ConfigModelEntry[] }
-interface ModelsConfig { providers?: Record<string, ProviderConfigEntry | undefined> }
-interface AgentModelEntry { params?: Record<string, unknown> }
+interface ConfigModelEntry {
+  id?: string;
+  contextWindow?: number;
+  contextTokens?: number;
+}
+interface ProviderConfigEntry {
+  models?: ConfigModelEntry[];
+}
+interface ModelsConfig {
+  providers?: Record<string, ProviderConfigEntry | undefined>;
+}
+interface AgentModelEntry {
+  params?: Record<string, unknown>;
+}
 
 const ANTHROPIC_1M_MODEL_PREFIXES = ["claude-opus-4", "claude-sonnet-4"] as const;
 export const ANTHROPIC_CONTEXT_1M_TOKENS = 1_048_576;
@@ -44,9 +58,9 @@ export function applyDiscoveredContextWindows(params: {
     const contextTokens =
       typeof model.contextTokens === "number"
         ? Math.trunc(model.contextTokens)
-        : (typeof model.contextWindow === "number"
+        : typeof model.contextWindow === "number"
           ? Math.trunc(model.contextWindow)
-          : undefined);
+          : undefined;
     if (!contextTokens || contextTokens <= 0) {
       continue;
     }
@@ -76,9 +90,9 @@ export function applyConfiguredContextWindows(params: {
       const contextTokens =
         typeof model?.contextTokens === "number"
           ? model.contextTokens
-          : (typeof model?.contextWindow === "number"
+          : typeof model?.contextWindow === "number"
             ? model.contextWindow
-            : undefined);
+            : undefined;
       if (!modelId || !contextTokens || contextTokens <= 0) {
         continue;
       }
@@ -341,9 +355,9 @@ function resolveConfiguredProviderContextTokens(
         const contextTokens =
           typeof m?.contextTokens === "number"
             ? m.contextTokens
-            : (typeof m?.contextWindow === "number"
+            : typeof m?.contextWindow === "number"
               ? m.contextWindow
-              : undefined);
+              : undefined;
         if (
           typeof m?.id === "string" &&
           m.id === model &&

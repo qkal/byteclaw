@@ -20,6 +20,6 @@ export const buildLitellmModelDefinition: FacadeModule["buildLitellmModelDefinit
   loadFacadeModule()["buildLitellmModelDefinition"](
     ...args,
   )) as FacadeModule["buildLitellmModelDefinition"];
-export const {LITELLM_BASE_URL} = loadFacadeModule();
-export const {LITELLM_DEFAULT_MODEL_ID} = loadFacadeModule();
-export const {LITELLM_DEFAULT_MODEL_REF} = loadFacadeModule();
+export const { LITELLM_BASE_URL } = loadFacadeModule();
+export const { LITELLM_DEFAULT_MODEL_ID } = loadFacadeModule();
+export const { LITELLM_DEFAULT_MODEL_REF } = loadFacadeModule();

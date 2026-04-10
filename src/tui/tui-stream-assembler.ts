@@ -23,7 +23,7 @@ function extractTextBlocksAndSignals(message: unknown): {
     return { sawNonTextContentBlocks: false, textBlocks: [] };
   }
   const record = message as Record<string, unknown>;
-  const {content} = record;
+  const { content } = record;
 
   if (typeof content === "string") {
     const text = content.trim();

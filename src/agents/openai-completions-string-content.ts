@@ -22,7 +22,7 @@ export function flattenCompletionMessagesToStringContent(messages: unknown[]): u
     if (!message || typeof message !== "object") {
       return message;
     }
-    const {content} = (message as { content?: unknown });
+    const { content } = message as { content?: unknown };
     const flattenedContent = flattenStringOnlyCompletionContent(content);
     if (flattenedContent === content) {
       return message;

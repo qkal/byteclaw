@@ -11,7 +11,7 @@ function collectBundledChatChannelAliases(): Record<string, ChatChannelId> {
   const aliases = new Map<string, ChatChannelId>();
 
   for (const entry of listChannelCatalogEntries({ origin: "bundled" })) {
-    const {channel} = entry;
+    const { channel } = entry;
     const rawId = channel?.id?.trim();
     if (!rawId || !CHAT_CHANNEL_ORDER.includes(rawId)) {
       continue;

@@ -13,7 +13,7 @@ export function resolveSystemPromptOverride(params: {
   config?: OpenClawConfig;
   agentId?: string;
 }): string | undefined {
-  const {config} = params;
+  const { config } = params;
   if (!config) {
     return undefined;
   }

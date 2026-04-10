@@ -4,7 +4,7 @@ export function extractFirstTextBlock(message: unknown): string | undefined {
   if (!message || typeof message !== "object") {
     return undefined;
   }
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   const inline = readStringValue(content);
   if (inline !== undefined) {
     return inline;

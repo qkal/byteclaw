@@ -85,7 +85,12 @@ function buildButtonsBlock(
     return null;
   }
   return {
-    buttons: choices.map((choice) => (Object.assign({label:choice.label,value:choice.value}, choice.style?{style:choice.style}:{}))),
+    buttons: choices.map((choice) =>
+      Object.assign(
+        { label: choice.label, value: choice.value },
+        choice.style ? { style: choice.style } : {},
+      ),
+    ),
     type: "buttons",
   };
 }
@@ -169,7 +174,7 @@ export function isSlackInteractiveRepliesEnabled(params: {
 }
 
 export function compileSlackInteractiveReplies(payload: ReplyPayload): ReplyPayload {
-  const {text} = payload;
+  const { text } = payload;
   if (!text) {
     return payload;
   }
@@ -226,7 +231,7 @@ export function compileSlackInteractiveReplies(payload: ReplyPayload): ReplyPayl
 }
 
 export function parseSlackOptionsLine(payload: ReplyPayload): ReplyPayload {
-  const {text} = payload;
+  const { text } = payload;
   if (!text || payload.interactive?.blocks?.length || hasSlackBlocks(payload)) {
     return payload;
   }

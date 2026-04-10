@@ -23,7 +23,11 @@ describe("onboard auth credentials secret refs", () => {
     await lifecycle.cleanup();
   });
 
-  interface AuthProfileEntry { key?: string; keyRef?: unknown; metadata?: unknown }
+  interface AuthProfileEntry {
+    key?: string;
+    keyRef?: unknown;
+    metadata?: unknown;
+  }
 
   async function withAuthEnv(
     prefix: string,

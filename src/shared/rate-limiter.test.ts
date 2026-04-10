@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  RateLimiter,
-  createRateLimitMiddleware,
-  defaultRateLimiter,
-} from "./rate-limiter.js";
+import { RateLimiter, createRateLimitMiddleware, defaultRateLimiter } from "./rate-limiter.js";
 
 describe("rate-limiter", () => {
   describe("RateLimiter", () => {

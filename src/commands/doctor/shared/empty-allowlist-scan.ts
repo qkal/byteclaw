@@ -21,7 +21,7 @@ export function scanEmptyAllowlistPolicyWarnings(
   cfg: OpenClawConfig,
   params: ScanEmptyAllowlistPolicyWarningsParams,
 ): string[] {
-  const {channels} = cfg;
+  const { channels } = cfg;
   if (!channels || typeof channels !== "object") {
     return [];
   }

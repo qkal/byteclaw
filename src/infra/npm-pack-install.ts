@@ -74,7 +74,7 @@ export function finalizeNpmSpecArchiveInstall<TResult extends { ok: boolean }>(
   if (!flowResult.ok) {
     return flowResult;
   }
-  const {installResult} = flowResult;
+  const { installResult } = flowResult;
   if (!isSuccessfulInstallResult(installResult)) {
     return installResult as Exclude<TResult, { ok: true }>;
   }

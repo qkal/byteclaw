@@ -6,20 +6,20 @@ import {
 
 describe("stripImessageLengthPrefixedUtf8Text", () => {
   it("removes a length-delimited field wrapper from text", () => {
-    const raw = `${String.fromCharCode(0x0A, 5)}hello`;
+    const raw = `${String.fromCharCode(0x0a, 5)}hello`;
     expect(stripImessageLengthPrefixedUtf8Text(raw)).toBe("hello");
   });
 
   it("removes a wrapped payload when the payload length byte is ASCII-printable", () => {
     const inner = "Mrrrrow! 🐱 Ich bin wach und bereit!";
-    const raw = `${String.fromCharCode(0x0A, Buffer.byteLength(inner, "utf8"))}${inner}`;
+    const raw = `${String.fromCharCode(0x0a, Buffer.byteLength(inner, "utf8"))}${inner}`;
     expect(stripImessageLengthPrefixedUtf8Text(raw)).toBe(inner);
   });
 
   it("removes a payload behind a two-byte varint length (raw buffer)", () => {
     const inner = "a".repeat(128);
     const buf = Buffer.allocUnsafe(3 + Buffer.byteLength(inner, "utf8"));
-    buf.writeUInt8(0x0A, 0);
+    buf.writeUInt8(0x0a, 0);
     buf.writeUInt8(0x80, 1);
     buf.writeUInt8(0x01, 2);
     buf.write(inner, 3, "utf8");
@@ -43,7 +43,7 @@ describe("stripImessageLengthPrefixedUtf8Text", () => {
   });
 
   it("preserves text when the wrapped length does not consume the whole string", () => {
-    const raw = `${String.fromCharCode(0x0A, 5)}hi`;
+    const raw = `${String.fromCharCode(0x0a, 5)}hi`;
     expect(stripImessageLengthPrefixedUtf8Text(raw)).toBe(raw);
   });
 

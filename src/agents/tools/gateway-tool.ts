@@ -47,7 +47,7 @@ function getSnapshotConfig(snapshot: unknown): Record<string, unknown> {
   if (!snapshot || typeof snapshot !== "object") {
     throw new Error("config.get response is not an object.");
   }
-  const {config} = (snapshot as { config?: unknown });
+  const { config } = snapshot as { config?: unknown };
   if (!config || typeof config !== "object" || Array.isArray(config)) {
     throw new Error("config.get response is missing a config object.");
   }

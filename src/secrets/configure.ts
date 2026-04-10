@@ -98,8 +98,8 @@ function removeSecretProvider(config: OpenClawConfig, providerAlias: string): bo
   if (!isRecord(config.secrets?.providers)) {
     return false;
   }
-  const {providers} = config.secrets;
-  if (! Object.hasOwn(providers, providerAlias)) {
+  const { providers } = config.secrets;
+  if (!Object.hasOwn(providers, providerAlias)) {
     return false;
   }
   delete providers[providerAlias];
@@ -108,7 +108,7 @@ function removeSecretProvider(config: OpenClawConfig, providerAlias: string): bo
   }
 
   if (isRecord(config.secrets?.defaults)) {
-    const {defaults} = config.secrets;
+    const { defaults } = config.secrets;
     if (defaults?.env === providerAlias) {
       delete defaults.env;
     }

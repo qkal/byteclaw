@@ -303,8 +303,12 @@ export async function startGatewayServer(
   const channelRuntimeEnvs = Object.fromEntries(
     Object.entries(channelLogs).map(([id, logger]) => [id, runtimeForLogger(logger)]),
   ) as unknown as Record<ChannelId, RuntimeEnv>;
-  const listActiveGatewayMethods = (nextBaseGatewayMethods: string[]) =>
-    [...new Set([...nextBaseGatewayMethods, ...listChannelPlugins().flatMap((plugin) => plugin.gatewayMethods ?? [])])];
+  const listActiveGatewayMethods = (nextBaseGatewayMethods: string[]) => [
+    ...new Set([
+      ...nextBaseGatewayMethods,
+      ...listChannelPlugins().flatMap((plugin) => plugin.gatewayMethods ?? []),
+    ]),
+  ];
   const runtimeConfig = await resolveGatewayRuntimeConfig({
     auth: opts.auth,
     bind: opts.bind,
@@ -364,7 +368,7 @@ export async function startGatewayServer(
   };
   const initialHooksConfig = runtimeConfig.hooksConfig;
   const initialHookClientIpConfig = resolveHookClientIpConfig(cfgAtStart);
-  const {canvasHostEnabled} = runtimeConfig;
+  const { canvasHostEnabled } = runtimeConfig;
 
   // Create auth rate limiters used by connect/auth flows.
   const rateLimitConfig = cfgAtStart.gateway?.auth?.rateLimit;

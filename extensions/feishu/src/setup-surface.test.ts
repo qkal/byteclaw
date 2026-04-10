@@ -235,7 +235,7 @@ describe("feishu setup wizard", () => {
       }) as WizardPrompter["text"],
     });
 
-    const {setupWizard} = feishuSetupPlugin;
+    const { setupWizard } = feishuSetupPlugin;
     if (!setupWizard || !("finalize" in setupWizard) || !setupWizard.finalize) {
       throw new Error("feishu setupWizard.finalize unavailable");
     }

@@ -154,7 +154,7 @@ export async function handleSlackAction(
   const account = resolveSlackAccount({ accountId, cfg });
   const actionConfig = account.actions ?? cfg.channels?.slack?.actions;
   const isActionEnabled = createActionGate(actionConfig);
-  const {userToken} = account;
+  const { userToken } = account;
   const botToken = account.botToken?.trim();
   const allowUserWrites = account.config.userTokenReadOnly === false;
 

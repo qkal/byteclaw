@@ -6,7 +6,10 @@ import {
   resolveGatewayConnectionAuthFromConfig,
 } from "./connection-auth.js";
 
-interface ResolvedAuth { token?: string; password?: string }
+interface ResolvedAuth {
+  token?: string;
+  password?: string;
+}
 
 interface ConnectionAuthCase {
   name: string;

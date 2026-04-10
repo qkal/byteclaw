@@ -104,9 +104,9 @@ export function handleSubagentsAgentsAction(ctx: SubagentsCommandContext): Comma
         ? formatConversationBindingText({
             conversationId: binding.conversation.conversationId,
           })
-        : (currentConversationBindingsSupported
+        : currentConversationBindingsSupported
           ? "unbound"
-          : "bindings unavailable");
+          : "bindings unavailable";
       const resolvedIndex = indexByChildSessionKey.get(entry.childSessionKey);
       const prefix = resolvedIndex ? `${resolvedIndex}.` : "-";
       lines.push(`${prefix} ${formatRunLabel(entry)} (${bindingText})`);

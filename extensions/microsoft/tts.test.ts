@@ -59,7 +59,7 @@ describe("edgeTTS empty audio validation", () => {
     const outputPath = path.join(tempDir, "voice.mp3");
 
     mockTtsPromise = vi.fn(async (_text: string, filePath: string) => {
-      writeFileSync(filePath, Buffer.from([0xFF, 0xFB, 0x90, 0x00]));
+      writeFileSync(filePath, Buffer.from([0xff, 0xfb, 0x90, 0x00]));
     });
 
     await expect(

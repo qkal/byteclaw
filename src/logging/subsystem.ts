@@ -44,11 +44,9 @@ function shouldLogToConsole(level: LogLevel, settings: { level: LogLevel }): boo
 type ChalkInstance = InstanceType<typeof Chalk>;
 
 const inspectValue: ((value: unknown) => string) | null = (() => {
-  const {getBuiltinModule} = (
-    process as NodeJS.Process & {
-      getBuiltinModule?: (id: string) => unknown;
-    }
-  );
+  const { getBuiltinModule } = process as NodeJS.Process & {
+    getBuiltinModule?: (id: string) => unknown;
+  };
   if (typeof getBuiltinModule !== "function") {
     return null;
   }
@@ -276,9 +274,9 @@ function shouldSuppressProbeConsoleLine(params: {
   const runLikeId =
     typeof params.meta?.runId === "string"
       ? params.meta.runId
-      : (typeof params.meta?.sessionId === "string"
+      : typeof params.meta?.sessionId === "string"
         ? params.meta.sessionId
-        : undefined);
+        : undefined;
   if (runLikeId?.startsWith("probe-")) {
     return true;
   }

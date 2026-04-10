@@ -39,7 +39,10 @@ describe("resolveWindowsSpawnProgram", () => {
       execPath: "C:\\node\\node.exe",
       platform: "win32",
     });
-    const invocation = materializeWindowsSpawnProgram(resolved, ["--cwd", String.raw`C:\safe & calc.exe`]);
+    const invocation = materializeWindowsSpawnProgram(resolved, [
+      "--cwd",
+      String.raw`C:\safe & calc.exe`,
+    ]);
 
     expect(invocation).toEqual({
       argv: ["--cwd", String.raw`C:\safe & calc.exe`],

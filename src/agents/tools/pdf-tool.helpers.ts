@@ -7,7 +7,10 @@ import {
 import { bundledProviderSupportsNativePdfDocument } from "../../media-understanding/bundled-defaults.js";
 import { extractAssistantText } from "../pi-embedded-utils.js";
 
-export interface PdfModelConfig { primary?: string; fallbacks?: string[] }
+export interface PdfModelConfig {
+  primary?: string;
+  fallbacks?: string[];
+}
 
 export function resolvePdfInputs(record: Record<string, unknown>): string[] {
   const pdfCandidates: string[] = [];

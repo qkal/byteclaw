@@ -19,9 +19,7 @@ function normalizeAllowEntry(raw: string): string {
   return normalizeLowercaseStringOrEmpty(raw.trim().replace(/^(nextcloud-talk|nc-talk|nc):/i, ""));
 }
 
-export function normalizeNextcloudTalkAllowlist(
-  values: (string | number)[] | undefined,
-): string[] {
+export function normalizeNextcloudTalkAllowlist(values: (string | number)[] | undefined): string[] {
   return (values ?? []).map((value) => normalizeAllowEntry(String(value))).filter(Boolean);
 }
 
@@ -145,15 +143,15 @@ export function resolveNextcloudTalkGroupAllow(params: {
     innerMatch:
       params.groupPolicy === "open"
         ? { allowed: true }
-        : (params.groupPolicy === "disabled"
+        : params.groupPolicy === "disabled"
           ? { allowed: false }
-          : innerMatch),
+          : innerMatch,
     outerMatch:
       params.groupPolicy === "open"
         ? { allowed: true }
-        : (params.groupPolicy === "disabled"
+        : params.groupPolicy === "disabled"
           ? { allowed: false }
-          : outerMatch),
+          : outerMatch,
   };
 }
 

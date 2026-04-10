@@ -765,11 +765,11 @@ describe("short-term promotion", () => {
       });
 
       expect(applied.applied).toBe(0);
-      await expect(
-        fs.readFile(path.join(workspaceDir, "MEMORY.md"), "utf8"),
-      ).rejects.toMatchObject({
-        code: "ENOENT",
-      });
+      await expect(fs.readFile(path.join(workspaceDir, "MEMORY.md"), "utf8")).rejects.toMatchObject(
+        {
+          code: "ENOENT",
+        },
+      );
     });
   });
 

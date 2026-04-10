@@ -87,7 +87,7 @@ export function pickAutoSshTargetFromDiscovery(params: {
   sshUser?: string | null;
 }): string | null {
   for (const beacon of params.discovery) {
-    const {sshTarget} = buildGatewayDiscoveryTarget(beacon, {
+    const { sshTarget } = buildGatewayDiscoveryTarget(beacon, {
       sshUser: params.sshUser ?? undefined,
     });
     if (!sshTarget) {

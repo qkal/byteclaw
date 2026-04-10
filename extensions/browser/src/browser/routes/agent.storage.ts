@@ -351,9 +351,9 @@ export function registerBrowserAgentStorageRoutes(
     const colorScheme =
       schemeRaw === "dark" || schemeRaw === "light" || schemeRaw === "no-preference"
         ? schemeRaw
-        : (schemeRaw === "none"
+        : schemeRaw === "none"
           ? null
-          : undefined);
+          : undefined;
     if (colorScheme === undefined) {
       return jsonError(res, 400, "colorScheme must be dark|light|no-preference|none");
     }

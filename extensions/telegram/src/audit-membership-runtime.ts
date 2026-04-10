@@ -9,10 +9,18 @@ import type {
 import { resolveTelegramApiBase, resolveTelegramFetch } from "./fetch.js";
 import { makeProxyFetch } from "./proxy.js";
 
-interface TelegramApiOk<T> { ok: true; result: T }
-interface TelegramApiErr { ok: false; description?: string }
+interface TelegramApiOk<T> {
+  ok: true;
+  result: T;
+}
+interface TelegramApiErr {
+  ok: false;
+  description?: string;
+}
 type TelegramGroupMembershipAuditData = Omit<TelegramGroupMembershipAudit, "elapsedMs">;
-interface TelegramChatMemberResult { status?: string }
+interface TelegramChatMemberResult {
+  status?: string;
+}
 
 export async function auditTelegramGroupMembershipImpl(
   params: AuditTelegramGroupMembershipParams,

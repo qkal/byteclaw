@@ -23,14 +23,17 @@ function makeStream(chunks: Uint8Array[]) {
 }
 
 function makeStallingFetch(firstChunk: Uint8Array) {
-  return vi.fn(async () => new Response(
-      new ReadableStream<Uint8Array>({
-        start(controller) {
-          controller.enqueue(firstChunk);
-        },
-      }),
-      { status: 200 },
-    ));
+  return vi.fn(
+    async () =>
+      new Response(
+        new ReadableStream<Uint8Array>({
+          start(controller) {
+            controller.enqueue(firstChunk);
+          },
+        }),
+        { status: 200 },
+      ),
+  );
 }
 
 function makeLookupFn(): LookupFn {

@@ -1398,8 +1398,8 @@ describe("active-memory plugin", () => {
     } as Record<string, Record<string, unknown>>;
     updater?.(store);
     const lines =
-      (store[sessionKey]?.pluginDebugEntries as { lines?: string[] }[] | undefined)?.[0]
-        ?.lines ?? [];
+      (store[sessionKey]?.pluginDebugEntries as { lines?: string[] }[] | undefined)?.[0]?.lines ??
+      [];
     expect(lines.some((line) => line.includes("\u001b"))).toBe(false);
     expect(lines.some((line) => line.includes("\r"))).toBe(false);
   });

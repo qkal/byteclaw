@@ -639,9 +639,8 @@ export async function startQaGatewayChild(params: {
   });
   await fs.writeFile(configPath, `${JSON.stringify(cfg, null, 2)}\n`, "utf8");
   const allowedPluginIds = [...(cfg.plugins?.allow ?? []), "openai"].filter(
-    (pluginId, index, array): pluginId is string => (
-        typeof pluginId === "string" && pluginId.length > 0 && array.indexOf(pluginId) === index
-      ),
+    (pluginId, index, array): pluginId is string =>
+      typeof pluginId === "string" && pluginId.length > 0 && array.indexOf(pluginId) === index,
   );
   const bundledPluginsSourceRoot = resolveQaBundledPluginsSourceRoot(params.repoRoot);
   const { bundledPluginsDir, stagedRoot: stagedBundledPluginsRoot } =

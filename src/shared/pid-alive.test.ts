@@ -104,7 +104,8 @@ describe("getProcessStartTime", () => {
     });
   });
 
-  it("returns null on non-Linux platforms", () => withProcessPlatform("darwin", async () => {
+  it("returns null on non-Linux platforms", () =>
+    withProcessPlatform("darwin", async () => {
       expect(getProcessStartTime(process.pid)).toBeNull();
     }));
 

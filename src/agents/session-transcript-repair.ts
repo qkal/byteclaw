@@ -21,7 +21,7 @@ function isRawToolCallBlock(block: unknown): block is RawToolCallBlock {
   if (!block || typeof block !== "object") {
     return false;
   }
-  const {type} = (block as { type?: unknown });
+  const { type } = block as { type?: unknown };
   return (
     typeof type === "string" &&
     (type === "toolCall" || type === "toolUse" || type === "functionCall")
@@ -387,7 +387,7 @@ export function repairToolUseResultPairing(
       continue;
     }
 
-    const {role} = (msg as { role?: unknown });
+    const { role } = msg as { role?: unknown };
     if (role !== "assistant") {
       // Tool results must only appear directly after the matching assistant tool call turn.
       // Any "free-floating" toolResult entries in session history can make strict providers
@@ -463,7 +463,7 @@ export function repairToolUseResultPairing(
     // Aborted/errored assistant turns should never synthesize missing tool results, but
     // The replay sanitizer can still legitimately retain real tool results for surviving
     // Tool calls in the same turn after malformed siblings are dropped.
-    const {stopReason} = (assistant as { stopReason?: string });
+    const { stopReason } = assistant as { stopReason?: string };
     if (stopReason === "error" || stopReason === "aborted") {
       out.push(msg);
       if (!shouldDropErroredAssistantResults(options)) {

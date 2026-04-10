@@ -304,7 +304,7 @@ export async function runPluginInstallCommand(params: {
     defaultRuntime.error(requestResolution.error);
     return defaultRuntime.exit(1);
   }
-  const {request} = requestResolution;
+  const { request } = requestResolution;
   const cfg = await loadConfigForInstall(request).catch((error: unknown) => {
     defaultRuntime.error(formatErrorMessage(error));
     return null;

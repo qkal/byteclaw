@@ -33,9 +33,9 @@ export async function resolveCurrentDirectiveLevels(params: {
   const currentFastMode =
     typeof params.sessionEntry?.fastMode === "boolean"
       ? params.sessionEntry.fastMode
-      : (typeof params.agentEntry?.fastModeDefault === "boolean"
+      : typeof params.agentEntry?.fastModeDefault === "boolean"
         ? params.agentEntry.fastModeDefault
-        : undefined);
+        : undefined;
   const currentVerboseLevel =
     (params.sessionEntry?.verboseLevel as VerboseLevel | undefined) ??
     (params.agentCfg?.verboseDefault as VerboseLevel | undefined);

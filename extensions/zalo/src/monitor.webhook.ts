@@ -232,7 +232,9 @@ export async function handleZaloWebhookRequest(
 
       target.statusSink?.({ lastInboundAt: Date.now() });
       processUpdate({ target, update }).catch((error) => {
-        target.runtime.error?.(`[${target.account.accountId}] Zalo webhook failed: ${String(error)}`);
+        target.runtime.error?.(
+          `[${target.account.accountId}] Zalo webhook failed: ${String(error)}`,
+        );
       });
 
       res.statusCode = 200;

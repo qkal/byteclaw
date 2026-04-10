@@ -1,6 +1,9 @@
-import { callGateway } from "../gateway/call.js";
-import { formatErrorMessage } from "../infra/errors.js";
-import { extractAssistantText, stripToolMessages } from "./tools/chat-history-text.js";
+import { callGateway } from '../gateway/call.js';
+import { formatErrorMessage } from '../infra/errors.js';
+import {
+  extractAssistantText,
+  stripToolMessages,
+} from './tools/chat-history-text.js';
 
 type GatewayCaller = typeof callGateway;
 
@@ -18,7 +21,7 @@ export interface AssistantReplySnapshot {
 }
 
 export interface AgentWaitResult {
-  status: "ok" | "timeout" | "error";
+  status: 'ok' | 'timeout' | 'error';
   error?: string;
   startedAt?: number;
   endedAt?: number;
@@ -38,13 +41,13 @@ interface RawAgentWaitResponse {
 }
 
 function normalizeAgentWaitResult(
-  status: AgentWaitResult["status"],
+  status: AgentWaitResult['status'],
   wait?: RawAgentWaitResponse,
 ): AgentWaitResult {
   return {
-    endedAt: typeof wait?.endedAt === "number" ? wait.endedAt : undefined,
-    error: typeof wait?.error === "string" ? wait.error : undefined,
-    startedAt: typeof wait?.startedAt === "number" ? wait.startedAt : undefined,
+    endedAt: typeof wait?.endedAt === 'number' ? wait.endedAt : undefined,
+    error: typeof wait?.error === 'string' ? wait.error : undefined,
+    startedAt: typeof wait?.startedAt === 'number' ? wait.startedAt : undefined,
     status,
   };
 }
@@ -61,13 +64,15 @@ function normalizePendingRunIds(runIds: Iterable<string>): string[] {
   return [...seen];
 }
 
-function resolveLatestAssistantReplySnapshot(messages: unknown[]): AssistantReplySnapshot {
+function resolveLatestAssistantReplySnapshot(
+  messages: unknown[],
+): AssistantReplySnapshot {
   for (let i = messages.length - 1; i >= 0; i -= 1) {
     const candidate = messages[i];
-    if (!candidate || typeof candidate !== "object") {
+    if (!candidate || typeof candidate !== 'object') {
       continue;
     }
-    if ((candidate as { role?: unknown }).role !== "assistant") {
+    if ((candidate as { role?: unknown }).role !== 'assistant') {
       continue;
     }
     const text = extractAssistantText(candidate);
@@ -93,7 +98,7 @@ export async function readLatestAssistantReplySnapshot(params: {
   const history = await (params.callGateway ?? runWaitDeps.callGateway)<{
     messages: unknown[];
   }>({
-    method: "chat.history",
+    method: 'chat.history',
     params: { limit: params.limit ?? 50, sessionKey: params.sessionKey },
   });
   return resolveLatestAssistantReplySnapshot(
@@ -122,26 +127,28 @@ export async function waitForAgentRun(params: {
 }): Promise<AgentWaitResult> {
   const timeoutMs = Math.max(1, Math.floor(params.timeoutMs));
   try {
-    const wait = await (params.callGateway ?? runWaitDeps.callGateway)<RawAgentWaitResponse>({
-      method: "agent.wait",
+    const wait = await (
+      params.callGateway ?? runWaitDeps.callGateway
+    )<RawAgentWaitResponse>({
+      method: 'agent.wait',
       params: {
         runId: params.runId,
         timeoutMs,
       },
       timeoutMs: timeoutMs + 2000,
     });
-    if (wait?.status === "timeout") {
-      return normalizeAgentWaitResult("timeout", wait);
+    if (wait?.status === 'timeout') {
+      return normalizeAgentWaitResult('timeout', wait);
     }
-    if (wait?.status === "error") {
-      return normalizeAgentWaitResult("error", wait);
+    if (wait?.status === 'error') {
+      return normalizeAgentWaitResult('error', wait);
     }
-    return normalizeAgentWaitResult("ok", wait);
+    return normalizeAgentWaitResult('ok', wait);
   } catch (error) {
-    const error = formatErrorMessage(error);
+    const formattedError = formatErrorMessage(error);
     return {
-      error,
-      status: error.includes("gateway timeout") ? "timeout" : "error",
+      error: formattedError,
+      status: formattedError.includes('gateway timeout') ? 'timeout' : 'error',
     };
   }
 }
@@ -159,7 +166,7 @@ export async function waitForAgentRunAndReadUpdatedAssistantReply(params: {
     runId: params.runId,
     timeoutMs: params.timeoutMs,
   });
-  if (wait.status !== "ok") {
+  if (wait.status !== 'ok') {
     return wait;
   }
 
@@ -170,12 +177,13 @@ export async function waitForAgentRunAndReadUpdatedAssistantReply(params: {
   });
   const baselineFingerprint = params.baseline?.fingerprint;
   const replyText =
-    latestReply.text && (!baselineFingerprint || latestReply.fingerprint !== baselineFingerprint)
+    latestReply.text &&
+    (!baselineFingerprint || latestReply.fingerprint !== baselineFingerprint)
       ? latestReply.text
       : undefined;
   return {
     replyText,
-    status: "ok",
+    status: 'ok',
   };
 }
 
@@ -187,11 +195,14 @@ export async function waitForAgentRunsToDrain(params: {
   callGateway?: GatewayCaller;
 }): Promise<AgentRunsDrainResult> {
   const deadlineAtMs =
-    params.deadlineAtMs ?? Date.now() + Math.max(1, Math.floor(params.timeoutMs ?? 0));
+    params.deadlineAtMs ??
+    Date.now() + Math.max(1, Math.floor(params.timeoutMs ?? 0));
 
   // Runs may finish and spawn more runs, so refresh until no pending IDs remain.
   let pendingRunIds = new Set<string>(
-    normalizePendingRunIds(params.initialPendingRunIds ?? params.getPendingRunIds()),
+    normalizePendingRunIds(
+      params.initialPendingRunIds ?? params.getPendingRunIds(),
+    ),
   );
 
   while (pendingRunIds.size > 0 && Date.now() < deadlineAtMs) {
@@ -205,7 +216,9 @@ export async function waitForAgentRunsToDrain(params: {
         }),
       ),
     );
-    pendingRunIds = new Set<string>(normalizePendingRunIds(params.getPendingRunIds()));
+    pendingRunIds = new Set<string>(
+      normalizePendingRunIds(params.getPendingRunIds()),
+    );
   }
 
   return {

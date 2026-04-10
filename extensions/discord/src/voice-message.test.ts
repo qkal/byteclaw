@@ -4,22 +4,22 @@ const runFfprobeMock = vi.hoisted(() => vi.fn<(...args: unknown[]) => Promise<st
 const runFfmpegMock = vi.hoisted(() => vi.fn<(...args: unknown[]) => Promise<void>>());
 
 vi.mock("openclaw/plugin-sdk/temp-path", async () => ({
-    resolvePreferredOpenClawTmpDir: () => "/tmp",
-  }));
+  resolvePreferredOpenClawTmpDir: () => "/tmp",
+}));
 
 vi.mock("openclaw/plugin-sdk/media-runtime", async () => ({
-    MEDIA_FFMPEG_MAX_AUDIO_DURATION_SECS: 1200,
-    parseFfprobeCodecAndSampleRate: (stdout: string) => {
-      const [codec, sampleRate] = stdout.trim().split(",");
-      return {
-        codec,
-        sampleRateHz: Number(sampleRate),
-      };
-    },
-    runFfmpeg: runFfmpegMock,
-    runFfprobe: runFfprobeMock,
-    unlinkIfExists: vi.fn(async () => {}),
-  }));
+  MEDIA_FFMPEG_MAX_AUDIO_DURATION_SECS: 1200,
+  parseFfprobeCodecAndSampleRate: (stdout: string) => {
+    const [codec, sampleRate] = stdout.trim().split(",");
+    return {
+      codec,
+      sampleRateHz: Number(sampleRate),
+    };
+  },
+  runFfmpeg: runFfmpegMock,
+  runFfprobe: runFfprobeMock,
+  unlinkIfExists: vi.fn(async () => {}),
+}));
 
 let ensureOggOpus: typeof import("./voice-message.js").ensureOggOpus;
 

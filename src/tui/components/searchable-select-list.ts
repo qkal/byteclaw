@@ -82,8 +82,15 @@ export class SearchableSelectList implements Component {
    */
   private smartFilter(query: string): SelectItem[] {
     const q = normalizeLowercaseStringOrEmpty(query);
-    interface ScoredItem { item: SelectItem; tier: number; score: number }
-    interface FuzzyCandidate { item: SelectItem; searchTextLower: string }
+    interface ScoredItem {
+      item: SelectItem;
+      tier: number;
+      score: number;
+    }
+    interface FuzzyCandidate {
+      item: SelectItem;
+      searchTextLower: string;
+    }
     const scoredItems: ScoredItem[] = [];
     const fuzzyCandidates: FuzzyCandidate[] = [];
 
@@ -269,7 +276,7 @@ export class SearchableSelectList implements Component {
     const prefixWidth = prefix.length;
     const displayValue = this.getItemLabel(item);
 
-    const {description} = item;
+    const { description } = item;
     if (description) {
       const descriptionLayout = this.getDescriptionLayout(width, prefixWidth);
       if (descriptionLayout) {

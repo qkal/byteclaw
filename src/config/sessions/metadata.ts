@@ -122,7 +122,7 @@ export function deriveGroupSessionPatch(params: {
     return null;
   }
 
-  const {channel} = resolution;
+  const { channel } = resolution;
   const subject = params.ctx.GroupSubject?.trim();
   const space = params.ctx.GroupSpace?.trim();
   const explicitChannel = params.ctx.GroupChannel?.trim();

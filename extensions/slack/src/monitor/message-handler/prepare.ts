@@ -121,7 +121,7 @@ async function resolveSlackConversationContext(params: {
   message: SlackMessageEvent;
 }): Promise<SlackConversationContext> {
   const { ctx, account, message } = params;
-  const {cfg} = ctx;
+  const { cfg } = ctx;
 
   let channelInfo: {
     name?: string;
@@ -276,16 +276,16 @@ function resolveSlackRoutingContext(params: {
     channel: "slack",
     peer: {
       id: isDirectMessage ? (message.user ?? "unknown") : message.channel,
-      kind: isDirectMessage ? "direct" : (isRoom ? "channel" : "group"),
+      kind: isDirectMessage ? "direct" : isRoom ? "channel" : "group",
     },
     teamId: ctx.teamId || undefined,
   });
 
-  const chatType = isDirectMessage ? "direct" : (isGroupDm ? "group" : "channel");
+  const chatType = isDirectMessage ? "direct" : isGroupDm ? "group" : "channel";
   const replyToMode = resolveSlackReplyToMode(account, chatType);
   const threadContext = resolveSlackThreadContext({ message, replyToMode });
   const threadTs = threadContext.incomingThreadTs;
-  const {isThreadReply} = threadContext;
+  const { isThreadReply } = threadContext;
   // Keep true thread replies thread-scoped, but preserve channel-level sessions
   // For top-level room turns when replyToMode is off.
   // For DMs, preserve existing auto-thread behavior when replyToMode="all".
@@ -299,13 +299,13 @@ function resolveSlackRoutingContext(params: {
   // Before this fix, every channel message used its own ts as threadId, creating
   // Isolated sessions per message (regression from #10686).
   const roomThreadId = isThreadReply && threadTs ? threadTs : undefined;
-  const canonicalThreadId = isRoomish ? roomThreadId : (isThreadReply ? threadTs : autoThreadId);
+  const canonicalThreadId = isRoomish ? roomThreadId : isThreadReply ? threadTs : autoThreadId;
   const threadKeys = resolveThreadSessionKeys({
     baseSessionKey: route.sessionKey,
     parentSessionKey: canonicalThreadId && ctx.threadInheritParent ? route.sessionKey : undefined,
     threadId: canonicalThreadId,
   });
-  const {sessionKey} = threadKeys;
+  const { sessionKey } = threadKeys;
   const historyKey =
     isThreadReply && ctx.threadHistoryScope === "thread" ? sessionKey : message.channel;
 
@@ -329,7 +329,7 @@ export async function prepareSlackMessage(params: {
   opts: { source: "message" | "app_mention"; wasMentioned?: boolean };
 }): Promise<PreparedSlackMessage | null> {
   const { ctx, account, message, opts } = params;
-  const {cfg} = ctx;
+  const { cfg } = ctx;
   const conversation = await resolveSlackConversationContext({ account, ctx, message });
   const {
     channelInfo,
@@ -447,9 +447,9 @@ export async function prepareSlackMessage(params: {
   const channelUsersAllowlistConfigured =
     isRoom && Array.isArray(channelConfig?.users) && channelConfig.users.length > 0;
   const threadContextAllowFromLower = isRoom
-    ? (channelUsersAllowlistConfigured
+    ? channelUsersAllowlistConfigured
       ? normalizeAllowListLower(channelConfig?.users)
-      : [])
+      : []
     : isDirectMessage
       ? ctx.dmPolicy === "open"
         ? []
@@ -481,7 +481,7 @@ export async function prepareSlackMessage(params: {
     hasControlCommand: hasControlCommandInMessage,
     useAccessGroups: ctx.useAccessGroups,
   });
-  const {commandAuthorized} = commandGate;
+  const { commandAuthorized } = commandGate;
 
   if (isRoomish && commandGate.shouldBlock) {
     logInboundDrop({
@@ -515,15 +515,15 @@ export async function prepareSlackMessage(params: {
       requireMention: Boolean(shouldRequireMention),
     },
   });
-  const {effectiveWasMentioned} = mentionDecision;
+  const { effectiveWasMentioned } = mentionDecision;
   if (isRoom && shouldRequireMention && mentionDecision.shouldSkip) {
     ctx.logger.info({ channel: message.channel, reason: "no-mention" }, "skipping channel message");
     const pendingText = (message.text ?? "").trim();
     const fallbackFile = message.files?.[0]?.name
       ? `[Slack file: ${message.files[0].name}]`
-      : (message.files?.length
+      : message.files?.length
         ? "[Slack file]"
-        : "");
+        : "";
     const pendingBody = pendingText || fallbackFile;
     recordPendingHistoryEntryIfEnabled({
       entry: pendingBody
@@ -600,9 +600,9 @@ export async function prepareSlackMessage(params: {
             return false;
           },
         )
-      : (statusReactionsWillHandle
+      : statusReactionsWillHandle
         ? Promise.resolve(true)
-        : null);
+        : null;
 
   const roomLabel = channelName ? `#${channelName}` : `#${message.channel}`;
   const senderName = await resolveSenderName();
@@ -612,9 +612,9 @@ export async function prepareSlackMessage(params: {
     : `Slack message in ${roomLabel} from ${senderName}`;
   const slackFrom = isDirectMessage
     ? `slack:${message.user}`
-    : (isRoom
+    : isRoom
       ? `slack:channel:${message.channel}`
-      : `slack:group:${message.channel}`);
+      : `slack:group:${message.channel}`;
 
   enqueueSystemEvent(`${inboundLabel}: ${preview}`, {
     contextKey: `slack:message:${message.channel}:${message.ts ?? "unknown"}`,

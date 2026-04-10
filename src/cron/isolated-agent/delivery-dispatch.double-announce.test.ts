@@ -704,7 +704,7 @@ describe("dispatchCronDelivery — double-announce guard", () => {
       // Two calls total: first failed transiently, second succeeded.
       expect(deliverOutboundPayloads).toHaveBeenCalledTimes(2);
 
-      const {calls} = vi.mocked(deliverOutboundPayloads).mock;
+      const { calls } = vi.mocked(deliverOutboundPayloads).mock;
       expect(calls[0][0]).toEqual(expect.objectContaining({ skipQueue: true }));
       expect(calls[1][0]).toEqual(expect.objectContaining({ skipQueue: true }));
     } finally {

@@ -133,9 +133,9 @@ export function mergeSessionIdentity(params: {
   const nextResolved = Boolean(nextAcpxSessionId || nextAgentSessionId);
   const nextState: SessionAcpIdentity["state"] = nextResolved
     ? "resolved"
-    : (currentResolved
+    : currentResolved
       ? "resolved"
-      : incoming.state);
+      : incoming.state;
   const nextSource = allowIncomingValue ? incoming.source : current.source;
   const next: SessionAcpIdentity = {
     state: nextState,
@@ -195,7 +195,7 @@ export function createIdentityFromStatus(params: {
   if (!params.status) {
     return undefined;
   }
-  const {details} = params.status;
+  const { details } = params.status;
   const acpxRecordId =
     normalizeText((params.status as { acpxRecordId?: unknown }).acpxRecordId) ??
     normalizeText(details?.acpxRecordId);

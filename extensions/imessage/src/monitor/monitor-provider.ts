@@ -194,7 +194,8 @@ export async function monitorIMessageProvider(opts: MonitorIMessageOpts = {}): P
       };
       await handleMessageNow(syntheticMessage);
     },
-    shouldDebounce: (entry) => shouldDebounceTextInbound({
+    shouldDebounce: (entry) =>
+      shouldDebounceTextInbound({
         text: entry.message.text,
         cfg,
         hasMedia: Boolean(entry.message.attachments && entry.message.attachments.length > 0),
@@ -226,9 +227,9 @@ export async function monitorIMessageProvider(opts: MonitorIMessageOpts = {}): P
     const kind = kindFromMime(mediaType ?? undefined);
     const placeholder = kind
       ? `<media:${kind}>`
-      : (validAttachments.length
+      : validAttachments.length
         ? "<media:attachment>"
-        : "");
+        : "";
     const bodyText = messageText || placeholder;
 
     const storeAllowFrom = await readChannelAllowFromStore(
@@ -383,7 +384,10 @@ export async function monitorIMessageProvider(opts: MonitorIMessageOpts = {}): P
     });
 
     if (shouldLogVerbose()) {
-      const preview = truncateUtf16Safe(String(ctxPayload.Body ?? ""), 200).replace(/\n/g, String.raw`\n`);
+      const preview = truncateUtf16Safe(String(ctxPayload.Body ?? ""), 200).replace(
+        /\n/g,
+        String.raw`\n`,
+      );
       logVerbose(
         `imessage inbound: chatId=${chatId ?? "unknown"} from=${ctxPayload.From} len=${
           String(ctxPayload.Body ?? "").length

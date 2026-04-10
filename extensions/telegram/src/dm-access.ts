@@ -21,7 +21,7 @@ interface TelegramSenderIdentity {
 }
 
 function resolveTelegramSenderIdentity(msg: Message, chatId: number): TelegramSenderIdentity {
-  const {from} = msg;
+  const { from } = msg;
   const userId = from?.id != null ? String(from.id) : null;
   return {
     candidateId: userId ?? String(chatId),

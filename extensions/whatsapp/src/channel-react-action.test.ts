@@ -7,48 +7,48 @@ const hoisted = vi.hoisted(() => ({
 }));
 
 vi.mock("./channel-react-action.runtime.js", async () => ({
-    handleWhatsAppAction: hoisted.handleWhatsAppAction,
-    normalizeWhatsAppTarget: (value?: string | null) => {
-      const raw = `${value ?? ""}`.trim();
-      if (!raw) {
-        return null;
+  handleWhatsAppAction: hoisted.handleWhatsAppAction,
+  normalizeWhatsAppTarget: (value?: string | null) => {
+    const raw = `${value ?? ""}`.trim();
+    if (!raw) {
+      return null;
+    }
+    const stripped = raw.replace(/^whatsapp:/, "");
+    return stripped.startsWith("+") ? stripped : `+${stripped.replace(/^\+/, "")}`;
+  },
+  readStringParam: (
+    params: Record<string, unknown>,
+    key: string,
+    options?: { required?: boolean; allowEmpty?: boolean },
+  ) => {
+    const value = params[key];
+    if (value == null) {
+      if (options?.required) {
+        const err = new Error(`${key} required`);
+        err.name = "ToolInputError";
+        throw err;
       }
-      const stripped = raw.replace(/^whatsapp:/, "");
-      return stripped.startsWith("+") ? stripped : `+${stripped.replace(/^\+/, "")}`;
-    },
-    readStringParam: (
-      params: Record<string, unknown>,
-      key: string,
-      options?: { required?: boolean; allowEmpty?: boolean },
-    ) => {
-      const value = params[key];
-      if (value == null) {
-        if (options?.required) {
-          const err = new Error(`${key} required`);
-          err.name = "ToolInputError";
-          throw err;
-        }
-        return undefined;
+      return undefined;
+    }
+    const text = String(value);
+    if (!options?.allowEmpty && !text.trim()) {
+      if (options?.required) {
+        const err = new Error(`${key} required`);
+        err.name = "ToolInputError";
+        throw err;
       }
-      const text = String(value);
-      if (!options?.allowEmpty && !text.trim()) {
-        if (options?.required) {
-          const err = new Error(`${key} required`);
-          err.name = "ToolInputError";
-          throw err;
-        }
-        return undefined;
-      }
-      return text;
-    },
-    resolveReactionMessageId: ({
-      args,
-      toolContext,
-    }: {
-      args: Record<string, unknown>;
-      toolContext?: { currentMessageId?: string | number | null };
-    }) => args.messageId ?? toolContext?.currentMessageId ?? null,
-  }));
+      return undefined;
+    }
+    return text;
+  },
+  resolveReactionMessageId: ({
+    args,
+    toolContext,
+  }: {
+    args: Record<string, unknown>;
+    toolContext?: { currentMessageId?: string | number | null };
+  }) => args.messageId ?? toolContext?.currentMessageId ?? null,
+}));
 
 describe("whatsapp react action messageId resolution", () => {
   const baseCfg = {

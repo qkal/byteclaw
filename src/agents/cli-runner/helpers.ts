@@ -319,7 +319,7 @@ export async function prepareCliPromptImagePayload(params: {
   imagePaths?: string[];
   cleanupImages?: () => Promise<void>;
 }> {
-  let {prompt} = params;
+  let { prompt } = params;
   const resolvedImages =
     params.images && params.images.length > 0
       ? params.images
@@ -393,7 +393,7 @@ export function buildCliArgs(params: {
   }
   if (params.imagePaths && params.imagePaths.length > 0) {
     const mode = params.backend.imageMode ?? "repeat";
-    const {imageArg} = params.backend;
+    const { imageArg } = params.backend;
     if (imageArg && imageArg !== "@") {
       if (mode === "list") {
         args.push(imageArg, params.imagePaths.join(","));

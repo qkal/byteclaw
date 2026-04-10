@@ -8,6 +8,6 @@ function loadFacadeModule(): FacadeModule {
     dirName: "anthropic",
   });
 }
-export const {CLAUDE_CLI_BACKEND_ID} = loadFacadeModule();
+export const { CLAUDE_CLI_BACKEND_ID } = loadFacadeModule();
 export const isClaudeCliProvider: FacadeModule["isClaudeCliProvider"] = ((...args) =>
   loadFacadeModule()["isClaudeCliProvider"](...args)) as FacadeModule["isClaudeCliProvider"];

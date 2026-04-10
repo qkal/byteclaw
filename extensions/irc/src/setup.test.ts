@@ -37,9 +37,9 @@ const hoisted = vi.hoisted(() => ({
 }));
 
 vi.mock("./channel-runtime.js", () => ({
-    monitorIrcProvider: hoisted.monitorIrcProvider,
-    sendMessageIrc: hoisted.sendMessageIrc,
-  }));
+  monitorIrcProvider: hoisted.monitorIrcProvider,
+  sendMessageIrc: hoisted.sendMessageIrc,
+}));
 
 const ircSetupPlugin = {
   config: {
@@ -267,8 +267,8 @@ describe("irc setup", () => {
   });
 
   it("validates required input and applies normalized account config", () => {
-    const {validateInput} = ircSetupAdapter;
-    const {applyAccountConfig} = ircSetupAdapter;
+    const { validateInput } = ircSetupAdapter;
+    const { applyAccountConfig } = ircSetupAdapter;
     expect(validateInput).toBeTypeOf("function");
     expect(applyAccountConfig).toBeTypeOf("function");
 

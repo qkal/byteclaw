@@ -187,7 +187,8 @@ export const discordMessageActions: ChannelMessageActionAdapter = {
     requesterSenderId,
     toolContext,
     mediaLocalRoots,
-  }) => await (
+  }) =>
+    await (
       await loadDiscordChannelActionsRuntime()
     ).handleDiscordMessageAction({
       accountId,

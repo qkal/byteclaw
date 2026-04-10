@@ -91,7 +91,7 @@ function createSnapshotFromLifecycleEvent(params: {
     error,
     runId,
     startedAt,
-    status: phase === "error" ? "error" : (data?.aborted ? "timeout" : "ok"),
+    status: phase === "error" ? "error" : data?.aborted ? "timeout" : "ok",
     ts: Date.now(),
   };
 }

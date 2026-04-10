@@ -249,7 +249,7 @@ export async function sendBlueBubblesMedia(params: {
       if (typeof maxBytes === "number" && maxBytes > 0) {
         assertMediaWithinLimit(localFile.sizeBytes, maxBytes);
       }
-      const {data} = localFile;
+      const { data } = localFile;
       assertMediaWithinLimit(data.byteLength, maxBytes);
       buffer = new Uint8Array(data);
       if (!resolvedContentType) {

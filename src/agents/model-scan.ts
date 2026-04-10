@@ -210,9 +210,9 @@ async function fetchOpenRouterModels(fetchImpl: typeof fetch): Promise<OpenRoute
       const maxCompletionTokens =
         typeof obj.max_completion_tokens === "number" && Number.isFinite(obj.max_completion_tokens)
           ? obj.max_completion_tokens
-          : (typeof obj.max_output_tokens === "number" && Number.isFinite(obj.max_output_tokens)
+          : typeof obj.max_output_tokens === "number" && Number.isFinite(obj.max_output_tokens)
             ? obj.max_output_tokens
-            : null);
+            : null;
 
       const supportedParameters = Array.isArray(obj.supported_parameters)
         ? obj.supported_parameters
@@ -337,7 +337,7 @@ function ensureImageInput(model: OpenAIModel): OpenAIModel {
   }
   return {
     ...model,
-    input: [...new Set([...model.input ?? [], 'image'])],
+    input: [...new Set([...(model.input ?? []), "image"])],
   };
 }
 

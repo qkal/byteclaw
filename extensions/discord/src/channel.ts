@@ -529,7 +529,7 @@ export const discordPlugin: ChannelPlugin<ResolvedDiscordAccount, DiscordProbe> 
       }),
       gateway: {
         startAccount: async (ctx) => {
-          const {account} = ctx;
+          const { account } = ctx;
           const startupDelayMs = resolveDiscordStartupDelayMs(ctx.cfg, account.accountId);
           if (startupDelayMs > 0) {
             ctx.log?.info(

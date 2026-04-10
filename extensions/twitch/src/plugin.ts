@@ -99,8 +99,8 @@ export const twitchPlugin: ChannelPlugin<ResolvedTwitchAccount> =
       configSchema: buildChannelConfigSchema(TwitchConfigSchema),
       gateway: {
         startAccount: async (ctx): Promise<void> => {
-          const {account} = ctx;
-          const {accountId} = ctx;
+          const { account } = ctx;
+          const { accountId } = ctx;
 
           ctx.setStatus?.({
             accountId,
@@ -122,8 +122,8 @@ export const twitchPlugin: ChannelPlugin<ResolvedTwitchAccount> =
           });
         },
         stopAccount: async (ctx): Promise<void> => {
-          const {account} = ctx;
-          const {accountId} = ctx;
+          const { account } = ctx;
+          const { accountId } = ctx;
 
           await removeClientManager(accountId);
 

@@ -95,9 +95,9 @@ export function resolveProviderAuthOverview(params: {
     const suffix =
       display === profileId
         ? ""
-        : (display.startsWith(profileId)
+        : display.startsWith(profileId)
           ? display.slice(profileId.length).trim()
-          : `(${display})`);
+          : `(${display})`;
     const base = `${profileId}=OAuth${suffix ? ` ${suffix}` : ""}`;
     return withUnusableSuffix(base, profileId);
   });

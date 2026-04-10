@@ -176,7 +176,7 @@ export async function acquireFileLock(
         release: () => releaseHeldLock(normalizedFile),
       };
     } catch (error) {
-      const {code} = (error as { code?: string });
+      const { code } = error as { code?: string };
       if (code !== "EEXIST") {
         throw error;
       }

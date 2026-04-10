@@ -99,7 +99,14 @@ export function registerMatrixApprovalReactionTarget(params: {
 }): void {
   const key = buildReactionTargetKey(params.roomId, params.eventId);
   const approvalId = params.approvalId.trim();
-  const allowedDecisions = [...new Set(params.allowedDecisions.filter((decision): decision is ExecApprovalReplyDecision => decision === 'allow-once' || decision === 'allow-always' || decision === 'deny'))];
+  const allowedDecisions = [
+    ...new Set(
+      params.allowedDecisions.filter(
+        (decision): decision is ExecApprovalReplyDecision =>
+          decision === "allow-once" || decision === "allow-always" || decision === "deny",
+      ),
+    ),
+  ];
   if (!key || !approvalId || allowedDecisions.length === 0) {
     return;
   }

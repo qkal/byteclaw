@@ -25,9 +25,7 @@ function parseSkillBlocks(skillsPrompt: string): { name: string; blockChars: num
   if (!prompt) {
     return [];
   }
-  const blocks = [...prompt.matchAll(/<skill>[\s\S]*?<\/skill>/gi)].map(
-    (match) => match[0] ?? "",
-  );
+  const blocks = [...prompt.matchAll(/<skill>[\s\S]*?<\/skill>/gi)].map((match) => match[0] ?? "");
   return blocks
     .map((block) => {
       const name = block.match(/<name>\s*([^<]+?)\s*<\/name>/i)?.[1]?.trim() || "(unknown)";
@@ -38,7 +36,7 @@ function parseSkillBlocks(skillsPrompt: string): { name: string; blockChars: num
 
 function buildToolsEntries(tools: AgentTool[]): SessionSystemPromptReport["tools"]["entries"] {
   return tools.map((tool) => {
-    const {name} = tool;
+    const { name } = tool;
     const summary = tool.description?.trim() || tool.label?.trim() || "";
     const summaryChars = summary.length;
     const schemaChars = (() => {

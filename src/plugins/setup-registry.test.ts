@@ -74,14 +74,14 @@ describe("setup-registry getJiti", () => {
       ],
     });
     mocks.createJiti.mockImplementation(() => () => ({
-        default: {
-          register(api: {
-            registerConfigMigration: (migrate: (config: unknown) => unknown) => void;
-          }) {
-            api.registerConfigMigration((config) => ({ changes: ["unexpected"], config }));
-          },
+      default: {
+        register(api: {
+          registerConfigMigration: (migrate: (config: unknown) => unknown) => void;
+        }) {
+          api.registerConfigMigration((config) => ({ changes: ["unexpected"], config }));
         },
-      }));
+      },
+    }));
 
     const result = runPluginSetupConfigMigrations({
       config: {
@@ -162,14 +162,14 @@ describe("setup-registry getJiti", () => {
       plugins: [{ id: "voice-call", rootDir: pluginRoot }],
     });
     mocks.createJiti.mockImplementation(() => () => ({
-        default: {
-          register(api: {
-            registerConfigMigration: (migrate: (config: unknown) => unknown) => void;
-          }) {
-            api.registerConfigMigration((config) => ({ changes: ["voice-call"], config }));
-          },
+      default: {
+        register(api: {
+          registerConfigMigration: (migrate: (config: unknown) => unknown) => void;
+        }) {
+          api.registerConfigMigration((config) => ({ changes: ["voice-call"], config }));
         },
-      }));
+      },
+    }));
 
     const result = runPluginSetupConfigMigrations({
       config: {

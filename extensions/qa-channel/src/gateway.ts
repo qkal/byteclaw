@@ -8,7 +8,7 @@ export async function startQaGatewayAccount(
   channelLabel: string,
   ctx: ChannelGatewayContext<ResolvedQaChannelAccount>,
 ) {
-  const {account} = ctx;
+  const { account } = ctx;
   if (!account.configured) {
     throw new Error(`QA channel is not configured for account "${account.accountId}"`);
   }

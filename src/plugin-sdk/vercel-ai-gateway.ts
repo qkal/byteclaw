@@ -28,13 +28,13 @@ export const getStaticVercelAiGatewayModelCatalog: FacadeModule["getStaticVercel
     loadFacadeModule()["getStaticVercelAiGatewayModelCatalog"](
       ...args,
     )) as FacadeModule["getStaticVercelAiGatewayModelCatalog"];
-export const {VERCEL_AI_GATEWAY_BASE_URL} = loadFacadeModule();
-export const {VERCEL_AI_GATEWAY_DEFAULT_CONTEXT_WINDOW} = loadFacadeModule();
+export const { VERCEL_AI_GATEWAY_BASE_URL } = loadFacadeModule();
+export const { VERCEL_AI_GATEWAY_DEFAULT_CONTEXT_WINDOW } = loadFacadeModule();
 export const VERCEL_AI_GATEWAY_DEFAULT_COST: FacadeModule["VERCEL_AI_GATEWAY_DEFAULT_COST"] =
   createLazyFacadeObjectValue(
     () => loadFacadeModule()["VERCEL_AI_GATEWAY_DEFAULT_COST"] as object,
   ) as FacadeModule["VERCEL_AI_GATEWAY_DEFAULT_COST"];
-export const {VERCEL_AI_GATEWAY_DEFAULT_MAX_TOKENS} = loadFacadeModule();
-export const {VERCEL_AI_GATEWAY_DEFAULT_MODEL_ID} = loadFacadeModule();
-export const {VERCEL_AI_GATEWAY_DEFAULT_MODEL_REF} = loadFacadeModule();
-export const {VERCEL_AI_GATEWAY_PROVIDER_ID} = loadFacadeModule();
+export const { VERCEL_AI_GATEWAY_DEFAULT_MAX_TOKENS } = loadFacadeModule();
+export const { VERCEL_AI_GATEWAY_DEFAULT_MODEL_ID } = loadFacadeModule();
+export const { VERCEL_AI_GATEWAY_DEFAULT_MODEL_REF } = loadFacadeModule();
+export const { VERCEL_AI_GATEWAY_PROVIDER_ID } = loadFacadeModule();

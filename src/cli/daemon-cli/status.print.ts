@@ -32,7 +32,7 @@ import {
 } from "./status.gather.js";
 
 function sanitizeDaemonStatusForJson(status: DaemonStatus): DaemonStatus {
-  const {command} = status.service;
+  const { command } = status.service;
   if (!command?.environment) {
     return status;
   }

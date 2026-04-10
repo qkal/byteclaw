@@ -21,13 +21,13 @@ const refLocator = vi.fn(() => {
 });
 
 vi.mock("./pw-session.js", () => ({
-    assertPageNavigationCompletedSafely,
-    ensurePageState,
-    forceDisconnectPlaywrightForTarget,
-    getPageForTargetId,
-    refLocator,
-    restoreRoleRefsForTarget,
-  }));
+  assertPageNavigationCompletedSafely,
+  ensurePageState,
+  forceDisconnectPlaywrightForTarget,
+  getPageForTargetId,
+  refLocator,
+  restoreRoleRefsForTarget,
+}));
 
 const { evaluateViaPlaywright } = await import("./pw-tools-core.interactions.js");
 

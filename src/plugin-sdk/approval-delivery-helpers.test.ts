@@ -18,7 +18,7 @@ describe("createApproverRestrictedNativeApprovalAdapter", () => {
       listAccountIds: () => ["work"],
       resolveNativeDeliveryMode: () => "dm",
     });
-    const {authorizeActorAction} = adapter.auth;
+    const { authorizeActorAction } = adapter.auth;
     if (!authorizeActorAction) {
       throw new Error("approval auth unavailable");
     }
@@ -70,8 +70,8 @@ describe("createApproverRestrictedNativeApprovalAdapter", () => {
         accountId === "channel-only" ? "channel" : "dm",
       resolveOriginTarget: () => ({ to: "origin-chat" }),
     });
-    const {getActionAvailabilityState} = adapter.auth;
-    const {getExecInitiatingSurfaceState} = adapter.auth;
+    const { getActionAvailabilityState } = adapter.auth;
+    const { getExecInitiatingSurfaceState } = adapter.auth;
     const hasConfiguredDmRoute = adapter.delivery;
     if (
       !getActionAvailabilityState ||
@@ -140,8 +140,8 @@ describe("createApproverRestrictedNativeApprovalAdapter", () => {
       listAccountIds: () => ["default"],
       resolveNativeDeliveryMode: () => "both",
     });
-    const {getActionAvailabilityState} = adapter.auth;
-    const {getExecInitiatingSurfaceState} = adapter.auth;
+    const { getActionAvailabilityState } = adapter.auth;
+    const { getExecInitiatingSurfaceState } = adapter.auth;
     if (!getActionAvailabilityState || !getExecInitiatingSurfaceState) {
       throw new Error("approval availability helper unavailable");
     }

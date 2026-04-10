@@ -451,11 +451,13 @@ function decodeMediaPath(raw: string, log: DeliverAccountContext["log"], prefix:
 
     if (!isWinLocal && (hasOctal || hasNonASCII)) {
       log?.debug?.(`${prefix} Decoding path with mixed encoding: ${mediaPath}`);
-      const decoded = mediaPath.replace(/\\([0-7]{1,3})/g, (_: string, octal: string) => String.fromCharCode(parseInt(octal, 8)));
+      const decoded = mediaPath.replace(/\\([0-7]{1,3})/g, (_: string, octal: string) =>
+        String.fromCharCode(parseInt(octal, 8)),
+      );
       const bytes: number[] = [];
       for (let i = 0; i < decoded.length; i++) {
         const code = decoded.charCodeAt(i);
-        if (code <= 0xFF) {
+        if (code <= 0xff) {
           bytes.push(code);
         } else {
           const charBytes = Buffer.from(decoded[i], "utf8");

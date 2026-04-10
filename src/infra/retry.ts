@@ -93,12 +93,12 @@ export async function retryAsync<T>(
 
   const resolved = resolveRetryConfig(DEFAULT_RETRY_CONFIG, options);
   const maxAttempts = resolved.attempts;
-  const {minDelayMs} = resolved;
+  const { minDelayMs } = resolved;
   const maxDelayMs =
     Number.isFinite(resolved.maxDelayMs) && resolved.maxDelayMs > 0
       ? resolved.maxDelayMs
       : Number.POSITIVE_INFINITY;
-  const {jitter} = resolved;
+  const { jitter } = resolved;
   const shouldRetry = options.shouldRetry ?? (() => true);
   let lastErr: unknown;
 

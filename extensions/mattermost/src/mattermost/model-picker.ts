@@ -120,7 +120,7 @@ function buildButton(params: {
           action: params.action,
           ownerUserId: params.ownerUserId,
         }
-      : (params.action === "list"
+      : params.action === "list"
         ? {
             action: "list" as const,
             ownerUserId: params.ownerUserId,
@@ -133,7 +133,7 @@ function buildButton(params: {
             ownerUserId: params.ownerUserId,
             page: normalizePage(params.page),
             provider: normalizeProviderId(params.provider ?? ""),
-          });
+          };
 
   return {
     // Mattermost requires action IDs to be unique within a post.

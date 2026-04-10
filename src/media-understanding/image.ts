@@ -68,10 +68,7 @@ async function resolveImageRuntime(params: {
   return { apiKey, model };
 }
 
-function buildImageContext(
-  prompt: string,
-  images: { buffer: Buffer; mime?: string }[],
-): Context {
+function buildImageContext(prompt: string, images: { buffer: Buffer; mime?: string }[]): Context {
   return {
     messages: [
       {

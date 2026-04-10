@@ -16,8 +16,8 @@ function loadFacadeModule(): FacadeModule {
   });
 }
 
-export const {MINIMAX_DEFAULT_MODEL_ID} = loadFacadeModule();
-export const {MINIMAX_DEFAULT_MODEL_REF} = loadFacadeModule();
+export const { MINIMAX_DEFAULT_MODEL_ID } = loadFacadeModule();
+export const { MINIMAX_DEFAULT_MODEL_REF } = loadFacadeModule();
 export const MINIMAX_TEXT_MODEL_REFS: FacadeModule["MINIMAX_TEXT_MODEL_REFS"] =
   createLazyFacadeArrayValue(
     () => loadFacadeModule().MINIMAX_TEXT_MODEL_REFS as unknown as readonly unknown[],

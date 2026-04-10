@@ -44,11 +44,11 @@ export async function resolveHookModelSelection(params: {
   hookRunner?: HookRunnerLike | null;
   hookContext: HookContext;
 }) {
-  let {provider} = params;
-  let {modelId} = params;
+  let { provider } = params;
+  let { modelId } = params;
   let modelResolveOverride: { providerOverride?: string; modelOverride?: string } | undefined;
   let legacyBeforeAgentStartResult: PluginHookBeforeAgentStartResult | undefined;
-  const {hookRunner} = params;
+  const { hookRunner } = params;
 
   // Run before_model_resolve hooks early so plugins can override the
   // Provider/model before resolveModel().

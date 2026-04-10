@@ -13,7 +13,7 @@ export function registerSlackReactionEvents(params: {
 
   const handleReactionEvent = async (event: SlackReactionEvent, action: string) => {
     try {
-      const {item} = event;
+      const { item } = event;
       if (!item || item.type !== "message") {
         return;
       }

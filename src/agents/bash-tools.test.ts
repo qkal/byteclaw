@@ -66,7 +66,9 @@ type ExecToolArgs = Parameters<ExecToolInstance["execute"]>[1];
 type ProcessToolArgs = Parameters<ProcessToolInstance["execute"]>[1];
 type ExecToolConfig = Exclude<Parameters<typeof createExecTool>[0], undefined>;
 type ExecToolRunOptions = Omit<ExecToolArgs, "command">;
-interface LabeledCase { label: string }
+interface LabeledCase {
+  label: string;
+}
 const createTestExecTool = (
   defaults?: Parameters<typeof createExecTool>[0],
 ): ReturnType<typeof createExecTool> => createExecTool({ ...TEST_EXEC_DEFAULTS, ...defaults });
@@ -135,7 +137,10 @@ const expectTextContainsValues = (
     }
   }
 };
-interface ProcessSessionSummary { sessionId: string; name?: string }
+interface ProcessSessionSummary {
+  sessionId: string;
+  name?: string;
+}
 const hasSession = (sessions: ProcessSessionSummary[], sessionId: string) =>
   sessions.some((session) => session.sessionId === sessionId);
 const executeExecTool = (tool: ExecToolInstance, params: ExecToolArgs) =>
@@ -147,7 +152,10 @@ const executeExecCommand = (
 ) => executeExecTool(tool, { command, ...options });
 const executeProcessTool = (tool: ProcessToolInstance, params: ProcessToolArgs) =>
   tool.execute(nextCallId(), params);
-interface ProcessPollResult { status: string; output?: string }
+interface ProcessPollResult {
+  status: string;
+  output?: string;
+}
 async function listProcessSessions(tool: ProcessToolInstance) {
   const list = await executeProcessTool(tool, { action: "list" });
   return (list.details as { sessions: ProcessSessionSummary[] }).sessions;
@@ -188,7 +196,7 @@ async function waitForCompletion(sessionId: string) {
   let status = PROCESS_STATUS_RUNNING;
   await expect
     .poll(async () => {
-      ({ status } = (await pollProcessSession({ sessionId, tool: processTool })));
+      ({ status } = await pollProcessSession({ sessionId, tool: processTool }));
       return status;
     }, BACKGROUND_POLL_OPTIONS)
     .not.toBe(PROCESS_STATUS_RUNNING);
@@ -247,7 +255,10 @@ async function runBackgroundCommandToCompletion(tool: ExecToolInstance, command:
   return { sessionId, status };
 }
 
-interface ProcessLogWindow { offset?: number; limit?: number }
+interface ProcessLogWindow {
+  offset?: number;
+  limit?: number;
+}
 async function readProcessLog(sessionId: string, options: ProcessLogWindow = {}) {
   return executeProcessTool(processTool, {
     action: "log",
@@ -626,7 +637,9 @@ describe("exec PATH handling", () => {
 
   it("prepends configured path entries", async () => {
     const basePath = isWin ? String.raw`C:\Windows\System32` : "/usr/bin";
-    const prepend = isWin ? [String.raw`C:\custom\bin`, String.raw`C:\oss\bin`] : ["/custom/bin", "/opt/oss/bin"];
+    const prepend = isWin
+      ? [String.raw`C:\custom\bin`, String.raw`C:\oss\bin`]
+      : ["/custom/bin", "/opt/oss/bin"];
     process.env.PATH = basePath;
 
     const tool = createTestExecTool({ pathPrepend: prepend });
@@ -681,7 +694,11 @@ describe("applyPathPrepend with case-insensitive PATH key", () => {
     // Use platform-appropriate paths and delimiters
     const delim = path.delimiter;
     const existing = isWin
-      ? [String.raw`C:\Windows\System32`, String.raw`C:\Windows`, String.raw`C:\Program Files\nodejs`]
+      ? [
+          String.raw`C:\Windows\System32`,
+          String.raw`C:\Windows`,
+          String.raw`C:\Program Files\nodejs`,
+        ]
       : ["/usr/bin", "/usr/local/bin", "/opt/node/bin"];
     const prepend = isWin ? [String.raw`C:\custom\bin`] : ["/custom/bin"];
     const existingPath = existing.join(delim);

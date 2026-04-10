@@ -10,7 +10,8 @@ export async function postJsonWithRetry<T>(params: {
   errorPrefix: string;
 }): Promise<T> {
   return await retryAsync(
-    async () => await postJson<T>({
+    async () =>
+      await postJson<T>({
         attachStatus: true,
         body: params.body,
         errorPrefix: params.errorPrefix,
@@ -25,7 +26,7 @@ export async function postJsonWithRetry<T>(params: {
       maxDelayMs: 2000,
       minDelayMs: 300,
       shouldRetry: (err) => {
-        const {status} = (err as { status?: number });
+        const { status } = err as { status?: number };
         return status === 429 || (typeof status === "number" && status >= 500);
       },
     },

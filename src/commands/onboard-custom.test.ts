@@ -343,9 +343,12 @@ describe("promptCustomApiConfig", () => {
 
     const fetchMock = vi
       .fn()
-      .mockImplementationOnce((_url: string, init?: { signal?: AbortSignal }) => new Promise((_resolve, reject) => {
-          init?.signal?.addEventListener("abort", () => reject(new Error("AbortError")));
-        }))
+      .mockImplementationOnce(
+        (_url: string, init?: { signal?: AbortSignal }) =>
+          new Promise((_resolve, reject) => {
+            init?.signal?.addEventListener("abort", () => reject(new Error("AbortError")));
+          }),
+      )
       .mockResolvedValueOnce({ json: async () => ({}), ok: true });
     vi.stubGlobal("fetch", fetchMock);
 

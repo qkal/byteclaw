@@ -54,7 +54,7 @@ export function resolveConfiguredCapabilityProvider<
     };
   }
 
-  const {provider} = selection;
+  const { provider } = selection;
   if (!provider) {
     return {
       code: "no-registered-provider",

@@ -249,7 +249,7 @@ describe("gateway server chat", () => {
       });
       expect(sendRes.ok).toBe(true);
 
-      const {sessionStorePath} = testState;
+      const { sessionStorePath } = testState;
       if (!sessionStorePath) {
         throw new Error("expected session store path");
       }

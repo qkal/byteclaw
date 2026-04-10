@@ -270,9 +270,9 @@ function resolveTalkResponseFromConfig(params: {
       timeoutMs:
         typeof sourceBaseTts.timeoutMs === "number"
           ? sourceBaseTts.timeoutMs
-          : (typeof runtimeBaseTts.timeoutMs === "number"
+          : typeof runtimeBaseTts.timeoutMs === "number"
             ? runtimeBaseTts.timeoutMs
-            : 30_000),
+            : 30_000,
     }) ?? talkProviderConfig;
 
   return {

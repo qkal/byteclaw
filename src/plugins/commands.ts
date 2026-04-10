@@ -5,10 +5,10 @@
  * These commands are processed before built-in commands and before agent invocation.
  */
 
-import { resolveConversationBindingContext } from "../channels/conversation-binding-context.js";
-import type { OpenClawConfig } from "../config/config.js";
-import { logVerbose } from "../globals.js";
-import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
+import { resolveConversationBindingContext } from '../channels/conversation-binding-context.js';
+import type { OpenClawConfig } from '../config/config.js';
+import { logVerbose } from '../globals.js';
+import { normalizeLowercaseStringOrEmpty } from '../shared/string-coerce.js';
 import {
   clearPluginCommands,
   clearPluginCommandsForPlugin,
@@ -17,23 +17,23 @@ import {
   registerPluginCommand,
   validateCommandName,
   validatePluginCommandDefinition,
-} from "./command-registration.js";
+} from './command-registration.js';
 import {
   type RegisteredPluginCommand,
   pluginCommands,
   setPluginCommandRegistryLocked,
-} from "./command-registry-state.js";
+} from './command-registry-state.js';
 import {
   detachPluginConversationBinding,
   getCurrentPluginConversationBinding,
   requestPluginConversationBinding,
-} from "./conversation-binding.js";
-import { getActivePluginChannelRegistry } from "./runtime.js";
+} from './conversation-binding.js';
+import { getActivePluginChannelRegistry } from './runtime.js';
 import type {
   OpenClawPluginCommandDefinition,
   PluginCommandContext,
   PluginCommandResult,
-} from "./types.js";
+} from './types.js';
 
 // Maximum allowed length for command arguments (defense in depth)
 const MAX_ARGS_LENGTH = 4096;
@@ -59,14 +59,16 @@ export function matchPluginCommand(
   commandBody: string,
 ): { command: RegisteredPluginCommand; args?: string } | null {
   const trimmed = commandBody.trim();
-  if (!trimmed.startsWith("/")) {
+  if (!trimmed.startsWith('/')) {
     return null;
   }
 
   // Extract command name and args
-  const spaceIndex = trimmed.indexOf(" ");
-  const commandName = spaceIndex === -1 ? trimmed : trimmed.slice(0, spaceIndex);
-  const args = spaceIndex === -1 ? undefined : trimmed.slice(spaceIndex + 1).trim();
+  const spaceIndex = trimmed.indexOf(' ');
+  const commandName =
+    spaceIndex === -1 ? trimmed : trimmed.slice(0, spaceIndex);
+  const args =
+    spaceIndex === -1 ? undefined : trimmed.slice(spaceIndex + 1).trim();
 
   const key = normalizeLowercaseStringOrEmpty(commandName);
   const command =
@@ -102,10 +104,11 @@ function sanitizeArgs(args: string | undefined): string | undefined {
   }
 
   // Remove control characters (except newlines and tabs which may be intentional)
-  let sanitized = "";
+  let sanitized = '';
   for (const char of args) {
     const code = char.charCodeAt(0);
-    const isControl = (code <= 0x1F && code !== 0x09 && code !== 0x0A) || code === 0x7F;
+    const isControl =
+      (code <= 0x1f && code !== 0x09 && code !== 0x0a) || code === 0x7f;
     if (!isControl) {
       sanitized += char;
     }
@@ -157,28 +160,36 @@ export async function executePluginCommand(params: {
   args?: string;
   senderId?: string;
   channel: string;
-  channelId?: PluginCommandContext["channelId"];
+  channelId?: PluginCommandContext['channelId'];
   isAuthorizedSender: boolean;
-  gatewayClientScopes?: PluginCommandContext["gatewayClientScopes"];
-  sessionKey?: PluginCommandContext["sessionKey"];
-  sessionId?: PluginCommandContext["sessionId"];
+  gatewayClientScopes?: PluginCommandContext['gatewayClientScopes'];
+  sessionKey?: PluginCommandContext['sessionKey'];
+  sessionId?: PluginCommandContext['sessionId'];
   commandBody: string;
   config: OpenClawConfig;
-  from?: PluginCommandContext["from"];
-  to?: PluginCommandContext["to"];
-  accountId?: PluginCommandContext["accountId"];
-  messageThreadId?: PluginCommandContext["messageThreadId"];
-  threadParentId?: PluginCommandContext["threadParentId"];
+  from?: PluginCommandContext['from'];
+  to?: PluginCommandContext['to'];
+  accountId?: PluginCommandContext['accountId'];
+  messageThreadId?: PluginCommandContext['messageThreadId'];
+  threadParentId?: PluginCommandContext['threadParentId'];
 }): Promise<PluginCommandResult> {
-  const { command, args, senderId, channel, isAuthorizedSender, commandBody, config } = params;
+  const {
+    command,
+    args,
+    senderId,
+    channel,
+    isAuthorizedSender,
+    commandBody,
+    config,
+  } = params;
 
   // Check authorization
   const requireAuth = command.requireAuth !== false; // Default to true
   if (requireAuth && !isAuthorizedSender) {
     logVerbose(
-      `Plugin command /${command.name} blocked: unauthorized sender ${senderId || "<unknown>"}`,
+      `Plugin command /${command.name} blocked: unauthorized sender ${senderId || '<unknown>'}`,
     );
-    return { text: "⚠️ This command requires authorization." };
+    return { text: '⚠️ This command requires authorization.' };
   }
 
   // Sanitize args before passing to handler
@@ -226,8 +237,8 @@ export async function executePluginCommand(params: {
     requestConversationBinding: async (bindingParams) => {
       if (!command.pluginRoot || !bindingConversation) {
         return {
-          status: "error",
-          message: "This command cannot bind the current conversation.",
+          status: 'error',
+          message: 'This command cannot bind the current conversation.',
         };
       }
       return requestPluginConversationBinding({
@@ -251,14 +262,16 @@ export async function executePluginCommand(params: {
   try {
     const result = await command.handler(ctx);
     logVerbose(
-      `Plugin command /${command.name} executed successfully for ${senderId || "unknown"}`,
+      `Plugin command /${command.name} executed successfully for ${senderId || 'unknown'}`,
     );
     return result;
   } catch (error) {
-    const error = error as Error;
-    logVerbose(`Plugin command /${command.name} error: ${error.message}`);
+    const commandError = error as Error;
+    logVerbose(
+      `Plugin command /${command.name} error: ${commandError.message}`,
+    );
     // Don't leak internal error details - return a safe generic message
-    return { text: "⚠️ Command failed. Please try again later." };
+    return { text: '⚠️ Command failed. Please try again later.' };
   } finally {
     setPluginCommandRegistryLocked(false);
   }
@@ -282,7 +295,9 @@ export function listPluginCommands(): {
   }));
 }
 
-function listPluginInvocationNames(command: OpenClawPluginCommandDefinition): string[] {
+function listPluginInvocationNames(
+  command: OpenClawPluginCommandDefinition,
+): string[] {
   return listPluginInvocationKeys(command);
 }
 

@@ -113,7 +113,7 @@ export function applyToolPolicyPipeline(params: {
       continue;
     }
 
-    let {policy} = step;
+    let { policy } = step;
     if (step.stripPluginOnlyAllowlist) {
       const resolved = analyzeAllowlistByToolType(policy, pluginGroups, coreToolNames);
       if (resolved.unknownAllowlist.length > 0) {
@@ -175,9 +175,9 @@ function describeUnknownAllowlistSuffix(params: {
   const detail =
     params.hasGatedCoreEntries && params.hasOtherEntries
       ? "Some entries are shipped core tools but unavailable in the current runtime/provider/model/config; other entries won't match any tool unless the plugin is enabled."
-      : (params.hasGatedCoreEntries
+      : params.hasGatedCoreEntries
         ? "These entries are shipped core tools but unavailable in the current runtime/provider/model/config."
-        : "These entries won't match any tool unless the plugin is enabled.");
+        : "These entries won't match any tool unless the plugin is enabled.";
   return preface ? `${preface} ${detail}` : detail;
 }
 

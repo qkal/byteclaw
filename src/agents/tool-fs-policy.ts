@@ -17,7 +17,7 @@ export function createToolFsPolicy(params: { workspaceOnly?: boolean }): ToolFsP
 export function resolveToolFsConfig(params: { cfg?: OpenClawConfig; agentId?: string }): {
   workspaceOnly?: boolean;
 } {
-  const {cfg} = params;
+  const { cfg } = params;
   const globalFs = cfg?.tools?.fs;
   const agentFs =
     cfg && params.agentId ? resolveAgentConfig(cfg, params.agentId)?.tools?.fs : undefined;
@@ -37,7 +37,7 @@ export function resolveEffectiveToolFsRootExpansionAllowed(params: {
   cfg?: OpenClawConfig;
   agentId?: string;
 }): boolean {
-  const {cfg} = params;
+  const { cfg } = params;
   if (!cfg) {
     return true;
   }

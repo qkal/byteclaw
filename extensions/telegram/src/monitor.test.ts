@@ -120,10 +120,9 @@ async function makeTaggedPollingFetchError() {
   return err;
 }
 
-const createAbortTask = (
-  abort: AbortController,
-  beforeAbort?: () => void,
-): (() => Promise<void>) => async () => {
+const createAbortTask =
+  (abort: AbortController, beforeAbort?: () => void): (() => Promise<void>) =>
+  async () => {
     beforeAbort?.();
     abort.abort();
   };
@@ -260,10 +259,10 @@ async function monitorWithAutoAbort(opts: Omit<MonitorTelegramOpts, "abortSignal
 }
 
 vi.mock("openclaw/plugin-sdk/config-runtime", async () => ({
-    loadConfig,
-    resolveAgentMaxConcurrent: (cfg: { agents?: { defaults?: { maxConcurrent?: number } } }) =>
-      cfg.agents?.defaults?.maxConcurrent ?? 1,
-  }));
+  loadConfig,
+  resolveAgentMaxConcurrent: (cfg: { agents?: { defaults?: { maxConcurrent?: number } } }) =>
+    cfg.agents?.defaults?.maxConcurrent ?? 1,
+}));
 
 vi.mock("./bot.js", () => ({
   createTelegramBot: (opts: Record<string, unknown>) => {

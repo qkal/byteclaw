@@ -364,7 +364,7 @@ export async function handleBashChatCommand(params: {
     });
 
     if (result.details?.status === "running") {
-      const {sessionId} = result.details;
+      const { sessionId } = result.details;
       activeJob = {
         command: commandText,
         sessionId,

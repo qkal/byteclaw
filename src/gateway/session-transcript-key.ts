@@ -96,7 +96,7 @@ export function resolveSessionKeyForTranscriptFile(sessionFile: string): string 
   if (matchingEntries.length > 0) {
     const matchesBySessionId = new Map<string, [string, SessionEntry][]>();
     for (const entry of matchingEntries) {
-      const {sessionId} = entry[1];
+      const { sessionId } = entry[1];
       if (!sessionId) {
         continue;
       }
@@ -131,9 +131,9 @@ export function resolveSessionKeyForTranscriptFile(sessionFile: string): string 
     const resolvedKey =
       resolvedMatches.length === 1
         ? freshestMatch?.key
-        : ((freshestMatch?.updatedAt ?? 0) > (secondFreshestMatch?.updatedAt ?? 0)
+        : (freshestMatch?.updatedAt ?? 0) > (secondFreshestMatch?.updatedAt ?? 0)
           ? freshestMatch?.key
-          : undefined);
+          : undefined;
     if (resolvedKey) {
       TRANSCRIPT_SESSION_KEY_CACHE.set(targetPath, resolvedKey);
       return resolvedKey;

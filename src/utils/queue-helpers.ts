@@ -86,7 +86,7 @@ export function applyQueueDropPolicy<T>(params: {
   summarize: (item: T) => string;
   summaryLimit?: number;
 }): boolean {
-  const {cap} = params.queue;
+  const { cap } = params.queue;
   if (cap <= 0 || params.queue.items.length < cap) {
     return true;
   }
@@ -199,7 +199,7 @@ export function buildQueueSummaryPrompt(params: {
   if (params.state.dropPolicy !== "summarize" || params.state.droppedCount <= 0) {
     return undefined;
   }
-  const {noun} = params;
+  const { noun } = params;
   const title =
     params.title ??
     `[Queue overflow] Dropped ${params.state.droppedCount} ${noun}${params.state.droppedCount === 1 ? "" : "s"} due to cap.`;

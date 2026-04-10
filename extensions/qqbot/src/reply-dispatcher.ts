@@ -595,7 +595,11 @@ async function handleVideoPayload(ctx: ReplyContext, payload: MediaPayload): Pro
     }
   } catch (error) {
     const errMsg =
-      error instanceof Error ? error.message : (typeof error === "string" ? error : JSON.stringify(error));
+      error instanceof Error
+        ? error.message
+        : typeof error === "string"
+          ? error
+          : JSON.stringify(error);
     log?.error(`[qqbot:${account.accountId}] Video send failed: ${errMsg}`);
   }
 }
@@ -689,7 +693,11 @@ async function handleFilePayload(ctx: ReplyContext, payload: MediaPayload): Prom
     log?.info(`[qqbot:${account.accountId}] File message sent`);
   } catch (error) {
     const errMsg =
-      error instanceof Error ? error.message : (typeof error === "string" ? error : JSON.stringify(error));
+      error instanceof Error
+        ? error.message
+        : typeof error === "string"
+          ? error
+          : JSON.stringify(error);
     log?.error(`[qqbot:${account.accountId}] File send failed: ${errMsg}`);
   }
 }

@@ -23,7 +23,11 @@ export interface BrowserDownloadPayload {
   path: string;
 }
 
-interface BrowserDownloadResult { ok: true; targetId: string; download: BrowserDownloadPayload }
+interface BrowserDownloadResult {
+  ok: true;
+  targetId: string;
+  download: BrowserDownloadPayload;
+}
 
 async function postDownloadRequest(
   baseUrl: string | undefined,

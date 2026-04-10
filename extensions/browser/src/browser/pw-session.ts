@@ -56,8 +56,14 @@ export interface BrowserNetworkRequest {
   failureText?: string;
 }
 
-interface SnapshotForAIResult { full: string; incremental?: string }
-interface SnapshotForAIOptions { timeout?: number; track?: string }
+interface SnapshotForAIResult {
+  full: string;
+  incremental?: string;
+}
+interface SnapshotForAIOptions {
+  timeout?: number;
+  track?: string;
+}
 
 export interface WithSnapshotForAI {
   _snapshotForAI?: (options?: SnapshotForAIOptions) => Promise<SnapshotForAIResult>;
@@ -805,9 +811,9 @@ export async function gotoPageWithNavigationGuard(opts: {
 export function refLocator(page: Page, ref: string) {
   const normalized = ref.startsWith("@")
     ? ref.slice(1)
-    : (ref.startsWith("ref=")
+    : ref.startsWith("ref=")
       ? ref.slice(4)
-      : ref);
+      : ref;
 
   if (/^e\d+$/.test(normalized)) {
     const state = pageStates.get(page);
@@ -875,7 +881,7 @@ export async function closePlaywrightBrowserConnection(opts?: { cdpUrl?: string 
 
 function cdpSocketNeedsAttach(wsUrl: string): boolean {
   try {
-    const {pathname} = new URL(wsUrl);
+    const { pathname } = new URL(wsUrl);
     return (
       pathname === "/cdp" || pathname.endsWith("/cdp") || pathname.includes("/devtools/browser/")
     );

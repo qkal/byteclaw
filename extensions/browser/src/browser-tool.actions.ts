@@ -148,9 +148,9 @@ function canRetryChromeActWithoutTargetId(request: Parameters<typeof browserAct>
   const kind =
     typeof typedRequest.kind === "string"
       ? typedRequest.kind
-      : (typeof typedRequest.action === "string"
+      : typeof typedRequest.action === "string"
         ? typedRequest.action
-        : "");
+        : "";
   return kind === "hover" || kind === "scrollIntoView" || kind === "wait";
 }
 
@@ -188,9 +188,9 @@ export async function executeSnapshotAction(params: {
   const mode: "efficient" | undefined =
     input.mode === "efficient"
       ? "efficient"
-      : (format !== "aria" && snapshotDefaults?.mode === "efficient"
+      : format !== "aria" && snapshotDefaults?.mode === "efficient"
         ? "efficient"
-        : undefined);
+        : undefined;
   const labels = typeof input.labels === "boolean" ? input.labels : undefined;
   const refs: "aria" | "role" | undefined =
     input.refs === "aria" || input.refs === "role" ? input.refs : undefined;
@@ -215,9 +215,9 @@ export async function executeSnapshotAction(params: {
         : mode === "efficient"
           ? undefined
           : DEFAULT_AI_SNAPSHOT_MAX_CHARS
-      : (hasMaxChars
+      : hasMaxChars
         ? maxChars
-        : undefined);
+        : undefined;
   const snapshotQuery = {
     ...(format ? { format } : {}),
     targetId,

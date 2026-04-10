@@ -282,9 +282,9 @@ async function promptEndpointAndModelBase(
   const familyChoice = await promptFoundryModelFamily(ctx);
   const resolvedModelName =
     familyChoice === "reasoning-family"
-      ? (usesFoundryResponsesByDefault(modelId) || requiresFoundryMaxCompletionTokens(modelId)
+      ? usesFoundryResponsesByDefault(modelId) || requiresFoundryMaxCompletionTokens(modelId)
         ? modelId
-        : "gpt-5")
+        : "gpt-5"
       : undefined;
   const api = await promptFoundryApi(
     ctx,
@@ -345,9 +345,7 @@ export function buildFoundryConnectionTest(params: {
   };
 }
 
-export function extractTenantSuggestions(
-  rawMessage: string,
-): { id: string; label?: string }[] {
+export function extractTenantSuggestions(rawMessage: string): { id: string; label?: string }[] {
   const suggestions: { id: string; label?: string }[] = [];
   const seen = new Set<string>();
   const regex = /([0-9a-fA-F-]{36})(?:\s+'([^'\r\n]+)')?/g;

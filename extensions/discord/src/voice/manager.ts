@@ -283,7 +283,9 @@ function scheduleTempCleanup(tempDir: string, delayMs: number = 30 * 60 * 1000):
   const timer = setTimeout(() => {
     fs.rm(tempDir, { force: true, recursive: true }).catch((error) => {
       if (shouldLogVerbose()) {
-        logVerbose(`discord voice: temp cleanup failed for ${tempDir}: ${formatErrorMessage(error)}`);
+        logVerbose(
+          `discord voice: temp cleanup failed for ${tempDir}: ${formatErrorMessage(error)}`,
+        );
       }
     });
   }, delayMs);
@@ -619,13 +621,17 @@ export class DiscordVoiceManager {
   private enqueueProcessing(entry: VoiceSessionEntry, task: () => Promise<void>) {
     entry.processingQueue = entry.processingQueue
       .then(task)
-      .catch((error) => logger.warn(`discord voice: processing failed: ${formatErrorMessage(error)}`));
+      .catch((error) =>
+        logger.warn(`discord voice: processing failed: ${formatErrorMessage(error)}`),
+      );
   }
 
   private enqueuePlayback(entry: VoiceSessionEntry, task: () => Promise<void>) {
     entry.playbackQueue = entry.playbackQueue
       .then(task)
-      .catch((error) => logger.warn(`discord voice: playback failed: ${formatErrorMessage(error)}`));
+      .catch((error) =>
+        logger.warn(`discord voice: playback failed: ${formatErrorMessage(error)}`),
+      );
   }
 
   private clearCaptureFinalizeTimer(entry: VoiceSessionEntry, userId: string, generation?: number) {
@@ -829,7 +835,7 @@ export class DiscordVoiceManager {
       logger.warn(`discord voice: TTS failed: ${ttsResult.error ?? "unknown error"}`);
       return;
     }
-    const {audioPath} = ttsResult;
+    const { audioPath } = ttsResult;
     logVoiceVerbose(
       `tts ok (${speakText.length} chars): guild ${entry.guildId} channel ${entry.channelId}`,
     );
@@ -1064,7 +1070,7 @@ export class DiscordVoiceManager {
         memberRoleIds: Array.isArray(member.roles)
           ? member.roles
               .map((role) =>
-                typeof role === "string" ? role : (typeof role?.id === "string" ? role.id : ""),
+                typeof role === "string" ? role : typeof role?.id === "string" ? role.id : "",
               )
               .filter(Boolean)
           : [],
@@ -1097,7 +1103,9 @@ export class DiscordVoiceReadyListener extends ReadyListener {
   async handle(_data: unknown, _client: Client): Promise<void> {
     void this.manager
       .autoJoin()
-      .catch((error) => logger.warn(`discord voice: autoJoin failed: ${formatErrorMessage(error)}`));
+      .catch((error) =>
+        logger.warn(`discord voice: autoJoin failed: ${formatErrorMessage(error)}`),
+      );
   }
 }
 

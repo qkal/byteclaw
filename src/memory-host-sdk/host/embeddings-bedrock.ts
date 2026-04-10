@@ -245,7 +245,7 @@ function parseSingle(family: Family, raw: string): number[] {
 
 function parseCohereBatch(family: Family, raw: string): number[][] {
   const data = JSON.parse(raw);
-  const {embeddings} = data;
+  const { embeddings } = data;
   if (!embeddings) {
     return [];
   }

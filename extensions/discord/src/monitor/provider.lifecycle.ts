@@ -361,7 +361,7 @@ export async function runDiscordGatewayLifecycle(params: {
   gatewaySupervisor: DiscordGatewaySupervisor;
   statusSink?: DiscordMonitorStatusSink;
 }) {
-  const {gateway} = params;
+  const { gateway } = params;
   if (gateway) {
     registerGateway(params.accountId, gateway);
   }

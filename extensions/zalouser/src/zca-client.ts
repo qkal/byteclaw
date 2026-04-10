@@ -186,7 +186,8 @@ export interface API {
             height?: number;
           };
         }
-      | (| string
+      | (
+          | string
           | {
               data: Buffer;
               filename: `${string}.${string}`;
@@ -195,7 +196,8 @@ export interface API {
                 width?: number;
                 height?: number;
               };
-            })[],
+            }
+        )[],
     threadId: string,
     type?: number,
   ): Promise<

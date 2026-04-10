@@ -256,9 +256,9 @@ describe("gateway server health/presence", () => {
     const presencePayload = presenceRes.payload;
     const entries = Array.isArray(presencePayload)
       ? presencePayload
-      : (Array.isArray((presencePayload as { presence?: unknown } | undefined)?.presence)
+      : Array.isArray((presencePayload as { presence?: unknown } | undefined)?.presence)
         ? ((presencePayload as { presence: Record<string, unknown>[] }).presence ?? [])
-        : []);
+        : [];
     const clientEntry = entries.find(
       (e) => e.host === GATEWAY_CLIENT_NAMES.FINGERPRINT && e.version === "9.9.9",
     );

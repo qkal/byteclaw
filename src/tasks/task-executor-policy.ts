@@ -16,9 +16,9 @@ function resolveTaskDisplayTitle(task: TaskRecord): string {
     task.label?.trim() ||
       (task.runtime === "acp"
         ? "ACP background task"
-        : (task.runtime === "subagent"
+        : task.runtime === "subagent"
           ? "Subagent task"
-          : task.task.trim() || "Background task")),
+          : task.task.trim() || "Background task"),
   );
 }
 
@@ -57,9 +57,9 @@ export function formatTaskTerminalMessage(task: TaskRecord): string {
   const fallbackSummary = sanitizeTaskStatusText(task.terminalSummary, { errorContext: true });
   return error
     ? `Background task failed: ${title}${runLabel}. ${error}`
-    : (fallbackSummary
+    : fallbackSummary
       ? `Background task failed: ${title}${runLabel}. ${fallbackSummary}`
-      : `Background task failed: ${title}${runLabel}.`);
+      : `Background task failed: ${title}${runLabel}.`;
 }
 
 export function formatTaskBlockedFollowupMessage(task: TaskRecord): string | null {

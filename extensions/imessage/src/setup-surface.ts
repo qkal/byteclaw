@@ -37,7 +37,9 @@ export const imessageSetupWizard: ChannelSetupWizard = {
     unconfiguredScore: imessageSetupStatusBase.unconfiguredScore,
   }),
   textInputs: [
-    createIMessageCliPathTextInput(async ({ currentValue }) => !(await detectBinary(currentValue ?? "imsg"))),
+    createIMessageCliPathTextInput(
+      async ({ currentValue }) => !(await detectBinary(currentValue ?? "imsg")),
+    ),
   ],
 };
 

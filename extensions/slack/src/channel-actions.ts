@@ -58,7 +58,8 @@ export function createSlackActions(
   return {
     describeMessageTool,
     extractToolSend: ({ args }) => extractSlackToolSend(args),
-    handleAction: async (ctx) => await handleSlackMessageAction({
+    handleAction: async (ctx) =>
+      await handleSlackMessageAction({
         ctx,
         includeReadThreadId: true,
         invoke: async (action, cfg, toolContext) =>

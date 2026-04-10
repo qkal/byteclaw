@@ -14,9 +14,9 @@ const hoisted = vi.hoisted(() => ({
   readConfigFileSnapshotMock: vi.fn<() => Promise<ConfigFileSnapshot>>(),
 }));
 
-const {loadConfigMock} = hoisted;
-const {readConfigFileSnapshotMock} = hoisted;
-const {collectChannelDoctorStaleConfigMutationsMock} = hoisted;
+const { loadConfigMock } = hoisted;
+const { readConfigFileSnapshotMock } = hoisted;
+const { collectChannelDoctorStaleConfigMutationsMock } = hoisted;
 
 vi.mock("../config/config.js", () => ({
   loadConfig: () => loadConfigMock(),

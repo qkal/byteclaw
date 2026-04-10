@@ -89,9 +89,9 @@ function createHarness(params?: {
     getJoinedRooms: vi.fn(async () =>
       params?.getJoinedRoomsError
         ? await Promise.reject(params.getJoinedRoomsError)
-        : (Object.keys(params?.joinedMembersByRoom ?? {}).length > 0
+        : Object.keys(params?.joinedMembersByRoom ?? {}).length > 0
           ? Object.keys(params?.joinedMembersByRoom ?? {})
-          : ["!room:example.org"]),
+          : ["!room:example.org"],
     ),
     getRoomStateEvent: vi.fn(
       async (roomId: string, _eventType: string, stateKey: string) =>

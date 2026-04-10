@@ -113,7 +113,13 @@ export function watchClientDisconnect(
   abortController: AbortController,
   onDisconnect?: () => void,
 ) {
-  const sockets = [...new Set([req.socket, res.socket].filter((socket): socket is NonNullable<typeof socket> => socket !== null))];
+  const sockets = [
+    ...new Set(
+      [req.socket, res.socket].filter(
+        (socket): socket is NonNullable<typeof socket> => socket !== null,
+      ),
+    ),
+  ];
   if (sockets.length === 0) {
     return () => {};
   }

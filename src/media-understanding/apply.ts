@@ -117,10 +117,10 @@ function resolveUtf16Charset(buffer?: Buffer): "utf-16le" | "utf-16be" | undefin
   }
   const b0 = buffer[0];
   const b1 = buffer[1];
-  if (b0 === 0xFF && b1 === 0xFE) {
+  if (b0 === 0xff && b1 === 0xfe) {
     return "utf-16le";
   }
-  if (b0 === 0xFE && b1 === 0xFF) {
+  if (b0 === 0xfe && b1 === 0xff) {
     return "utf-16be";
   }
   const sampleLen = Math.min(buffer.length, 2048);
@@ -182,7 +182,7 @@ const CP1252_MAP: (string | undefined)[] = [
 function decodeLegacyText(buffer: Buffer): string {
   let output = "";
   for (const byte of buffer) {
-    if (byte >= 0x80 && byte <= 0x9F) {
+    if (byte >= 0x80 && byte <= 0x9f) {
       const mapped = CP1252_MAP[byte - 0x80];
       output += mapped ?? String.fromCharCode(byte);
       continue;
@@ -206,7 +206,7 @@ function getTextStats(text: string): { printableRatio: number; wordishRatio: num
       wordish += 1;
       continue;
     }
-    if (code < 32 || (code >= 0x7F && code <= 0x9F)) {
+    if (code < 32 || (code >= 0x7f && code <= 0x9f)) {
       control += 1;
       continue;
     }

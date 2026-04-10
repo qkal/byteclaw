@@ -7,11 +7,9 @@ import { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
 const DEFAULT_FALLBACK_BROWSER_TMP_DIR = "/tmp/openclaw";
 
 function canUseNodeFs(): boolean {
-  const {getBuiltinModule} = (
-    process as NodeJS.Process & {
-      getBuiltinModule?: (id: string) => unknown;
-    }
-  );
+  const { getBuiltinModule } = process as NodeJS.Process & {
+    getBuiltinModule?: (id: string) => unknown;
+  };
   if (typeof getBuiltinModule !== "function") {
     return false;
   }
@@ -29,7 +27,10 @@ export const DEFAULT_TRACE_DIR = DEFAULT_BROWSER_TMP_DIR;
 export const DEFAULT_DOWNLOAD_DIR = path.join(DEFAULT_BROWSER_TMP_DIR, "downloads");
 export const DEFAULT_UPLOAD_DIR = path.join(DEFAULT_BROWSER_TMP_DIR, "uploads");
 
-interface InvalidPathResult { ok: false; error: string }
+interface InvalidPathResult {
+  ok: false;
+  error: string;
+}
 
 function invalidPath(scopeLabel: string): InvalidPathResult {
   return {
@@ -253,7 +254,11 @@ async function resolveCheckedPathsWithinRoot(params: {
       });
       resolvedPaths.push(opened.realPath);
     } catch (error) {
-      if (params.allowMissingFallback && error instanceof SafeOpenError && error.code === "not-found") {
+      if (
+        params.allowMissingFallback &&
+        error instanceof SafeOpenError &&
+        error.code === "not-found"
+      ) {
         // Preserve historical behavior for paths that do not exist yet.
         resolvedPaths.push(pathResult.fallbackPath);
         continue;

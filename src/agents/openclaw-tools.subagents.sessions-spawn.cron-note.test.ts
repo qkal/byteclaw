@@ -11,7 +11,10 @@ import { SUBAGENT_SPAWN_ACCEPTED_NOTE } from "./subagent-spawn.js";
 
 const callGatewayMock = getCallGatewayMock();
 
-interface SpawnResult { status?: string; note?: string }
+interface SpawnResult {
+  status?: string;
+  note?: string;
+}
 
 describe("sessions_spawn: cron isolated session note suppression", () => {
   beforeEach(() => {

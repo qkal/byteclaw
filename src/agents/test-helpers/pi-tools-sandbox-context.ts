@@ -15,7 +15,7 @@ interface PiToolsSandboxContextParams {
 }
 
 export function createPiToolsSandboxContext(params: PiToolsSandboxContextParams): SandboxContext {
-  const {workspaceDir} = params;
+  const { workspaceDir } = params;
   return {
     agentWorkspaceDir: params.agentWorkspaceDir ?? workspaceDir,
     backendId: "docker",

@@ -57,14 +57,14 @@ export function buildDiscordNativeCommandContext(params: BuildDiscordNativeComma
     CommandArgs: params.commandArgs,
     From: params.isDirectMessage
       ? `discord:${params.user.id}`
-      : (params.isGroupDm
+      : params.isGroupDm
         ? `discord:group:${params.channelId}`
-        : `discord:channel:${params.channelId}`),
+        : `discord:channel:${params.channelId}`,
     To: `slash:${params.user.id}`,
     SessionKey: params.sessionKey,
     CommandTargetSessionKey: params.commandTargetSessionKey,
     AccountId: params.accountId ?? undefined,
-    ChatType: params.isDirectMessage ? "direct" : (params.isGroupDm ? "group" : "channel"),
+    ChatType: params.isDirectMessage ? "direct" : params.isGroupDm ? "group" : "channel",
     ConversationLabel: conversationLabel,
     GroupSubject: params.isGuild ? params.guildName : undefined,
     GroupSystemPrompt: groupSystemPrompt,

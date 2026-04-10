@@ -2,11 +2,7 @@ import {
   normalizeOptionalString,
   normalizeOptionalTrimmedStringList,
 } from "openclaw/plugin-sdk/text-runtime";
-import type {
-  BrowserConfig,
-  BrowserProfileConfig,
-  OpenClawConfig,
-} from "../config/config.js";
+import type { BrowserConfig, BrowserProfileConfig, OpenClawConfig } from "../config/config.js";
 import { resolveGatewayPort } from "../config/paths.js";
 import {
   DEFAULT_BROWSER_CONTROL_PORT,
@@ -255,9 +251,9 @@ export function resolveBrowserConfig(
     defaultProfileFromConfig ??
     (profiles[DEFAULT_BROWSER_DEFAULT_PROFILE_NAME]
       ? DEFAULT_BROWSER_DEFAULT_PROFILE_NAME
-      : (profiles[DEFAULT_OPENCLAW_BROWSER_PROFILE_NAME]
+      : profiles[DEFAULT_OPENCLAW_BROWSER_PROFILE_NAME]
         ? DEFAULT_OPENCLAW_BROWSER_PROFILE_NAME
-        : "user"));
+        : "user");
 
   const extraArgs = Array.isArray(cfg?.extraArgs)
     ? cfg.extraArgs.filter(
@@ -298,7 +294,7 @@ export function resolveProfile(
   }
 
   const rawProfileUrl = profile.cdpUrl?.trim() ?? "";
-  let {cdpHost} = resolved;
+  let { cdpHost } = resolved;
   let cdpPort = profile.cdpPort ?? 0;
   let cdpUrl = "";
   const driver = profile.driver === "existing-session" ? "existing-session" : "openclaw";

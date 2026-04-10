@@ -78,9 +78,9 @@ export function buildInboundMediaNote(ctx: MsgContext): string | undefined {
   const paths =
     pathsFromArray && pathsFromArray.length > 0
       ? pathsFromArray
-      : (ctx.MediaPath?.trim()
+      : ctx.MediaPath?.trim()
         ? [ctx.MediaPath.trim()]
-        : []);
+        : [];
   if (paths.length === 0) {
     return undefined;
   }

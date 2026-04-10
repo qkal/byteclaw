@@ -37,7 +37,7 @@ export function extractCites(content: unknown): ParsedCite[] {
 
   for (const verse of content) {
     if (verse?.block?.cite && typeof verse.block.cite === "object") {
-      const {cite} = verse.block;
+      const { cite } = verse.block;
 
       if (cite.chan && typeof cite.chan === "object") {
         const { nest, where } = cite.chan;
@@ -208,7 +208,7 @@ function renderInlineItem(
     return ship;
   }
   if ("sect" in record) {
-    const {sect} = record;
+    const { sect } = record;
     if (typeof sect === "string") {
       return `@${sect || "all"}`;
     }

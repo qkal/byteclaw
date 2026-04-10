@@ -56,7 +56,7 @@ export async function readPinnedEvents(client: MatrixClient, roomId: string): Pr
       EventType.RoomPinnedEvents,
       "",
     )) as RoomPinnedEventsEventContent;
-    const {pinned} = content;
+    const { pinned } = content;
     return pinned.filter((id) => id.trim().length > 0);
   } catch (error: unknown) {
     if (isMatrixNotFoundError(error)) {

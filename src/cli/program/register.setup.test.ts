@@ -12,9 +12,9 @@ const mocks = vi.hoisted(() => ({
   setupWizardCommandMock: vi.fn(),
 }));
 
-const {setupCommandMock} = mocks;
-const {setupWizardCommandMock} = mocks;
-const {runtime} = mocks;
+const { setupCommandMock } = mocks;
+const { setupWizardCommandMock } = mocks;
+const { runtime } = mocks;
 
 vi.mock("../../commands/setup.js", () => ({
   setupCommand: mocks.setupCommandMock,

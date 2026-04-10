@@ -62,9 +62,9 @@ export function createLineNodeWebhookHandler(params: {
       const signature =
         typeof signatureHeader === "string"
           ? signatureHeader.trim()
-          : (Array.isArray(signatureHeader)
+          : Array.isArray(signatureHeader)
             ? (signatureHeader[0] ?? "").trim()
-            : "");
+            : "";
 
       if (!signature) {
         logVerbose("line: webhook missing X-Line-Signature header");

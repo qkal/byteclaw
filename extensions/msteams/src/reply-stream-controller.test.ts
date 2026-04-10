@@ -20,14 +20,14 @@ vi.mock("./streaming-message.js", () => ({
     isFailed = false;
     streamedLength = 0;
     sendInformativeUpdate = vi.fn(async () => {});
-    update = vi.fn(function  update(
+    update = vi.fn(function update(
       this: { hasContent: boolean; streamedLength: number },
       payloadText?: string,
     ) {
       this.hasContent = true;
       this.streamedLength = payloadText?.length ?? 0;
     });
-    finalize = vi.fn(async function  finalize(this: { isFinalized: boolean }) {
+    finalize = vi.fn(async function finalize(this: { isFinalized: boolean }) {
       this.isFinalized = true;
     });
 

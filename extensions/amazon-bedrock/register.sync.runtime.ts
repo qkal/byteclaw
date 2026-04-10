@@ -43,7 +43,8 @@ function createGuardrailWrapStreamFn(
     if (!inner) {
       return inner;
     }
-    return (model, context, options) => streamWithPayloadPatch(inner, model, context, options, (payload) => {
+    return (model, context, options) =>
+      streamWithPayloadPatch(inner, model, context, options, (payload) => {
         const gc: Record<string, unknown> = {
           guardrailIdentifier: guardrailConfig.guardrailIdentifier,
           guardrailVersion: guardrailConfig.guardrailVersion,
@@ -76,7 +77,7 @@ export function registerAmazonBedrockPlugin(api: OpenClawPluginApi): void {
     family: "anthropic-by-model",
   });
   const pluginConfig = (api.pluginConfig ?? {}) as AmazonBedrockPluginConfig;
-  const {guardrail} = pluginConfig;
+  const { guardrail } = pluginConfig;
 
   const baseWrapStreamFn = ({ modelId, streamFn }: { modelId: string; streamFn?: StreamFn }) =>
     isAnthropicBedrockModel(modelId) ? streamFn : createBedrockNoCacheWrapper(streamFn);
@@ -173,7 +174,7 @@ export function registerAmazonBedrockPlugin(api: OpenClawPluginApi): void {
         // Pi-ai's bedrock provider reads `options.region` at runtime but the
         // StreamFn type does not declare it. Merge via Object.assign to avoid
         // An unsafe type assertion.
-        const merged = { ...options, region};
+        const merged = { ...options, region };
         return underlying(streamModel, context, merged);
       };
     },

@@ -249,7 +249,7 @@ export function formatRefEntryForAgent(entry: RefIndexEntry): string {
 
   if (entry.attachments?.length) {
     for (const att of entry.attachments) {
-      const sourceHint = att.localPath ? ` (${att.localPath})` : (att.url ? ` (${att.url})` : "");
+      const sourceHint = att.localPath ? ` (${att.localPath})` : att.url ? ` (${att.url})` : "";
       switch (att.type) {
         case "image": {
           parts.push(`[image${att.filename ? `: ${att.filename}` : ""}${sourceHint}]`);

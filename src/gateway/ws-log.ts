@@ -206,7 +206,7 @@ export function summarizeAgentEventForWsLog(payload: unknown): Record<string, un
     if (text?.trim()) {
       extra.text = compactPreview(text);
     }
-    const {mediaCount} = resolveSendableOutboundReplyParts({
+    const { mediaCount } = resolveSendableOutboundReplyParts({
       mediaUrls: Array.isArray(data.mediaUrls) ? data.mediaUrls : undefined,
     });
     if (mediaCount > 0) {
@@ -403,9 +403,9 @@ function logWsCompact(direction: "in" | "out", kind: string, meta?: Record<strin
   const arrowColor =
     kind === "req" || kind === "res"
       ? chalk.yellowBright
-      : (direction === "in"
+      : direction === "in"
         ? chalk.greenBright
-        : chalk.cyanBright);
+        : chalk.cyanBright;
 
   const prefix = `${arrowColor(compactArrow)} ${chalk.bold(kind)}`;
 

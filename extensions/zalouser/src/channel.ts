@@ -150,7 +150,7 @@ export const zalouserPlugin: ChannelPlugin<ResolvedZalouserAccount, ZalouserProb
           ).logoutZaloProfile(ctx.account.profile || resolveZalouserQrProfile(ctx.accountId)),
         startAccount: async (ctx) => {
           const { getZaloUserInfo } = await loadZalouserChannelRuntime();
-          const {account} = ctx;
+          const { account } = ctx;
           let userLabel = "";
           try {
             const userInfo = await getZaloUserInfo(account.profile);

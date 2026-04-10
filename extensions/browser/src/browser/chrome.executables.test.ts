@@ -19,7 +19,9 @@ describe("chrome executables", () => {
   });
 
   it("classifies beta Linux Google Chrome builds as canary", () => {
-    vi.spyOn(fs, "existsSync").mockImplementation((candidate) => String(candidate) === "/usr/bin/google-chrome-beta");
+    vi.spyOn(fs, "existsSync").mockImplementation(
+      (candidate) => String(candidate) === "/usr/bin/google-chrome-beta",
+    );
 
     expect(resolveGoogleChromeExecutableForPlatform("linux")).toEqual({
       kind: "canary",
@@ -28,7 +30,9 @@ describe("chrome executables", () => {
   });
 
   it("classifies unstable Linux Google Chrome builds as canary", () => {
-    vi.spyOn(fs, "existsSync").mockImplementation((candidate) => String(candidate) === "/usr/bin/google-chrome-unstable");
+    vi.spyOn(fs, "existsSync").mockImplementation(
+      (candidate) => String(candidate) === "/usr/bin/google-chrome-unstable",
+    );
 
     expect(resolveGoogleChromeExecutableForPlatform("linux")).toEqual({
       kind: "canary",

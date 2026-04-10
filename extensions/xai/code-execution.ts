@@ -38,11 +38,11 @@ function readPluginCodeExecutionConfig(cfg?: unknown): CodeExecutionConfig | und
   if (!xaiEntry || typeof xaiEntry !== "object") {
     return undefined;
   }
-  const {config} = (xaiEntry as Record<string, unknown>);
+  const { config } = xaiEntry as Record<string, unknown>;
   if (!config || typeof config !== "object") {
     return undefined;
   }
-  const {codeExecution} = (config as Record<string, unknown>);
+  const { codeExecution } = config as Record<string, unknown>;
   if (!codeExecution || typeof codeExecution !== "object") {
     return undefined;
   }

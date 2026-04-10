@@ -426,7 +426,7 @@ export class TwilioProvider implements VoiceCallProvider {
 
     // Extract just the origin (host) from the public URL, ignoring any path
     const url = new URL(this.currentPublicUrl);
-    const {origin} = url;
+    const { origin } = url;
 
     // Convert https:// to wss:// for WebSocket
     const wsOrigin = origin.replace(/^https:\/\//, "wss://").replace(/^http:\/\//, "ws://");
@@ -611,10 +611,10 @@ export class TwilioProvider implements VoiceCallProvider {
     // Stream audio in 20ms chunks (160 bytes at 8kHz mu-law)
     const CHUNK_SIZE = 160;
     const CHUNK_DELAY_MS = 20;
-    const SILENCE_CHUNK = Buffer.alloc(CHUNK_SIZE, 0xFF);
+    const SILENCE_CHUNK = Buffer.alloc(CHUNK_SIZE, 0xff);
 
     const handler = this.mediaStreamHandler;
-    const {ttsProvider} = this;
+    const { ttsProvider } = this;
 
     const normalizeSendResult = (raw: unknown): StreamSendResult => {
       if (!raw || typeof raw !== "object") {

@@ -159,7 +159,7 @@ function resolveRuntimeLabel(
     if (sandboxMode === "off") {
       return "direct";
     }
-    const runtime = runtimeStatus.sandboxed ? "docker" : (sessionKey ? "direct" : "unknown");
+    const runtime = runtimeStatus.sandboxed ? "docker" : sessionKey ? "direct" : "unknown";
     return `${runtime}/${sandboxMode}`;
   }
 
@@ -186,7 +186,7 @@ function resolveRuntimeLabel(
     });
     return sessionKey !== mainKey.trim();
   })();
-  const runtime = sandboxed ? "docker" : (sessionKey ? "direct" : "unknown");
+  const runtime = sandboxed ? "docker" : sessionKey ? "direct" : "unknown";
   return `${runtime}/${sandboxMode}`;
 }
 
@@ -292,9 +292,9 @@ const readUsageFromSessionLog = (
       return undefined;
     }
     const model = snapshot.modelProvider
-      ? (snapshot.model
+      ? snapshot.model
         ? `${snapshot.modelProvider}/${snapshot.model}`
-        : snapshot.modelProvider)
+        : snapshot.modelProvider
       : snapshot.model;
 
     return {
@@ -577,9 +577,9 @@ export function buildStatusMessage(args: StatusArgs): string {
       : undefined;
   const cappedConfiguredContextTokens =
     typeof explicitConfiguredContextTokens === "number"
-      ? (typeof activeContextTokens === "number"
+      ? typeof activeContextTokens === "number"
         ? Math.min(explicitConfiguredContextTokens, activeContextTokens)
-        : explicitConfiguredContextTokens)
+        : explicitConfiguredContextTokens
       : undefined;
   // When a fallback model is active, the selected-model context limit that
   // Callers keep on the agent config is often stale. Prefer an explicit runtime
@@ -673,14 +673,14 @@ export function buildStatusMessage(args: StatusArgs): string {
   const queueMode = args.queue?.mode ?? "unknown";
   const queueDetails = formatQueueDetails(args.queue);
   const verboseLabel =
-    verboseLevel === "full" ? "verbose:full" : (verboseLevel === "on" ? "verbose" : null);
+    verboseLevel === "full" ? "verbose:full" : verboseLevel === "on" ? "verbose" : null;
   const pluginDebugLines = verboseLevel !== "off" ? resolveSessionPluginDebugLines(entry) : [];
   const pluginStatusLine = pluginDebugLines.length > 0 ? pluginDebugLines.join(" · ") : null;
   const elevatedLabel =
     elevatedLevel && elevatedLevel !== "off"
-      ? (elevatedLevel === "on"
+      ? elevatedLevel === "on"
         ? "elevated"
-        : `elevated:${elevatedLevel}`)
+        : `elevated:${elevatedLevel}`
       : null;
   const textVerbosity = resolveConfiguredTextVerbosity({
     agentId: args.agentId,

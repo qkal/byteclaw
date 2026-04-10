@@ -77,7 +77,7 @@ export const nextcloudTalkGatewayAdapter: NonNullable<
     };
   },
   startAccount: async (ctx) => {
-    const {account} = ctx;
+    const { account } = ctx;
     if (!account.secret || !account.baseUrl) {
       throw new Error(
         `Nextcloud Talk not configured for account "${account.accountId}" (missing secret or baseUrl)`,

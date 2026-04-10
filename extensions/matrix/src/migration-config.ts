@@ -169,7 +169,7 @@ export function resolveMatrixMigrationAccountTarget(params: {
   })
     ? stored
     : null;
-  const {homeserver} = resolved;
+  const { homeserver } = resolved;
   const userId = resolved.userId || matchingStored?.userId || "";
   const accessToken = resolved.accessToken || matchingStored?.accessToken || "";
   if (!homeserver || !userId || !accessToken) {

@@ -3,8 +3,8 @@
  * Provides a unified ChildProcess-like API across Bun and Node.js.
  */
 
-import type { ChildProcess as NodeChildProcess } from 'node:child_process';
-import { EventEmitter } from 'node:events';
+import type { ChildProcess as NodeChildProcess } from "node:child_process";
+import { EventEmitter } from "node:events";
 
 /**
  * Minimal readable stream interface for stdin/stdout/stderr
@@ -82,7 +82,7 @@ export interface ChildProcessWrapperFactory {
 export interface SubprocessWrapperOptions {
   cwd?: string | URL;
   env?: NodeJS.ProcessEnv;
-  stdio?: 'inherit' | 'pipe' | 'ignore' | Array<'inherit' | 'pipe' | 'ignore'>;
+  stdio?: "inherit" | "pipe" | "ignore" | Array<"inherit" | "pipe" | "ignore">;
   detached?: boolean;
   shell?: boolean | string;
   windowsHide?: boolean;

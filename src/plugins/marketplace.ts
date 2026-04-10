@@ -597,7 +597,7 @@ async function loadMarketplace(params: {
 }
 
 function resolveSafeMarketplaceDownloadFileName(url: string, fallback: string): string {
-  const {pathname} = new URL(url);
+  const { pathname } = new URL(url);
   const fileName = path.basename(pathname).trim() || fallback;
   if (
     fileName === "." ||
@@ -891,7 +891,7 @@ async function validateMarketplaceManifest(params: {
 
   const canonicalRootDir = await fs.realpath(params.rootDir);
   for (const plugin of params.manifest.plugins) {
-    const {source} = plugin;
+    const { source } = plugin;
     if (source.kind === "path") {
       if (isHttpUrl(source.path)) {
         return {

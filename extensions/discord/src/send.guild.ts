@@ -115,7 +115,7 @@ export async function timeoutMemberDiscord(
   opts: DiscordReactOpts = {},
 ): Promise<APIGuildMember> {
   const rest = resolveDiscordRest(opts);
-  let {until} = payload;
+  let { until } = payload;
   if (!until && payload.durationMinutes) {
     const ms = payload.durationMinutes * 60 * 1000;
     until = new Date(Date.now() + ms).toISOString();

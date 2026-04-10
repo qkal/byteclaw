@@ -72,11 +72,11 @@ export function applyGoogleGeminiModelDefault(cfg: OpenClawConfig): {
   const currentPrimary =
     typeof current === "string"
       ? current.trim() || undefined
-      : (current &&
+      : current &&
           typeof current === "object" &&
           typeof (current as { primary?: unknown }).primary === "string"
         ? ((current as { primary: string }).primary || "").trim() || undefined
-        : undefined);
+        : undefined;
   if (currentPrimary === GOOGLE_GEMINI_DEFAULT_MODEL) {
     return { changed: false, next: cfg };
   }

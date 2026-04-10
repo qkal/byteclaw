@@ -12,7 +12,11 @@ import { runCommandWithTimeout } from "../process/exec.js";
 import { parseTarVerboseMetadata } from "./skills-install-tar-verbose.js";
 import { hasBinary } from "./skills.js";
 
-export interface ArchiveExtractResult { stdout: string; stderr: string; code: number | null }
+export interface ArchiveExtractResult {
+  stdout: string;
+  stderr: string;
+  code: number | null;
+}
 interface TarPreflightResult {
   entries: string[];
   metadata: ReturnType<typeof parseTarVerboseMetadata>;

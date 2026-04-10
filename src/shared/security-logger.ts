@@ -59,7 +59,7 @@ class SecurityLogger {
     };
 
     this.history.push(event);
-    
+
     // Trim history if exceeds max size
     if (this.history.length > this.options.maxHistory) {
       this.history.shift();

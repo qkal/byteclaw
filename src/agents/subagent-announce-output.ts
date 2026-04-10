@@ -120,8 +120,8 @@ function extractSubagentOutputText(message: unknown): string {
   if (!message || typeof message !== "object") {
     return "";
   }
-  const {role} = (message as { role?: unknown });
-  const {content} = (message as { content?: unknown });
+  const { role } = message as { role?: unknown };
+  const { content } = message as { content?: unknown };
   if (role === "assistant") {
     return extractAssistantText(message) ?? "";
   }
@@ -148,7 +148,7 @@ function countAssistantToolCalls(content: unknown): number {
     if (!block || typeof block !== "object") {
       continue;
     }
-    const {type} = (block as { type?: unknown });
+    const { type } = block as { type?: unknown };
     if (
       type === "toolCall" ||
       type === "tool_use" ||
@@ -171,7 +171,7 @@ function summarizeSubagentOutputHistory(messages: unknown[]): SubagentOutputSnap
     if (!message || typeof message !== "object") {
       continue;
     }
-    const {role} = (message as { role?: unknown });
+    const { role } = message as { role?: unknown };
     if (role === "assistant") {
       snapshot.toolCallCount += countAssistantToolCalls((message as { content?: unknown }).content);
       const text = extractSubagentOutputText(message).trim();

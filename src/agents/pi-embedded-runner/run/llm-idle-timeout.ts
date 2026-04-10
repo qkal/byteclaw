@@ -73,7 +73,8 @@ export function streamWithIdleTimeout(
           const iterator = originalAsyncIterator();
           let idleTimer: NodeJS.Timeout | null = null;
 
-          const createTimeoutPromise = (): Promise<never> => new Promise((_, reject) => {
+          const createTimeoutPromise = (): Promise<never> =>
+            new Promise((_, reject) => {
               idleTimer = setTimeout(() => {
                 const error = new Error(
                   `LLM idle timeout (${Math.floor(timeoutMs / 1000)}s): no response from model`,

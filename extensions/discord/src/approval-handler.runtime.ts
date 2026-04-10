@@ -215,9 +215,9 @@ function createPluginApprovalRequestContainer(params: {
   actionRow?: Row<Button>;
 }): ExecApprovalContainer {
   const expiresAtSeconds = Math.max(0, Math.floor(params.view.expiresAtMs / 1000));
-  const {severity} = params.view;
+  const { severity } = params.view;
   const accentColor =
-    severity === "critical" ? "#ED4245" : (severity === "info" ? "#5865F2" : "#FAA61A");
+    severity === "critical" ? "#ED4245" : severity === "info" ? "#5865F2" : "#FAA61A";
   return new ExecApprovalContainer({
     accentColor,
     accountId: params.accountId,
@@ -246,15 +246,15 @@ function createExecResolvedContainer(params: {
   const decisionLabel =
     params.view.decision === "allow-once"
       ? "Allowed (once)"
-      : (params.view.decision === "allow-always"
+      : params.view.decision === "allow-always"
         ? "Allowed (always)"
-        : "Denied");
+        : "Denied";
   const accentColor =
     params.view.decision === "deny"
       ? "#ED4245"
-      : (params.view.decision === "allow-always"
+      : params.view.decision === "allow-always"
         ? "#5865F2"
-        : "#57F287");
+        : "#57F287";
 
   return new ExecApprovalContainer({
     accentColor,
@@ -277,15 +277,15 @@ function createPluginResolvedContainer(params: {
   const decisionLabel =
     params.view.decision === "allow-once"
       ? "Allowed (once)"
-      : (params.view.decision === "allow-always"
+      : params.view.decision === "allow-always"
         ? "Allowed (always)"
-        : "Denied");
+        : "Denied";
   const accentColor =
     params.view.decision === "deny"
       ? "#ED4245"
-      : (params.view.decision === "allow-always"
+      : params.view.decision === "allow-always"
         ? "#5865F2"
-        : "#57F287");
+        : "#57F287";
 
   return new ExecApprovalContainer({
     accentColor,

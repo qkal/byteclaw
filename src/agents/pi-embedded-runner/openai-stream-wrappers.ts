@@ -40,7 +40,7 @@ function shouldApplyOpenAIAttributionHeaders(model: {
   provider?: unknown;
   baseUrl?: unknown;
 }): "openai" | "openai-codex" | undefined {
-  const {attributionProvider} = resolveOpenAIRequestCapabilities(model);
+  const { attributionProvider } = resolveOpenAIRequestCapabilities(model);
   return attributionProvider === "openai" || attributionProvider === "openai-codex"
     ? attributionProvider
     : undefined;

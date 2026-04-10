@@ -296,7 +296,7 @@ function coerceAllowlistEntries(allowlist: unknown): ExecAllowlistEntry[] | unde
         changed = true; // Dropped empty string
       }
     } else if (item && typeof item === "object" && !Array.isArray(item)) {
-      const {pattern} = (item as { pattern?: unknown });
+      const { pattern } = item as { pattern?: unknown };
       if (typeof pattern === "string" && pattern.trim().length > 0) {
         result.push(item as ExecAllowlistEntry);
       } else {

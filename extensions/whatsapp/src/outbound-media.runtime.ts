@@ -16,9 +16,9 @@ export async function loadOutboundMediaFromUrl(
   const localRoots =
     options.mediaAccess?.localRoots?.length && options.mediaAccess.localRoots.length > 0
       ? options.mediaAccess.localRoots
-      : (options.mediaLocalRoots && options.mediaLocalRoots.length > 0
+      : options.mediaLocalRoots && options.mediaLocalRoots.length > 0
         ? options.mediaLocalRoots
-        : undefined);
+        : undefined;
   return await loadWebMedia(
     mediaUrl,
     readFile

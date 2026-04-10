@@ -18,8 +18,8 @@ function summarizeMusicGenerationCapabilities(
   provider: ReturnType<typeof listRuntimeMusicGenerationProviders>[number],
 ): string {
   const supportedModes = listSupportedMusicGenerationModes(provider);
-  const {generate} = provider.capabilities;
-  const {edit} = provider.capabilities;
+  const { generate } = provider.capabilities;
+  const { edit } = provider.capabilities;
   const capabilities = [
     supportedModes.length > 0 ? `modes=${supportedModes.join("/")}` : null,
     generate?.maxTracks ? `maxTracks=${generate.maxTracks}` : null,

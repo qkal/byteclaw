@@ -72,7 +72,7 @@ import { looksLikeFeishuId, normalizeFeishuTarget } from "./targets.js";
 import type { FeishuConfig, FeishuProbeResult, ResolvedFeishuAccount } from "./types.js";
 
 function readFeishuMediaParam(params: Record<string, unknown>): string | undefined {
-  const {media} = params;
+  const { media } = params;
   if (typeof media !== "string") {
     return undefined;
   }

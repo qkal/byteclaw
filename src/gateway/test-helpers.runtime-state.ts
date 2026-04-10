@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import os from "node:os";
 import path from "node:path";
-import type { Mock} from "vitest";
+import type { Mock } from "vitest";
 import { vi } from "vitest";
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { GetReplyOptions, ReplyPayload } from "../auto-reply/types.js";
@@ -145,22 +145,22 @@ export function getGatewayTestHoistedState(): GatewayTestHoistedState {
   return gatewayTestHoisted;
 }
 
-export const {testTailnetIPv4} = gatewayTestHoisted;
-export const {testTailscaleWhois} = gatewayTestHoisted;
-export const {piSdkMock} = gatewayTestHoisted;
-export const {cronIsolatedRun} = gatewayTestHoisted;
-export const {agentCommand} = gatewayTestHoisted;
-export const {runBtwSideQuestion} = gatewayTestHoisted;
+export const { testTailnetIPv4 } = gatewayTestHoisted;
+export const { testTailscaleWhois } = gatewayTestHoisted;
+export const { piSdkMock } = gatewayTestHoisted;
+export const { cronIsolatedRun } = gatewayTestHoisted;
+export const { agentCommand } = gatewayTestHoisted;
+export const { runBtwSideQuestion } = gatewayTestHoisted;
 export const dispatchInboundMessageMock = gatewayTestHoisted.dispatchInboundMessage;
-export const {getReplyFromConfig} = gatewayTestHoisted;
+export const { getReplyFromConfig } = gatewayTestHoisted;
 export const mockGetReplyFromConfigOnce = (impl: GetReplyFromConfigFn) => {
   getReplyFromConfig.mockImplementationOnce(impl);
 };
-export const {sendWhatsAppMock} = gatewayTestHoisted;
-export const {testState} = gatewayTestHoisted;
-export const {testIsNixMode} = gatewayTestHoisted;
-export const {sessionStoreSaveDelayMs} = gatewayTestHoisted;
-export const {embeddedRunMock} = gatewayTestHoisted;
+export const { sendWhatsAppMock } = gatewayTestHoisted;
+export const { testState } = gatewayTestHoisted;
+export const { testIsNixMode } = gatewayTestHoisted;
+export const { sessionStoreSaveDelayMs } = gatewayTestHoisted;
+export const { embeddedRunMock } = gatewayTestHoisted;
 
 export const testConfigRoot = resolveGlobalSingleton(GATEWAY_TEST_CONFIG_ROOT_KEY, () => ({
   value: path.join(os.tmpdir(), `openclaw-gateway-test-${process.pid}-${crypto.randomUUID()}`),

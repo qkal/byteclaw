@@ -190,7 +190,7 @@ const STICKER_PACKAGES: Record<string, string> = {
 };
 
 function describeStickerKeywords(sticker: StickerEventMessage): string {
-  const {keywords} = (sticker as StickerEventMessage & { keywords?: string[] });
+  const { keywords } = sticker as StickerEventMessage & { keywords?: string[] };
   if (keywords && keywords.length > 0) {
     return keywords.slice(0, 3).join(", ");
   }
@@ -438,16 +438,16 @@ async function finalizeLineInboundContext(params: {
 export async function buildLineMessageContext(params: BuildLineMessageContextParams) {
   const { event, allMedia, cfg, account, commandAuthorized, groupHistories, historyLimit } = params;
 
-  const {source} = event;
+  const { source } = event;
   const { userId, groupId, roomId, isGroup, peerId, route } = await resolveLineInboundRoute({
     account,
     cfg,
     source,
   });
 
-  const {message} = event;
+  const { message } = event;
   const messageId = message.id;
-  const {timestamp} = event;
+  const { timestamp } = event;
 
   const textContent = extractMessageText(message);
   const placeholder = extractMediaPlaceholder(message);
@@ -527,14 +527,14 @@ export async function buildLinePostbackContext(params: {
 }) {
   const { event, cfg, account, commandAuthorized } = params;
 
-  const {source} = event;
+  const { source } = event;
   const { userId, groupId, roomId, isGroup, peerId, route } = await resolveLineInboundRoute({
     account,
     cfg,
     source,
   });
 
-  const {timestamp} = event;
+  const { timestamp } = event;
   const rawData = event.postback?.data?.trim() ?? "";
   if (!rawData) {
     return null;

@@ -843,9 +843,7 @@ describe("setupChannels", () => {
     const select = vi.fn(async ({ message, options }: { message: string; options: unknown[] }) => {
       if (message === "Select a channel") {
         expect(
-          (options as { label?: string }[]).some((option) =>
-            option.label?.includes("QA Channel"),
-          ),
+          (options as { label?: string }[]).some((option) => option.label?.includes("QA Channel")),
         ).toBe(false);
       }
       return "__done__";

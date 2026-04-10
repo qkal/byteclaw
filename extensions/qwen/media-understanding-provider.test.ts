@@ -42,9 +42,9 @@ describe("describeQwenVideo", () => {
     const bodyText =
       typeof init?.body === "string"
         ? init.body
-        : (Buffer.isBuffer(init?.body)
+        : Buffer.isBuffer(init?.body)
           ? init.body.toString("utf8")
-          : "");
+          : "";
     const body = JSON.parse(bodyText);
     expect(body.model).toBe("qwen-vl-max");
     expect(body.messages?.[0]?.content?.[0]?.text).toBe("summarize the clip");

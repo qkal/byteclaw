@@ -207,7 +207,7 @@ export function normalizeStoredCronJobs(
       incrementIssue(issues, key);
     };
 
-    const {state} = raw;
+    const { state } = raw;
     if (!state || typeof state !== "object" || Array.isArray(state)) {
       raw.state = {};
       mutated = true;
@@ -275,7 +275,7 @@ export function normalizeStoredCronJobs(
       mutated = true;
     }
 
-    const {payload} = raw;
+    const { payload } = raw;
     if (
       (!payload || typeof payload !== "object" || Array.isArray(payload)) &&
       inferPayloadIfMissing(raw)
@@ -347,7 +347,7 @@ export function normalizeStoredCronJobs(
       }
     }
 
-    const {schedule} = raw;
+    const { schedule } = raw;
     if (schedule && typeof schedule === "object" && !Array.isArray(schedule)) {
       const sched = schedule as Record<string, unknown>;
       const kind = normalizeOptionalLowercaseString(sched.kind) ?? "";
@@ -431,7 +431,7 @@ export function normalizeStoredCronJobs(
       }
     }
 
-    const {delivery} = raw;
+    const { delivery } = raw;
     if (delivery && typeof delivery === "object" && !Array.isArray(delivery)) {
       const modeRaw = (delivery as { mode?: unknown }).mode;
       if (typeof modeRaw === "string") {
@@ -447,7 +447,7 @@ export function normalizeStoredCronJobs(
       }
     }
 
-    const {isolation} = raw;
+    const { isolation } = raw;
     if (isolation && typeof isolation === "object" && !Array.isArray(isolation)) {
       delete raw.isolation;
       mutated = true;

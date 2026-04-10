@@ -77,7 +77,7 @@ export function resolveAcpSessionIdentifierLinesFromIdentity(params: {
 }): string[] {
   const backend = normalizeText(params.backend) ?? "backend";
   const mode = params.mode ?? "status";
-  const {identity} = params;
+  const { identity } = params;
   const agentSessionId = normalizeText(identity?.agentSessionId);
   const acpxSessionId = normalizeText(identity?.acpxSessionId);
   const acpxRecordId = normalizeText(identity?.acpxRecordId);
@@ -113,7 +113,7 @@ export function resolveAcpThreadSessionDetailLines(params: {
   sessionKey: string;
   meta?: SessionAcpMeta;
 }): string[] {
-  const {meta} = params;
+  const { meta } = params;
   const identity = resolveSessionIdentityFromMeta(meta);
   const backend = normalizeText(meta?.backend) ?? "backend";
   const lines = resolveAcpSessionIdentifierLinesFromIdentity({

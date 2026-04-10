@@ -4,8 +4,13 @@ import { toStringEnv } from "./env.js";
 
 const FORCE_KILL_WAIT_FALLBACK_MS = 4000;
 
-interface PtyExitEvent { exitCode: number; signal?: number }
-interface PtyDisposable { dispose: () => void }
+interface PtyExitEvent {
+  exitCode: number;
+  signal?: number;
+}
+interface PtyDisposable {
+  dispose: () => void;
+}
 interface PtySpawnHandle {
   pid: number;
   write: (data: string | Buffer) => void;

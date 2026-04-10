@@ -165,7 +165,7 @@ async function resolveCliProgramArguments(params: {
   runtime?: GatewayRuntimePreference;
   nodePath?: string;
 }): Promise<GatewayProgramArgs> {
-  const {execPath} = process;
+  const { execPath } = process;
   const runtime = params.runtime ?? "auto";
 
   if (runtime === "node") {

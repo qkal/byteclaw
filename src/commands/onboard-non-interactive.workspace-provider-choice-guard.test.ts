@@ -55,7 +55,7 @@ async function removeDirWithRetry(dir: string): Promise<void> {
       await fs.rm(dir, { force: true, recursive: true });
       return;
     } catch (error) {
-      const {code} = (error as NodeJS.ErrnoException);
+      const { code } = error as NodeJS.ErrnoException;
       const isTransient = code === "ENOTEMPTY" || code === "EBUSY" || code === "EPERM";
       if (!isTransient || attempt === 4) {
         throw error;

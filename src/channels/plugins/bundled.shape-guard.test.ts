@@ -254,29 +254,29 @@ describe("bundled channel entry shape guards", () => {
     let reentered = false;
     vi.doMock("jiti", () => ({
       createJiti: () => () => {
-          if (!reentered) {
-            reentered = true;
-            expect(bundled.listBundledChannelPlugins()).toEqual([]);
-          }
-          return {
-            default: {
-              configSchema: {},
-              description: "Alpha",
-              id: "alpha",
-              kind: "bundled-channel-entry",
-              loadChannelPlugin() {
-                return {
-                  id: "alpha",
-                  meta: {},
-                  capabilities: {},
-                  config: {},
-                };
-              },
-              name: "Alpha",
-              register() {},
+        if (!reentered) {
+          reentered = true;
+          expect(bundled.listBundledChannelPlugins()).toEqual([]);
+        }
+        return {
+          default: {
+            configSchema: {},
+            description: "Alpha",
+            id: "alpha",
+            kind: "bundled-channel-entry",
+            loadChannelPlugin() {
+              return {
+                id: "alpha",
+                meta: {},
+                capabilities: {},
+                config: {},
+              };
             },
-          };
-        },
+            name: "Alpha",
+            register() {},
+          },
+        };
+      },
     }));
 
     const bundled = await importFreshModule<typeof import("./bundled.js")>(

@@ -74,9 +74,9 @@ function buildGoogleTemplateSources(params: {
 }): GoogleTemplateSource[] {
   const defaultTemplateProviderId = params.templateProviderId?.trim()
     ? params.templateProviderId
-    : (isGoogleGeminiCliProvider(params.providerId)
+    : isGoogleGeminiCliProvider(params.providerId)
       ? "google"
-      : GOOGLE_GEMINI_CLI_PROVIDER_ID);
+      : GOOGLE_GEMINI_CLI_PROVIDER_ID;
   const preferredExternalFirst =
     isGoogleGeminiCliProvider(params.providerId) &&
     params.family.preferExternalFirstForCli === true;

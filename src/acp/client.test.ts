@@ -726,7 +726,10 @@ describe("resolvePermissionRequest", () => {
       { log, prompt },
     );
 
-    expect(prompt).toHaveBeenCalledWith("exec", String.raw`exec: [permission] Allow "safe"? (y/N) \nnext`);
+    expect(prompt).toHaveBeenCalledWith(
+      "exec",
+      String.raw`exec: [permission] Allow "safe"? (y/N) \nnext`,
+    );
     expect(log).toHaveBeenCalledWith(
       '\n[permission requested] exec: [permission] Allow "safe"? (y/N) \\nnext (exec) [exec_capable]',
     );
@@ -742,8 +745,8 @@ describe("acp event mapper", () => {
         return false;
       }
       return (
-        codePoint <= 0x1F ||
-        (codePoint >= 0x7F && codePoint <= 0x9F) ||
+        codePoint <= 0x1f ||
+        (codePoint >= 0x7f && codePoint <= 0x9f) ||
         codePoint === 0x20_28 ||
         codePoint === 0x20_29
       );
@@ -793,7 +796,7 @@ describe("acp event mapper", () => {
   it("never emits raw C0/C1 or unicode line separators from resource link metadata", () => {
     const controls = [
       ...Array.from({ length: 0x20 }, (_, codePoint) => String.fromCharCode(codePoint)),
-      ...Array.from({ length: 0x21 }, (_, index) => String.fromCharCode(0x7F + index)),
+      ...Array.from({ length: 0x21 }, (_, index) => String.fromCharCode(0x7f + index)),
       "\u2028",
       "\u2029",
     ];

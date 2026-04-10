@@ -189,8 +189,8 @@ describe("nextcloud talk setup", () => {
   });
 
   it("validates env/default-account constraints and applies config patches", () => {
-    const {validateInput} = nextcloudTalkSetupAdapter;
-    const {applyAccountConfig} = nextcloudTalkSetupAdapter;
+    const { validateInput } = nextcloudTalkSetupAdapter;
+    const { applyAccountConfig } = nextcloudTalkSetupAdapter;
     expect(validateInput).toBeTypeOf("function");
     expect(applyAccountConfig).toBeTypeOf("function");
 

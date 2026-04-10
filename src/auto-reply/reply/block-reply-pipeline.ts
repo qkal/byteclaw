@@ -208,7 +208,7 @@ export function createBlockReplyPipeline(params: {
     if (bufferPayload(payload)) {
       return;
     }
-    const {hasMedia} = resolveSendableOutboundReplyParts(payload);
+    const { hasMedia } = resolveSendableOutboundReplyParts(payload);
     if (hasMedia) {
       void coalescer?.flush({ force: true });
       sendPayload(payload, /* BypassSeenCheck */ false);

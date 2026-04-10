@@ -461,7 +461,7 @@ function buildModelRows(params: {
     ]),
   );
 
-  const {resolvedDefault} = params.data;
+  const { resolvedDefault } = params.data;
   const shouldDisableReset =
     Boolean(parsedCurrentModel) &&
     parsedCurrentModel?.provider === resolvedDefault.provider &&

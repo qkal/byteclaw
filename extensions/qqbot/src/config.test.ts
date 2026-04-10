@@ -238,7 +238,7 @@ describe("qqbot config", () => {
       inputAccountId: "bot2",
     },
   ])("splits --token on the first colon for $accountId", ({ inputAccountId, expectedPath }) => {
-    const {setup} = qqbotSetupPlugin;
+    const { setup } = qqbotSetupPlugin;
     expect(setup).toBeDefined();
 
     const next = setup!.applyAccountConfig?.({

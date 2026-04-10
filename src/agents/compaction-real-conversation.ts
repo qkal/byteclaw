@@ -27,7 +27,7 @@ function hasMeaningfulText(text: string): boolean {
 }
 
 export function hasMeaningfulConversationContent(message: AgentMessage): boolean {
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (typeof content === "string") {
     return hasMeaningfulText(content);
   }
@@ -39,7 +39,7 @@ export function hasMeaningfulConversationContent(message: AgentMessage): boolean
     if (!block || typeof block !== "object") {
       continue;
     }
-    const {type} = (block as { type?: unknown });
+    const { type } = block as { type?: unknown };
     if (type !== "text") {
       // Tool-call metadata and internal reasoning blocks do not make a
       // Heartbeat-only transcript count as real conversation.
@@ -49,7 +49,7 @@ export function hasMeaningfulConversationContent(message: AgentMessage): boolean
       sawMeaningfulNonTextBlock = true;
       continue;
     }
-    const {text} = (block as { text?: unknown });
+    const { text } = block as { text?: unknown };
     if (typeof text !== "string") {
       continue;
     }

@@ -1,10 +1,6 @@
 import { resolveChannelDefaultAccountId } from "../channels/plugins/helpers.js";
-import type {
-  getChannelPlugin} from "../channels/plugins/index.js";
-import {
-  listChannelPlugins,
-  normalizeChannelId,
-} from "../channels/plugins/index.js";
+import type { getChannelPlugin } from "../channels/plugins/index.js";
+import { listChannelPlugins, normalizeChannelId } from "../channels/plugins/index.js";
 import { resolveInstallableChannelPlugin } from "../commands/channel-setup/channel-plugin-resolution.js";
 import {
   type OpenClawConfig,
@@ -52,9 +48,9 @@ function isConfiguredAuthPlugin(plugin: ChannelPlugin, cfg: OpenClawConfig): boo
       const account = plugin.config.resolveAccount(cfg, accountId);
       const enabled = plugin.config.isEnabled
         ? plugin.config.isEnabled(account, cfg)
-        : (account && typeof account === "object"
+        : account && typeof account === "object"
           ? ((account as { enabled?: boolean }).enabled ?? true)
-          : true);
+          : true;
       if (enabled) {
         return true;
       }
@@ -112,7 +108,7 @@ async function resolveChannelPluginForMode(
   if (!channelId) {
     throw new Error(`Unsupported channel: ${channelInput}`);
   }
-  const {plugin} = resolved;
+  const { plugin } = resolved;
   if (!plugin || !supportsChannelAuthMode(plugin, mode)) {
     throw new Error(`Channel ${channelId} does not support ${mode}`);
   }

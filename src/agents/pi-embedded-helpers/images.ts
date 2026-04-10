@@ -18,7 +18,7 @@ function isThinkingOrRedactedBlock(block: unknown): boolean {
 export function isEmptyAssistantMessageContent(
   message: Extract<AgentMessage, { role: "assistant" }>,
 ): boolean {
-  const {content} = message;
+  const { content } = message;
   if (content == null) {
     return true;
   }
@@ -78,7 +78,7 @@ export async function sanitizeSessionMessagesImages(
       continue;
     }
 
-    const {role} = (msg as { role?: unknown });
+    const { role } = msg as { role?: unknown };
     if (role === "toolResult") {
       const toolMsg = msg as Extract<AgentMessage, { role: "toolResult" }>;
       const content = Array.isArray(toolMsg.content) ? toolMsg.content : [];
@@ -93,7 +93,7 @@ export async function sanitizeSessionMessagesImages(
 
     if (role === "user") {
       const userMsg = msg as Extract<AgentMessage, { role: "user" }>;
-      const {content} = userMsg;
+      const { content } = userMsg;
       if (Array.isArray(content)) {
         const nextContent = (await sanitizeContentBlocksImages(
           content as unknown as ContentBlock[],
@@ -108,7 +108,7 @@ export async function sanitizeSessionMessagesImages(
     if (role === "assistant") {
       const assistantMsg = msg as Extract<AgentMessage, { role: "assistant" }>;
       if (assistantMsg.stopReason === "error") {
-        const {content} = assistantMsg;
+        const { content } = assistantMsg;
         if (Array.isArray(content)) {
           const nextContent = (await sanitizeContentBlocksImages(
             content as unknown as ContentBlock[],
@@ -121,7 +121,7 @@ export async function sanitizeSessionMessagesImages(
         }
         continue;
       }
-      const {content} = assistantMsg;
+      const { content } = assistantMsg;
       if (Array.isArray(content)) {
         const strippedContent = options?.preserveSignatures
           ? content // Keep signatures for Antigravity Claude

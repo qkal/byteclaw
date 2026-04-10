@@ -85,9 +85,9 @@ export function coerceSecretRef(value: unknown, defaults?: SecretDefaults): Secr
     const provider =
       value.source === "env"
         ? (defaults?.env ?? DEFAULT_SECRET_PROVIDER_ALIAS)
-        : (value.source === "file"
+        : value.source === "file"
           ? (defaults?.file ?? DEFAULT_SECRET_PROVIDER_ALIAS)
-          : (defaults?.exec ?? DEFAULT_SECRET_PROVIDER_ALIAS));
+          : (defaults?.exec ?? DEFAULT_SECRET_PROVIDER_ALIAS);
     return {
       id: value.id,
       provider,

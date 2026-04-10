@@ -133,7 +133,7 @@ function formatVerificationStageNotice(params: {
 }
 
 function formatVerificationSasNotice(summary: MatrixVerificationSummaryLike): string | null {
-  const {sas} = summary;
+  const { sas } = summary;
   if (!sas) {
     return null;
   }
@@ -551,7 +551,7 @@ export function createMatrixVerificationEventRouter(params: {
         );
         return;
       }
-      const {flowId} = signal;
+      const { flowId } = signal;
       const sourceEventId = trimMaybeString(event?.event_id);
       const sourceFingerprint = sourceEventId ?? `${senderId}:${event.type}:${flowId ?? "none"}`;
       const shouldRouteInRoom = await (

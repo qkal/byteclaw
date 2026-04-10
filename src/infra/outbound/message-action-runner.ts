@@ -534,7 +534,7 @@ async function handleSendAction(ctx: ResolvedActionContext): Promise<MessageActi
     toolContext: input.toolContext,
   });
   const mirrorMediaUrls =
-    mergedMediaUrls.length > 0 ? mergedMediaUrls : (mediaUrl ? [mediaUrl] : undefined);
+    mergedMediaUrls.length > 0 ? mergedMediaUrls : mediaUrl ? [mediaUrl] : undefined;
   throwIfAborted(abortSignal);
   const send = await executeSendAction({
     bestEffort: bestEffort ?? undefined,
@@ -726,7 +726,7 @@ async function handlePluginAction(ctx: ResolvedActionContext): Promise<MessageAc
 export async function runMessageAction(
   input: RunMessageActionParams,
 ): Promise<MessageActionRunResult> {
-  const {cfg} = input;
+  const { cfg } = input;
   let params = { ...input.params };
   const resolvedAgentId =
     input.agentId ??
@@ -738,7 +738,7 @@ export async function runMessageAction(
   parseComponentsParam(params);
   parseInteractiveParam(params);
 
-  const {action} = input;
+  const { action } = input;
   if (action === "broadcast") {
     return handleBroadcastAction(input, params);
   }

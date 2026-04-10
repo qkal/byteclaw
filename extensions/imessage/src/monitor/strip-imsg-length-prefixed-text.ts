@@ -13,7 +13,7 @@ function readVarint(buf: Uint8Array, start: number): Varint | null {
   while (offset < buf.length && shift <= 28) {
     const byte = buf[offset];
     offset += 1;
-    value |= (byte & 0x7F) << shift;
+    value |= (byte & 0x7f) << shift;
     if ((byte & 0x80) === 0) {
       return { nextOffset: offset, value };
     }
@@ -29,7 +29,7 @@ export function tryStripImessageLengthPrefixedUtf8Buffer(buf: Uint8Array): Uint8
     return null;
   }
 
-  if (key.value !== 0x0A) {
+  if (key.value !== 0x0a) {
     return null;
   }
 

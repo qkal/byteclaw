@@ -276,7 +276,8 @@ describe("base64 size guards", () => {
     {
       expectedError: "Image too large",
       kind: "images",
-      run: async (data: string) => await extractImageContentFromSource(
+      run: async (data: string) =>
+        await extractImageContentFromSource(
           { type: "base64", data, mediaType: "image/png" },
           {
             allowUrl: false,
@@ -290,7 +291,8 @@ describe("base64 size guards", () => {
     {
       expectedError: "File too large",
       kind: "files",
-      run: async (data: string) => await extractFileContentFromSource({
+      run: async (data: string) =>
+        await extractFileContentFromSource({
           source: { type: "base64", data, mediaType: "text/plain", filename: "x.txt" },
           limits: {
             allowUrl: false,

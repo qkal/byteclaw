@@ -4,8 +4,12 @@ import * as parentCoreApiModule from "../core-api.js";
 import * as browserCliSharedModule from "./browser-cli-shared.js";
 import * as cliCoreApiModule from "./core-api.js";
 
-interface BrowserRequest { path?: string }
-interface BrowserRuntimeOptions { timeoutMs?: number }
+interface BrowserRequest {
+  path?: string;
+}
+interface BrowserRuntimeOptions {
+  timeoutMs?: number;
+}
 
 export type BrowserManageCall = [unknown, BrowserRequest, BrowserRuntimeOptions | undefined];
 

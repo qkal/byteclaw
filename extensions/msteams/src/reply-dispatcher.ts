@@ -118,7 +118,8 @@ export function createMSTeamsReplyDispatcher(params: {
 
   const pendingMessages: MSTeamsRenderedMessage[] = [];
 
-  const sendMessages = async (messages: MSTeamsRenderedMessage[]): Promise<string[]> => sendMSTeamsMessages({
+  const sendMessages = async (messages: MSTeamsRenderedMessage[]): Promise<string[]> =>
+    sendMSTeamsMessages({
       adapter: params.adapter,
       appId: params.appId,
       context: params.context,
@@ -256,7 +257,8 @@ export function createMSTeamsReplyDispatcher(params: {
     typingCallbacks,
   });
 
-  const markDispatchIdle = (): Promise<void> => flushPendingMessages()
+  const markDispatchIdle = (): Promise<void> =>
+    flushPendingMessages()
       .catch((error) => {
         const errMsg = formatUnknownError(error);
         const classification = classifyMSTeamsSendError(error);
@@ -268,9 +270,11 @@ export function createMSTeamsReplyDispatcher(params: {
           hint,
         });
       })
-      .then(() => streamController.finalize().catch((err) => {
+      .then(() =>
+        streamController.finalize().catch((err) => {
           params.log.debug?.("stream finalize failed", { error: formatUnknownError(err) });
-        }))
+        }),
+      )
       .finally(() => {
         baseMarkDispatchIdle();
       });

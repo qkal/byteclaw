@@ -314,12 +314,15 @@ export function resolveExistingUsageSessionFile(params: {
       ? path.dirname(candidate)
       : resolveSessionTranscriptsDirForAgent(params.agentId);
     const baseFileName = `${sessionId}.jsonl`;
-    const entries = fs.readdirSync(sessionsDir, { withFileTypes: true }).filter((entry) => (
-        entry.isFile() &&
-        (entry.name === baseFileName ||
-          entry.name.startsWith(`${baseFileName}.reset.`) ||
-          entry.name.startsWith(`${baseFileName}.deleted.`))
-      ));
+    const entries = fs
+      .readdirSync(sessionsDir, { withFileTypes: true })
+      .filter(
+        (entry) =>
+          entry.isFile() &&
+          (entry.name === baseFileName ||
+            entry.name.startsWith(`${baseFileName}.reset.`) ||
+            entry.name.startsWith(`${baseFileName}.deleted.`)),
+      );
 
     const primary = entries.find((entry) => entry.name === baseFileName);
     if (primary) {
@@ -424,7 +427,7 @@ export async function loadCostUsageSummary(params?: {
   }
 
   const daily = [...dailyMap.entries()]
-    .map(([date, bucket]) => (Object.assign({date}, bucket)))
+    .map(([date, bucket]) => Object.assign({ date }, bucket))
     .toSorted((a, b) => a.date.localeCompare(b.date));
 
   // Calculate days for backwards compatibility in response
@@ -482,7 +485,7 @@ export async function discoverAllSessions(params?: {
         try {
           const message = parsed.message as Record<string, unknown> | undefined;
           if (message?.role === "user") {
-            const {content} = message;
+            const { content } = message;
             if (typeof content === "string") {
               firstUserMessage = content.slice(0, 100);
             } else if (Array.isArray(content)) {
@@ -492,7 +495,7 @@ export async function discoverAllSessions(params?: {
                   block &&
                   (block as Record<string, unknown>).type === "text"
                 ) {
-                  const {text} = (block as Record<string, unknown>);
+                  const { text } = block as Record<string, unknown>;
                   if (typeof text === "string") {
                     firstUserMessage = text.slice(0, 100);
                   }
@@ -750,7 +753,9 @@ export async function loadSessionCostSummary(params: {
     .map(([date, data]) => ({ cost: data.cost, date, tokens: data.tokens }))
     .toSorted((a, b) => a.date.localeCompare(b.date));
 
-  const dailyMessageCounts: SessionDailyMessageCounts[] = [...dailyMessageMap.values()].toSorted((a, b) => a.date.localeCompare(b.date));
+  const dailyMessageCounts: SessionDailyMessageCounts[] = [...dailyMessageMap.values()].toSorted(
+    (a, b) => a.date.localeCompare(b.date),
+  );
 
   const dailyLatency: SessionDailyLatency[] = [...dailyLatencyMap.entries()]
     .map(([date, values]) => {
@@ -758,12 +763,14 @@ export async function loadSessionCostSummary(params: {
       if (!stats) {
         return null;
       }
-      return Object.assign({date}, stats);
+      return Object.assign({ date }, stats);
     })
     .filter((entry): entry is SessionDailyLatency => Boolean(entry))
     .toSorted((a, b) => a.date.localeCompare(b.date));
 
-  const dailyModelUsage: SessionDailyModelUsage[] = [...dailyModelUsageMap.values()].toSorted((a, b) => a.date.localeCompare(b.date) || b.cost - a.cost);
+  const dailyModelUsage: SessionDailyModelUsage[] = [...dailyModelUsageMap.values()].toSorted(
+    (a, b) => a.date.localeCompare(b.date) || b.cost - a.cost,
+  );
 
   const toolUsage: SessionToolUsage | undefined = toolUsageMap.size
     ? {
@@ -982,9 +989,9 @@ export async function loadSessionLogs(params: {
         message.tool_calls ?? message.toolCalls ?? message.function_call ?? message.functionCall;
       const toolCalls = Array.isArray(rawToolCalls)
         ? rawToolCalls
-        : (rawToolCalls
+        : rawToolCalls
           ? [rawToolCalls]
-          : []);
+          : [];
       if (toolCalls.length > 0) {
         for (const call of toolCalls) {
           const callObj = call as Record<string, unknown>;

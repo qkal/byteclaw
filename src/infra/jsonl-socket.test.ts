@@ -12,7 +12,7 @@ async function listenOnSocket(server: net.Server, socketPath: string): Promise<b
     });
     return true;
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (code === "EPERM" || code === "EACCES") {
       return false;
     }

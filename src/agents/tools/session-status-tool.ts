@@ -144,9 +144,9 @@ function formatSessionTaskLine(params: {
   const headline =
     snapshot.activeCount > 0
       ? `${snapshot.activeCount} active`
-      : (snapshot.recentFailureCount > 0
+      : snapshot.recentFailureCount > 0
         ? `${snapshot.recentFailureCount} recent failure${snapshot.recentFailureCount === 1 ? "" : "s"}`
-        : `latest ${task.status.replaceAll("_", " ")}`);
+        : `latest ${task.status.replaceAll("_", " ")}`;
   const title = formatTaskStatusTitle(task);
   const detail = formatTaskStatusDetail(task);
   const parts = [headline, task.runtime, title, detail].filter(Boolean);

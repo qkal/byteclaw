@@ -141,7 +141,7 @@ beforeEach(() => {
     throw new Error("unexpected extra Copilot token refresh");
   });
   globalThis.fetch = vi.fn(async (input: string | URL | Request) => {
-    const url = typeof input === "string" ? input : (input instanceof URL ? input.href : input.url);
+    const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
     throw new Error(`Unexpected fetch in test: ${url}`);
   }) as unknown as typeof fetch;
   computeBackoffMock.mockClear();
@@ -180,7 +180,7 @@ const buildAssistant = (overrides: Partial<AssistantMessage>): AssistantMessage 
 const makeAttempt = (overrides: Partial<EmbeddedRunAttemptResult>): EmbeddedRunAttemptResult => {
   const toolMetas = overrides.toolMetas ?? [];
   const didSendViaMessagingTool = overrides.didSendViaMessagingTool ?? false;
-  const {successfulCronAdds} = overrides;
+  const { successfulCronAdds } = overrides;
   return {
     aborted: false,
     assistantTexts: [],

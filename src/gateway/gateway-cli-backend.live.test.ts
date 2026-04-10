@@ -238,11 +238,11 @@ describeLive("gateway live (cli backend)", () => {
             message:
               providerId === "codex-cli"
                 ? `Please include the token CLI-BACKEND-${nonce} in your reply.`
-                : (enableCliModelSwitchProbe
+                : enableCliModelSwitchProbe
                   ? `Reply with exactly: CLI backend OK ${nonce}.` +
                     ` Also remember this session note for later: ${memoryToken}.` +
                     " Do not include the note in your reply."
-                  : `Reply with exactly: CLI backend OK ${nonce}.`),
+                  : `Reply with exactly: CLI backend OK ${nonce}.`,
             sessionKey,
           },
           { expectFinal: true },

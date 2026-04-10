@@ -1,10 +1,10 @@
-import { spawn } from 'node:child_process';
-import { normalizeOptionalLowercaseString } from '../shared/string-coerce.js';
-import { formatErrorMessage } from './errors.js';
-import { triggerOpenClawRestart } from './restart.js';
-import { detectRespawnSupervisor } from './supervisor-markers.js';
+import { spawn } from "node:child_process";
+import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
+import { formatErrorMessage } from "./errors.js";
+import { triggerOpenClawRestart } from "./restart.js";
+import { detectRespawnSupervisor } from "./supervisor-markers.js";
 
-type RespawnMode = 'spawned' | 'supervised' | 'disabled' | 'failed';
+type RespawnMode = "spawned" | "supervised" | "disabled" | "failed";
 
 export interface GatewayRespawnResult {
   mode: RespawnMode;
@@ -14,12 +14,7 @@ export interface GatewayRespawnResult {
 
 function isTruthy(value: string | undefined): boolean {
   const normalized = normalizeOptionalLowercaseString(value);
-  return (
-    normalized === '1' ||
-    normalized === 'true' ||
-    normalized === 'yes' ||
-    normalized === 'on'
-  );
+  return normalized === "1" || normalized === "true" || normalized === "yes" || normalized === "on";
 }
 
 /**
@@ -30,31 +25,30 @@ function isTruthy(value: string | undefined): boolean {
  */
 export function restartGatewayProcessWithFreshPid(): GatewayRespawnResult {
   if (isTruthy(process.env.OPENCLAW_NO_RESPAWN)) {
-    return { mode: 'disabled' };
+    return { mode: "disabled" };
   }
   const supervisor = detectRespawnSupervisor(process.env);
   if (supervisor) {
     // On macOS launchd, exit cleanly and let KeepAlive relaunch the service.
     // Avoid detached kickstart/start handoffs here so restart timing stays tied
     // To launchd's native supervision rather than a second helper process.
-    if (supervisor === 'schtasks') {
+    if (supervisor === "schtasks") {
       const restart = triggerOpenClawRestart();
       if (!restart.ok) {
         return {
           detail: restart.detail ?? `${restart.method} restart failed`,
-          mode: 'failed',
+          mode: "failed",
         };
       }
     }
-    return { mode: 'supervised' };
+    return { mode: "supervised" };
   }
-  if (process.platform === 'win32') {
+  if (process.platform === "win32") {
     // Detached respawn is unsafe on Windows without an identified Scheduled Task:
     // The child becomes orphaned if the original process exits.
     return {
-      detail:
-        'win32: detached respawn unsupported without Scheduled Task markers',
-      mode: 'disabled',
+      detail: "win32: detached respawn unsupported without Scheduled Task markers",
+      mode: "disabled",
     };
   }
 
@@ -66,14 +60,14 @@ export function restartGatewayProcessWithFreshPid(): GatewayRespawnResult {
     const child = spawn(process.execPath, args, {
       detached: true,
       env,
-      stdio: 'inherit' as const,
+      stdio: "inherit" as const,
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (child as any).unref();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return { mode: 'spawned', pid: (child as any).pid ?? undefined };
+    return { mode: "spawned", pid: (child as any).pid ?? undefined };
   } catch (error) {
     const detail = formatErrorMessage(error);
-    return { detail, mode: 'failed' };
+    return { detail, mode: "failed" };
   }
 }

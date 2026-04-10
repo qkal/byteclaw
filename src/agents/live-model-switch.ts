@@ -24,7 +24,7 @@ export function resolveLiveSessionModelSelection(params: {
   defaultModel: string;
 }): LiveSessionModelSelection | null {
   const sessionKey = normalizeOptionalString(params.sessionKey);
-  const {cfg} = params;
+  const { cfg } = params;
   if (!cfg || !sessionKey) {
     return null;
   }
@@ -153,7 +153,7 @@ export function shouldSwitchToLiveModel(params: {
   currentAuthProfileIdSource?: string;
 }): LiveSessionModelSelection | undefined {
   const sessionKey = params.sessionKey?.trim();
-  const {cfg} = params;
+  const { cfg } = params;
   if (!cfg || !sessionKey) {
     return undefined;
   }
@@ -207,7 +207,7 @@ export async function clearLiveModelSwitchPending(params: {
   agentId?: string;
 }): Promise<void> {
   const sessionKey = params.sessionKey?.trim();
-  const {cfg} = params;
+  const { cfg } = params;
   if (!cfg || !sessionKey) {
     return;
   }

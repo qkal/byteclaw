@@ -14,7 +14,7 @@ export async function resolveAgentSessionDirsFromAgentsDir(agentsDir: string): P
   try {
     entries = await fs.readdir(agentsDir, { withFileTypes: true });
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return [];
     }
@@ -29,7 +29,7 @@ export function resolveAgentSessionDirsFromAgentsDirSync(agentsDir: string): str
   try {
     entries = fsSync.readdirSync(agentsDir, { withFileTypes: true });
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return [];
     }

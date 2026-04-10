@@ -11,7 +11,7 @@ export function parseSetUnsetCommand(params: {
   action: "set" | "unset";
   args: string;
 }): SetUnsetParseResult {
-  const {action} = params;
+  const { action } = params;
   const args = params.args.trim();
   if (action === "unset") {
     if (!args) {

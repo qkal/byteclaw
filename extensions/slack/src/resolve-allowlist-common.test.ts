@@ -52,7 +52,7 @@ describe("resolveSlackAllowlistEntries", () => {
         return {};
       },
       resolveNonId: ({ input, parsed, lookup }) => {
-        const {name} = (parsed as { name?: string });
+        const { name } = parsed as { name?: string };
         if (!name) {
           return undefined;
         }

@@ -164,8 +164,8 @@ function buildPluginReport(
           ...baseContext,
           workspaceDir,
         };
-  const {rawConfig} = context;
-  const {config} = context;
+  const { rawConfig } = context;
+  const { config } = context;
 
   // Apply bundled-provider allowlist compat so that `plugins list` and `doctor`
   // Report the same loaded/disabled status the gateway uses at runtime.  Without
@@ -288,7 +288,7 @@ export function buildPluginInspectReport(params: {
   report?: PluginStatusReport;
 }): PluginInspectReport | null {
   const rawConfig = params.config ?? loadConfig();
-  const {config} = resolvePluginRuntimeLoadContext({
+  const { config } = resolvePluginRuntimeLoadContext({
     config: rawConfig,
     env: params.env,
     workspaceDir: params.workspaceDir,
@@ -393,7 +393,7 @@ export function buildPluginInspectReport(params: {
     bundleCapabilities: plugin.bundleCapabilities ?? [],
     capabilities,
     capabilityCount,
-    capabilityMode: capabilityCount === 0 ? "none" : (capabilityCount === 1 ? "plain" : "hybrid"),
+    capabilityMode: capabilityCount === 0 ? "none" : capabilityCount === 1 ? "plain" : "hybrid",
     cliCommands: [...plugin.cliCommands],
     commands: [...plugin.commands],
     compatibility,

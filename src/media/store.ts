@@ -203,7 +203,7 @@ async function downloadToFile(
         const req = requestImpl(parsedUrl, { headers, lookup: pinned.lookup }, (res) => {
           // Follow redirects
           if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400) {
-            const {location} = res.headers;
+            const { location } = res.headers;
             if (!location || maxRedirects <= 0) {
               reject(new Error(`Redirect loop or missing Location header`));
               return;

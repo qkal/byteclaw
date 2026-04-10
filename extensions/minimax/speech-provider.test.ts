@@ -55,7 +55,11 @@ describe("buildMinimaxSpeechProvider", () => {
       delete process.env.MINIMAX_API_HOST;
       delete process.env.MINIMAX_TTS_MODEL;
       delete process.env.MINIMAX_TTS_VOICE_ID;
-      const config = provider.resolveConfig!({ cfg: {} as never, rawConfig: {}, timeoutMs: 30_000 });
+      const config = provider.resolveConfig!({
+        cfg: {} as never,
+        rawConfig: {},
+        timeoutMs: 30_000,
+      });
       expect(config.baseUrl).toBe("https://api.minimax.io");
       expect(config.model).toBe("speech-2.8-hd");
       expect(config.voiceId).toBe("English_expressive_narrator");
@@ -90,7 +94,11 @@ describe("buildMinimaxSpeechProvider", () => {
       process.env.MINIMAX_API_HOST = "https://env.api.com";
       process.env.MINIMAX_TTS_MODEL = "speech-01-240228";
       process.env.MINIMAX_TTS_VOICE_ID = "Chinese (Mandarin)_Gentle_Boy";
-      const config = provider.resolveConfig!({ cfg: {} as never, rawConfig: {}, timeoutMs: 30_000 });
+      const config = provider.resolveConfig!({
+        cfg: {} as never,
+        rawConfig: {},
+        timeoutMs: 30_000,
+      });
       expect(config.baseUrl).toBe("https://env.api.com");
       expect(config.model).toBe("speech-01-240228");
       expect(config.voiceId).toBe("Chinese (Mandarin)_Gentle_Boy");

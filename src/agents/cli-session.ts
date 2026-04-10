@@ -124,7 +124,7 @@ export function resolveCliSessionReuse(params: {
   sessionId?: string;
   invalidatedReason?: "auth-profile" | "auth-epoch" | "system-prompt" | "mcp";
 } {
-  const {binding} = params;
+  const { binding } = params;
   const sessionId = normalizeOptionalString(binding?.sessionId);
   if (!sessionId) {
     return {};

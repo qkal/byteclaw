@@ -68,7 +68,9 @@ describe("node-host sanitizeEnv", () => {
   it("preserves inherited non-portable Windows-style env keys", () => {
     withEnv({ "ProgramFiles(x86)": String.raw`C:\Program Files (x86)` }, () => {
       const env = sanitizeEnv(undefined);
-      expect(getEnvValueCaseInsensitive(env, "ProgramFiles(x86)")).toBe(String.raw`C:\Program Files (x86)`);
+      expect(getEnvValueCaseInsensitive(env, "ProgramFiles(x86)")).toBe(
+        String.raw`C:\Program Files (x86)`,
+      );
     });
   });
 });
@@ -88,7 +90,7 @@ describe("node-host output decoding", () => {
       supportsGbk = false;
     }
 
-    const raw = Buffer.from([0xB2, 0xE2, 0xCA, 0xD4, 0xA1, 0xAB, 0xA3, 0xBB]);
+    const raw = Buffer.from([0xb2, 0xe2, 0xca, 0xd4, 0xa1, 0xab, 0xa3, 0xbb]);
     const decoded = decodeCapturedOutputBuffer({
       buffer: raw,
       platform: "win32",

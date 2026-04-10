@@ -173,7 +173,7 @@ export function deriveSessionTotalTokens(params: {
   const hasPromptOverride =
     typeof promptOverride === "number" && Number.isFinite(promptOverride) && promptOverride > 0;
 
-  const {usage} = params;
+  const { usage } = params;
   if (!usage && !hasPromptOverride) {
     return undefined;
   }

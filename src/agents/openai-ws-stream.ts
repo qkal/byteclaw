@@ -831,9 +831,7 @@ export function createOpenAIWebSocketStreamFn(
                 session,
               });
               if (transport === "websocket") {
-                throw error instanceof Error
-                  ? error
-                  : new Error(String(error));
+                throw error instanceof Error ? error : new Error(String(error));
               }
               log.warn(
                 `[ws-stream] reconnect after warm-up failed for session=${sessionId}; falling back to HTTP. error=${String(error)}`,

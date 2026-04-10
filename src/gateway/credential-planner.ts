@@ -73,7 +73,7 @@ function resolveConfiguredGatewayCredentialInput(params: {
   defaults?: GatewaySecretDefaults;
   path: GatewayCredentialInputPath;
 }): GatewayConfiguredCredentialInput {
-  const {ref} = resolveSecretInputRef({
+  const { ref } = resolveSecretInputRef({
     defaults: params.defaults,
     value: params.value,
   });
@@ -92,7 +92,7 @@ export function createGatewayCredentialPlan(params: {
   defaults?: GatewaySecretDefaults;
 }): GatewayCredentialPlan {
   const env = params.env ?? process.env;
-  const {gateway} = params.config;
+  const { gateway } = params.config;
   const remote = gateway?.remote;
   const defaults = params.defaults ?? params.config.secrets?.defaults;
   const authMode = gateway?.auth?.mode;

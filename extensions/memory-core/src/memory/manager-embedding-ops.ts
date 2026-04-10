@@ -100,7 +100,7 @@ export abstract class MemoryManagerEmbeddingOps extends MemoryManagerSyncOps {
     const missingChunks = missing.map((m) => m.chunk);
     const batches = buildMemoryEmbeddingBatches(missingChunks, EMBEDDING_BATCH_MAX_TOKENS);
     const toCache: { hash: string; embedding: number[] }[] = [];
-    const {provider} = this;
+    const { provider } = this;
     if (!provider) {
       throw new Error("Cannot embed batch in FTS-only mode (no embedding provider)");
     }
@@ -161,7 +161,7 @@ export abstract class MemoryManagerEmbeddingOps extends MemoryManagerSyncOps {
     _entry: MemoryFileEntry | SessionFileEntry,
     source: MemorySource,
   ): Promise<number[][]> {
-    const {provider} = this;
+    const { provider } = this;
     const batchEmbed = this.providerRuntime?.batchEmbed;
     if (!provider || !batchEmbed) {
       return this.embedChunksInBatches(chunks);
@@ -234,7 +234,7 @@ export abstract class MemoryManagerEmbeddingOps extends MemoryManagerSyncOps {
     if (texts.length === 0) {
       return [];
     }
-    const {provider} = this;
+    const { provider } = this;
     if (!provider) {
       throw new Error("Cannot embed batch in FTS-only mode (no embedding provider)");
     }
@@ -265,7 +265,7 @@ export abstract class MemoryManagerEmbeddingOps extends MemoryManagerSyncOps {
     if (inputs.length === 0) {
       return [];
     }
-    const {provider} = this;
+    const { provider } = this;
     const embedBatchInputs = provider?.embedBatchInputs;
     if (!embedBatchInputs) {
       return await this.embedBatchWithRetry(inputs.map((input) => input.text));

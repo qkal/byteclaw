@@ -212,7 +212,7 @@ function validateImageGenerationCapabilities(params: {
   resolution?: ImageGenerationResolution;
   explicitResolution?: boolean;
 }) {
-  const {provider} = params;
+  const { provider } = params;
   if (!provider) {
     return;
   }
@@ -293,7 +293,7 @@ async function loadReferenceImages(params: {
 
     const resolvedPathInfo: { resolved: string; rewrittenFrom?: string } = isDataUrl
       ? { resolved: "" }
-      : (params.sandboxConfig
+      : params.sandboxConfig
         ? await resolveSandboxedBridgeMediaPath({
             inboundFallbackDir: "media/inbound",
             mediaPath: resolvedImage,
@@ -303,7 +303,7 @@ async function loadReferenceImages(params: {
             resolved: resolvedImage.startsWith("file://")
               ? resolvedImage.slice("file://".length)
               : resolvedImage,
-          });
+          };
     const resolvedPath = isDataUrl ? null : resolvedPathInfo.resolved;
 
     const localRoots = resolveMediaToolLocalRoots(
@@ -316,7 +316,7 @@ async function loadReferenceImages(params: {
 
     const media = isDataUrl
       ? decodeDataUrl(resolvedImage, { maxBytes: params.maxBytes })
-      : (params.sandboxConfig
+      : params.sandboxConfig
         ? await loadWebMedia(resolvedPath ?? resolvedImage, {
             maxBytes: params.maxBytes,
             readFile: createSandboxBridgeReadFile({ sandbox: params.sandboxConfig }),
@@ -325,7 +325,7 @@ async function loadReferenceImages(params: {
         : await loadWebMedia(resolvedPath ?? resolvedImage, {
             localRoots,
             maxBytes: params.maxBytes,
-          }));
+          });
     if (media.kind !== "image") {
       throw new ToolInputError(`Unsupported media type: ${media.kind}`);
     }
@@ -400,7 +400,24 @@ export function createImageGenerateTool(options?: {
       const action = resolveAction(params);
       if (action === "list") {
         const runtimeProviders = listRuntimeImageGenerationProviders({ config: effectiveCfg });
-        const providers = runtimeProviders.map((provider) => (Object.assign({id:provider.id}, provider.label?{label:provider.label}:{}, provider.defaultModel?{defaultModel:provider.defaultModel}:{}, {models:provider.models??(provider.defaultModel?[provider.defaultModel]:[]),configured:isCapabilityProviderConfigured({providers:runtimeProviders,provider,cfg:effectiveCfg,agentDir:options?.agentDir}),authEnvVars:getImageGenerationProviderAuthEnvVars(provider.id),capabilities:provider.capabilities})));
+        const providers = runtimeProviders.map((provider) =>
+          Object.assign(
+            { id: provider.id },
+            provider.label ? { label: provider.label } : {},
+            provider.defaultModel ? { defaultModel: provider.defaultModel } : {},
+            {
+              models: provider.models ?? (provider.defaultModel ? [provider.defaultModel] : []),
+              configured: isCapabilityProviderConfigured({
+                providers: runtimeProviders,
+                provider,
+                cfg: effectiveCfg,
+                agentDir: options?.agentDir,
+              }),
+              authEnvVars: getImageGenerationProviderAuthEnvVars(provider.id),
+              capabilities: provider.capabilities,
+            },
+          ),
+        );
         const lines = providers.flatMap((provider) => {
           const caps: string[] = [];
           if (provider.capabilities.edit.enabled) {
@@ -466,9 +483,9 @@ export function createImageGenerateTool(options?: {
         explicitResolution ??
         (size || modeCaps?.supportsResolution === false
           ? undefined
-          : (inputImages.length > 0
+          : inputImages.length > 0
             ? await inferResolutionFromInputImages(inputImages)
-            : undefined));
+            : undefined);
       validateImageGenerationCapabilities({
         aspectRatio,
         count,

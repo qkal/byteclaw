@@ -18,7 +18,7 @@ import {
 import { recordShortTermRecalls } from "./short-term-promotion.js";
 import { createMemoryCoreTestHarness } from "./test-helpers.js";
 
-const {constants} = __testing;
+const { constants } = __testing;
 const { createTempWorkspace } = createMemoryCoreTestHarness();
 
 type CronParam = NonNullable<Parameters<typeof reconcileShortTermDreamingCronJob>[0]["cron"]>;

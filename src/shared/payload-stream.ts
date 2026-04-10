@@ -1,14 +1,11 @@
-import { Readable } from 'node:stream';
+import { Readable } from "node:stream";
 
 export interface StreamPayloadOptions {
   chunkSize?: number;
   maxBufferSize?: number;
   maxChunkSize?: number;
   validateChunk?: (chunk: Buffer) => boolean;
-  onProgress?: (progress: {
-    bytesProcessed: number;
-    totalBytes: number;
-  }) => void;
+  onProgress?: (progress: { bytesProcessed: number; totalBytes: number }) => void;
   encoding?: BufferEncoding;
 }
 
@@ -23,17 +20,15 @@ class PayloadSizeLimitError extends Error {
     public readonly actualSize: number,
     public readonly maxSize: number,
   ) {
-    super(
-      `Payload exceeds maximum buffer size of ${maxSize} bytes (actual: ${actualSize} bytes)`,
-    );
-    this.name = 'PayloadSizeLimitError';
+    super(`Payload exceeds maximum buffer size of ${maxSize} bytes (actual: ${actualSize} bytes)`);
+    this.name = "PayloadSizeLimitError";
   }
 }
 
 class ChunkValidationError extends Error {
   constructor(public readonly chunkIndex: number) {
     super(`Chunk validation failed at index ${chunkIndex}`);
-    this.name = 'ChunkValidationError';
+    this.name = "ChunkValidationError";
   }
 }
 
@@ -45,12 +40,9 @@ export async function* streamPayload(
   source: Readable | string | Buffer | Uint8Array,
   options: StreamPayloadOptions = {},
 ): AsyncGenerator<Buffer, StreamStats, unknown> {
-  const chunkSize = Math.min(
-    options.chunkSize ?? 64 * 1024,
-    options.maxChunkSize ?? 1024 * 1024,
-  );
+  const chunkSize = Math.min(options.chunkSize ?? 64 * 1024, options.maxChunkSize ?? 1024 * 1024);
   const maxBufferSize = options.maxBufferSize ?? 10 * 1024 * 1024;
-  const encoding = options.encoding ?? 'utf8';
+  const encoding = options.encoding ?? "utf8";
   const validateChunk = options.validateChunk ?? (() => true);
   const onProgress = options.onProgress;
 
@@ -66,7 +58,7 @@ export async function* streamPayload(
   };
 
   try {
-    if (typeof source === 'string') {
+    if (typeof source === "string") {
       const buffer = Buffer.from(source, encoding);
       totalBytes = buffer.length;
       for (const chunk of streamBuffer(buffer, chunkSize)) {
@@ -120,9 +112,7 @@ export async function* streamPayload(
       if (chunk === null) {
         break;
       }
-      const chunkBuffer = Buffer.isBuffer(chunk)
-        ? chunk
-        : Buffer.from(chunk, encoding);
+      const chunkBuffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, encoding);
       buffer = Buffer.concat([buffer, chunkBuffer]);
       totalBytes += chunkBuffer.length;
 
@@ -157,22 +147,17 @@ export async function* streamPayload(
 
     return { bytesProcessed, totalBytes, chunksProduced };
   } catch (error) {
-    if (
-      error instanceof PayloadSizeLimitError ||
-      error instanceof ChunkValidationError
-    ) {
+    if (error instanceof PayloadSizeLimitError || error instanceof ChunkValidationError) {
       throw error;
     }
     throw new Error(
       `Failed to stream payload: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
     );
   }
 }
 
-function* streamBuffer(
-  buffer: Buffer,
-  chunkSize: number,
-): Generator<Buffer, void, unknown> {
+function* streamBuffer(buffer: Buffer, chunkSize: number): Generator<Buffer, void, unknown> {
   for (let offset = 0; offset < buffer.length; offset += chunkSize) {
     yield buffer.subarray(offset, Math.min(offset + chunkSize, buffer.length));
   }
@@ -192,7 +177,7 @@ export async function collectStream(
 
   for await (const chunk of stream) {
     if (!validate(chunk)) {
-      throw new Error('Chunk validation failed during collection');
+      throw new Error("Chunk validation failed during collection");
     }
     totalSize += chunk.length;
     if (totalSize > maxSize) {
@@ -217,7 +202,7 @@ export function createSizeLimitTransform(
   return new TransformStream({
     transform(chunk, controller) {
       if (!validate(chunk)) {
-        controller.error(new Error('Chunk validation failed'));
+        controller.error(new Error("Chunk validation failed"));
         return;
       }
       totalSize += chunk.length;

@@ -93,7 +93,7 @@ export function resolveLineAccount(params: {
   cfg: OpenClawConfig;
   accountId?: string;
 }): ResolvedLineAccount {
-  const {cfg} = params;
+  const { cfg } = params;
   const accountId = normalizeSharedAccountId(params.accountId ?? resolveDefaultLineAccountId(cfg));
   const lineConfig = cfg.channels?.line as LineConfig | undefined;
   const accounts = lineConfig?.accounts;

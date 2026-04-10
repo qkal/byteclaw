@@ -114,7 +114,7 @@ export async function buildExportSessionReply(params: HandleCommandsParams): Pro
   const args = parseExportArgs(params.command.commandBodyNormalized);
 
   // 1. Resolve session file
-  const {sessionEntry} = params;
+  const { sessionEntry } = params;
   if (!sessionEntry?.sessionId) {
     return { text: "❌ No active session found." };
   }

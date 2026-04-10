@@ -47,7 +47,7 @@ function resolveMatrixCurrentDmRoomId(params: {
       agentId: params.agentId,
     });
     const store = loadSessionStore(storePath);
-    const {existing} = resolveSessionStoreEntry({
+    const { existing } = resolveSessionStoreEntry({
       sessionKey,
       store,
     });

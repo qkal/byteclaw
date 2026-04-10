@@ -150,13 +150,13 @@ export async function buildTelegramInboundContextPayload(params: {
     : false;
   const visibleReplyForwardedFrom =
     includeReplyTarget && replyTarget?.forwardedFrom
-      ? (shouldIncludeGroupSupplementalContext({
+      ? shouldIncludeGroupSupplementalContext({
           kind: "forwarded",
           senderId: replyTarget.forwardedFrom.fromId,
           senderUsername: replyTarget.forwardedFrom.fromUsername,
         })
         ? replyTarget.forwardedFrom
-        : undefined)
+        : undefined
       : undefined;
   const visibleReplyTarget: TelegramReplyTarget | null =
     includeReplyTarget && replyTarget
@@ -174,13 +174,13 @@ export async function buildTelegramInboundContextPayload(params: {
       }]\n`
     : "";
   const replySuffix = visibleReplyTarget
-    ? (visibleReplyTarget.kind === "quote"
+    ? visibleReplyTarget.kind === "quote"
       ? `\n\n[Quoting ${visibleReplyTarget.sender}${
           visibleReplyTarget.id ? ` id:${visibleReplyTarget.id}` : ""
         }]\n${replyForwardAnnotation}"${visibleReplyTarget.body}"\n[/Quoting]`
       : `\n\n[Replying to ${visibleReplyTarget.sender}${
           visibleReplyTarget.id ? ` id:${visibleReplyTarget.id}` : ""
-        }]\n${replyForwardAnnotation}${visibleReplyTarget.body}\n[/Replying]`)
+        }]\n${replyForwardAnnotation}${visibleReplyTarget.body}\n[/Replying]`
     : "";
   const forwardPrefix = visibleForwardOrigin
     ? `[Forwarded from ${visibleForwardOrigin.from}${
@@ -331,12 +331,12 @@ export async function buildTelegramInboundContextPayload(params: {
   });
   const shouldPersistGroupLastRouteThread = isGroup && route.matchedBy !== "binding.channel";
   const updateLastRouteThreadId = isGroup
-    ? (shouldPersistGroupLastRouteThread && resolvedThreadId != null
+    ? shouldPersistGroupLastRouteThread && resolvedThreadId != null
       ? String(resolvedThreadId)
-      : undefined)
-    : (dmThreadId != null
+      : undefined
+    : dmThreadId != null
       ? String(dmThreadId)
-      : undefined);
+      : undefined;
 
   await sessionRuntime.recordInboundSession({
     ctx: ctxPayload,

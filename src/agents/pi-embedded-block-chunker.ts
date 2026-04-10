@@ -240,7 +240,7 @@ export class EmbeddedBlockChunker {
       return { reopenFence: undefined, start: skipLeadingNewlines(source, absoluteBreakIdx) };
     }
 
-    const {fenceSplit} = breakResult;
+    const { fenceSplit } = breakResult;
     if (fenceSplit) {
       const closeFence = rawChunk.endsWith("\n")
         ? `${fenceSplit.closeFenceLine}\n`

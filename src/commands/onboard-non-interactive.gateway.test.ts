@@ -129,9 +129,9 @@ function createJsonCaptureRuntime() {
       const capturedError =
         typeof firstArg === "string"
           ? firstArg
-          : (firstArg instanceof Error
+          : firstArg instanceof Error
             ? firstArg.message
-            : (JSON.stringify(firstArg) ?? ""));
+            : (JSON.stringify(firstArg) ?? "");
       throw new Error(capturedError);
     },
     exit: (_code: number) => {
@@ -142,9 +142,9 @@ function createJsonCaptureRuntime() {
       capturedJson =
         typeof firstArg === "string"
           ? firstArg
-          : (firstArg instanceof Error
+          : firstArg instanceof Error
             ? firstArg.message
-            : (JSON.stringify(firstArg) ?? ""));
+            : (JSON.stringify(firstArg) ?? "");
     },
   };
 

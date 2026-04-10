@@ -50,7 +50,7 @@ export async function deliverLineAutoReply(params: {
   deps: LineAutoReplyDeps;
 }): Promise<{ replyTokenUsed: boolean }> {
   const { payload, lineData, replyToken, accountId, to, textLimit, deps } = params;
-  let {replyTokenUsed} = params;
+  let { replyTokenUsed } = params;
 
   const pushLineMessages = async (messages: messagingApi.Message[]): Promise<void> => {
     if (messages.length === 0) {
@@ -124,7 +124,7 @@ export async function deliverLineAutoReply(params: {
 
   const chunks = processed.text ? deps.chunkMarkdownText(processed.text, textLimit) : [];
 
-  const {mediaUrls} = resolveSendableOutboundReplyParts(payload);
+  const { mediaUrls } = resolveSendableOutboundReplyParts(payload);
   const mediaMessages = mediaUrls
     .map((url) => url?.trim())
     .filter((url): url is string => Boolean(url))

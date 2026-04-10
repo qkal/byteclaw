@@ -237,8 +237,8 @@ export function estimateUsageCost(params: {
   usage?: NormalizedUsage | UsageTotals | null;
   cost?: ModelCostConfig;
 }): number | undefined {
-  const {usage} = params;
-  const {cost} = params;
+  const { usage } = params;
+  const { cost } = params;
   if (!usage || !cost) {
     return undefined;
   }

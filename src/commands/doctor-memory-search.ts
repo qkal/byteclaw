@@ -51,7 +51,7 @@ async function resolveRuntimeMemoryAuditContext(
     cfg,
     purpose: "status",
   });
-  const {manager} = result;
+  const { manager } = result;
   if (!manager) {
     return null;
   }
@@ -110,7 +110,10 @@ export async function noteMemoryRecallHealth(cfg: OpenClawConfig): Promise<void>
       note(message, "Memory search");
     }
   } catch (error) {
-    note(`Memory recall audit could not be completed: ${formatErrorMessage(error)}`, "Memory search");
+    note(
+      `Memory recall audit could not be completed: ${formatErrorMessage(error)}`,
+      "Memory search",
+    );
   }
 }
 

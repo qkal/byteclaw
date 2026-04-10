@@ -435,7 +435,9 @@ async function _chunkedInsertBlocks(
   return { children: allChildren, skipped: allSkipped };
 }
 
-interface Logger { info?: (msg: string) => void }
+interface Logger {
+  info?: (msg: string) => void;
+}
 
 /**
  * Insert blocks using the Descendant API (supports tables, nested lists, large docs).

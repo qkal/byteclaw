@@ -44,14 +44,14 @@ vi.mock("./slash-commands.runtime.js", () => {
     ) => {
       const name = cmd.nativeName ?? cmd.key;
       const values = args?.values ?? {};
-      const {mode} = values;
-      const {period} = values;
+      const { mode } = values;
+      const { period } = values;
       const selected =
         typeof mode === "string" && mode.trim()
           ? mode.trim()
-          : (typeof period === "string" && period.trim()
+          : typeof period === "string" && period.trim()
             ? period.trim()
-            : "");
+            : "";
       return selected ? `/${name} ${selected}` : `/${name}`;
     },
     findCommandByNativeName: (name: string) => {
@@ -233,7 +233,7 @@ function createArgMenusHarness() {
     command: (name: string, handler: (args: unknown) => Promise<void>) => {
       commands.set(name, handler);
     },
-    options (this: unknown, id: string, handler: (args: unknown) => Promise<void>) {
+    options(this: unknown, id: string, handler: (args: unknown) => Promise<void>) {
       optionsReceiverContexts.push(this);
       options.set(id, handler);
     },

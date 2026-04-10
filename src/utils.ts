@@ -78,18 +78,18 @@ export function sleep(ms: number) {
 }
 
 function isHighSurrogate(codeUnit: number): boolean {
-  return codeUnit >= 0xD8_00 && codeUnit <= 0xDB_FF;
+  return codeUnit >= 0xd8_00 && codeUnit <= 0xdb_ff;
 }
 
 function isLowSurrogate(codeUnit: number): boolean {
-  return codeUnit >= 0xDC_00 && codeUnit <= 0xDF_FF;
+  return codeUnit >= 0xdc_00 && codeUnit <= 0xdf_ff;
 }
 
 export function sliceUtf16Safe(input: string, start: number, end?: number): string {
   const len = input.length;
 
   let from = start < 0 ? Math.max(len + start, 0) : Math.min(start, len);
-  let to = end === undefined ? len : (end < 0 ? Math.max(len + end, 0) : Math.min(end, len));
+  let to = end === undefined ? len : end < 0 ? Math.max(len + end, 0) : Math.min(end, len);
 
   if (to < from) {
     const tmp = from;

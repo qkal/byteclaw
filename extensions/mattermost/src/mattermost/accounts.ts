@@ -103,8 +103,8 @@ export function resolveMattermostAccount(params: {
   const baseUrl = normalizeMattermostBaseUrl(configUrl || envUrl);
   const requireMention = resolveMattermostRequireMention(merged);
 
-  const botTokenSource: MattermostTokenSource = configToken ? "config" : (envToken ? "env" : "none");
-  const baseUrlSource: MattermostBaseUrlSource = configUrl ? "config" : (envUrl ? "env" : "none");
+  const botTokenSource: MattermostTokenSource = configToken ? "config" : envToken ? "env" : "none";
+  const baseUrlSource: MattermostBaseUrlSource = configUrl ? "config" : envUrl ? "env" : "none";
 
   return {
     accountId,

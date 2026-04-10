@@ -250,9 +250,9 @@ function resolveClawHubArchiveVerification(
     const detail =
       typeof sha256hashValue === "string" && sha256hashValue.trim().length === 0
         ? "empty string"
-        : (typeof sha256hashValue === "string"
+        : typeof sha256hashValue === "string"
           ? `unrecognized value "${sha256hashValue.trim()}"`
-          : `non-string value of type ${typeof sha256hashValue}`);
+          : `non-string value of type ${typeof sha256hashValue}`;
     return buildClawHubInstallFailure(
       `ClawHub version metadata for "${packageName}@${version}" has an invalid sha256hash (${detail}).`,
       CLAWHUB_INSTALL_ERROR_CODE.MISSING_ARCHIVE_INTEGRITY,
@@ -657,8 +657,8 @@ function validateClawHubPluginPackage(params: {
     );
   }
 
-  const {compatibility} = params;
-  const {runtimeVersion} = params;
+  const { compatibility } = params;
+  const { runtimeVersion } = params;
   if (
     compatibility?.pluginApiRange &&
     !satisfiesPluginApiRange(runtimeVersion, compatibility.pluginApiRange)

@@ -118,10 +118,14 @@ function mergeSsrFPolicies(...policies: (SsrFPolicy | undefined)[]): SsrFPolicy 
       merged.allowRfc2544BenchmarkRange = true;
     }
     if (policy.allowedHostnames?.length) {
-      merged.allowedHostnames = [...new Set([...merged.allowedHostnames ?? [], ...policy.allowedHostnames])];
+      merged.allowedHostnames = [
+        ...new Set([...(merged.allowedHostnames ?? []), ...policy.allowedHostnames]),
+      ];
     }
     if (policy.hostnameAllowlist?.length) {
-      merged.hostnameAllowlist = [...new Set([...merged.hostnameAllowlist ?? [], ...policy.hostnameAllowlist])];
+      merged.hostnameAllowlist = [
+        ...new Set([...(merged.hostnameAllowlist ?? []), ...policy.hostnameAllowlist]),
+      ];
     }
   }
   return Object.keys(merged).length > 0 ? merged : undefined;
@@ -168,7 +172,7 @@ function resolveComfyWorkflowSource(config: ComfyProviderConfig): {
   workflow?: ComfyWorkflow;
   workflowPath?: string;
 } {
-  const {workflow} = config;
+  const { workflow } = config;
   if (isRecord(workflow)) {
     return { workflow: structuredClone(workflow) };
   }
@@ -204,7 +208,7 @@ function setWorkflowInput(params: {
   if (!isRecord(node)) {
     throw new Error(`Comfy workflow missing node "${params.nodeId}"`);
   }
-  const {inputs} = node;
+  const { inputs } = node;
   if (!isRecord(inputs)) {
     throw new Error(`Comfy workflow node "${params.nodeId}" is missing an inputs object`);
   }
@@ -435,7 +439,7 @@ function collectOutputFiles(params: {
   outputNodeId?: string;
   outputKinds: readonly ComfyOutputKind[];
 }): { nodeId: string; file: ComfyOutputFile }[] {
-  const {outputs} = params.history;
+  const { outputs } = params.history;
   if (!outputs) {
     return [];
   }

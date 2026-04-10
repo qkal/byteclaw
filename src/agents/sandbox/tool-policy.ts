@@ -133,7 +133,7 @@ function resolveExplicitSandboxReAllowPatterns(params: {
   allow?: string[];
   alsoAllow?: string[];
 }): string[] {
-  return [...new Set([...params.allow ?? [], ...params.alsoAllow ?? []])];
+  return [...new Set([...(params.allow ?? []), ...(params.alsoAllow ?? [])])];
 }
 
 function filterDefaultDenyForExplicitAllows(params: {

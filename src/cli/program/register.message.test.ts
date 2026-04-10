@@ -19,19 +19,19 @@ const mocks = vi.hoisted(() => ({
   registerMessageThreadCommandsMock: vi.fn(),
 }));
 
-const {createMessageCliHelpersMock} = mocks;
-const {registerMessageSendCommandMock} = mocks;
-const {registerMessageBroadcastCommandMock} = mocks;
-const {registerMessagePollCommandMock} = mocks;
-const {registerMessageReactionsCommandsMock} = mocks;
-const {registerMessageReadEditDeleteCommandsMock} = mocks;
-const {registerMessagePinCommandsMock} = mocks;
-const {registerMessagePermissionsCommandMock} = mocks;
-const {registerMessageSearchCommandMock} = mocks;
-const {registerMessageThreadCommandsMock} = mocks;
-const {registerMessageEmojiCommandsMock} = mocks;
-const {registerMessageStickerCommandsMock} = mocks;
-const {registerMessageDiscordAdminCommandsMock} = mocks;
+const { createMessageCliHelpersMock } = mocks;
+const { registerMessageSendCommandMock } = mocks;
+const { registerMessageBroadcastCommandMock } = mocks;
+const { registerMessagePollCommandMock } = mocks;
+const { registerMessageReactionsCommandsMock } = mocks;
+const { registerMessageReadEditDeleteCommandsMock } = mocks;
+const { registerMessagePinCommandsMock } = mocks;
+const { registerMessagePermissionsCommandMock } = mocks;
+const { registerMessageSearchCommandMock } = mocks;
+const { registerMessageThreadCommandsMock } = mocks;
+const { registerMessageEmojiCommandsMock } = mocks;
+const { registerMessageStickerCommandsMock } = mocks;
+const { registerMessageDiscordAdminCommandsMock } = mocks;
 
 vi.mock("./message/helpers.js", () => ({
   createMessageCliHelpers: mocks.createMessageCliHelpersMock,

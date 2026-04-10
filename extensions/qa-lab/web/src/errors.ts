@@ -1,7 +1,7 @@
 export function formatErrorMessage(err: unknown): string {
   if (err instanceof Error) {
     let formatted = err.message || err.name || "Error";
-    let {cause} = err;
+    let { cause } = err;
     const seen = new Set<unknown>([err]);
     while (cause && !seen.has(cause)) {
       seen.add(cause);

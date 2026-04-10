@@ -21,7 +21,10 @@ const loadConfigMock = vi.hoisted(() =>
 );
 
 const resolveStorePathMock = vi.hoisted(() =>
-  vi.fn((_store: string | undefined, opts?: { agentId?: string }) => `/tmp/sessions-${opts?.agentId ?? "missing"}.json`),
+  vi.fn(
+    (_store: string | undefined, opts?: { agentId?: string }) =>
+      `/tmp/sessions-${opts?.agentId ?? "missing"}.json`,
+  ),
 );
 const loadSessionStoreMock = vi.hoisted(() => vi.fn(() => ({})));
 
@@ -77,7 +80,8 @@ describe("sessionsCommand default store agent selection", () => {
       },
     }));
     resolveStorePathMock.mockImplementation(
-      (_store: string | undefined, opts?: { agentId?: string }) => `/tmp/sessions-${opts?.agentId ?? "missing"}.json`,
+      (_store: string | undefined, opts?: { agentId?: string }) =>
+        `/tmp/sessions-${opts?.agentId ?? "missing"}.json`,
     );
     loadSessionStoreMock.mockImplementation(() => ({}));
   });

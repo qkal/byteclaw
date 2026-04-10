@@ -15,7 +15,9 @@ import {
 } from "./test-helpers/pi-embedded-runner-e2e-fixtures.js";
 
 const runEmbeddedAttemptMock = vi.fn();
-const disposeSessionMcpRuntimeMock = vi.fn<(sessionId: string) => Promise<void>>(async () => undefined);
+const disposeSessionMcpRuntimeMock = vi.fn<(sessionId: string) => Promise<void>>(
+  async () => undefined,
+);
 const resolveSessionKeyForRequestMock = vi.fn();
 const resolveStoredSessionKeyForSessionIdMock = vi.fn();
 const loggerWarnMock = vi.fn();
@@ -138,7 +140,10 @@ const installRunEmbeddedMocks = () => {
     createEmbeddedRunAuthController: () => ({
       advanceAuthProfile: vi.fn(async () => false),
       initializeAuthProfile: vi.fn(async () => undefined),
-      maybeRefreshRuntimeAuthForAuthError: vi.fn(async (_errorText: string, runtimeAuthRetry) => refreshRuntimeAuthOnFirstPromptError && runtimeAuthRetry !== true),
+      maybeRefreshRuntimeAuthForAuthError: vi.fn(
+        async (_errorText: string, runtimeAuthRetry) =>
+          refreshRuntimeAuthOnFirstPromptError && runtimeAuthRetry !== true,
+      ),
       stopRuntimeAuthRefreshTimer: vi.fn(),
     }),
   }));
@@ -260,9 +265,10 @@ const readSessionMessages = async (sessionFile: string) => {
   const entries = await readSessionEntries(sessionFile);
   return entries
     .filter((entry) => entry.type === "message")
-    .map(
-      (entry) => (entry as { message?: { role?: string; content?: unknown } }).message,
-    ) as { role?: string; content?: unknown }[];
+    .map((entry) => (entry as { message?: { role?: string; content?: unknown } }).message) as {
+    role?: string;
+    content?: unknown;
+  }[];
 };
 
 const runDefaultEmbeddedTurn = async (sessionFile: string, prompt: string, sessionKey: string) => {

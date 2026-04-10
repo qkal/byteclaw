@@ -58,7 +58,7 @@ interface RuntimeRequirementEvalParams {
 }
 
 export function evaluateRuntimeRequires(params: RuntimeRequirementEvalParams): boolean {
-  const {requires} = params;
+  const { requires } = params;
   if (!requires) {
     return true;
   }

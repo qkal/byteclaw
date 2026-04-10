@@ -4,7 +4,10 @@ import {
 } from "../../shared/string-coerce.js";
 import { normalizeStringEntries } from "../../shared/string-normalization.js";
 
-export interface ServicePrefix<TService extends string> { prefix: string; service: TService }
+export interface ServicePrefix<TService extends string> {
+  prefix: string;
+  service: TService;
+}
 
 export interface ChatTargetPrefixesParams {
   trimmed: string;

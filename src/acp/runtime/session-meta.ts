@@ -107,7 +107,7 @@ export async function listAcpSessionEntries(params: {
   const entries: AcpSessionStoreEntry[] = [];
 
   for (const target of storeTargets) {
-    const {storePath} = target;
+    const { storePath } = target;
     let store: Record<string, SessionEntry>;
     try {
       store = loadSessionStore(storePath);

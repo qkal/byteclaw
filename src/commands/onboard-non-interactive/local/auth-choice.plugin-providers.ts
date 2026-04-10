@@ -127,7 +127,7 @@ export async function applyNonInteractivePluginProviderChoice(params: {
     return null;
   }
 
-  const {method} = providerChoice;
+  const { method } = providerChoice;
   if (!method.runNonInteractive) {
     params.runtime.error(
       [

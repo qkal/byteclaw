@@ -142,9 +142,9 @@ function normalizeQaSuiteConcurrency(value: number | undefined, scenarioCount: n
   const raw =
     typeof value === "number" && Number.isFinite(value)
       ? value
-      : (Number.isFinite(envValue)
+      : Number.isFinite(envValue)
         ? envValue
-        : DEFAULT_QA_SUITE_CONCURRENCY);
+        : DEFAULT_QA_SUITE_CONCURRENCY;
   return Math.max(1, Math.min(Math.floor(raw), Math.max(1, scenarioCount)));
 }
 

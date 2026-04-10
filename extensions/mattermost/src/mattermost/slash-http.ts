@@ -419,7 +419,7 @@ async function handleSlashCommandAsync(params: {
             currentModel,
             ownerUserId: senderId,
           })
-        : (pickerEntry.kind === "providers"
+        : pickerEntry.kind === "providers"
           ? renderMattermostProviderPickerView({
               currentModel,
               data,
@@ -431,7 +431,7 @@ async function handleSlashCommandAsync(params: {
               ownerUserId: senderId,
               page: 1,
               provider: pickerEntry.provider,
-            }));
+            });
 
     await sendMessageMattermost(to, view.text, {
       accountId: account.accountId,
@@ -455,9 +455,9 @@ async function handleSlashCommandAsync(params: {
     From:
       kind === "direct"
         ? `mattermost:${senderId}`
-        : (kind === "group"
+        : kind === "group"
           ? `mattermost:group:${channelId}`
-          : `mattermost:channel:${channelId}`),
+          : `mattermost:channel:${channelId}`,
     GroupSubject: kind !== "direct" ? channelDisplay || roomLabel : undefined,
     MessageSid: triggerId ?? `slash-${Date.now()}`,
     OriginatingChannel: "mattermost" as const,

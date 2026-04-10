@@ -1340,9 +1340,9 @@ function ensureListener() {
               summary:
                 patch.status === "failed"
                   ? (patch.error ?? current.error)
-                  : (patch.status === "succeeded"
+                  : patch.status === "succeeded"
                     ? current.terminalSummary
-                    : undefined),
+                    : undefined,
             })
           : undefined;
       const updated = updateTask(current.taskId, patch);
@@ -1545,9 +1545,9 @@ function updateTaskStateByRunId(params: {
       normalizeTaskSummary(params.eventSummary) ??
       (nextStatus === "failed"
         ? normalizeTaskSummary(params.error ?? current.error)
-        : (nextStatus === "succeeded"
+        : nextStatus === "succeeded"
           ? normalizeTaskSummary(params.terminalSummary ?? current.terminalSummary)
-          : undefined));
+          : undefined);
     const shouldAppendEvent =
       (params.status && params.status !== current.status) ||
       Boolean(normalizeTaskSummary(params.eventSummary));

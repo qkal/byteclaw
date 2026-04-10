@@ -223,9 +223,9 @@ function buildMessagingSection(params: {
           `- If you use \`message\` (\`action=send\`) to deliver your user-visible reply, respond with ONLY: ${SILENT_REPLY_TOKEN} (avoid duplicate replies).`,
           params.inlineButtonsEnabled
             ? "- Inline buttons supported. Use `action=send` with `buttons=[[{text,callback_data,style?}]]`; `style` can be `primary`, `success`, or `danger`."
-            : (params.runtimeChannel
+            : params.runtimeChannel
               ? `- Inline buttons not enabled for ${params.runtimeChannel}. If you need them, ask to set ${params.runtimeChannel}.capabilities.inlineButtons ("dm"|"group"|"all"|"allowlist").`
-              : ""),
+              : "",
           ...(params.messageToolHints ?? []),
         ]
           .filter(Boolean)
@@ -394,7 +394,7 @@ export function buildAgentSystemPrompt(params: {
     typeof params.extraSystemPrompt === "string"
       ? normalizeStructuredPromptSection(params.extraSystemPrompt)
       : undefined;
-  const {promptContribution} = params;
+  const { promptContribution } = params;
   const providerStablePrefix = normalizeProviderPromptBlock(promptContribution?.stablePrefix);
   const providerDynamicSuffix = normalizeProviderPromptBlock(promptContribution?.dynamicSuffix);
   const providerSectionOverrides = Object.fromEntries(
@@ -433,7 +433,7 @@ export function buildAgentSystemPrompt(params: {
     typeof params.heartbeatPrompt === "string"
       ? normalizeStructuredPromptSection(params.heartbeatPrompt)
       : undefined;
-  const {runtimeInfo} = params;
+  const { runtimeInfo } = params;
   const runtimeChannel = normalizeOptionalLowercaseString(runtimeInfo?.channel);
   const runtimeCapabilities = runtimeInfo?.capabilities ?? [];
   const runtimeCapabilitiesLower = new Set(
@@ -630,9 +630,9 @@ export function buildAgentSystemPrompt(params: {
             : "",
           params.sandboxInfo.hostBrowserAllowed === true
             ? "Host browser control: allowed."
-            : (params.sandboxInfo.hostBrowserAllowed === false
+            : params.sandboxInfo.hostBrowserAllowed === false
               ? "Host browser control: blocked."
-              : ""),
+              : "",
           params.sandboxInfo.elevated?.allowed
             ? "Elevated exec is available for this session."
             : "",
@@ -799,9 +799,9 @@ export function buildRuntimeLine(
     runtimeInfo?.repoRoot ? `repo=${runtimeInfo.repoRoot}` : "",
     runtimeInfo?.os
       ? `os=${runtimeInfo.os}${runtimeInfo?.arch ? ` (${runtimeInfo.arch})` : ""}`
-      : (runtimeInfo?.arch
+      : runtimeInfo?.arch
         ? `arch=${runtimeInfo.arch}`
-        : ""),
+        : "",
     runtimeInfo?.node ? `node=${runtimeInfo.node}` : "",
     runtimeInfo?.model ? `model=${runtimeInfo.model}` : "",
     runtimeInfo?.defaultModel ? `default_model=${runtimeInfo.defaultModel}` : "",

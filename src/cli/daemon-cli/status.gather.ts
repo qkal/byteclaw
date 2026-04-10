@@ -277,9 +277,9 @@ async function resolveGatewayStatusSummary(params: {
   let probeNote =
     !probeUrlOverride && bindMode === "lan"
       ? `bind=lan listens on 0.0.0.0 (all interfaces); probing via ${probeHost}.`
-      : (!probeUrlOverride && bindMode === "loopback"
+      : !probeUrlOverride && bindMode === "loopback"
         ? "Loopback-only gateway; only local clients can connect."
-        : undefined);
+        : undefined;
   probeNote = appendProbeNote(probeNote, bindHostWarning);
   probeNote = appendProbeNote(probeNote, tailnetWarning);
 
@@ -347,7 +347,9 @@ export async function gatherDaemonStatus(
     : process.env;
   const [loaded, runtime] = await Promise.all([
     service.isLoaded({ env: serviceEnv }).catch(() => false),
-    service.readRuntime(serviceEnv).catch((error) => ({ detail: String(error), status: "unknown" })),
+    service
+      .readRuntime(serviceEnv)
+      .catch((error) => ({ detail: String(error), status: "unknown" })),
   ]);
   const configAudit = command
     ? await loadServiceAuditModule().then(({ auditGatewayServiceConfig }) =>
@@ -508,6 +510,12 @@ export function renderPortDiagnosticsForCli(status: DaemonStatus, rpcOk?: boolea
 }
 
 export function resolvePortListeningAddresses(status: DaemonStatus): string[] {
-  const addrs = [...new Set(status.port?.listeners?.map((l) => l.address ? normalizeListenerAddress(l.address) : '').filter((v): v is string => Boolean(v)) ?? [])];
+  const addrs = [
+    ...new Set(
+      status.port?.listeners
+        ?.map((l) => (l.address ? normalizeListenerAddress(l.address) : ""))
+        .filter((v): v is string => Boolean(v)) ?? [],
+    ),
+  ];
   return addrs;
 }

@@ -174,16 +174,16 @@ export function createSlackMonitorContext(params: {
     const isGroup = channelType === "mpim";
     const from = isDirectMessage
       ? `slack:${channelId}`
-      : (isGroup
+      : isGroup
         ? `slack:group:${channelId}`
-        : `slack:channel:${channelId}`);
-    const chatType = isDirectMessage ? "direct" : (isGroup ? "group" : "channel");
+        : `slack:channel:${channelId}`;
+    const chatType = isDirectMessage ? "direct" : isGroup ? "group" : "channel";
     const senderId = normalizeOptionalString(p.senderId) ?? "";
 
     // Resolve through shared channel/account bindings so system events route to
     // The same agent session as regular inbound messages.
     try {
-      const peerKind = isDirectMessage ? "direct" : (isGroup ? "group" : "channel");
+      const peerKind = isDirectMessage ? "direct" : isGroup ? "group" : "channel";
       const peerId = isDirectMessage ? senderId : channelId;
       if (peerId) {
         const route = resolveAgentRoute({
@@ -378,9 +378,9 @@ export function createSlackMonitorContext(params: {
     const incomingTeamId =
       typeof raw.team_id === "string"
         ? raw.team_id
-        : (typeof raw.team?.id === "string"
+        : typeof raw.team?.id === "string"
           ? raw.team.id
-          : "");
+          : "";
 
     if (params.apiAppId && incomingApiAppId && incomingApiAppId !== params.apiAppId) {
       logVerbose(

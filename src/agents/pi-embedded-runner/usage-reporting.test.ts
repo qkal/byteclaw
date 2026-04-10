@@ -15,7 +15,7 @@ function makeAttemptResult(
 ): EmbeddedRunAttemptResult {
   const toolMetas = overrides.toolMetas ?? [];
   const didSendViaMessagingTool = overrides.didSendViaMessagingTool ?? false;
-  const {successfulCronAdds} = overrides;
+  const { successfulCronAdds } = overrides;
   return {
     aborted: false,
     assistantTexts: [],

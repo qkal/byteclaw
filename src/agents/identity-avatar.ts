@@ -54,7 +54,7 @@ function resolveLocalAvatarPath(params: {
   workspaceDir: string;
 }): { ok: true; filePath: string } | { ok: false; reason: string } {
   const workspaceRoot = resolveExistingPath(params.workspaceDir);
-  const {raw} = params;
+  const { raw } = params;
   const resolved =
     raw.startsWith("~") || path.isAbsolute(raw)
       ? resolveUserPath(raw)

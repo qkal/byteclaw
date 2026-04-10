@@ -9,7 +9,10 @@ export const CHUTES_USERINFO_ENDPOINT = `${CHUTES_OAUTH_ISSUER}/idp/userinfo`;
 
 const DEFAULT_EXPIRES_BUFFER_MS = 5 * 60 * 1000;
 
-export interface ChutesPkce { verifier: string; challenge: string }
+export interface ChutesPkce {
+  verifier: string;
+  challenge: string;
+}
 
 export interface ChutesUserInfo {
   sub?: string;

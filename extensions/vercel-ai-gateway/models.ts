@@ -87,9 +87,9 @@ function toPerMillionCost(value: number | string | undefined): number {
   const numeric =
     typeof value === "number"
       ? value
-      : (typeof value === "string"
+      : typeof value === "string"
         ? Number.parseFloat(value)
-        : Number.NaN);
+        : Number.NaN;
   if (!Number.isFinite(numeric) || numeric < 0) {
     return 0;
   }
@@ -159,9 +159,9 @@ function buildDiscoveredModelDefinition(
         : (fallback?.cost ?? VERCEL_AI_GATEWAY_DEFAULT_COST),
     id,
     input: Array.isArray(model.tags)
-      ? (model.tags.includes("vision")
+      ? model.tags.includes("vision")
         ? ["text", "image"]
-        : ["text"])
+        : ["text"]
       : (fallback?.input ?? ["text"]),
     maxTokens,
     name: (typeof model.name === "string" ? model.name.trim() : "") || fallback?.name || id,

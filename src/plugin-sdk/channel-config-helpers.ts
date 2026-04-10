@@ -148,9 +148,7 @@ interface MultiAccountChannelConfigAdapterParams<
 }
 
 /** Coerce mixed allowlist config values into plain strings without trimming or deduping. */
-export function mapAllowFromEntries(
-  allowFrom: (string | number)[] | null | undefined,
-): string[] {
+export function mapAllowFromEntries(allowFrom: (string | number)[] | null | undefined): string[] {
   return (allowFrom ?? []).map((entry) => String(entry));
 }
 

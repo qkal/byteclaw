@@ -45,7 +45,7 @@ export function sanitizeToolCallId(id: string, mode: ToolCallIdMode = "strict"):
 export function extractToolCallsFromAssistant(
   msg: Extract<AgentMessage, { role: "assistant" }>,
 ): ToolCallLike[] {
-  const {content} = msg;
+  const { content } = msg;
   if (!Array.isArray(content)) {
     return [];
   }
@@ -72,11 +72,11 @@ export function extractToolCallsFromAssistant(
 export function extractToolResultId(
   msg: Extract<AgentMessage, { role: "toolResult" }>,
 ): string | null {
-  const {toolCallId} = (msg as { toolCallId?: unknown });
+  const { toolCallId } = msg as { toolCallId?: unknown };
   if (typeof toolCallId === "string" && toolCallId) {
     return toolCallId;
   }
-  const {toolUseId} = (msg as { toolUseId?: unknown });
+  const { toolUseId } = msg as { toolUseId?: unknown };
   if (typeof toolUseId === "string" && toolUseId) {
     return toolUseId;
   }
@@ -225,7 +225,7 @@ function rewriteAssistantToolCallIds(params: {
   message: Extract<AgentMessage, { role: "assistant" }>;
   resolveId: (id: string) => string;
 }): Extract<AgentMessage, { role: "assistant" }> {
-  const {content} = params.message;
+  const { content } = params.message;
   if (!Array.isArray(content)) {
     return params.message;
   }
@@ -236,8 +236,8 @@ function rewriteAssistantToolCallIds(params: {
       return block;
     }
     const rec = block as { type?: unknown; id?: unknown };
-    const {type} = rec;
-    const {id} = rec;
+    const { type } = rec;
+    const { id } = rec;
     if (
       (type !== "functionCall" && type !== "toolUse" && type !== "toolCall") ||
       typeof id !== "string" ||
@@ -267,7 +267,7 @@ function rewriteToolResultIds(params: {
     typeof params.message.toolCallId === "string" && params.message.toolCallId
       ? params.message.toolCallId
       : undefined;
-  const {toolUseId} = (params.message as { toolUseId?: unknown });
+  const { toolUseId } = params.message as { toolUseId?: unknown };
   const toolUseIdStr = typeof toolUseId === "string" && toolUseId ? toolUseId : undefined;
   const sharedRawId =
     toolCallId && toolUseIdStr && toolCallId === toolUseIdStr ? toolCallId : undefined;
@@ -313,7 +313,7 @@ export function sanitizeToolCallIdsForCloudCodeAssist(
     if (!msg || typeof msg !== "object") {
       return msg;
     }
-    const {role} = (msg as { role?: unknown });
+    const { role } = msg as { role?: unknown };
     if (role === "assistant") {
       const next = rewriteAssistantToolCallIds({
         message: msg as Extract<AgentMessage, { role: "assistant" }>,

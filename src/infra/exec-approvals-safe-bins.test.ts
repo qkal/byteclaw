@@ -358,9 +358,7 @@ describe("exec approvals safe bins", () => {
       for (const deniedFlag of fixtureDeniedFlags) {
         expect(compiledDeniedFlags.has(deniedFlag)).toBe(true);
       }
-      expect([...compiledDeniedFlags].toSorted()).toEqual(
-        [...fixtureDeniedFlags].toSorted(),
-      );
+      expect([...compiledDeniedFlags].toSorted()).toEqual([...fixtureDeniedFlags].toSorted());
     }
   });
 

@@ -169,7 +169,7 @@ export function expectUnauthorizedResponse(
 
 export function createCanonicalizedChannelPluginHandler() {
   return vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
-    const {pathname} = new URL(req.url ?? "/", "http://localhost");
+    const { pathname } = new URL(req.url ?? "/", "http://localhost");
     const canonicalPath = canonicalizePathVariant(pathname);
     if (canonicalPath !== "/api/channels/nostr/default/profile") {
       return false;

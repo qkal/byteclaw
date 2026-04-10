@@ -192,7 +192,7 @@ export function extractNarrativeText(messages: unknown[]): string | null {
     if (record.role !== "assistant") {
       continue;
     }
-    const {content} = record;
+    const { content } = record;
     if (typeof content === "string" && content.trim().length > 0) {
       return content.trim();
     }

@@ -14,4 +14,6 @@ export const BLUEBUBBLES_ACTIONS = {
 
 type BlueBubblesActionSpecs = typeof BLUEBUBBLES_ACTIONS;
 
-export const BLUEBUBBLES_ACTION_NAMES = Object.keys(BLUEBUBBLES_ACTIONS) as (keyof BlueBubblesActionSpecs)[];
+export const BLUEBUBBLES_ACTION_NAMES = Object.keys(
+  BLUEBUBBLES_ACTIONS,
+) as (keyof BlueBubblesActionSpecs)[];

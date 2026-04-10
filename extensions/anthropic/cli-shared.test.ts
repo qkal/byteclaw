@@ -111,7 +111,7 @@ describe("normalizeClaudeBackendConfig", () => {
 
   it("is wired through the anthropic cli backend normalize hook", () => {
     const backend = buildAnthropicCliBackend();
-    const {normalizeConfig} = backend;
+    const { normalizeConfig } = backend;
 
     expect(normalizeConfig).toBeTypeOf("function");
 

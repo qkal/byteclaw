@@ -9,11 +9,9 @@ const LOG_PREFIX = "openclaw";
 const LOG_SUFFIX = ".log";
 
 function canUseNodeFs(): boolean {
-  const {getBuiltinModule} = (
-    process as NodeJS.Process & {
-      getBuiltinModule?: (id: string) => unknown;
-    }
-  );
+  const { getBuiltinModule } = process as NodeJS.Process & {
+    getBuiltinModule?: (id: string) => unknown;
+  };
   if (typeof getBuiltinModule !== "function") {
     return false;
   }

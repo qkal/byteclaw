@@ -45,7 +45,7 @@ export interface DiscordGatewaySupervisor {
 type GatewaySupervisorPhase = "active" | "buffering" | "disposed" | "teardown";
 
 function readFirstStackFrame(err: Error): string | undefined {
-  const {stack} = err;
+  const { stack } = err;
   if (!stack) {
     return undefined;
   }

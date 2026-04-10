@@ -25,10 +25,7 @@ export class ValidationError extends Error {
 /**
  * Validate a value against a set of rules.
  */
-export function validate<T>(
-  value: T,
-  rules: ValidationRule<T>[],
-): ValidationResult<T> {
+export function validate<T>(value: T, rules: ValidationRule<T>[]): ValidationResult<T> {
   const errors: string[] = [];
 
   for (const rule of rules) {
@@ -60,15 +57,15 @@ export function validateOrThrow<T>(value: T, rules: ValidationRule<T>[]): T {
  */
 export const ValidationRules = {
   required: <T>(value: T): boolean => value !== null && value !== undefined,
-  
+
   string: (value: unknown): value is string => typeof value === "string",
-  
+
   number: (value: unknown): value is number => typeof value === "number" && !isNaN(value),
-  
+
   boolean: (value: unknown): value is boolean => typeof value === "boolean",
-  
+
   email: (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-  
+
   url: (value: string): boolean => {
     try {
       new URL(value);
@@ -77,34 +74,50 @@ export const ValidationRules = {
       return false;
     }
   },
-  
-  minLength: (min: number) => (value: string): boolean => value.length >= min,
-  
-  maxLength: (max: number) => (value: string): boolean => value.length <= max,
-  
-  minValue: (min: number) => (value: number): boolean => value >= min,
-  
-  maxValue: (max: number) => (value: number): boolean => value <= max,
-  
-  pattern: (regex: RegExp) => (value: string): boolean => regex.test(value),
-  
-  enum: <T extends readonly string[]>(values: T) => (value: string): value is T[number] =>
-    values.includes(value as T[number]),
-  
+
+  minLength:
+    (min: number) =>
+    (value: string): boolean =>
+      value.length >= min,
+
+  maxLength:
+    (max: number) =>
+    (value: string): boolean =>
+      value.length <= max,
+
+  minValue:
+    (min: number) =>
+    (value: number): boolean =>
+      value >= min,
+
+  maxValue:
+    (max: number) =>
+    (value: number): boolean =>
+      value <= max,
+
+  pattern:
+    (regex: RegExp) =>
+    (value: string): boolean =>
+      regex.test(value),
+
+  enum:
+    <T extends readonly string[]>(values: T) =>
+    (value: string): value is T[number] =>
+      values.includes(value as T[number]),
+
   uuid: (value: string): boolean =>
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value),
-  
+
   alpha: (value: string): boolean => /^[a-zA-Z]+$/.test(value),
-  
+
   alphanumeric: (value: string): boolean => /^[a-zA-Z0-9]+$/.test(value),
-  
+
   date: (value: string): boolean => !isNaN(Date.parse(value)),
-  
-  port: (value: number): boolean =>
-    Number.isInteger(value) && value >= 1 && value <= 65535,
-  
+
+  port: (value: number): boolean => Number.isInteger(value) && value >= 1 && value <= 65535,
+
   positive: (value: number): boolean => value > 0,
-  
+
   nonNegative: (value: number): boolean => value >= 0,
 } as const;
 
@@ -121,7 +134,7 @@ export class Schema<T extends Record<string, unknown>> {
     for (const [key, rules] of Object.entries(this.rules)) {
       const value = data[key];
       const result = validate(value, rules);
-      
+
       if (!result.valid) {
         errors.push(...result.errors.map((e) => `${String(key)}: ${e}`));
       } else {

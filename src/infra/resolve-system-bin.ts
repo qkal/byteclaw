@@ -77,7 +77,7 @@ function buildWindowsTrustedDirs(): readonly string[] {
  */
 function buildUnixTrustedDirs(trust: SystemBinTrust): readonly string[] {
   const dirs: string[] = [...UNIX_BASE_TRUSTED_DIRS];
-  const {platform} = process;
+  const { platform } = process;
 
   if (platform === "linux") {
     // Fixed NixOS system profile path. Never derive trust from NIX_PROFILES:

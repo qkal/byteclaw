@@ -4,7 +4,7 @@ export function extractErrorCode(err: unknown): string | undefined {
   if (!err || typeof err !== "object") {
     return undefined;
   }
-  const {code} = (err as { code?: unknown });
+  const { code } = err as { code?: unknown };
   if (typeof code === "string") {
     return code;
   }
@@ -18,7 +18,7 @@ export function readErrorName(err: unknown): string {
   if (!err || typeof err !== "object") {
     return "";
   }
-  const {name} = (err as { name?: unknown });
+  const { name } = err as { name?: unknown };
   return typeof name === "string" ? name : "";
 }
 
@@ -70,7 +70,7 @@ export function formatErrorMessage(err: unknown): string {
   if (err instanceof Error) {
     formatted = err.message || err.name || "Error";
     // Traverse .cause chain to include nested error messages (e.g. grammY HttpError wraps network errors in .cause)
-    let {cause} = err;
+    let { cause } = err;
     const seen = new Set<unknown>([err]);
     while (cause && !seen.has(cause)) {
       seen.add(cause);

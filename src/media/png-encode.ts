@@ -9,7 +9,7 @@ const CRC_TABLE = (() => {
   for (let i = 0; i < 256; i += 1) {
     let c = i;
     for (let k = 0; k < 8; k += 1) {
-      c = c & 1 ? 0xED_B8_83_20 ^ (c >>> 1) : c >>> 1;
+      c = c & 1 ? 0xed_b8_83_20 ^ (c >>> 1) : c >>> 1;
     }
     table[i] = c >>> 0;
   }
@@ -18,11 +18,11 @@ const CRC_TABLE = (() => {
 
 /** Compute CRC32 checksum for a buffer (used in PNG chunk encoding). */
 export function crc32(buf: Buffer): number {
-  let crc = 0xFF_FF_FF_FF;
+  let crc = 0xff_ff_ff_ff;
   for (let i = 0; i < buf.length; i += 1) {
-    crc = CRC_TABLE[(crc ^ buf[i]) & 0xFF] ^ (crc >>> 8);
+    crc = CRC_TABLE[(crc ^ buf[i]) & 0xff] ^ (crc >>> 8);
   }
-  return (crc ^ 0xFF_FF_FF_FF) >>> 0;
+  return (crc ^ 0xff_ff_ff_ff) >>> 0;
 }
 
 /** Create a PNG chunk with type, data, and CRC. */
@@ -71,7 +71,7 @@ export function encodePngRgba(buffer: Buffer, width: number, height: number): Bu
   }
   const compressed = deflateSync(raw);
 
-  const signature = Buffer.from([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]);
+  const signature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
   const ihdr = Buffer.alloc(13);
   ihdr.writeUInt32BE(width, 0);
   ihdr.writeUInt32BE(height, 4);

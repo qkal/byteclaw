@@ -40,11 +40,11 @@ const hoisted = vi.hoisted(
   (): {
     resolveBootstrapContextForRunMock: ResolveBootstrapContextForRunMock;
   } => ({
-      resolveBootstrapContextForRunMock: vi.fn<() => Promise<BootstrapContext>>(async () => ({
-        bootstrapFiles: [],
-        contextFiles: [],
-      })),
-    }),
+    resolveBootstrapContextForRunMock: vi.fn<() => Promise<BootstrapContext>>(async () => ({
+      bootstrapFiles: [],
+      contextFiles: [],
+    })),
+  }),
 );
 
 setCliRunnerExecuteTestDeps({

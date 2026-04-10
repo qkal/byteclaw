@@ -45,12 +45,12 @@ function isWithdrawnReplyError(err: unknown): boolean {
     return false;
   }
   // SDK error shape: err.code
-  const {code} = (err as { code?: number });
+  const { code } = err as { code?: number };
   if (typeof code === "number" && WITHDRAWN_REPLY_ERROR_CODES.has(code)) {
     return true;
   }
   // AxiosError shape: err.response.data.code
-  const {response} = (err as { response?: { data?: { code?: number; msg?: string } } });
+  const { response } = err as { response?: { data?: { code?: number; msg?: string } } };
   if (
     typeof response?.data?.code === "number" &&
     WITHDRAWN_REPLY_ERROR_CODES.has(response.data.code)
@@ -188,9 +188,9 @@ function parseInteractiveCardContent(parsed: unknown): string {
   const candidate = parsed as { elements?: unknown; body?: { elements?: unknown } };
   const elements = Array.isArray(candidate.elements)
     ? candidate.elements
-    : (Array.isArray(candidate.body?.elements)
+    : Array.isArray(candidate.body?.elements)
       ? candidate.body.elements
-      : null);
+      : null;
   if (!elements) {
     return "[Interactive Card]";
   }
@@ -369,10 +369,10 @@ export async function listFeishuThreadMessages(params: {
     msg?: string;
     data?: {
       items?: ({
-          message_id?: string;
-          root_id?: string;
-          parent_id?: string;
-        } & FeishuMessageGetItem)[];
+        message_id?: string;
+        root_id?: string;
+        parent_id?: string;
+      } & FeishuMessageGetItem)[];
     };
   };
 

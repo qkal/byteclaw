@@ -774,7 +774,8 @@ export function buildDiscordComponentMessage(params: {
   const entries: DiscordComponentEntry[] = [];
   const modals: DiscordModalEntry[] = [];
   const components: TopLevelComponents[] = [];
-  const containerChildren: (| Row<
+  const containerChildren: (
+    | Row<
         | Button
         | LinkButton
         | StringSelectMenu
@@ -787,7 +788,8 @@ export function buildDiscordComponentMessage(params: {
     | Section
     | MediaGallery
     | Separator
-    | File)[] = [];
+    | File
+  )[] = [];
 
   const addEntry = (entry: DiscordComponentEntry) => {
     entries.push({
@@ -840,13 +842,15 @@ export function buildDiscordComponentMessage(params: {
       continue;
     }
     if (block.type === "actions") {
-      const rowComponents: (| Button
+      const rowComponents: (
+        | Button
         | LinkButton
         | StringSelectMenu
         | UserSelectMenu
         | RoleSelectMenu
         | MentionableSelectMenu
-        | ChannelSelectMenu)[] = [];
+        | ChannelSelectMenu
+      )[] = [];
       if (block.buttons) {
         if (block.buttons.length > 5) {
           throw new Error("Action rows support up to 5 buttons");

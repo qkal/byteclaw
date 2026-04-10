@@ -166,7 +166,7 @@ function applyOsc8Ranges(line: string, ranges: UrlRange[]): string {
 
   while (i < line.length) {
     // Fast path: only check for escape sequences when we see ESC
-    if (line.charCodeAt(i) === 0x1B) {
+    if (line.charCodeAt(i) === 0x1b) {
       // ANSI SGR sequence
       const sgr = line.slice(i).match(SGR_START_RE);
       if (sgr) {

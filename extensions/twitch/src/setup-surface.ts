@@ -256,7 +256,7 @@ function setTwitchGroupPolicy(
   policy: "open" | "allowlist" | "disabled",
 ): OpenClawConfig {
   const allowedRoles: TwitchRole[] =
-    policy === "open" ? ["all"] : (policy === "allowlist" ? ["moderator", "vip"] : []);
+    policy === "open" ? ["all"] : policy === "allowlist" ? ["moderator", "vip"] : [];
   return setTwitchAccessControl(cfg, allowedRoles, true);
 }
 
@@ -302,7 +302,7 @@ const twitchDmPolicy: ChannelSetupDmPolicy = {
   },
   setPolicy: (cfg, policy) => {
     const allowedRoles: TwitchRole[] =
-      policy === "open" ? ["all"] : (policy === "allowlist" ? [] : ["moderator"]);
+      policy === "open" ? ["all"] : policy === "allowlist" ? [] : ["moderator"];
     return setTwitchAccessControl(cfg, allowedRoles, true);
   },
 };

@@ -127,13 +127,13 @@ function createStartupConfig(params: {
       ? {
           channels: {},
         }
-      : (params.channelIds?.length
+      : params.channelIds?.length
         ? {
             channels: Object.fromEntries(
               params.channelIds.map((channelId) => [channelId, { enabled: true }]),
             ),
           }
-        : {})),
+        : {}),
     ...(params.enabledPluginIds?.length
       ? {
           plugins: {
@@ -143,13 +143,13 @@ function createStartupConfig(params: {
             ),
           },
         }
-      : (params.allowPluginIds?.length
+      : params.allowPluginIds?.length
         ? {
             plugins: {
               allow: params.allowPluginIds,
             },
           }
-        : {})),
+        : {}),
     ...(params.providerIds?.length
       ? {
           models: {

@@ -603,7 +603,7 @@ export function resolvePluginSetupAutoEnableReasons(params: {
       config: params.config,
       env,
     });
-    const values = Array.isArray(raw) ? raw : (raw ? [raw] : []);
+    const values = Array.isArray(raw) ? raw : raw ? [raw] : [];
     for (const reason of values) {
       const normalized = reason.trim();
       if (!normalized) {

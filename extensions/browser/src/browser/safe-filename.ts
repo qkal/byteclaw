@@ -11,7 +11,7 @@ export function sanitizeUntrustedFileName(fileName: string, fallbackName: string
   let cleaned = "";
   for (let i = 0; i < base.length; i++) {
     const code = base.charCodeAt(i);
-    if (code < 0x20 || code === 0x7F) {
+    if (code < 0x20 || code === 0x7f) {
       continue;
     }
     cleaned += base[i];

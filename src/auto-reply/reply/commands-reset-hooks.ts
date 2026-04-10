@@ -51,7 +51,7 @@ async function findLatestArchivedTranscript(sessionFile: string): Promise<string
 async function loadBeforeResetTranscript(params: {
   sessionFile?: string;
 }): Promise<{ sessionFile?: string; messages: unknown[] }> {
-  const {sessionFile} = params;
+  const { sessionFile } = params;
   if (!sessionFile) {
     logVerbose("before_reset: no session file available, firing hook with empty messages");
     return { messages: [], sessionFile };

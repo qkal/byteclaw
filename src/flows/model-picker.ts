@@ -44,8 +44,13 @@ export interface PromptDefaultModelParams {
   message?: string;
 }
 
-export interface PromptDefaultModelResult { model?: string; config?: OpenClawConfig }
-export interface PromptModelAllowlistResult { models?: string[] }
+export interface PromptDefaultModelResult {
+  model?: string;
+  config?: OpenClawConfig;
+}
+export interface PromptModelAllowlistResult {
+  models?: string[];
+}
 
 async function loadModelPickerRuntime() {
   return import("../commands/model-picker.runtime.js");
@@ -202,12 +207,14 @@ function createPreferredProviderMatcher(params: {
     }
     const value =
       Boolean(preferredOwnerPluginIdSet) &&
-      Boolean(resolveOwningPluginIdsForProvider({
-        config: params.cfg,
-        env: params.env,
-        provider: normalizedEntryProvider,
-        workspaceDir: params.workspaceDir,
-      })?.some((pluginId) => preferredOwnerPluginIdSet.has(pluginId)));
+      Boolean(
+        resolveOwningPluginIdsForProvider({
+          config: params.cfg,
+          env: params.env,
+          provider: normalizedEntryProvider,
+          workspaceDir: params.workspaceDir,
+        })?.some((pluginId) => preferredOwnerPluginIdSet.has(pluginId)),
+      );
     entryProviderCache.set(normalizedEntryProvider, value);
     return value;
   };
@@ -263,8 +270,8 @@ async function maybeFilterModelsByProvider(params: {
   workspaceDir?: string;
   env?: NodeJS.ProcessEnv;
 }): Promise<typeof params.models> {
-  const providerIds = [...new Set(params.models.map((entry) => entry.provider))].toSorted(
-    (a, b) => a.localeCompare(b),
+  const providerIds = [...new Set(params.models.map((entry) => entry.provider))].toSorted((a, b) =>
+    a.localeCompare(b),
   );
   const hasPreferredProvider = Boolean(params.preferredProvider);
   const shouldPromptProvider =
@@ -319,7 +326,12 @@ async function resolveProviderPluginSetupOptions(params: {
           env: params.env,
           workspaceDir: params.workspaceDir,
         });
-  return providerModelPickerOptions.map((entry) => ((Object.assign({value:entry.value,label:entry.label}, entry.hint?{hint:entry.hint}:{}))));
+  return providerModelPickerOptions.map((entry) =>
+    Object.assign(
+      { value: entry.value, label: entry.label },
+      entry.hint ? { hint: entry.hint } : {},
+    ),
+  );
 }
 
 async function maybeHandleProviderPluginSelection(params: {
@@ -740,9 +752,9 @@ export function applyModelFallbacksFromSelection(
   const existingPrimary =
     typeof existingModel === "string"
       ? existingModel
-      : (existingModel && typeof existingModel === "object"
+      : existingModel && typeof existingModel === "object"
         ? existingModel.primary
-        : undefined);
+        : undefined;
 
   const fallbacks = normalized.filter((key) => key !== resolvedKey);
   return {

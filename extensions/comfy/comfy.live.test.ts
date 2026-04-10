@@ -33,11 +33,9 @@ function withPluginsEnabled<T>(cfg: T): T {
 describeLive("comfy live", () => {
   let cfg = {} as ReturnType<typeof loadConfig>;
   let agentDir = "";
-  const imageProviders: { id: string; generateImage: Function; isConfigured?: Function }[] =
-    [];
+  const imageProviders: { id: string; generateImage: Function; isConfigured?: Function }[] = [];
   const musicProviders: RegisteredMusicProvider[] = [];
-  const videoProviders: { id: string; generateVideo: Function; isConfigured?: Function }[] =
-    [];
+  const videoProviders: { id: string; generateVideo: Function; isConfigured?: Function }[] = [];
 
   beforeAll(async () => {
     cfg = withPluginsEnabled(loadConfig());

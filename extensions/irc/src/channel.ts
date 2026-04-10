@@ -252,7 +252,8 @@ export const ircPlugin: ChannelPlugin<ResolvedIrcAccount, IrcProbe> = createChat
     },
     reload: { configPrefixes: ["channels.irc"] },
     resolver: {
-      resolveTargets: async ({ inputs, kind }) => inputs.map((input) => {
+      resolveTargets: async ({ inputs, kind }) =>
+        inputs.map((input) => {
           const normalized = normalizeIrcMessagingTarget(input);
           if (!normalized) {
             return {

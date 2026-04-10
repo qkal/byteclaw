@@ -589,7 +589,7 @@ Use jobId as the canonical identifier; id is accepted for compatibility. Use con
             "payload" in job &&
             (job as { payload?: { kind?: string; text?: string } }).payload?.kind === "systemEvent"
           ) {
-            const {payload} = (job as { payload: { kind: string; text: string } });
+            const { payload } = job as { payload: { kind: string; text: string } };
             if (typeof payload.text === "string" && payload.text.trim()) {
               const contextLines = await buildReminderContextLines({
                 agentSessionKey: opts?.agentSessionKey,

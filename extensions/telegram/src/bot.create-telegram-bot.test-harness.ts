@@ -132,7 +132,7 @@ async function dispatchHarnessReplies(
   await params.dispatcherOptions.typingCallbacks?.onReplyStart?.();
   const reply = await runReply(params);
   const payloads: ReplyPayload[] =
-    reply === undefined ? [] : (Array.isArray(reply) ? reply : [reply]);
+    reply === undefined ? [] : Array.isArray(reply) ? reply : [reply];
   const dispatcher = createReplyDispatcher({
     deliver: async (payload, info) => {
       await params.dispatcherOptions.deliver?.(payload, info);
@@ -169,19 +169,23 @@ async function dispatchHarnessReplies(
 const dispatchReplyHoisted = vi.hoisted(() => ({
   dispatchReplyWithBufferedBlockDispatcher: vi.fn<DispatchReplyWithBufferedBlockDispatcherFn>(
     async (params: DispatchReplyHarnessParams) =>
-      await dispatchHarnessReplies(params, async (dispatchParams) => await replySpyHoisted.replySpy(dispatchParams.ctx, dispatchParams.replyOptions)),
+      await dispatchHarnessReplies(
+        params,
+        async (dispatchParams) =>
+          await replySpyHoisted.replySpy(dispatchParams.ctx, dispatchParams.replyOptions),
+      ),
   ),
 }));
-export const {listSkillCommandsForAgents} = skillCommandListHoisted;
-const {buildModelsProviderData} = modelProviderDataHoisted;
-export const {replySpy} = replySpyHoisted;
-export const {dispatchReplyWithBufferedBlockDispatcher} = dispatchReplyHoisted;
+export const { listSkillCommandsForAgents } = skillCommandListHoisted;
+const { buildModelsProviderData } = modelProviderDataHoisted;
+export const { replySpy } = replySpyHoisted;
+export const { dispatchReplyWithBufferedBlockDispatcher } = dispatchReplyHoisted;
 const menuSyncHoisted = vi.hoisted(() => ({
   syncTelegramMenuCommands: vi.fn(async ({ bot, commandsToRegister }) => {
     await bot.api.setMyCommands(commandsToRegister);
   }),
 }));
-export const {syncTelegramMenuCommands} = menuSyncHoisted;
+export const { syncTelegramMenuCommands } = menuSyncHoisted;
 
 function parseModelRef(raw: string): { provider?: string; model: string } {
   const trimmed = raw.trim();
@@ -231,16 +235,16 @@ function createModelsProviderDataFromConfig(cfg: OpenClawConfig): {
 const systemEventsHoisted = vi.hoisted(() => ({
   enqueueSystemEventSpy: vi.fn<TelegramBotDeps["enqueueSystemEvent"]>(() => false),
 }));
-export const {enqueueSystemEventSpy} = systemEventsHoisted;
+export const { enqueueSystemEventSpy } = systemEventsHoisted;
 const execApprovalHoisted = vi.hoisted(() => ({
   resolveExecApprovalSpy: vi.fn(async () => undefined),
 }));
-export const {resolveExecApprovalSpy} = execApprovalHoisted;
+export const { resolveExecApprovalSpy } = execApprovalHoisted;
 
 const sentMessageCacheHoisted = vi.hoisted(() => ({
   wasSentByBot: vi.fn(() => false),
 }));
-export const {wasSentByBot} = sentMessageCacheHoisted;
+export const { wasSentByBot } = sentMessageCacheHoisted;
 
 vi.doMock("./sent-message-cache.js", () => ({
   clearSentMessageCache: vi.fn(),
@@ -276,25 +280,25 @@ const grammySpies = vi.hoisted(() => ({
   useSpy: vi.fn() as MockFn<(arg: unknown) => void>,
 }));
 
-export const {useSpy} = grammySpies;
-export const {middlewareUseSpy} = grammySpies;
-export const {onSpy} = grammySpies;
-export const {stopSpy} = grammySpies;
-export const {commandSpy} = grammySpies;
-export const {botCtorSpy} = grammySpies;
-export const {answerCallbackQuerySpy} = grammySpies;
-export const {sendChatActionSpy} = grammySpies;
-export const {editMessageTextSpy} = grammySpies;
-export const {editMessageReplyMarkupSpy} = grammySpies;
-export const {sendMessageDraftSpy} = grammySpies;
-export const {setMessageReactionSpy} = grammySpies;
-export const {setMyCommandsSpy} = grammySpies;
-export const {getMeSpy} = grammySpies;
-export const {getChatSpy} = grammySpies;
-export const {sendMessageSpy} = grammySpies;
-export const {sendAnimationSpy} = grammySpies;
-export const {sendPhotoSpy} = grammySpies;
-export const {getFileSpy} = grammySpies;
+export const { useSpy } = grammySpies;
+export const { middlewareUseSpy } = grammySpies;
+export const { onSpy } = grammySpies;
+export const { stopSpy } = grammySpies;
+export const { commandSpy } = grammySpies;
+export const { botCtorSpy } = grammySpies;
+export const { answerCallbackQuerySpy } = grammySpies;
+export const { sendChatActionSpy } = grammySpies;
+export const { editMessageTextSpy } = grammySpies;
+export const { editMessageReplyMarkupSpy } = grammySpies;
+export const { sendMessageDraftSpy } = grammySpies;
+export const { setMessageReactionSpy } = grammySpies;
+export const { setMyCommandsSpy } = grammySpies;
+export const { getMeSpy } = grammySpies;
+export const { getChatSpy } = grammySpies;
+export const { sendMessageSpy } = grammySpies;
+export const { sendAnimationSpy } = grammySpies;
+export const { sendPhotoSpy } = grammySpies;
+export const { getFileSpy } = grammySpies;
 
 const runnerHoisted = vi.hoisted(() => ({
   sequentializeMiddleware: vi.fn(async (_ctx: unknown, next?: () => Promise<void>) => {
@@ -305,9 +309,9 @@ const runnerHoisted = vi.hoisted(() => ({
   sequentializeSpy: vi.fn(() => runnerHoisted.sequentializeMiddleware),
   throttlerSpy: vi.fn(() => "throttler"),
 }));
-export const {sequentializeSpy} = runnerHoisted;
+export const { sequentializeSpy } = runnerHoisted;
 export let sequentializeKey: ((ctx: unknown) => string) | undefined;
-export const {throttlerSpy} = runnerHoisted;
+export const { throttlerSpy } = runnerHoisted;
 export const telegramBotRuntimeForTest: TelegramBotRuntimeForTest = {
   Bot: class {
     api = {
@@ -474,7 +478,10 @@ beforeEach(() => {
   dispatchReplyWithBufferedBlockDispatcher.mockReset();
   dispatchReplyWithBufferedBlockDispatcher.mockImplementation(
     async (params: DispatchReplyHarnessParams) =>
-      await dispatchHarnessReplies(params, async (dispatchParams) => await replySpy(dispatchParams.ctx, dispatchParams.replyOptions)),
+      await dispatchHarnessReplies(
+        params,
+        async (dispatchParams) => await replySpy(dispatchParams.ctx, dispatchParams.replyOptions),
+      ),
   );
   syncTelegramMenuCommands.mockReset();
   syncTelegramMenuCommands.mockImplementation(async ({ bot, commandsToRegister }) => {
@@ -517,7 +524,9 @@ beforeEach(() => {
   listSkillCommandsForAgents.mockReset();
   listSkillCommandsForAgents.mockReturnValue([]);
   buildModelsProviderData.mockReset();
-  buildModelsProviderData.mockImplementation(async (cfg: OpenClawConfig) => createModelsProviderDataFromConfig(cfg));
+  buildModelsProviderData.mockImplementation(async (cfg: OpenClawConfig) =>
+    createModelsProviderDataFromConfig(cfg),
+  );
   middlewareUseSpy.mockReset();
   runnerHoisted.sequentializeMiddleware.mockReset();
   runnerHoisted.sequentializeMiddleware.mockImplementation(async (_ctx, next) => {

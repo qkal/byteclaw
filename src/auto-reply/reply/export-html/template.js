@@ -44,7 +44,7 @@
   const toolCallMap = new Map();
   for (const entry of entries) {
     if (entry.type === "message" && entry.message.role === "assistant") {
-      const {content} = entry.message;
+      const { content } = entry.message;
       if (Array.isArray(content)) {
         for (const block of content) {
           if (block.type === "toolCall") {
@@ -236,7 +236,7 @@
         showConnector,
       });
 
-      const {children} = node;
+      const { children } = node;
       const multipleChildren = children.length > 1;
 
       // Order children (active branch first)
@@ -403,8 +403,8 @@
     const searchTokens = searchQuery.toLowerCase().split(/\s+/).filter(Boolean);
 
     const filtered = flatNodes.filter((flatNode) => {
-      const {entry} = flatNode.node;
-      const {label} = flatNode.node;
+      const { entry } = flatNode.node;
+      const { label } = flatNode.node;
       const isCurrentLeaf = entry.id === currentLeafId;
 
       // Always show current leaf
@@ -447,7 +447,8 @@
           passesFilter = true;
           break;
         }
-        default: { // 'default'
+        default: {
+          // 'default'
           passesFilter = !isSettingsEntry;
           break;
         }
@@ -634,8 +635,8 @@
     switch (name) {
       case "read": {
         const path = shortenPath(String(args.path || args.file_path || ""));
-        const {offset} = args;
-        const {limit} = args;
+        const { offset } = args;
+        const { limit } = args;
         let display = path;
         if (offset !== undefined || limit !== undefined) {
           const start = offset ?? 1;
@@ -771,7 +772,10 @@
               `<span class="tree-role-tool">${escapeHtml(formatToolCall(toolCall.name, toolCall.arguments))}</span>`
             );
           }
-          return labelHtml + `<span class="tree-role-tool">[${escapeHtml(msg.toolName || "tool")}]</span>`;
+          return (
+            labelHtml +
+            `<span class="tree-role-tool">[${escapeHtml(msg.toolName || "tool")}]</span>`
+          );
         }
         if (msg.role === "bashExecution") {
           const cmd = truncate(normalize(msg.command || ""));
@@ -804,7 +808,10 @@
         return labelHtml + `<span class="tree-muted">[model: ${escapeHtml(entry.modelId)}]</span>`;
       }
       case "thinking_level_change": {
-        return labelHtml + `<span class="tree-muted">[thinking: ${escapeHtml(entry.thinkingLevel)}]</span>`;
+        return (
+          labelHtml +
+          `<span class="tree-muted">[thinking: ${escapeHtml(entry.thinkingLevel)}]</span>`
+        );
       }
       default: {
         return labelHtml + `<span class="tree-muted">[${escapeHtml(entry.type)}]</span>`;
@@ -832,7 +839,7 @@
       container.innerHTML = "";
 
       for (const flatNode of filtered) {
-        const {entry} = flatNode.node;
+        const { entry } = flatNode.node;
         const isOnPath = activePathIds.has(entry.id);
         const isTarget = entry.id === currentTargetId;
 
@@ -876,7 +883,7 @@
       // Just update markers and classes
       const nodes = container.querySelectorAll(".tree-node");
       for (const node of nodes) {
-        const {id} = node.dataset;
+        const { id } = node.dataset;
         const isOnPath = activePathIds.has(id);
         const isTarget = id === currentTargetId;
 
@@ -1088,7 +1095,7 @@
 
     let html = `<div class="tool-execution ${statusClass}">`;
     const args = call.arguments || {};
-    const {name} = call;
+    const { name } = call;
 
     const invalidArg = '<span class="tool-error">[invalid arg]</span>';
 
@@ -1107,8 +1114,8 @@
       }
       case "read": {
         const filePath = str(args.file_path ?? args.path);
-        const {offset} = args;
-        const {limit} = args;
+        const { offset } = args;
+        const { limit } = args;
 
         let pathHtml = filePath === null ? invalidArg : escapeHtml(shortenPath(filePath || ""));
         if (filePath !== null && (offset !== undefined || limit !== undefined)) {
@@ -1165,9 +1172,9 @@
           for (const line of diffLines) {
             const cls = line.match(/^\+/)
               ? "diff-added"
-              : (line.match(/^-/)
+              : line.match(/^-/)
                 ? "diff-removed"
-                : "diff-context");
+                : "diff-context";
             html += `<div class="${cls}">${escapeHtml(replaceTabs(line))}</div>`;
           }
           html += "</div>";
@@ -1231,7 +1238,7 @@
    * Download the session data as a JSONL file.
    * Reconstructs the original format: header line + entry lines.
    */
-  window.downloadSessionJson = function  downloadSessionJson() {
+  window.downloadSessionJson = function downloadSessionJson() {
     // Build JSONL content: header first, then all entries
     const lines = [];
     if (header) {
@@ -1347,7 +1354,7 @@
 
       if (msg.role === "user") {
         let html = `<div class="user-message" id="${entryId}">${copyBtnHtml}${tsHtml}`;
-        const {content} = msg;
+        const { content } = msg;
 
         if (Array.isArray(content)) {
           const images = content.filter((c) => c.type === "image");
@@ -1617,7 +1624,7 @@
                     return `<div class="tool-item"><span class="tool-item-name">${escapeHtml(t.name)}</span> - <span class="tool-item-desc">${escapeHtml(t.description)}</span></div>`;
                   }
                   const params = t.parameters;
-                  const {properties} = params;
+                  const { properties } = params;
                   const required = params.required || [];
                   let paramsHtml = "";
                   for (const [name, prop] of Object.entries(properties)) {
@@ -1699,7 +1706,7 @@
     messagesEl.querySelectorAll(".copy-link-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
-        const {entryId} = btn.dataset;
+        const { entryId } = btn.dataset;
         const shareUrl = buildShareUrl(entryId);
         void copyToClipboard(shareUrl, btn);
       });
@@ -1759,7 +1766,7 @@
       // Code blocks: syntax highlight, no HTML escaping
       code(token) {
         const code = token.text;
-        const {lang} = token;
+        const { lang } = token;
         let highlighted;
         if (lang && hljs.getLanguage(lang)) {
           try {

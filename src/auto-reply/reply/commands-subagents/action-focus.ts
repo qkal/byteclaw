@@ -129,7 +129,7 @@ export async function handleSubagentsFocusAction(
   }
 
   const label = focusTarget.label || token;
-  const {accountId} = bindingContext;
+  const { accountId } = bindingContext;
   const acpMeta =
     focusTarget.targetKind === "acp"
       ? readAcpSessionEntry({

@@ -76,7 +76,7 @@ export async function handleAssistantFailover(params: {
   maybeBackoffBeforeOverloadFailover: (reason: FailoverReason | null) => Promise<void>;
   advanceAuthProfile: () => Promise<boolean>;
 }): Promise<AssistantFailoverOutcome> {
-  let {overloadProfileRotations} = params;
+  let { overloadProfileRotations } = params;
   let decision = params.initialDecision;
   const sameModelIdleTimeoutRetry = (): AssistantFailoverOutcome => {
     params.warn(

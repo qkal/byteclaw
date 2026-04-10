@@ -2,7 +2,7 @@ import { Buffer } from "node:buffer";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const cryptoMocks = vi.hoisted(() => ({
-  randomBytes: vi.fn((bytes: number) => Buffer.alloc(bytes, 0xAB)),
+  randomBytes: vi.fn((bytes: number) => Buffer.alloc(bytes, 0xab)),
   randomInt: vi.fn(),
   randomUUID: vi.fn(),
 }));
@@ -47,13 +47,13 @@ describe("secure-random", () => {
     {
       byteCount: undefined,
       expectedBytes: 16,
-      expectedToken: Buffer.alloc(16, 0xAB).toString("base64url"),
+      expectedToken: Buffer.alloc(16, 0xab).toString("base64url"),
       name: "uses the default byte count",
     },
     {
       byteCount: 18,
       expectedBytes: 18,
-      expectedToken: Buffer.alloc(18, 0xAB).toString("base64url"),
+      expectedToken: Buffer.alloc(18, 0xab).toString("base64url"),
       name: "passes custom byte counts through",
     },
     {
@@ -75,7 +75,7 @@ describe("secure-random", () => {
   it("generates secure hex strings", () => {
     cryptoMocks.randomBytes.mockClear();
 
-    expect(generateSecureHex(4)).toBe(Buffer.alloc(4, 0xAB).toString("hex"));
+    expect(generateSecureHex(4)).toBe(Buffer.alloc(4, 0xab).toString("hex"));
     expect(cryptoMocks.randomBytes).toHaveBeenCalledWith(4);
   });
 

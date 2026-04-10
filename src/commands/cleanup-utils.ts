@@ -26,7 +26,7 @@ export function collectWorkspaceDirs(cfg: OpenClawConfig | undefined): string[] 
   }
   const list = Array.isArray(cfg?.agents?.list) ? cfg?.agents?.list : [];
   for (const agent of list) {
-    const {workspace} = (agent as { workspace?: unknown });
+    const { workspace } = agent as { workspace?: unknown };
     if (typeof workspace === "string" && workspace.trim()) {
       dirs.add(resolveUserPath(workspace));
     }
@@ -64,7 +64,7 @@ function isUnsafeRemovalTarget(target: string): boolean {
     return true;
   }
   const resolved = path.resolve(target);
-  const {root} = path.parse(resolved);
+  const { root } = path.parse(resolved);
   if (resolved === root) {
     return true;
   }

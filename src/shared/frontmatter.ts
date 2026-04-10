@@ -104,7 +104,7 @@ export function parseOpenClawManifestInstallBase(
   }
   const raw = input as Record<string, unknown>;
   const kindRaw =
-    typeof raw.kind === "string" ? raw.kind : (typeof raw.type === "string" ? raw.type : "");
+    typeof raw.kind === "string" ? raw.kind : typeof raw.type === "string" ? raw.type : "";
   const kind = normalizeOptionalLowercaseString(kindRaw) ?? "";
   if (!allowedKinds.includes(kind)) {
     return undefined;

@@ -17,7 +17,11 @@ interface ReactionParams {
   fetchImpl?: MattermostFetch;
 }
 type ReactionMutation = (client: MattermostClient, params: MutationPayload) => Promise<void>;
-interface MutationPayload { userId: string; postId: string; emojiName: string }
+interface MutationPayload {
+  userId: string;
+  postId: string;
+  emojiName: string;
+}
 
 const BOT_USER_CACHE_TTL_MS = 10 * 60_000;
 const botUserIdCache = new Map<string, { userId: string; expiresAt: number }>();

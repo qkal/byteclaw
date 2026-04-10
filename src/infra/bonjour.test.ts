@@ -70,17 +70,17 @@ vi.mock("../logger.js", async () => {
 });
 
 vi.mock("@homebridge/ciao", () => ({
-    Protocol: { TCP: "tcp" },
-    getResponder: () => ({
-      createService,
-      shutdown,
-    }),
-  }));
+  Protocol: { TCP: "tcp" },
+  getResponder: () => ({
+    createService,
+    shutdown,
+  }),
+}));
 
 vi.mock("./unhandled-rejections.js", () => ({
-    registerUnhandledRejectionHandler: (handler: (reason: unknown) => boolean) =>
-      registerUnhandledRejectionHandler(handler),
-  }));
+  registerUnhandledRejectionHandler: (handler: (reason: unknown) => boolean) =>
+    registerUnhandledRejectionHandler(handler),
+}));
 
 const { startGatewayBonjourAdvertiser } = await import("./bonjour.js");
 

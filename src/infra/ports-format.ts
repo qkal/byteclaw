@@ -75,7 +75,7 @@ export function isDualStackLoopbackGatewayListeners(
     if (classifyPortListener(listener, port) !== "gateway") {
       return false;
     }
-    const {pid} = listener;
+    const { pid } = listener;
     if (typeof pid !== "number" || !Number.isFinite(pid)) {
       return false;
     }

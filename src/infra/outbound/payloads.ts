@@ -100,11 +100,11 @@ export function normalizeOutboundPayloads(
   const normalizedPayloads: NormalizedOutboundPayload[] = [];
   for (const payload of normalizeReplyPayloadsForDelivery(payloads)) {
     const parts = resolveSendableOutboundReplyParts(payload);
-    const {interactive} = payload;
-    const {channelData} = payload;
+    const { interactive } = payload;
+    const { channelData } = payload;
     const hasChannelData = hasReplyChannelData(channelData);
     const hasInteractive = hasInteractiveReplyBlocks(interactive);
-    const {text} = parts;
+    const { text } = parts;
     if (
       !hasReplyPayloadContent({ ...payload, mediaUrls: parts.mediaUrls, text }, { hasChannelData })
     ) {

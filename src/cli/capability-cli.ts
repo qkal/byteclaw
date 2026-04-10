@@ -975,7 +975,17 @@ async function runTtsProviders(transport: CapabilityTransport) {
       ...payload,
       providers: (payload.providers ?? []).map((provider) => {
         const id = typeof provider.id === "string" ? provider.id : "";
-        return Object.assign({available:true,configured:typeof provider.configured===`boolean`?provider.configured:providerHasGenericConfig({cfg,providerId:id}),selected:Boolean(id&&payload.active===id)}, provider);
+        return Object.assign(
+          {
+            available: true,
+            configured:
+              typeof provider.configured === `boolean`
+                ? provider.configured
+                : providerHasGenericConfig({ cfg, providerId: id }),
+            selected: Boolean(id && payload.active === id),
+          },
+          provider,
+        );
       }),
     };
   }
@@ -1018,9 +1028,9 @@ async function runTtsStateMutation(params: {
     const method =
       params.capability === "tts.enable"
         ? "tts.enable"
-        : (params.capability === "tts.disable"
+        : params.capability === "tts.disable"
           ? "tts.disable"
-          : "tts.setProvider");
+          : "tts.setProvider";
     const payload = await callGateway({
       method,
       params: params.provider ? { provider: params.provider } : undefined,

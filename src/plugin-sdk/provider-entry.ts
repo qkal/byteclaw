@@ -105,7 +105,7 @@ export function defineSingleProviderPluginEntry(options: SingleProviderPluginOpt
     ...(options.kind ? { kind: options.kind } : {}),
     ...(options.configSchema ? { configSchema: options.configSchema } : {}),
     register(api) {
-      const {provider} = options;
+      const { provider } = options;
       if (provider) {
         const providerId = provider.id ?? options.id;
         const envVars = resolveEnvVars({
@@ -134,7 +134,7 @@ export function defineSingleProviderPluginEntry(options: SingleProviderPluginOpt
             run: catalogRun!,
           };
         } else {
-          const {buildProvider} = provider.catalog;
+          const { buildProvider } = provider.catalog;
           catalog = {
             order: "simple",
             run: (ctx: ProviderCatalogContext): Promise<ProviderCatalogResult> =>

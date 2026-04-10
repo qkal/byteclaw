@@ -118,9 +118,7 @@ export function resolveExecSafeBinRuntimePolicy(params: {
       local: params.local,
     }),
   );
-  const unprofiledSafeBins = [...safeBins]
-    .filter((entry) => !safeBinProfiles[entry])
-    .toSorted();
+  const unprofiledSafeBins = [...safeBins].filter((entry) => !safeBinProfiles[entry]).toSorted();
   const explicitTrustedSafeBinDirs = [
     ...normalizeTrustedSafeBinDirs(params.global?.safeBinTrustedDirs),
     ...normalizeTrustedSafeBinDirs(params.local?.safeBinTrustedDirs),
@@ -135,9 +133,9 @@ export function resolveExecSafeBinRuntimePolicy(params: {
     for (const hit of writableTrustedSafeBinDirs) {
       const scope =
         hit.worldWritable || hit.groupWritable
-          ? (hit.worldWritable
+          ? hit.worldWritable
             ? "world-writable"
-            : "group-writable")
+            : "group-writable"
           : "writable";
       params.onWarning(
         `exec: safeBinTrustedDirs includes ${scope} directory '${hit.dir}'; remove trust or tighten permissions (for example chmod 755).`,

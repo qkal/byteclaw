@@ -102,7 +102,8 @@ export function createMSTeamsConversationStoreFs(params?: {
 
   const findPreferredDmByUserId = async (
     id: string,
-  ): Promise<MSTeamsConversationStoreEntry | null> => findPreferredDmConversationByUserId(await list(), id);
+  ): Promise<MSTeamsConversationStoreEntry | null> =>
+    findPreferredDmConversationByUserId(await list(), id);
 
   const upsert = async (
     conversationId: string,

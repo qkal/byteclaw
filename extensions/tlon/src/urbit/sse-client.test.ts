@@ -155,8 +155,8 @@ describe("UrbitSSEClient", () => {
       const client = new UrbitSSEClient("https://example.com", "urbauth-~zod=123");
 
       // Access private properties for testing
-      const {lastHeardEventId} = (client as unknown as { lastHeardEventId: number });
-      const {ackThreshold} = (client as unknown as { ackThreshold: number });
+      const { lastHeardEventId } = client as unknown as { lastHeardEventId: number };
+      const { ackThreshold } = client as unknown as { ackThreshold: number };
 
       expect(lastHeardEventId).toBe(-1);
       expect(ackThreshold).toBeGreaterThan(0);

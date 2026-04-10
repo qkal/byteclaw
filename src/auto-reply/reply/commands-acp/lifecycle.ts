@@ -197,7 +197,7 @@ async function bindSpawnedAcpSessionToCurrentConversation(params: {
   }
 
   const bindingContext = resolveAcpCommandBindingContext(params.commandParams);
-  const {channel} = bindingContext;
+  const { channel } = bindingContext;
   if (!channel) {
     return {
       error: "ACP current-conversation binding requires a channel context.",
@@ -307,7 +307,7 @@ async function bindSpawnedAcpSessionToThread(params: {
   }
 
   const bindingContext = resolveAcpCommandBindingContext(commandParams);
-  const {channel} = bindingContext;
+  const { channel } = bindingContext;
   if (!channel) {
     return {
       error: "ACP thread binding requires a channel context.",

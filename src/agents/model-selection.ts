@@ -54,7 +54,7 @@ function sanitizeModelWarningValue(value: string): string {
   let controlBoundary = -1;
   for (let index = 0; index < stripped.length; index += 1) {
     const code = stripped.charCodeAt(index);
-    if (code <= 0x1F || code === 0x7F) {
+    if (code <= 0x1f || code === 0x7f) {
       controlBoundary = index;
       break;
     }
@@ -890,7 +890,7 @@ export function normalizeModelSelection(value: unknown): string | undefined {
   if (!value || typeof value !== "object") {
     return undefined;
   }
-  const {primary} = (value as { primary?: unknown });
+  const { primary } = value as { primary?: unknown };
   if (typeof primary === "string" && primary.trim()) {
     return primary.trim();
   }

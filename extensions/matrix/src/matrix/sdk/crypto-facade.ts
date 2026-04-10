@@ -88,8 +88,10 @@ export function createMatrixCryptoFacade(deps: {
 }): MatrixCryptoFacade {
   return {
     acceptVerification: async (id) => await deps.verificationManager.acceptVerification(id),
-    cancelVerification: async (id, params) => await deps.verificationManager.cancelVerification(id, params),
-    confirmVerificationReciprocateQr: async (id) => deps.verificationManager.confirmVerificationReciprocateQr(id),
+    cancelVerification: async (id, params) =>
+      await deps.verificationManager.cancelVerification(id, params),
+    confirmVerificationReciprocateQr: async (id) =>
+      deps.verificationManager.confirmVerificationReciprocateQr(id),
     confirmVerificationSas: async (id) => await deps.verificationManager.confirmVerificationSas(id),
     decryptMedia: async (
       file: EncryptedFile,
@@ -170,8 +172,10 @@ export function createMatrixCryptoFacade(deps: {
       const crypto = deps.client.getCrypto() as MatrixVerificationCryptoApi | undefined;
       return await deps.verificationManager.requestVerification(crypto, params);
     },
-    scanVerificationQr: async (id, qrDataBase64) => await deps.verificationManager.scanVerificationQr(id, qrDataBase64),
-    startVerification: async (id, method = "sas") => await deps.verificationManager.startVerification(id, method),
+    scanVerificationQr: async (id, qrDataBase64) =>
+      await deps.verificationManager.scanVerificationQr(id, qrDataBase64),
+    startVerification: async (id, method = "sas") =>
+      await deps.verificationManager.startVerification(id, method),
     updateSyncData: async (
       _toDeviceMessages: unknown,
       _otkCounts: unknown,

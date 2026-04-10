@@ -17,49 +17,49 @@ if (
 }
 
 vi.mock("../channels/plugins/bootstrap-registry.js", () => ({
-    getBootstrapChannelPlugin: (id: string) => {
-      if (id === "irc") {
-        return {
-          secrets: {
-            collectRuntimeConfigAssignments: ircSecrets.collectRuntimeConfigAssignments,
-          },
-        };
-      }
-      if (id === "slack") {
-        return {
-          secrets: {
-            collectRuntimeConfigAssignments: slackSecrets.collectRuntimeConfigAssignments,
-          },
-        };
-      }
-      if (id === "googlechat") {
-        return {
-          secrets: {
-            collectRuntimeConfigAssignments: googleChatSecrets.collectRuntimeConfigAssignments,
-          },
-        };
-      }
-      return undefined;
-    },
-    getBootstrapChannelSecrets: (id: string) => {
-      if (id === "irc") {
-        return {
+  getBootstrapChannelPlugin: (id: string) => {
+    if (id === "irc") {
+      return {
+        secrets: {
           collectRuntimeConfigAssignments: ircSecrets.collectRuntimeConfigAssignments,
-        };
-      }
-      if (id === "slack") {
-        return {
+        },
+      };
+    }
+    if (id === "slack") {
+      return {
+        secrets: {
           collectRuntimeConfigAssignments: slackSecrets.collectRuntimeConfigAssignments,
-        };
-      }
-      if (id === "googlechat") {
-        return {
+        },
+      };
+    }
+    if (id === "googlechat") {
+      return {
+        secrets: {
           collectRuntimeConfigAssignments: googleChatSecrets.collectRuntimeConfigAssignments,
-        };
-      }
-      return undefined;
-    },
-  }));
+        },
+      };
+    }
+    return undefined;
+  },
+  getBootstrapChannelSecrets: (id: string) => {
+    if (id === "irc") {
+      return {
+        collectRuntimeConfigAssignments: ircSecrets.collectRuntimeConfigAssignments,
+      };
+    }
+    if (id === "slack") {
+      return {
+        collectRuntimeConfigAssignments: slackSecrets.collectRuntimeConfigAssignments,
+      };
+    }
+    if (id === "googlechat") {
+      return {
+        collectRuntimeConfigAssignments: googleChatSecrets.collectRuntimeConfigAssignments,
+      };
+    }
+    return undefined;
+  },
+}));
 
 function asConfig(value: unknown): OpenClawConfig {
   return value as OpenClawConfig;

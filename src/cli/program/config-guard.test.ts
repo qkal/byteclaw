@@ -44,7 +44,7 @@ async function withCapturedStdout(run: () => Promise<void>): Promise<string> {
 }
 
 describe("ensureConfigReady", () => {
-  const {resetConfigGuardStateForTests} = __test__;
+  const { resetConfigGuardStateForTests } = __test__;
 
   async function runEnsureConfigReady(commandPath: string[], suppressDoctorStdout = false) {
     const runtime = makeRuntime();

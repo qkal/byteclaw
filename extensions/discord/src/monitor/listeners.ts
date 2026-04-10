@@ -419,7 +419,7 @@ async function handleDiscordReactionEvent(
     if (!("user" in data)) {
       return;
     }
-    const {user} = data;
+    const { user } = data;
     if (!user || user.bot) {
       return;
     }
@@ -502,9 +502,9 @@ async function handleDiscordReactionEvent(
           : (data.guild_id ?? (isGroupDm ? "group-dm" : "dm")));
       const channelLabel = channelSlug
         ? `#${channelSlug}`
-        : (channelName
+        : channelName
           ? `#${normalizeDiscordSlug(channelName)}`
-          : `#${data.channel_id}`);
+          : `#${data.channel_id}`;
       const baseText = `Discord reaction ${action}: ${emojiLabel} by ${actorLabel} on ${guildSlug} ${channelLabel} msg ${data.message_id}`;
       const contextKey = `discord:reaction:${action}:${data.message_id}:${user.id}:${emojiLabel}`;
       reactionBase = { baseText, contextKey };
@@ -521,7 +521,7 @@ async function handleDiscordReactionEvent(
         parentPeer: parentPeerId ? { id: parentPeerId, kind: "channel" } : undefined,
         peer: {
           id: isDirectMessage ? user.id : data.channel_id,
-          kind: isDirectMessage ? "direct" : (isGroupDm ? "group" : "channel"),
+          kind: isDirectMessage ? "direct" : isGroupDm ? "group" : "channel",
         },
       });
       enqueueSystemEvent(text, {

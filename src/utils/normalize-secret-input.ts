@@ -21,7 +21,7 @@ export function normalizeSecretInput(value: unknown): string {
   let latin1Only = "";
   for (const char of collapsed) {
     const codePoint = char.codePointAt(0);
-    if (typeof codePoint === "number" && codePoint <= 0xFF) {
+    if (typeof codePoint === "number" && codePoint <= 0xff) {
       latin1Only += char;
     }
   }

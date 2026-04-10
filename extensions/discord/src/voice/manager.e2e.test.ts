@@ -62,7 +62,7 @@ const {
         subscribe: vi.fn(() => ({
           on: vi.fn(),
           destroy: vi.fn(),
-          async *[Symbol.asyncIterator] () {},
+          async *[Symbol.asyncIterator]() {},
         })),
       },
       state: {
@@ -93,7 +93,9 @@ const {
       stop: vi.fn(),
     })),
     createConnectionMock,
-    entersStateMock: vi.fn(async (_target?: unknown, _state?: string, _timeoutMs?: number) => undefined),
+    entersStateMock: vi.fn(
+      async (_target?: unknown, _state?: string, _timeoutMs?: number) => undefined,
+    ),
     joinVoiceChannelMock: vi.fn(() => createConnectionMock()),
     resolveAgentRouteMock: vi.fn(() => ({ agentId: "agent-1", sessionKey: "discord:g1:c1" })),
     textToSpeechMock: vi.fn(async () => ({ audioPath: "/tmp/voice.mp3", success: true })),

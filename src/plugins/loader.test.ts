@@ -3555,7 +3555,8 @@ module.exports = {
     const scenarios = [
       {
         label: "does not warn when loaded non-bundled plugin is in plugins.allow",
-        loadRegistry: () => withStateDir((stateDir) => {
+        loadRegistry: () =>
+          withStateDir((stateDir) => {
             const globalDir = path.join(stateDir, "extensions", "rogue");
             mkdirSafe(globalDir);
             writePlugin({

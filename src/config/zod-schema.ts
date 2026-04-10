@@ -129,7 +129,7 @@ const HttpUrlSchema = z
   .string()
   .url()
   .refine((value) => {
-    const {protocol} = new URL(value);
+    const { protocol } = new URL(value);
     return protocol === "http:" || protocol === "https:";
   }, "Expected http:// or https:// URL");
 
@@ -969,7 +969,7 @@ export const OpenClawSchema = z
     }
     const agentIds = new Set(agents.map((agent) => agent.id));
 
-    const {broadcast} = cfg;
+    const { broadcast } = cfg;
     if (!broadcast) {
       return;
     }

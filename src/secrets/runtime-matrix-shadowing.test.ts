@@ -22,21 +22,21 @@ vi.mock("../plugins/web-search-providers.runtime.js", () => ({
 }));
 
 vi.mock("../channels/plugins/bootstrap-registry.js", () => ({
-    getBootstrapChannelPlugin: (id: string) =>
-      id === "matrix"
-        ? {
-            secrets: {
-              collectRuntimeConfigAssignments: matrixSecrets.collectRuntimeConfigAssignments,
-            },
-          }
-        : undefined,
-    getBootstrapChannelSecrets: (id: string) =>
-      id === "matrix"
-        ? {
+  getBootstrapChannelPlugin: (id: string) =>
+    id === "matrix"
+      ? {
+          secrets: {
             collectRuntimeConfigAssignments: matrixSecrets.collectRuntimeConfigAssignments,
-          }
-        : undefined,
-  }));
+          },
+        }
+      : undefined,
+  getBootstrapChannelSecrets: (id: string) =>
+    id === "matrix"
+      ? {
+          collectRuntimeConfigAssignments: matrixSecrets.collectRuntimeConfigAssignments,
+        }
+      : undefined,
+}));
 
 function asConfig(value: unknown): OpenClawConfig {
   return value as OpenClawConfig;

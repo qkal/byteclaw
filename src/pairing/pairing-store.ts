@@ -221,8 +221,9 @@ function pruneExcessRequestsByAccount(reqs: PairingRequest[], maxPending: number
     if (indexes.length <= maxPending) {
       continue;
     }
-    const sortedIndexes = [...indexes]
-      .toSorted((left, right) => resolveLastSeenAt(reqs[left]) - resolveLastSeenAt(reqs[right]));
+    const sortedIndexes = [...indexes].toSorted(
+      (left, right) => resolveLastSeenAt(reqs[left]) - resolveLastSeenAt(reqs[right]),
+    );
     for (const index of sortedIndexes.slice(0, sortedIndexes.length - maxPending)) {
       droppedIndexes.add(index);
     }
@@ -394,7 +395,7 @@ async function readAllowFromStateForPathWithExists(
   try {
     stat = await fs.promises.stat(filePath);
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code !== "ENOENT") {
       throw error;
     }
@@ -435,7 +436,7 @@ function readAllowFromStateForPathSyncWithExists(
   try {
     stat = fs.statSync(filePath);
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code !== "ENOENT") {
       return { entries: [], exists: false };
     }
@@ -453,7 +454,7 @@ function readAllowFromStateForPathSyncWithExists(
   try {
     raw = fs.readFileSync(filePath, "utf8");
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return { entries: [], exists: false };
     }
@@ -711,7 +712,14 @@ export async function listChannelPairingRequests(
       const filtered = normalizedAccountId
         ? pruned.filter((entry) => requestMatchesAccountId(entry, normalizedAccountId))
         : pruned;
-      return filtered.filter((r) => r && typeof r.id === 'string' && typeof r.code === 'string' && typeof r.createdAt === 'string')
+      return filtered
+        .filter(
+          (r) =>
+            r &&
+            typeof r.id === "string" &&
+            typeof r.code === "string" &&
+            typeof r.createdAt === "string",
+        )
         .toSorted((a, b) => a.createdAt.localeCompare(b.createdAt));
     },
   );

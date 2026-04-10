@@ -18,7 +18,13 @@ export function resolvePinnedMainDmOwnerFromAllowlist(params: {
   if (rawAllowFrom.some((entry) => String(entry).trim() === "*")) {
     return null;
   }
-  const normalizedOwners = [...new Set(rawAllowFrom.map((entry) => params.normalizeEntry(String(entry))).filter((entry): entry is string => Boolean(entry)))];
+  const normalizedOwners = [
+    ...new Set(
+      rawAllowFrom
+        .map((entry) => params.normalizeEntry(String(entry)))
+        .filter((entry): entry is string => Boolean(entry)),
+    ),
+  ];
   return normalizedOwners.length === 1 ? normalizedOwners[0] : null;
 }
 

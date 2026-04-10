@@ -10,7 +10,10 @@ import { formatDocsLink } from "../terminal/links.js";
 import { getTerminalTableWidth, renderTable } from "../terminal/table.js";
 import { theme } from "../terminal/theme.js";
 
-interface RunOpts { allowFailure?: boolean; inherit?: boolean }
+interface RunOpts {
+  allowFailure?: boolean;
+  inherit?: boolean;
+}
 
 function run(cmd: string, args: string[], opts?: RunOpts): string {
   const res = spawnSync(cmd, args, {
@@ -35,7 +38,7 @@ function writeFileSudoIfNeeded(filePath: string, content: string): void {
     fs.writeFileSync(filePath, content, "utf8");
     return;
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code !== "EACCES" && code !== "EPERM") {
       throw error instanceof Error ? error : new Error(String(error));
     }
@@ -59,7 +62,7 @@ function mkdirSudoIfNeeded(dirPath: string): void {
     fs.mkdirSync(dirPath, { recursive: true });
     return;
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code !== "EACCES" && code !== "EPERM") {
       throw error instanceof Error ? error : new Error(String(error));
     }

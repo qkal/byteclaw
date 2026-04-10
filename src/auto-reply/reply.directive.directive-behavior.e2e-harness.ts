@@ -117,16 +117,13 @@ export function mockEmbeddedTextResult(text = "done") {
 }
 
 export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeBase(
-    async (home) => await fn(home),
-    {
-      env: {
-        OPENCLAW_AGENT_DIR: (home) => path.join(home, ".openclaw", "agent"),
-        PI_CODING_AGENT_DIR: (home) => path.join(home, ".openclaw", "agent"),
-      },
-      prefix: "openclaw-reply-",
+  return withTempHomeBase(async (home) => await fn(home), {
+    env: {
+      OPENCLAW_AGENT_DIR: (home) => path.join(home, ".openclaw", "agent"),
+      PI_CODING_AGENT_DIR: (home) => path.join(home, ".openclaw", "agent"),
     },
-  );
+    prefix: "openclaw-reply-",
+  });
 }
 
 export function sessionStorePath(home: string): string {

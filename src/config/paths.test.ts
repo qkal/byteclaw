@@ -45,7 +45,10 @@ describe("oauth paths", () => {
 describe("gateway port resolution", () => {
   it("prefers numeric env values over config", () => {
     expect(
-      resolveGatewayPort({ gateway: { port: 19_002 } }, envWith({ OPENCLAW_GATEWAY_PORT: "19001" })),
+      resolveGatewayPort(
+        { gateway: { port: 19_002 } },
+        envWith({ OPENCLAW_GATEWAY_PORT: "19001" }),
+      ),
     ).toBe(19_001);
   });
 

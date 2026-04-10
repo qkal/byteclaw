@@ -136,7 +136,7 @@ function extractJsonBlock(text: string): unknown {
 }
 
 function extractMessageText(result: ChromeMcpToolResult): string {
-  const {message} = extractStructuredContent(result);
+  const { message } = extractStructuredContent(result);
   if (typeof message === "string" && message.trim()) {
     return message;
   }

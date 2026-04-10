@@ -9,9 +9,7 @@ import {
 
 describe("env-validation", () => {
   it("validates required environment variables", () => {
-    const specs: EnvVarSpec[] = [
-      { name: "REQUIRED_VAR", required: true, type: "string" },
-    ];
+    const specs: EnvVarSpec[] = [{ name: "REQUIRED_VAR", required: true, type: "string" }];
     process.env.REQUIRED_VAR = "test";
     const result = validateEnv(specs);
     expect(result.valid).toBe(true);
@@ -19,9 +17,7 @@ describe("env-validation", () => {
   });
 
   it("fails on missing required variables", () => {
-    const specs: EnvVarSpec[] = [
-      { name: "MISSING_VAR", required: true, type: "string" },
-    ];
+    const specs: EnvVarSpec[] = [{ name: "MISSING_VAR", required: true, type: "string" }];
     const result = validateEnv(specs);
     expect(result.valid).toBe(false);
     expect(result.errors).toHaveLength(1);
@@ -36,9 +32,7 @@ describe("env-validation", () => {
   });
 
   it("validates number types", () => {
-    const specs: EnvVarSpec[] = [
-      { name: "NUMBER_VAR", required: true, type: "number" },
-    ];
+    const specs: EnvVarSpec[] = [{ name: "NUMBER_VAR", required: true, type: "number" }];
     process.env.NUMBER_VAR = "42";
     const result = validateEnv(specs);
     expect(result.env.NUMBER_VAR).toBe(42);
@@ -46,9 +40,7 @@ describe("env-validation", () => {
   });
 
   it("validates boolean types", () => {
-    const specs: EnvVarSpec[] = [
-      { name: "BOOL_VAR", required: true, type: "boolean" },
-    ];
+    const specs: EnvVarSpec[] = [{ name: "BOOL_VAR", required: true, type: "boolean" }];
     process.env.BOOL_VAR = "true";
     const result = validateEnv(specs);
     expect(result.env.BOOL_VAR).toBe(true);
@@ -56,9 +48,7 @@ describe("env-validation", () => {
   });
 
   it("validates URL types", () => {
-    const specs: EnvVarSpec[] = [
-      { name: "URL_VAR", required: true, type: "url" },
-    ];
+    const specs: EnvVarSpec[] = [{ name: "URL_VAR", required: true, type: "url" }];
     process.env.URL_VAR = "https://example.com";
     const result = validateEnv(specs);
     expect(result.valid).toBe(true);
@@ -66,9 +56,7 @@ describe("env-validation", () => {
   });
 
   it("rejects invalid URLs", () => {
-    const specs: EnvVarSpec[] = [
-      { name: "URL_VAR", required: true, type: "url" },
-    ];
+    const specs: EnvVarSpec[] = [{ name: "URL_VAR", required: true, type: "url" }];
     process.env.URL_VAR = "not-a-url";
     const result = validateEnv(specs);
     expect(result.valid).toBe(false);
@@ -76,9 +64,7 @@ describe("env-validation", () => {
   });
 
   it("throws on validation failure", () => {
-    const specs: EnvVarSpec[] = [
-      { name: "MISSING_VAR", required: true, type: "string" },
-    ];
+    const specs: EnvVarSpec[] = [{ name: "MISSING_VAR", required: true, type: "string" }];
     expect(() => validateEnvOrThrow(specs)).toThrow("EnvValidationError");
   });
 

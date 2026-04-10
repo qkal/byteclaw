@@ -46,9 +46,9 @@ export function extractMSTeamsQuoteInfo(
       content =
         typeof record.text === "string"
           ? record.text
-          : (typeof record.body === "string"
+          : typeof record.body === "string"
             ? record.body
-            : "");
+            : "";
     }
     if (!content) {
       continue;
@@ -76,10 +76,12 @@ export function extractMSTeamsQuoteInfo(
 
 export interface MentionableActivity {
   recipient?: { id?: string } | null;
-  entities?: {
-    type?: string;
-    mentioned?: { id?: string };
-  }[] | null;
+  entities?:
+    | {
+        type?: string;
+        mentioned?: { id?: string };
+      }[]
+    | null;
 }
 
 export function normalizeMSTeamsConversationId(raw: string): string {

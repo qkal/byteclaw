@@ -60,7 +60,9 @@ describe("resolveIMessageInboundDecision echo detection", () => {
   }
 
   it("drops inbound messages when outbound message id matches echo cache", () => {
-    const echoHas = vi.fn((_scope: string, lookup: { text?: string; messageId?: string }) => lookup.messageId === "42");
+    const echoHas = vi.fn(
+      (_scope: string, lookup: { text?: string; messageId?: string }) => lookup.messageId === "42",
+    );
 
     const decision = resolveDecision({
       bodyText: "Reasoning:\n_step_",
@@ -80,7 +82,10 @@ describe("resolveIMessageInboundDecision echo detection", () => {
   });
 
   it("matches attachment-only echoes by bodyText placeholder", () => {
-    const echoHas = vi.fn((_scope: string, lookup: { text?: string; messageId?: string }) => lookup.text === "<media:image>" && lookup.messageId === "42");
+    const echoHas = vi.fn(
+      (_scope: string, lookup: { text?: string; messageId?: string }) =>
+        lookup.text === "<media:image>" && lookup.messageId === "42",
+    );
 
     const decision = resolveDecision({
       bodyText: "<media:image>",

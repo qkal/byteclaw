@@ -35,7 +35,7 @@ const mockSendMessage = vi.mocked(sendMessageZalouser);
 const mockSendReaction = vi.mocked(sendReactionZalouser);
 
 function requireZalouserSendText() {
-  const {sendText} = zalouserOutboundAdapter;
+  const { sendText } = zalouserOutboundAdapter;
   if (!sendText) {
     throw new Error("zalouser outbound.sendText unavailable");
   }
@@ -43,7 +43,7 @@ function requireZalouserSendText() {
 }
 
 function getResolveToolPolicy() {
-  const {resolveToolPolicy} = zalouserGroupsAdapter;
+  const { resolveToolPolicy } = zalouserGroupsAdapter;
   if (!resolveToolPolicy) {
     throw new Error("resolveToolPolicy unavailable");
   }
@@ -51,7 +51,7 @@ function getResolveToolPolicy() {
 }
 
 function requireZalouserResolveRequireMention() {
-  const {resolveRequireMention} = zalouserGroupsAdapter;
+  const { resolveRequireMention } = zalouserGroupsAdapter;
   if (!resolveRequireMention) {
     throw new Error("resolveRequireMention unavailable");
   }
@@ -59,7 +59,7 @@ function requireZalouserResolveRequireMention() {
 }
 
 function requireZalouserPairingNormalizer() {
-  const {normalizeAllowEntry} = zalouserPairingTextAdapter;
+  const { normalizeAllowEntry } = zalouserPairingTextAdapter;
   if (!normalizeAllowEntry) {
     throw new Error("pairing.normalizeAllowEntry unavailable");
   }
@@ -130,7 +130,7 @@ describe("zalouser outbound", () => {
 
 describe("zalouser outbound chunking", () => {
   it("chunks outbound text without requiring Zalouser runtime initialization", () => {
-    const {chunker} = zalouserOutboundAdapter;
+    const { chunker } = zalouserOutboundAdapter;
     if (!chunker) {
       throw new Error("zalouser outbound.chunker unavailable");
     }
@@ -146,7 +146,7 @@ describe("zalouser channel policies", () => {
   });
 
   it("normalizes dm allowlist entries after trimming channel prefixes", () => {
-    const {resolveDmPolicy} = zalouserSecurityAdapter;
+    const { resolveDmPolicy } = zalouserSecurityAdapter;
     if (!resolveDmPolicy) {
       throw new Error("resolveDmPolicy unavailable");
     }
@@ -293,7 +293,7 @@ describe("zalouser account resolution", () => {
   });
 
   it("uses the configured default account for omitted target lookup", async () => {
-    const {resolveTargets} = zalouserResolverAdapter;
+    const { resolveTargets } = zalouserResolverAdapter;
     if (!resolveTargets) {
       throw new Error("zalouser resolver.resolveTargets unavailable");
     }
@@ -332,7 +332,7 @@ describe("zalouser account resolution", () => {
   });
 
   it("uses the configured default account for omitted qr login", async () => {
-    const {login} = zalouserAuthAdapter;
+    const { login } = zalouserAuthAdapter;
     if (!login) {
       throw new Error("zalouser auth.login unavailable");
     }

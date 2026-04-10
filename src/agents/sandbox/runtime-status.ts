@@ -64,7 +64,7 @@ export function resolveSandboxRuntimeStatus(params: {
     config: params.cfg,
     sessionKey,
   });
-  const {cfg} = params;
+  const { cfg } = params;
   const sandboxCfg = resolveSandboxConfigForAgent(cfg, agentId);
   const mainSessionKey = resolveMainSessionKeyForSandbox({ agentId, cfg });
   const sandboxed = sessionKey
@@ -96,7 +96,7 @@ function sanitizeForSingleLineDisplay(value: string): string {
       return String.raw`\t`;
     }
     const codePoint = char.codePointAt(0) ?? 0;
-    if (codePoint < 0x20 || codePoint === 0x7F) {
+    if (codePoint < 0x20 || codePoint === 0x7f) {
       return `\\x${codePoint.toString(16).padStart(2, "0")}`;
     }
     return char;
@@ -106,7 +106,7 @@ function sanitizeForSingleLineDisplay(value: string): string {
 function hasUnsafeControlChars(value: string): boolean {
   return [...value].some((char) => {
     const codePoint = char.codePointAt(0) ?? 0;
-    return codePoint < 0x20 || codePoint === 0x7F;
+    return codePoint < 0x20 || codePoint === 0x7f;
   });
 }
 
@@ -177,9 +177,9 @@ export function formatSandboxToolPolicyBlockedMessage(params: {
     lines.push("- Use the agent main session instead of a non-main session.");
   }
   const explainCommand = runtime.sessionKey
-    ? (hasUnsafeControlChars(runtime.sessionKey)
+    ? hasUnsafeControlChars(runtime.sessionKey)
       ? `openclaw sandbox explain --agent ${runtime.agentId}`
-      : `openclaw sandbox explain --session ${shellEscapeSingleArg(runtime.sessionKey)}`)
+      : `openclaw sandbox explain --session ${shellEscapeSingleArg(runtime.sessionKey)}`
     : "openclaw sandbox explain";
   lines.push(`- See: ${formatCliCommand(explainCommand)}`);
 

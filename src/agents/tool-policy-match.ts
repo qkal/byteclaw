@@ -39,9 +39,6 @@ export function isToolAllowedByPolicyName(name: string, policy?: SandboxToolPoli
   return makeToolPolicyMatcher(policy)(name);
 }
 
-export function isToolAllowedByPolicies(
-  name: string,
-  policies: (SandboxToolPolicy | undefined)[],
-) {
+export function isToolAllowedByPolicies(name: string, policies: (SandboxToolPolicy | undefined)[]) {
   return policies.every((policy) => isToolAllowedByPolicyName(name, policy));
 }

@@ -198,11 +198,9 @@ export function registerSlackInteractionEvents(params: { ctx: SlackMonitorContex
     summarizeViewState,
   });
 
-  const {viewClosed} = (
-    ctx.app as unknown as {
-      viewClosed?: RegisterSlackModalHandler;
-    }
-  );
+  const { viewClosed } = ctx.app as unknown as {
+    viewClosed?: RegisterSlackModalHandler;
+  };
   if (typeof viewClosed !== "function") {
     return;
   }

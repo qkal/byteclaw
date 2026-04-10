@@ -21,7 +21,7 @@ function collectImplicitHeartbeatDirectPolicyWarnings(cfg: OpenClawConfig): stri
     heartbeat: AgentConfig["heartbeat"] | undefined;
     pathHint: string;
   }) => {
-    const {heartbeat} = params;
+    const { heartbeat } = params;
     if (!heartbeat || heartbeat.target === undefined || heartbeat.target === "none") {
       return;
     }
@@ -91,8 +91,8 @@ function collectExecPolicyConflictWarnings(cfg: OpenClawConfig): string[] {
     globalExecConfig?: { security?: ExecSecurity; ask?: ExecAsk } | undefined;
     agentId?: string;
   }) => {
-    const {scopeExecConfig} = params;
-    const {globalExecConfig} = params;
+    const { scopeExecConfig } = params;
+    const { globalExecConfig } = params;
     if (
       !scopeExecConfig?.security &&
       !scopeExecConfig?.ask &&
@@ -267,7 +267,7 @@ export async function noteSecurityWarnings(cfg: OpenClawConfig) {
     approveHint: string;
     normalizeEntry?: (raw: string) => string;
   }) => {
-    const {dmPolicy} = params;
+    const { dmPolicy } = params;
     const policyPath = params.policyPath ?? `${params.allowFromPath}policy`;
     const { hasWildcard, allowCount, isMultiUserDm } = await resolveDmAllowState({
       accountId: params.accountId,

@@ -279,9 +279,9 @@ export function createEventHandlers(context: EventHandlerContext) {
       maybeRefreshHistoryForRun(evt.runId);
       const stopReason =
         evt.message && typeof evt.message === "object" && !Array.isArray(evt.message)
-          ? (typeof (evt.message as Record<string, unknown>).stopReason === "string"
+          ? typeof (evt.message as Record<string, unknown>).stopReason === "string"
             ? ((evt.message as Record<string, unknown>).stopReason as string)
-            : "")
+            : ""
           : "";
 
       const finalText = streamAssembler.finalize(

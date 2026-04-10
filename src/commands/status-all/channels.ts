@@ -164,7 +164,7 @@ const buildAccountNotes = (params: {
 }) => {
   const { plugin, cfg, entry } = params;
   const notes: string[] = [];
-  const {snapshot} = entry;
+  const { snapshot } = entry;
   if (snapshot.enabled === false) {
     notes.push("disabled");
   }

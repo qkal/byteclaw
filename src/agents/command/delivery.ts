@@ -196,7 +196,7 @@ export async function deliverAgentCommandResult(params: {
     opts.deliveryTargetMode ??
     effectiveDeliveryPlan.deliveryTargetMode ??
     (opts.to ? "explicit" : "implicit");
-  const {resolvedAccountId} = effectiveDeliveryPlan;
+  const { resolvedAccountId } = effectiveDeliveryPlan;
   const resolved =
     deliver && isDeliveryChannelKnown && deliveryChannel
       ? resolveAgentOutboundTarget({
@@ -210,7 +210,7 @@ export async function deliverAgentCommandResult(params: {
           resolvedTo: effectiveDeliveryPlan.resolvedTo,
           targetMode,
         };
-  const {resolvedTarget} = resolved;
+  const { resolvedTarget } = resolved;
   const deliveryTarget = resolved.resolvedTo;
   const resolvedThreadId = deliveryPlan.resolvedThreadId ?? opts.threadId;
   const replyTransport =

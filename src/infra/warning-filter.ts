@@ -39,7 +39,7 @@ function normalizeWarningArgs(args: unknown[]): ProcessWarning {
   if (warningArg instanceof Error) {
     ({ name } = warningArg);
     ({ message } = warningArg);
-    ({ code } = (warningArg as Error & { code?: string }));
+    ({ code } = warningArg as Error & { code?: string });
   } else if (typeof warningArg === "string") {
     message = warningArg;
   }

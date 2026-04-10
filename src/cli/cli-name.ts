@@ -24,5 +24,8 @@ export function replaceCliName(command: string, cliName = resolveCliName()): str
   if (!CLI_PREFIX_RE.test(command)) {
     return command;
   }
-  return command.replace(CLI_PREFIX_RE, (_match, runner: string | undefined) => `${runner ?? ""}${cliName}`);
+  return command.replace(
+    CLI_PREFIX_RE,
+    (_match, runner: string | undefined) => `${runner ?? ""}${cliName}`,
+  );
 }

@@ -60,7 +60,7 @@ function installRuntime(): MockRuntime {
 function createMockFetch(entries: { match: RegExp; response: Response }[]): typeof fetch {
   return (async (input: RequestInfo | URL) => {
     const url =
-      typeof input === "string" ? input : (input instanceof URL ? input.toString() : input.url);
+      typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
     const entry = entries.find((e) => e.match.test(url));
     if (!entry) {
       return new Response("not found", { status: 404 });

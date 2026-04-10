@@ -14,14 +14,14 @@ const {
   resolveDefaultGroupPolicyMock,
   warnMissingProviderGroupPolicyFallbackOnceMock,
 } = vi.hoisted(() => ({
-    createChannelPairingControllerMock: vi.fn(),
-    dispatchInboundReplyWithBaseMock: vi.fn(),
-    readStoreAllowFromForDmPolicyMock: vi.fn(),
-    resolveAllowlistProviderRuntimeGroupPolicyMock: vi.fn(),
-    resolveDefaultGroupPolicyMock: vi.fn(),
-    resolveDmGroupAccessWithCommandGateMock: vi.fn(),
-    warnMissingProviderGroupPolicyFallbackOnceMock: vi.fn(),
-  }));
+  createChannelPairingControllerMock: vi.fn(),
+  dispatchInboundReplyWithBaseMock: vi.fn(),
+  readStoreAllowFromForDmPolicyMock: vi.fn(),
+  resolveAllowlistProviderRuntimeGroupPolicyMock: vi.fn(),
+  resolveDefaultGroupPolicyMock: vi.fn(),
+  resolveDmGroupAccessWithCommandGateMock: vi.fn(),
+  warnMissingProviderGroupPolicyFallbackOnceMock: vi.fn(),
+}));
 
 const sendMessageNextcloudTalkMock = vi.hoisted(() => vi.fn());
 const resolveNextcloudTalkRoomKindMock = vi.hoisted(() => vi.fn());

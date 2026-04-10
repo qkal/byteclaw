@@ -1429,14 +1429,14 @@ export function createExecTool(
         warnings.push("Warning: background execution is disabled; running synchronously.");
       }
       const yieldWindow = allowBackground
-        ? (backgroundRequested
+        ? backgroundRequested
           ? 0
           : clampWithDefault(
               params.yieldMs ?? defaultBackgroundMs,
               defaultBackgroundMs,
               10,
               120_000,
-            ))
+            )
         : null;
       const elevatedDefaults = defaults?.elevated;
       const elevatedAllowed = Boolean(elevatedDefaults?.enabled && elevatedDefaults.allowed);

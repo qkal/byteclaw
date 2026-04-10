@@ -116,9 +116,9 @@ describe("phone-control plugin", () => {
         gatewayClientScopes: ["operator.admin"],
       });
       const text = String(res?.text ?? "");
-      const {nodes} = (
-        getConfig().gateway as { nodes?: { allowCommands?: string[]; denyCommands?: string[] } }
-      );
+      const { nodes } = getConfig().gateway as {
+        nodes?: { allowCommands?: string[]; denyCommands?: string[] };
+      };
       if (!nodes) {
         throw new Error("phone-control command did not persist gateway node config");
       }

@@ -486,10 +486,12 @@ describe("resolveMatrixAccount", () => {
     };
 
     expect(
-      [...resolveConfiguredMatrixBotUserIds({
-	accountId: 'ops',
-	cfg
-})].toSorted(),
+      [
+        ...resolveConfiguredMatrixBotUserIds({
+          accountId: "ops",
+          cfg,
+        }),
+      ].toSorted(),
     ).toEqual(["@alerts:example.org", "@main:example.org"]);
   });
 
@@ -510,11 +512,13 @@ describe("resolveMatrixAccount", () => {
     };
 
     expect(
-      [...resolveConfiguredMatrixBotUserIds({
-	accountId: 'ops',
-	cfg,
-	env
-})].toSorted(),
+      [
+        ...resolveConfiguredMatrixBotUserIds({
+          accountId: "ops",
+          cfg,
+          env,
+        }),
+      ].toSorted(),
     ).toEqual(["@alerts:example.org", "@main:example.org"]);
   });
 
@@ -547,12 +551,12 @@ describe("resolveMatrixAccount", () => {
       },
     };
 
-    expect([...resolveConfiguredMatrixBotUserIds({
-	accountId: 'default',
-	cfg
-})]).toEqual([
-      "@ops:example.org",
-    ]);
+    expect([
+      ...resolveConfiguredMatrixBotUserIds({
+        accountId: "default",
+        cfg,
+      }),
+    ]).toEqual(["@ops:example.org"]);
   });
 
   it("preserves shared nested dm and actions config when an account overrides one field", () => {

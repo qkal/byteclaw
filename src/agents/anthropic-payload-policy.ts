@@ -143,7 +143,7 @@ function applyAnthropicCacheControlToMessages(
     return;
   }
 
-  const {content} = record;
+  const { content } = record;
   if (Array.isArray(content)) {
     const lastBlock = content[content.length - 1];
     if (!lastBlock || typeof lastBlock !== "object") {
@@ -221,7 +221,7 @@ export function applyAnthropicPayloadPolicyToParams(
 export function applyAnthropicEphemeralCacheControlMarkers(
   payloadObj: Record<string, unknown>,
 ): void {
-  const {messages} = payloadObj;
+  const { messages } = payloadObj;
   if (!Array.isArray(messages)) {
     return;
   }

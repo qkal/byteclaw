@@ -76,9 +76,7 @@ export function normalizeInboundPathRoots(roots?: readonly string[]): string[] {
   return normalized;
 }
 
-export function mergeInboundPathRoots(
-  ...rootsLists: (readonly string[] | undefined)[]
-): string[] {
+export function mergeInboundPathRoots(...rootsLists: (readonly string[] | undefined)[]): string[] {
   const merged: string[] = [];
   const seen = new Set<string>();
   for (const roots of rootsLists) {

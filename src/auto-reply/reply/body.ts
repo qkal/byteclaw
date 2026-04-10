@@ -30,7 +30,7 @@ export async function applySessionHints(params: {
       params.sessionEntry.updatedAt = Date.now();
       params.sessionStore[params.sessionKey] = params.sessionEntry;
       if (params.storePath) {
-        const {sessionKey} = params;
+        const { sessionKey } = params;
         const { updateSessionStore } = await loadSessionStoreRuntime();
         await updateSessionStore(params.storePath, (store) => {
           const entry = store[sessionKey] ?? params.sessionEntry;

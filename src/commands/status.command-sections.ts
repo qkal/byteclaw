@@ -69,9 +69,9 @@ export function buildStatusTasksValue(params: {
       ? params.warn(
           `audit ${params.summary.taskAudit.errors} error${params.summary.taskAudit.errors === 1 ? "" : "s"} · ${params.summary.taskAudit.warnings} warn`,
         )
-      : (params.summary.taskAudit.warnings > 0
+      : params.summary.taskAudit.warnings > 0
         ? params.muted(`audit ${params.summary.taskAudit.warnings} warn`)
-        : params.muted("audit clean")),
+        : params.muted("audit clean"),
     `${params.summary.tasks.total} tracked`,
   ].join(" · ");
 }
@@ -152,7 +152,7 @@ export function buildStatusMemoryValue(params: {
     parts.push(`plugin ${params.memoryPlugin.slot}`);
   }
   const colorByTone = (tone: Tone, text: string) =>
-    tone === "ok" ? params.ok(text) : (tone === "warn" ? params.warn(text) : params.muted(text));
+    tone === "ok" ? params.ok(text) : tone === "warn" ? params.warn(text) : params.muted(text);
   if (params.memory.vector) {
     const state = params.resolveMemoryVectorState(params.memory.vector);
     const label = state.state === "disabled" ? "vector off" : `vector ${state.state}`;
@@ -188,7 +188,8 @@ export function buildStatusSecurityAuditLines(params: {
   shortenText: (value: string, maxLen: number) => string;
   formatCliCommand: (value: string) => string;
 }) {
-  const fmtSummary = (value: { critical: number; warn: number; info: number }) => [
+  const fmtSummary = (value: { critical: number; warn: number; info: number }) =>
+    [
       params.theme.error(`${value.critical} critical`),
       params.theme.warn(`${value.warn} warn`),
       params.theme.muted(`${value.info} info`),
@@ -203,11 +204,11 @@ export function buildStatusSecurityAuditLines(params: {
     const severityLabel = (sev: "critical" | "warn" | "info") =>
       sev === "critical"
         ? params.theme.error("CRITICAL")
-        : (sev === "warn"
+        : sev === "warn"
           ? params.theme.warn("WARN")
-          : params.theme.muted("INFO"));
+          : params.theme.muted("INFO");
     const sevRank = (sev: "critical" | "warn" | "info") =>
-      sev === "critical" ? 0 : (sev === "warn" ? 1 : 2);
+      sev === "critical" ? 0 : sev === "warn" ? 1 : 2;
     const shown = [...importantFindings]
       .toSorted((a, b) => sevRank(a.severity) - sevRank(b.severity))
       .slice(0, 6);
@@ -320,9 +321,9 @@ export function buildStatusFooterLines(params: {
     `  Need to debug live? ${params.formatCliCommand("openclaw logs --follow")}`,
     params.nodeOnlyGateway
       ? `  Need node service?  ${params.formatCliCommand("openclaw node status")}`
-      : (params.gatewayReachable
+      : params.gatewayReachable
         ? `  Need to test channels? ${params.formatCliCommand("openclaw status --deep")}`
-        : `  Fix reachability first: ${params.formatCliCommand("openclaw gateway probe")}`),
+        : `  Fix reachability first: ${params.formatCliCommand("openclaw gateway probe")}`,
   ];
 }
 

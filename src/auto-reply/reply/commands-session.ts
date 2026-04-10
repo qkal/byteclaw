@@ -237,9 +237,9 @@ export const handleSendPolicyCommand: CommandHandler = async (params, allowTextC
   const label =
     sendPolicyCommand.mode === "inherit"
       ? "inherit"
-      : (sendPolicyCommand.mode === "allow"
+      : sendPolicyCommand.mode === "allow"
         ? "on"
-        : "off");
+        : "off";
   return {
     reply: { text: `⚙️ Send policy set to ${label}.` },
     shouldContinue: false,
@@ -313,7 +313,7 @@ export const handleUsageCommand: CommandHandler = async (params, allowTextComman
     params.sessionEntry?.responseUsage ??
     (params.sessionKey ? params.sessionStore?.[params.sessionKey]?.responseUsage : undefined);
   const current = resolveResponseUsageMode(currentRaw);
-  const next = requested ?? (current === "off" ? "tokens" : (current === "tokens" ? "full" : "off"));
+  const next = requested ?? (current === "off" ? "tokens" : current === "tokens" ? "full" : "off");
 
   if (params.sessionEntry && params.sessionStore && params.sessionKey) {
     if (next === "off") {

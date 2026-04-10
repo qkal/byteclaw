@@ -638,9 +638,9 @@ export async function finalizeSetupWizard(
   await prompter.outro(
     controlUiOpened
       ? "Onboarding complete. Dashboard opened; keep that tab to control OpenClaw."
-      : (seededInBackground
+      : seededInBackground
         ? "Onboarding complete. Web UI seeded in the background; open it anytime with the dashboard link above."
-        : "Onboarding complete. Use the dashboard link above to control OpenClaw."),
+        : "Onboarding complete. Use the dashboard link above to control OpenClaw.",
   );
 
   return { launchedTui };

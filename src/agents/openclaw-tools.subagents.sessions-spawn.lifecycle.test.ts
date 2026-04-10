@@ -381,10 +381,12 @@ describe("openclaw-tools: subagents (sessions_spawn lifecycle)", () => {
     }
     const childSessionKey = child.sessionKey;
 
-    await waitFor(() => (
+    await waitFor(
+      () =>
         ctx.waitCalls.some((call) => call.runId === child.runId) &&
-        getLatestSubagentRunByChildSessionKey(childSessionKey)?.outcome?.status === "timeout"
-      ), 20_000);
+        getLatestSubagentRunByChildSessionKey(childSessionKey)?.outcome?.status === "timeout",
+      20_000,
+    );
 
     const childWait = ctx.waitCalls.find((call) => call.runId === child.runId);
     expect(childWait?.timeoutMs).toBe(1000);

@@ -40,26 +40,26 @@ const mockState = vi.hoisted(() => ({
 }));
 
 vi.mock("./runtime-api.js", () => ({
-    buildModelsProviderData: mockState.buildModelsProviderData,
-    createChannelReplyPipeline: vi.fn(() => ({
-      onModelSelected: vi.fn(),
-      typingCallbacks: {},
-    })),
-    createDedupeCache: vi.fn(() => ({
-      check: () => false,
-    })),
-    createReplyPrefixOptions: vi.fn(() => ({})),
-    createTypingCallbacks: vi.fn(() => ({ onReplyStart: vi.fn() })),
-    formatInboundFromLabel: vi.fn(() => ""),
-    isRequestBodyLimitError: vi.fn(() => false),
-    logTypingFailure: vi.fn(),
-    rawDataToString: vi.fn((value: unknown) => String(value ?? "")),
-    readRequestBodyWithLimit: mockState.readRequestBodyWithLimit,
-    resolveThreadSessionKeys: vi.fn((params: { baseSessionKey: string }) => ({
-      sessionKey: params.baseSessionKey,
-      parentSessionKey: undefined,
-    })),
-  }));
+  buildModelsProviderData: mockState.buildModelsProviderData,
+  createChannelReplyPipeline: vi.fn(() => ({
+    onModelSelected: vi.fn(),
+    typingCallbacks: {},
+  })),
+  createDedupeCache: vi.fn(() => ({
+    check: () => false,
+  })),
+  createReplyPrefixOptions: vi.fn(() => ({})),
+  createTypingCallbacks: vi.fn(() => ({ onReplyStart: vi.fn() })),
+  formatInboundFromLabel: vi.fn(() => ""),
+  isRequestBodyLimitError: vi.fn(() => false),
+  logTypingFailure: vi.fn(),
+  rawDataToString: vi.fn((value: unknown) => String(value ?? "")),
+  readRequestBodyWithLimit: mockState.readRequestBodyWithLimit,
+  resolveThreadSessionKeys: vi.fn((params: { baseSessionKey: string }) => ({
+    sessionKey: params.baseSessionKey,
+    parentSessionKey: undefined,
+  })),
+}));
 
 vi.mock("../runtime.js", () => ({
   getMattermostRuntime: () => ({
@@ -163,9 +163,9 @@ function createResponse(): {
       const callback =
         typeof chunkOrCb === "function"
           ? chunkOrCb
-          : (typeof encodingOrCb === "function"
+          : typeof encodingOrCb === "function"
             ? encodingOrCb
-            : cb);
+            : cb;
       body = chunk ? String(chunk) : "";
       callback?.();
       return this;

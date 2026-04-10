@@ -66,7 +66,9 @@ function normalizeScenarioIds(input: unknown, scenarios: QaSeedScenario[]) {
         .map((value) => (typeof value === "string" ? value.trim() : ""))
         .filter((value) => value.length > 0)
     : [];
-  const selectedIds = requestedIds.filter((id, index) => availableIds.has(id) && requestedIds.indexOf(id) === index);
+  const selectedIds = requestedIds.filter(
+    (id, index) => availableIds.has(id) && requestedIds.indexOf(id) === index,
+  );
   return selectedIds.length > 0 ? selectedIds : scenarios.map((scenario) => scenario.id);
 }
 

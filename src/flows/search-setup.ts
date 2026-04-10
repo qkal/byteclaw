@@ -265,7 +265,7 @@ function preserveDisabledState(original: OpenClawConfig, result: OpenClawConfig)
     return next;
   }
 
-  const {pluginId} = providerEntry;
+  const { pluginId } = providerEntry;
   const originalPluginEntry = (
     original.plugins?.entries as Record<string, Record<string, unknown>> | undefined
   )?.[pluginId];
@@ -362,9 +362,9 @@ export async function runSearchSetupFlow(
     const hint =
       entry.requiresCredential === false
         ? `${entry.hint} · key-free`
-        : (providerIsReady(config, entry)
+        : providerIsReady(config, entry)
           ? `${entry.hint} · configured`
-          : entry.hint);
+          : entry.hint;
     return { hint, label: entry.label, value: entry.id };
   });
 
@@ -475,9 +475,9 @@ export async function runSearchSetupFlow(
   const keyInput = await prompter.text({
     message: keyConfigured
       ? `${credentialLabel} (leave blank to keep current)`
-      : (envAvailable
+      : envAvailable
         ? `${credentialLabel} (leave blank to use env var)`
-        : credentialLabel),
+        : credentialLabel,
     placeholder: keyConfigured ? "Leave blank to keep current" : entry.placeholder,
   });
 

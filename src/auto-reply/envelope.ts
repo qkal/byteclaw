@@ -143,9 +143,9 @@ export function formatEnvelopeTimestamp(
   const formatted =
     zone.mode === "utc"
       ? formatUtcTimestamp(date)
-      : (zone.mode === "local"
+      : zone.mode === "local"
         ? formatZonedTimestamp(date)
-        : formatZonedTimestamp(date, { timeZone: zone.timeZone }));
+        : formatZonedTimestamp(date, { timeZone: zone.timeZone });
 
   if (!formatted) {
     return undefined;
@@ -214,9 +214,9 @@ export function formatInboundEnvelope(params: {
   const body =
     isDirect && params.fromMe
       ? `(self): ${params.body}`
-      : (!isDirect && resolvedSender
+      : !isDirect && resolvedSender
         ? `${resolvedSender}: ${params.body}`
-        : params.body);
+        : params.body;
   return formatAgentEnvelope({
     body,
     channel: params.channel,

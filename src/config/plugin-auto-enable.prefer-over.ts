@@ -57,7 +57,7 @@ function parseExternalCatalogChannelEntries(raw: unknown): ExternalCatalogChanne
     if (!isRecord(entry) || !isRecord(entry.openclaw) || !isRecord(entry.openclaw.channel)) {
       continue;
     }
-    const {channel} = entry.openclaw;
+    const { channel } = entry.openclaw;
     const id = normalizeOptionalString(channel.id) ?? "";
     if (!id) {
       continue;

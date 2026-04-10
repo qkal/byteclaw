@@ -53,9 +53,7 @@ function toAllowedValueDedupKey(value: unknown): string {
   return `${kind}:${safeStringify(value)}`;
 }
 
-export function summarizeAllowedValues(
-  values: readonly unknown[],
-): AllowedValuesSummary | null {
+export function summarizeAllowedValues(values: readonly unknown[]): AllowedValuesSummary | null {
   if (values.length === 0) {
     return null;
   }

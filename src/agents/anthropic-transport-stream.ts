@@ -232,11 +232,13 @@ function convertAnthropicMessages(
         }
         continue;
       }
-      const blocks: (| { type: "text"; text: string }
+      const blocks: (
+        | { type: "text"; text: string }
         | {
             type: "image";
             source: { type: "base64"; media_type: string; data: string };
-          })[] = msg.content.map((item) =>
+          }
+      )[] = msg.content.map((item) =>
         item.type === "text"
           ? {
               text: sanitizeTransportPayloadText(item.text),
@@ -715,9 +717,9 @@ export function createAnthropicMessagesTransportStreamFn(): StreamFn {
                 index,
                 name:
                   typeof contentBlock.name === "string"
-                    ? (isOAuthToken
+                    ? isOAuthToken
                       ? fromClaudeCodeName(contentBlock.name, context.tools)
-                      : contentBlock.name)
+                      : contentBlock.name
                     : "",
                 partialJson: "",
                 type: "toolCall",

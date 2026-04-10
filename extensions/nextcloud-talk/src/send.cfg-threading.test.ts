@@ -20,14 +20,14 @@ const hoisted = vi.hoisted(() => ({
 }));
 
 vi.mock("./send.runtime.js", () => ({
-    convertMarkdownTables: hoisted.convertMarkdownTables,
-    fetchWithSsrFGuard: hoisted.mockFetchGuard,
-    generateNextcloudTalkSignature: hoisted.generateNextcloudTalkSignature,
-    getNextcloudTalkRuntime: () => createSendCfgThreadingRuntime(hoisted),
-    resolveMarkdownTableMode: hoisted.resolveMarkdownTableMode,
-    resolveNextcloudTalkAccount: hoisted.resolveNextcloudTalkAccount,
-    ssrfPolicyFromPrivateNetworkOptIn: hoisted.ssrfPolicyFromPrivateNetworkOptIn,
-  }));
+  convertMarkdownTables: hoisted.convertMarkdownTables,
+  fetchWithSsrFGuard: hoisted.mockFetchGuard,
+  generateNextcloudTalkSignature: hoisted.generateNextcloudTalkSignature,
+  getNextcloudTalkRuntime: () => createSendCfgThreadingRuntime(hoisted),
+  resolveMarkdownTableMode: hoisted.resolveMarkdownTableMode,
+  resolveNextcloudTalkAccount: hoisted.resolveNextcloudTalkAccount,
+  ssrfPolicyFromPrivateNetworkOptIn: hoisted.ssrfPolicyFromPrivateNetworkOptIn,
+}));
 
 const { sendMessageNextcloudTalk, sendReactionNextcloudTalk } = await import("./send.js");
 

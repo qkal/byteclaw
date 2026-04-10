@@ -413,7 +413,7 @@ export function normalizeCronJobInput(
   const next: UnknownRecord = { ...base };
 
   if ("agentId" in base) {
-    const {agentId} = base;
+    const { agentId } = base;
     if (agentId === null) {
       next.agentId = null;
     } else if (typeof agentId === "string") {
@@ -427,7 +427,7 @@ export function normalizeCronJobInput(
   }
 
   if ("sessionKey" in base) {
-    const {sessionKey} = base;
+    const { sessionKey } = base;
     if (sessionKey === null) {
       next.sessionKey = null;
     } else if (typeof sessionKey === "string") {
@@ -441,7 +441,7 @@ export function normalizeCronJobInput(
   }
 
   if ("enabled" in base) {
-    const {enabled} = base;
+    const { enabled } = base;
     if (typeof enabled === "boolean") {
       next.enabled = enabled;
     } else if (typeof enabled === "string") {

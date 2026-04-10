@@ -330,7 +330,7 @@ export function patchScopedAccountConfig(params: {
       : undefined;
   const ensureChannelEnabled = params.ensureChannelEnabled ?? true;
   const ensureAccountEnabled = params.ensureAccountEnabled ?? ensureChannelEnabled;
-  const {patch} = params;
+  const { patch } = params;
   const accountPatch = params.accountPatch ?? patch;
   if (accountId === DEFAULT_ACCOUNT_ID && !params.scopeDefaultToAccounts) {
     return {

@@ -44,9 +44,11 @@ function createVerboseGate(
   return () => shouldEmit(resolveCurrentVerboseLevel(params) ?? fallbackVerbose);
 }
 
-export const createShouldEmitToolResult = (params: VerboseGateParams): (() => boolean) => createVerboseGate(params, (level) => level !== "off");
+export const createShouldEmitToolResult = (params: VerboseGateParams): (() => boolean) =>
+  createVerboseGate(params, (level) => level !== "off");
 
-export const createShouldEmitToolOutput = (params: VerboseGateParams): (() => boolean) => createVerboseGate(params, (level) => level === "full");
+export const createShouldEmitToolOutput = (params: VerboseGateParams): (() => boolean) =>
+  createVerboseGate(params, (level) => level === "full");
 
 export const finalizeWithFollowup = <T>(
   value: T,

@@ -265,14 +265,14 @@ export function buildQaGatewayConfig(params: {
             },
           },
         }
-      : (hasLiveProviderConfigs
+      : hasLiveProviderConfigs
         ? {
             models: {
               mode: "merge",
               providers: liveProviderConfigs,
             },
           }
-        : {})),
+        : {}),
     gateway: {
       auth: {
         mode: "token",

@@ -87,9 +87,9 @@ function resolveSlackApprovalDecisionLabel(
 ): string {
   return decision === "allow-once"
     ? "Allowed once"
-    : (decision === "allow-always"
+    : decision === "allow-always"
       ? "Allowed always"
-      : "Denied");
+      : "Denied";
 }
 
 function buildSlackPendingApprovalText(view: ExecApprovalPendingView): string {

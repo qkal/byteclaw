@@ -34,7 +34,7 @@ export function collectTwitchStatusIssues(
   const issues: ChannelStatusIssue[] = [];
 
   for (const entry of accounts) {
-    const {accountId} = entry;
+    const { accountId } = entry;
 
     if (!accountId) {
       continue;

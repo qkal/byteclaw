@@ -274,9 +274,9 @@ export async function channelsAddCommand(
   const initialSyncLimit =
     typeof opts.initialSyncLimit === "number"
       ? opts.initialSyncLimit
-      : (typeof opts.initialSyncLimit === "string" && opts.initialSyncLimit.trim()
+      : typeof opts.initialSyncLimit === "string" && opts.initialSyncLimit.trim()
         ? Number.parseInt(opts.initialSyncLimit, 10)
-        : undefined);
+        : undefined;
   const groupChannels = parseOptionalDelimitedEntries(opts.groupChannels);
   const dmAllowlist = parseOptionalDelimitedEntries(opts.dmAllowlist);
 

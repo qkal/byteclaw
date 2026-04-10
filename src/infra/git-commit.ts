@@ -33,7 +33,7 @@ function isMissingPathError(error: unknown): boolean {
   if (!(error instanceof Error)) {
     return false;
   }
-  const {code} = (error as NodeJS.ErrnoException);
+  const { code } = error as NodeJS.ErrnoException;
   return code === "ENOENT" || code === "ENOTDIR";
 }
 

@@ -71,14 +71,15 @@ function hasQueuedReactionEventFor(sender: string) {
     channel: "signal",
     peer: { id: normalizeE164(sender), kind: "direct" },
   });
-  return enqueueSystemEventMock.mock.calls.some(([text, options]) => (
+  return enqueueSystemEventMock.mock.calls.some(
+    ([text, options]) =>
       typeof text === "string" &&
       text.includes("Signal reaction added") &&
       typeof options === "object" &&
       options !== null &&
       "sessionKey" in options &&
-      (options as { sessionKey?: string }).sessionKey === route.sessionKey
-    ));
+      (options as { sessionKey?: string }).sessionKey === route.sessionKey,
+  );
 }
 
 function makeBaseEnvelope(overrides: Record<string, unknown> = {}) {

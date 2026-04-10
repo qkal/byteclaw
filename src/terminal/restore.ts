@@ -43,7 +43,7 @@ export function restoreTerminalState(
     reportRestoreFailure("progress line", error, reason);
   }
 
-  const {stdin} = process;
+  const { stdin } = process;
   if (stdin.isTTY && typeof stdin.setRawMode === "function") {
     try {
       stdin.setRawMode(false);

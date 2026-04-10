@@ -101,7 +101,7 @@ export class PlaywrightDiffScreenshotter implements DiffScreenshotter {
             await route.abort();
             return;
           }
-          const {pathname} = parsed;
+          const { pathname } = parsed;
           const asset = await getServedViewerAsset(pathname);
           if (!asset) {
             await route.abort();
@@ -119,9 +119,10 @@ export class PlaywrightDiffScreenshotter implements DiffScreenshotter {
             if (document.documentElement.dataset.openclawDiffsReady === "true") {
               return true;
             }
-            return [...document.querySelectorAll("[data-openclaw-diff-host]")].every((element) => (
-                element instanceof HTMLElement && element.shadowRoot?.querySelector("[data-diffs]")
-              ));
+            return [...document.querySelectorAll("[data-openclaw-diff-host]")].every(
+              (element) =>
+                element instanceof HTMLElement && element.shadowRoot?.querySelector("[data-diffs]"),
+            );
           },
           {
             timeout: 10_000,
@@ -162,7 +163,7 @@ export class PlaywrightDiffScreenshotter implements DiffScreenshotter {
           await page.emulateMedia({ media: "screen" });
           await page.evaluate(() => {
             const html = document.documentElement;
-            const {body} = document;
+            const { body } = document;
             const frame = document.querySelector(".oc-frame");
 
             html.style.background = "transparent";

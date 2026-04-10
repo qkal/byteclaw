@@ -172,9 +172,9 @@ export async function fetchThreadHistory(
           id:
             typeof seal?.id === "string"
               ? seal.id
-              : (typeof itemRecord?.id === "string"
+              : typeof itemRecord?.id === "string"
                 ? itemRecord.id
-                : undefined),
+                : undefined,
           timestamp: typeof memo?.sent === "number" ? memo.sent : Date.now(),
         } as TlonHistoryEntry;
       })

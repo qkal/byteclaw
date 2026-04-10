@@ -70,7 +70,7 @@ export function resolveExtraParams(params: {
       ? params.cfg.agents.list.find((agent) => agent.id === params.agentId)?.params
       : undefined;
 
-  const merged = { ...defaultParams, ...globalParams, ...agentParams};
+  const merged = { ...defaultParams, ...globalParams, ...agentParams };
   const resolvedParallelToolCalls = resolveAliasedParamValue(
     [defaultParams, globalParams, agentParams],
     "parallel_tool_calls",
@@ -263,9 +263,9 @@ function createStreamFnWithExtraParams(
   const cachedContent =
     typeof extraParams.cachedContent === "string"
       ? extraParams.cachedContent
-      : (typeof extraParams.cached_content === "string"
+      : typeof extraParams.cached_content === "string"
         ? extraParams.cached_content
-        : undefined);
+        : undefined;
   if (typeof cachedContent === "string" && cachedContent.trim()) {
     streamParams.cachedContent = cachedContent.trim();
   }

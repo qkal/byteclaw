@@ -16,5 +16,5 @@ export const applyXiaomiProviderConfig: FacadeModule["applyXiaomiProviderConfig"
   )) as FacadeModule["applyXiaomiProviderConfig"];
 export const buildXiaomiProvider: FacadeModule["buildXiaomiProvider"] = ((...args) =>
   loadFacadeModule()["buildXiaomiProvider"](...args)) as FacadeModule["buildXiaomiProvider"];
-export const {XIAOMI_DEFAULT_MODEL_ID} = loadFacadeModule();
-export const {XIAOMI_DEFAULT_MODEL_REF} = loadFacadeModule();
+export const { XIAOMI_DEFAULT_MODEL_ID } = loadFacadeModule();
+export const { XIAOMI_DEFAULT_MODEL_REF } = loadFacadeModule();

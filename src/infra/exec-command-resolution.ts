@@ -276,9 +276,9 @@ function matchArgPattern(argPattern: string, argv: string[], platform?: string |
   const argsSlice = argv.slice(1);
   const argsString =
     sep === "\x00"
-      ? (argsSlice.length === 0
+      ? argsSlice.length === 0
         ? "\x00\x00" // Zero args: double sentinel matches "^\x00\x00$" pattern
-        : argsSlice.join(sep) + sep) // Trailing sentinel to match pattern format
+        : argsSlice.join(sep) + sep // Trailing sentinel to match pattern format
       : argsSlice.join(sep);
   try {
     const regex = new RegExp(argPattern);
@@ -334,7 +334,7 @@ export function matchAllowlist(
   if (!resolution?.resolvedPath) {
     return null;
   }
-  const {resolvedPath} = resolution;
+  const { resolvedPath } = resolution;
   // ArgPattern matching is currently Windows-only.  On other platforms every
   // Path-matched entry is treated as a match regardless of argPattern, which
   // Preserves the pre-existing behaviour.

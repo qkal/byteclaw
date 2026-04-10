@@ -65,7 +65,7 @@ function parseDiscordUserInput(raw: string): {
 
 function scoreDiscordMember(member: DiscordMember, query: string): number {
   const q = normalizeLowercaseStringOrEmpty(query);
-  const {user} = member;
+  const { user } = member;
   const candidates = [user.username, user.global_name, member.nick ?? undefined]
     .map((value) => {
       const normalized = normalizeOptionalString(value);
@@ -161,7 +161,7 @@ export async function resolveDiscordUserAllowlist(params: {
     }
 
     if (best) {
-      const {user} = best.member;
+      const { user } = best.member;
       const name =
         normalizeOptionalString(best.member.nick) ??
         normalizeOptionalString(user.global_name) ??

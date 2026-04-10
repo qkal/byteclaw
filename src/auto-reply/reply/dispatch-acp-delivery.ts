@@ -356,9 +356,9 @@ export function createAcpDispatchDeliveryCoordinator(params: {
     const delivered =
       kind === "tool"
         ? params.dispatcher.sendToolResult(ttsPayload)
-        : (kind === "block"
+        : kind === "block"
           ? params.dispatcher.sendBlockReply(ttsPayload)
-          : params.dispatcher.sendFinalReply(ttsPayload));
+          : params.dispatcher.sendFinalReply(ttsPayload);
     if (kind === "final" && delivered) {
       state.deliveredFinalReply = true;
     }

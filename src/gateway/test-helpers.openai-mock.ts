@@ -25,7 +25,7 @@ function extractLastUserText(input: unknown[]): string {
     if (!item || item.role !== "user") {
       continue;
     }
-    const {content} = item;
+    const { content } = item;
     if (Array.isArray(content)) {
       const text = content
         .filter(
@@ -214,15 +214,15 @@ export function installOpenAiResponsesMock(params?: { baseUrl?: string }) {
     url.startsWith(`${responsesUrl}?`);
   const fetchImpl = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
     const url =
-      typeof input === "string" ? input : (input instanceof URL ? input.toString() : input.url);
+      typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
 
     if (isResponsesRequest(url)) {
       const bodyText =
         typeof (init as { body?: unknown } | undefined)?.body !== "undefined"
           ? decodeBodyText((init as { body?: unknown }).body)
-          : (input instanceof Request
+          : input instanceof Request
             ? await input.clone().text()
-            : "");
+            : "";
 
       const parsed = bodyText ? (JSON.parse(bodyText) as Record<string, unknown>) : {};
       const inputItems = Array.isArray(parsed.input) ? parsed.input : [];

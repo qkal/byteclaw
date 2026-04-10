@@ -153,7 +153,7 @@ const mod = jiti(
     runtimeBasename: PLUGIN_ENTRY_RUNTIME_BASENAME,
   }),
 );
-export const {ensureMatrixCryptoRuntime} = mod;
-export const {handleVerifyRecoveryKey} = mod;
-export const {handleVerificationBootstrap} = mod;
-export const {handleVerificationStatus} = mod;
+export const { ensureMatrixCryptoRuntime } = mod;
+export const { handleVerifyRecoveryKey } = mod;
+export const { handleVerificationBootstrap } = mod;
+export const { handleVerificationStatus } = mod;

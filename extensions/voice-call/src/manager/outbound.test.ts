@@ -139,7 +139,7 @@ describe("voice-call outbound helpers", () => {
       callId: expect.any(String),
       success: true,
     });
-    const {callId} = result;
+    const { callId } = result;
 
     expect(mapVoiceToPollyMock).toHaveBeenCalledWith("nova");
     expect(generateNotifyTwimlMock).toHaveBeenCalledWith("hello there", "Polly.Joanna");

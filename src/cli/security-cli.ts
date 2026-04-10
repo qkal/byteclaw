@@ -165,9 +165,9 @@ export function registerSecurityCli(program: Command) {
         }
         const label =
           sev === "critical"
-            ? (rich
+            ? rich
               ? theme.error("CRITICAL")
-              : "CRITICAL")
+              : "CRITICAL"
             : sev === "warn"
               ? rich
                 ? theme.warn("WARN")

@@ -105,7 +105,7 @@ export async function doctorShellCompletion(
     // Upgrade profile to use cached file
     await installCompletion(status.shell, true, cliName);
     note(
-      `Shell completion upgraded. Restart your shell or run: source ~/.${status.shell === "zsh" ? "zshrc" : (status.shell === "bash" ? "bashrc" : "config/fish/config.fish")}`,
+      `Shell completion upgraded. Restart your shell or run: source ~/.${status.shell === "zsh" ? "zshrc" : status.shell === "bash" ? "bashrc" : "config/fish/config.fish"}`,
       "Shell completion",
     );
     return;
@@ -155,7 +155,7 @@ export async function doctorShellCompletion(
       // Then install to profile
       await installCompletion(status.shell, true, cliName);
       note(
-        `Shell completion installed. Restart your shell or run: source ~/.${status.shell === "zsh" ? "zshrc" : (status.shell === "bash" ? "bashrc" : "config/fish/config.fish")}`,
+        `Shell completion installed. Restart your shell or run: source ~/.${status.shell === "zsh" ? "zshrc" : status.shell === "bash" ? "bashrc" : "config/fish/config.fish"}`,
         "Shell completion",
       );
     }

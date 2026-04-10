@@ -16,13 +16,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  */
 function runNpmAudit() {
   console.log("Running npm audit...");
-  
+
   try {
     const output = execSync("npm audit --json", {
       encoding: "utf8",
       stdio: ["ignore", "pipe", "pipe"],
     });
-    
+
     return JSON.parse(output);
   } catch (error) {
     // Npm audit exits with non-zero if vulnerabilities found
@@ -57,7 +57,7 @@ function countVulnerabilities(auditResult) {
  */
 function generateReport(auditResult, counts) {
   const lines = [];
-  
+
   lines.push("# Dependency Vulnerability Audit Report");
   lines.push("");
   lines.push(`Generated: ${new Date().toISOString()}`);
@@ -71,13 +71,13 @@ function generateReport(auditResult, counts) {
   lines.push(`- Info: ${counts.info}`);
   lines.push(`- Total: ${counts.total}`);
   lines.push("");
-  
+
   if (counts.total > 0) {
     lines.push("## Vulnerabilities");
     lines.push("");
-    
+
     const { vulnerabilities } = auditResult;
-    
+
     for (const [packageName, vuln] of Object.entries(vulnerabilities)) {
       lines.push(`### ${packageName}`);
       lines.push("");
@@ -92,7 +92,7 @@ function generateReport(auditResult, counts) {
     lines.push("✓ No vulnerabilities found!");
     lines.push("");
   }
-  
+
   return lines.join("\n");
 }
 
@@ -103,21 +103,21 @@ function main() {
   const rootDir = join(__dirname, "..");
   const artifactsDir = join(rootDir, ".artifacts");
   const reportPath = join(artifactsDir, "dependency-audit-report.md");
-  
+
   try {
     // Create artifacts directory
     mkdirSync(artifactsDir, { recursive: true });
-    
+
     // Run audit
     const auditResult = runNpmAudit();
     const counts = countVulnerabilities(auditResult);
-    
+
     // Generate report
     const report = generateReport(auditResult, counts);
-    
+
     // Write report
     writeFileSync(reportPath, report, "utf8");
-    
+
     console.log(`Report written to: ${reportPath}`);
     console.log("");
     console.log(`Total vulnerabilities: ${counts.total}`);
@@ -125,14 +125,14 @@ function main() {
     console.log(`  High: ${counts.high}`);
     console.log(`  Moderate: ${counts.moderate}`);
     console.log(`  Low: ${counts.low}`);
-    
+
     // Exit with error if critical or high vulnerabilities found
     if (counts.critical > 0 || counts.high > 0) {
       console.error("");
       console.error("❌ Critical or high vulnerabilities found!");
       process.exit(1);
     }
-    
+
     process.exit(0);
   } catch (error) {
     console.error("Audit failed:", error.message);

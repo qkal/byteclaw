@@ -1,7 +1,10 @@
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 
-export interface OAuthPrompt { message: string; placeholder?: string }
+export interface OAuthPrompt {
+  message: string;
+  placeholder?: string;
+}
 
 const validateRequiredInput = (value: string) => (value.trim().length > 0 ? undefined : "Required");
 

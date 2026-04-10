@@ -383,19 +383,19 @@ function defaultProfilesForState(testPort: number): HarnessState["cfgProfiles"] 
 vi.mock("../config/config.js", async () => {
   const actual = await vi.importActual<typeof import("../config/config.js")>("../config/config.js");
   const loadConfig = () => ({
-      browser: {
-        attachOnly: state.cfgAttachOnly,
-        color: "#FF4500",
-        defaultProfile: state.cfgDefaultProfile,
-        enabled: true,
-        evaluateEnabled: state.cfgEvaluateEnabled,
-        headless: true,
-        profiles:
-          Object.keys(state.cfgProfiles).length > 0
-            ? state.cfgProfiles
-            : defaultProfilesForState(state.testPort),
-      },
-    });
+    browser: {
+      attachOnly: state.cfgAttachOnly,
+      color: "#FF4500",
+      defaultProfile: state.cfgDefaultProfile,
+      enabled: true,
+      evaluateEnabled: state.cfgEvaluateEnabled,
+      headless: true,
+      profiles:
+        Object.keys(state.cfgProfiles).length > 0
+          ? state.cfgProfiles
+          : defaultProfilesForState(state.testPort),
+    },
+  });
   const writeConfigFile = vi.fn(async () => {});
   return {
     ...actual,

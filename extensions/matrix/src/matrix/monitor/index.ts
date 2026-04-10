@@ -232,9 +232,9 @@ export async function monitorMatrixProvider(opts: MonitorMatrixOpts = {}): Promi
   const streaming: "partial" | "quiet" | "off" =
     accountConfig.streaming === true || accountConfig.streaming === "partial"
       ? "partial"
-      : (accountConfig.streaming === "quiet"
+      : accountConfig.streaming === "quiet"
         ? "quiet"
-        : "off");
+        : "off";
   const blockStreamingEnabled = accountConfig.blockStreaming === true;
   const startupMs = Date.now();
   const startupGraceMs = 0;

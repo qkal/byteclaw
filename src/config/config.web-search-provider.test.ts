@@ -108,8 +108,8 @@ const mockWebSearchProviders = [
 ] as const;
 
 vi.mock("../plugins/web-search-providers.runtime.js", () => ({
-    resolvePluginWebSearchProviders: () => mockWebSearchProviders,
-  }));
+  resolvePluginWebSearchProviders: () => mockWebSearchProviders,
+}));
 
 vi.mock("../plugins/manifest-registry.js", () => {
   const buildSchema = () => ({

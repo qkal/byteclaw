@@ -82,7 +82,7 @@ describe("security fix", () => {
         };
 
         maybeApply("channels.whatsapp.", whatsapp);
-        const {accounts} = whatsapp;
+        const { accounts } = whatsapp;
         if (accounts && typeof accounts === "object") {
           for (const [accountId, value] of Object.entries(accounts)) {
             if (!value || typeof value !== "object") {
@@ -120,7 +120,7 @@ describe("security fix", () => {
     accountId: string,
     expectedPolicy = "allowlist",
   ) => {
-    const {whatsapp} = channels;
+    const { whatsapp } = channels;
     const accounts = whatsapp.accounts as Record<string, Record<string, unknown>>;
     expect(accounts[accountId]?.groupPolicy).toBe(expectedPolicy);
     return accounts;

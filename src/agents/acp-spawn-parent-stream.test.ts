@@ -11,34 +11,46 @@ vi.mock("../infra/system-events.js", () => ({
   enqueueSystemEvent: (...args: unknown[]) => enqueueSystemEventMock(...args),
 }));
 
-vi.mock("../infra/heartbeat-wake.js", async () => await mergeMockedModule(
-    await vi.importActual<typeof import("../infra/heartbeat-wake.js")>(
-      "../infra/heartbeat-wake.js",
+vi.mock(
+  "../infra/heartbeat-wake.js",
+  async () =>
+    await mergeMockedModule(
+      await vi.importActual<typeof import("../infra/heartbeat-wake.js")>(
+        "../infra/heartbeat-wake.js",
+      ),
+      () => ({
+        requestHeartbeatNow: (...args: unknown[]) => requestHeartbeatNowMock(...args),
+      }),
     ),
-    () => ({
-      requestHeartbeatNow: (...args: unknown[]) => requestHeartbeatNowMock(...args),
-    }),
-  ));
+);
 
-vi.mock("../acp/runtime/session-meta.js", async () => await mergeMockedModule(
-    await vi.importActual<typeof import("../acp/runtime/session-meta.js")>(
-      "../acp/runtime/session-meta.js",
+vi.mock(
+  "../acp/runtime/session-meta.js",
+  async () =>
+    await mergeMockedModule(
+      await vi.importActual<typeof import("../acp/runtime/session-meta.js")>(
+        "../acp/runtime/session-meta.js",
+      ),
+      () => ({
+        readAcpSessionEntry: (...args: unknown[]) => readAcpSessionEntryMock(...args),
+      }),
     ),
-    () => ({
-      readAcpSessionEntry: (...args: unknown[]) => readAcpSessionEntryMock(...args),
-    }),
-  ));
+);
 
-vi.mock("../config/sessions/paths.js", async () => await mergeMockedModule(
-    await vi.importActual<typeof import("../config/sessions/paths.js")>(
-      "../config/sessions/paths.js",
+vi.mock(
+  "../config/sessions/paths.js",
+  async () =>
+    await mergeMockedModule(
+      await vi.importActual<typeof import("../config/sessions/paths.js")>(
+        "../config/sessions/paths.js",
+      ),
+      () => ({
+        resolveSessionFilePath: (...args: unknown[]) => resolveSessionFilePathMock(...args),
+        resolveSessionFilePathOptions: (...args: unknown[]) =>
+          resolveSessionFilePathOptionsMock(...args),
+      }),
     ),
-    () => ({
-      resolveSessionFilePath: (...args: unknown[]) => resolveSessionFilePathMock(...args),
-      resolveSessionFilePathOptions: (...args: unknown[]) =>
-        resolveSessionFilePathOptionsMock(...args),
-    }),
-  ));
+);
 
 let emitAgentEvent: typeof import("../infra/agent-events.js").emitAgentEvent;
 let resolveAcpSpawnStreamLogPath: typeof import("./acp-spawn-parent-stream.js").resolveAcpSpawnStreamLogPath;

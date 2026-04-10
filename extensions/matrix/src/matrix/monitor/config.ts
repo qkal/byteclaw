@@ -154,7 +154,7 @@ async function resolveMatrixMonitorRoomsConfig(params: {
   runtime: RuntimeEnv;
   resolveTargets: ResolveMatrixTargetsFn;
 }): Promise<MatrixRoomsConfig | undefined> {
-  const {roomsConfig} = params;
+  const { roomsConfig } = params;
   if (!roomsConfig || Object.keys(roomsConfig).length === 0) {
     return roomsConfig;
   }

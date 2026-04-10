@@ -68,7 +68,7 @@ function resolveMarkdownModeFromSection(
     return undefined;
   }
   const normalizedAccountId = normalizeAccountId(accountId);
-  const {accounts} = section;
+  const { accounts } = section;
   if (accounts && typeof accounts === "object") {
     const match = resolveAccountEntry(accounts, normalizedAccountId);
     const matchMode = match?.markdown?.tables;

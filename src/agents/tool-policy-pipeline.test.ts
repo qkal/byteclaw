@@ -6,7 +6,9 @@ import {
 } from "./tool-policy-pipeline.js";
 import { resolveToolProfilePolicy } from "./tool-policy.js";
 
-interface DummyTool { name: string }
+interface DummyTool {
+  name: string;
+}
 
 function runAllowlistWarningStep(params: {
   allow: string[];

@@ -9,8 +9,16 @@ import { pathExists } from "../utils.js";
 import { resolveStableNodePath } from "./stable-node-path.js";
 import { runGatewayUpdate } from "./update-runner.js";
 
-interface CommandResponse { stdout?: string; stderr?: string; code?: number | null }
-interface CommandResult { stdout: string; stderr: string; code: number | null }
+interface CommandResponse {
+  stdout?: string;
+  stderr?: string;
+  code?: number | null;
+}
+interface CommandResult {
+  stdout: string;
+  stderr: string;
+  code: number | null;
+}
 const WHATSAPP_LIGHT_RUNTIME_API = bundledDistPluginFile("whatsapp", "light-runtime-api.js");
 const fixtureRootTracker = createSuiteTempRootTracker({ prefix: "openclaw-update-" });
 

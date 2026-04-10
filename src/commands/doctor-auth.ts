@@ -105,7 +105,7 @@ function hasLegacyCodexTransportOverride(providerOverride: unknown): boolean {
   if (isLegacyCodexTransportShape(providerOverride)) {
     return true;
   }
-  const {models} = providerOverride;
+  const { models } = providerOverride;
   if (!Array.isArray(models)) {
     return false;
   }

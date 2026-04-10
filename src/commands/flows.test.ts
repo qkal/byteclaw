@@ -206,7 +206,9 @@ describe("flows commands", () => {
       expect(lines).toContain("owner: agent:main:owner");
       expect(lines).toContain(String.raw`state: Waiting on child\nforged: yes`);
       expect(
-        lines.some((line) => line.includes("run-child-3") && line.includes(String.raw`Collect\nlogs`)),
+        lines.some(
+          (line) => line.includes("run-child-3") && line.includes(String.raw`Collect\nlogs`),
+        ),
       ).toBe(true);
       expect(lines.join("\n")).not.toContain("\u001b[");
     });

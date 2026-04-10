@@ -190,12 +190,12 @@ async function runGatewayAuthHealth(ctx: DoctorHealthFlowContext): Promise<void>
   const shouldSetToken =
     ctx.options.generateGatewayToken === true
       ? true
-      : (ctx.options.nonInteractive === true
+      : ctx.options.nonInteractive === true
         ? false
         : await ctx.prompter.confirmAutoFix({
             initialValue: true,
             message: "Generate and configure a gateway token now?",
-          }));
+          });
   if (!shouldSetToken) {
     return;
   }

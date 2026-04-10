@@ -18,7 +18,9 @@ function matchesProviderId(provider: ProviderPlugin, providerId: string): boolea
 }
 
 function resolveActiveThinkingProvider(providerId: string): ProviderPlugin | undefined {
-  return getActivePluginRegistry()?.providers.find((entry) => matchesProviderId(entry.provider, providerId))?.provider;
+  return getActivePluginRegistry()?.providers.find((entry) =>
+    matchesProviderId(entry.provider, providerId),
+  )?.provider;
 }
 
 interface ThinkingHookParams<TContext> {

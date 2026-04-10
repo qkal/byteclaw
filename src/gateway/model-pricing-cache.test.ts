@@ -8,7 +8,9 @@ const normalizeProviderModelIdWithPluginMock = vi.hoisted(() =>
   vi.fn<typeof normalizeProviderModelIdWithPlugin>(({ context }) => context.modelId),
 );
 
-vi.mock("../plugins/provider-runtime.js", () => ({ normalizeProviderModelIdWithPlugin: normalizeProviderModelIdWithPluginMock }));
+vi.mock("../plugins/provider-runtime.js", () => ({
+  normalizeProviderModelIdWithPlugin: normalizeProviderModelIdWithPluginMock,
+}));
 
 import {
   __resetGatewayModelPricingCacheForTest,

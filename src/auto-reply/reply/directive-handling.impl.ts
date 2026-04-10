@@ -110,8 +110,8 @@ export async function handleDirectiveOnly(
   if (modelResolution.errorText) {
     return { text: modelResolution.errorText };
   }
-  const {modelSelection} = modelResolution;
-  const {profileOverride} = modelResolution;
+  const { modelSelection } = modelResolution;
+  const { profileOverride } = modelResolution;
 
   const resolvedProvider = modelSelection?.provider ?? provider;
   const resolvedModel = modelSelection?.model ?? model;
@@ -160,9 +160,9 @@ export async function handleDirectiveOnly(
       const sourceSuffix =
         effectiveFastModeSource === "config"
           ? " (config)"
-          : (effectiveFastModeSource === "default"
+          : effectiveFastModeSource === "default"
             ? " (default)"
-            : "");
+            : "";
       return {
         text: withOptions(
           `Current fast mode: ${effectiveFastMode ? "on" : "off"}${sourceSuffix}.`,
@@ -466,18 +466,18 @@ export async function handleDirectiveOnly(
     parts.push(
       directives.reasoningLevel === "off"
         ? formatDirectiveAck("Reasoning visibility disabled.")
-        : (directives.reasoningLevel === "stream"
+        : directives.reasoningLevel === "stream"
           ? formatDirectiveAck("Reasoning stream enabled (Telegram only).")
-          : formatDirectiveAck("Reasoning visibility enabled.")),
+          : formatDirectiveAck("Reasoning visibility enabled."),
     );
   }
   if (directives.hasElevatedDirective && directives.elevatedLevel) {
     parts.push(
       directives.elevatedLevel === "off"
         ? formatDirectiveAck("Elevated mode disabled.")
-        : (directives.elevatedLevel === "full"
+        : directives.elevatedLevel === "full"
           ? formatDirectiveAck("Elevated mode set to full (auto-approve).")
-          : formatDirectiveAck("Elevated mode set to ask (approvals may still apply).")),
+          : formatDirectiveAck("Elevated mode set to ask (approvals may still apply)."),
     );
     if (shouldHintDirectRuntime) {
       parts.push(formatElevatedRuntimeHint());

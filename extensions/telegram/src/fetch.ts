@@ -108,9 +108,9 @@ function createDnsResultOrderLookup(
     const baseOptions: LookupOptions =
       typeof options === "number"
         ? { family: options }
-        : (options
+        : options
           ? { ...(options as LookupOptions) }
-          : {});
+          : {};
     const lookupOptions: LookupOptions = {
       ...baseOptions,
       order,
@@ -372,15 +372,15 @@ function collectErrorCodes(err: unknown): Set<string> {
     }
     seen.add(current);
     if (typeof current === "object") {
-      const {code} = (current as { code?: unknown });
+      const { code } = current as { code?: unknown };
       if (typeof code === "string" && code.trim()) {
         codes.add(code.trim().toUpperCase());
       }
-      const {cause} = (current as { cause?: unknown });
+      const { cause } = current as { cause?: unknown };
       if (cause && !seen.has(cause)) {
         queue.push(cause);
       }
-      const {errors} = (current as { errors?: unknown });
+      const { errors } = current as { errors?: unknown };
       if (Array.isArray(errors)) {
         for (const nested of errors) {
           if (nested && !seen.has(nested)) {
@@ -440,7 +440,7 @@ function createTelegramTransportAttempts(params: {
   if (!params.allowFallback || !params.fallbackPolicy) {
     return attempts;
   }
-  const {fallbackPolicy} = params;
+  const { fallbackPolicy } = params;
 
   let ipv4Dispatcher: TelegramDispatcher | null = null;
   attempts.push({
@@ -499,9 +499,9 @@ export function resolveTelegramTransport(
   const undiciSourceFetch = resolveWrappedFetch(undiciFetch as unknown as typeof fetch);
   const sourceFetch = explicitProxyUrl
     ? undiciSourceFetch
-    : (proxyFetch
+    : proxyFetch
       ? resolveWrappedFetch(proxyFetch)
-      : undiciSourceFetch);
+      : undiciSourceFetch;
   const dnsResultOrder = normalizeDnsResultOrder(dnsDecision.value);
   if (proxyFetch && !explicitProxyUrl) {
     return { fetch: sourceFetch, sourceFetch };

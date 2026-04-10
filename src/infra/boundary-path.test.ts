@@ -158,7 +158,7 @@ describe("resolveBoundaryPath", () => {
       await fs.symlink(safeTarget, safeLinkBase);
       await fs.symlink(outside, escapeLink);
 
-      const rand = createSeededRandom(0x5E_ED_12_34);
+      const rand = createSeededRandom(0x5e_ed_12_34);
       const fuzzCases = 32;
       for (let idx = 0; idx < fuzzCases; idx += 1) {
         const token = Math.floor(rand() * 1_000_000)

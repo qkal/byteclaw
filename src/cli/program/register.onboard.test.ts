@@ -11,8 +11,8 @@ const mocks = vi.hoisted(() => ({
   setupWizardCommandMock: vi.fn(),
 }));
 
-const {setupWizardCommandMock} = mocks;
-const {runtime} = mocks;
+const { setupWizardCommandMock } = mocks;
+const { runtime } = mocks;
 
 vi.mock("../../commands/auth-choice-options.static.js", () => ({
   formatStaticAuthChoiceChoicesForCli: () => "token|oauth",

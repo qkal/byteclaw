@@ -733,17 +733,20 @@ export async function rejectDevicePairing(
   requestId: string,
   baseDir?: string,
 ): Promise<{ requestId: string; deviceId: string } | null> {
-  return await withLock(async () => await rejectPendingPairingRequest<
-      DevicePairingPendingRequest,
-      DevicePairingStateFile,
-      "deviceId"
-    >({
-      getId: (pending: DevicePairingPendingRequest) => pending.deviceId,
-      idKey: "deviceId",
-      loadState: () => loadState(baseDir),
-      persistState: (state) => persistState(state, baseDir),
-      requestId,
-    }));
+  return await withLock(
+    async () =>
+      await rejectPendingPairingRequest<
+        DevicePairingPendingRequest,
+        DevicePairingStateFile,
+        "deviceId"
+      >({
+        getId: (pending: DevicePairingPendingRequest) => pending.deviceId,
+        idKey: "deviceId",
+        loadState: () => loadState(baseDir),
+        persistState: (state) => persistState(state, baseDir),
+        requestId,
+      }),
+  );
 }
 
 export async function removePairedDevice(

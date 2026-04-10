@@ -139,10 +139,14 @@ async function fetchMatrixWhoamiIdentity(params: {
     ssrfPolicy: params.ssrfPolicy,
     userId: params.userId,
   });
-  return (await retryMatrixAuthRequest("matrix auth whoami", async () => (await tempClient.doRequest("GET", "/_matrix/client/v3/account/whoami")) as {
-      user_id?: string;
-      device_id?: string;
-    })) as {
+  return (await retryMatrixAuthRequest(
+    "matrix auth whoami",
+    async () =>
+      (await tempClient.doRequest("GET", "/_matrix/client/v3/account/whoami")) as {
+        user_id?: string;
+        device_id?: string;
+      },
+  )) as {
     user_id?: string;
     device_id?: string;
   };
@@ -748,7 +752,7 @@ export async function resolveMatrixAuth(params?: {
 
   // If we have an access token, we can fetch userId via whoami if not provided
   if (accessToken) {
-    let {userId} = resolved;
+    let { userId } = resolved;
     const hasMatchingCachedToken = cachedCredentials?.accessToken === accessToken;
     let knownDeviceId = hasMatchingCachedToken
       ? cachedCredentials?.deviceId || resolved.deviceId
@@ -854,17 +858,21 @@ export async function resolveMatrixAuth(params?: {
     dispatcherPolicy: resolved.dispatcherPolicy,
     ssrfPolicy: resolved.ssrfPolicy,
   });
-  const login = (await retryMatrixAuthRequest("matrix auth login", async () => (await loginClient.doRequest("POST", "/_matrix/client/v3/login", undefined, {
-      device_id: resolved.deviceId,
-      identifier: { type: "m.id.user", user: resolved.userId },
-      initial_device_display_name: resolved.deviceName ?? "OpenClaw Gateway",
-      password,
-      type: "m.login.password",
-    })) as {
-      access_token?: string;
-      user_id?: string;
-      device_id?: string;
-    })) as {
+  const login = (await retryMatrixAuthRequest(
+    "matrix auth login",
+    async () =>
+      (await loginClient.doRequest("POST", "/_matrix/client/v3/login", undefined, {
+        device_id: resolved.deviceId,
+        identifier: { type: "m.id.user", user: resolved.userId },
+        initial_device_display_name: resolved.deviceName ?? "OpenClaw Gateway",
+        password,
+        type: "m.login.password",
+      })) as {
+        access_token?: string;
+        user_id?: string;
+        device_id?: string;
+      },
+  )) as {
     access_token?: string;
     user_id?: string;
     device_id?: string;

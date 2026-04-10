@@ -105,7 +105,9 @@ async function fetchRemoteMediaWithRedirects(
   throw new Error("too many redirects");
 }
 
-const fetchRemoteMediaMock = vi.fn(async (params: RemoteMediaFetchParams) => await fetchRemoteMediaWithRedirects(params));
+const fetchRemoteMediaMock = vi.fn(
+  async (params: RemoteMediaFetchParams) => await fetchRemoteMediaWithRedirects(params),
+);
 
 const runtimeStub = {
   channel: {
@@ -131,9 +133,16 @@ type DownloadAttachmentsNoFetchOverrides = Partial<
   Pick<DownloadAttachmentsParams, "allowHosts">;
 type FetchFn = typeof fetch;
 type MSTeamsAttachments = DownloadAttachmentsParams["attachments"];
-interface LabeledCase { label: string }
-interface FetchCallExpectation { expectFetchCalled?: boolean }
-interface DownloadedMediaExpectation { path?: string; placeholder?: string }
+interface LabeledCase {
+  label: string;
+}
+interface FetchCallExpectation {
+  expectFetchCalled?: boolean;
+}
+interface DownloadedMediaExpectation {
+  path?: string;
+  placeholder?: string;
+}
 
 const DEFAULT_MAX_BYTES = 1024 * 1024;
 const DEFAULT_ALLOW_HOSTS = [TEST_HOST];
@@ -187,7 +196,8 @@ const createHostedContentsWithType = (contentType: string, ...ids: string[]) =>
   ids.map((id) => ({ contentBytes: PNG_BASE64, contentType, id }));
 const _createHostedImageContents = (...ids: string[]) =>
   createHostedContentsWithType(CONTENT_TYPE_IMAGE_PNG, ...ids);
-const _createPdfResponse = (payload: Buffer | string = PDF_BUFFER) => createBufferResponse(payload, CONTENT_TYPE_APPLICATION_PDF);
+const _createPdfResponse = (payload: Buffer | string = PDF_BUFFER) =>
+  createBufferResponse(payload, CONTENT_TYPE_APPLICATION_PDF);
 const createBufferResponse = (payload: Buffer | string, contentType: string, status = 200) => {
   const raw = Buffer.isBuffer(payload) ? payload : Buffer.from(payload);
   return new Response(new Uint8Array(raw), {
@@ -213,11 +223,11 @@ const buildDownloadParams = (
   attachments: MSTeamsAttachments,
   overrides: DownloadAttachmentsBuildOverrides = {},
 ): DownloadAttachmentsParams => ({
-    allowHosts: DEFAULT_ALLOW_HOSTS,
-    attachments,
-    maxBytes: DEFAULT_MAX_BYTES,
-    ...overrides,
-  });
+  allowHosts: DEFAULT_ALLOW_HOSTS,
+  attachments,
+  maxBytes: DEFAULT_MAX_BYTES,
+  ...overrides,
+});
 
 const downloadAttachmentsWithFetch = async (
   attachments: MSTeamsAttachments,
@@ -424,9 +434,12 @@ describe("msteams attachments", () => {
         return createNotFoundResponse();
       });
 
-      fetchRemoteMediaMock.mockImplementationOnce(async (params) => await fetchRemoteMediaWithRedirects(params, {
-          dispatcher: {},
-        } as RequestInit));
+      fetchRemoteMediaMock.mockImplementationOnce(
+        async (params) =>
+          await fetchRemoteMediaWithRedirects(params, {
+            dispatcher: {},
+          } as RequestInit),
+      );
 
       const media = await downloadAttachmentsWithFetch(
         createImageAttachments(TEST_URL_IMAGE),

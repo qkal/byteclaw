@@ -25,7 +25,7 @@ async function getOsFreePort(): Promise<number> {
         reject(new Error("failed to acquire free port"));
         return;
       }
-      const {port} = addr;
+      const { port } = addr;
       server.close((err) => (err ? reject(err) : resolve(port)));
     });
   });
@@ -50,9 +50,9 @@ export async function getDeterministicFreePortBlock(params?: {
   const workerId = Number.parseInt(workerIdRaw, 10);
   const shard = Number.isFinite(workerId)
     ? Math.max(0, workerId)
-    : (isMainThread
+    : isMainThread
       ? Math.abs(process.pid)
-      : Math.abs(threadId));
+      : Math.abs(threadId);
 
   const rangeSize = 1000;
   const shardCount = 30;

@@ -17,7 +17,7 @@ interface EmitterLike {
 }
 
 export function getSocketEmitter(app: unknown): EmitterLike | null {
-  const {receiver} = (app as { receiver?: unknown });
+  const { receiver } = app as { receiver?: unknown };
   const client =
     receiver && typeof receiver === "object"
       ? (receiver as { client?: unknown }).client
@@ -25,8 +25,8 @@ export function getSocketEmitter(app: unknown): EmitterLike | null {
   if (!client || typeof client !== "object") {
     return null;
   }
-  const {on} = (client as { on?: unknown });
-  const {off} = (client as { off?: unknown });
+  const { on } = client as { on?: unknown };
+  const { off } = client as { off?: unknown };
   if (typeof on !== "function" || typeof off !== "function") {
     return null;
   }
@@ -89,7 +89,7 @@ export function waitForSlackSocketDisconnect(
  * and retrying will never succeed — continuing to retry blocks the entire gateway.
  */
 export function isNonRecoverableSlackAuthError(error: unknown): boolean {
-  const msg = error instanceof Error ? error.message : (typeof error === "string" ? error : "");
+  const msg = error instanceof Error ? error.message : typeof error === "string" ? error : "";
   return SLACK_AUTH_ERROR_RE.test(msg);
 }
 

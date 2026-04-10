@@ -88,12 +88,12 @@ export function sanitizeGoogleThinkingPayload(params: {
     return;
   }
   const payloadObj = params.payload as Record<string, unknown>;
-  const {config} = payloadObj;
+  const { config } = payloadObj;
   if (!config || typeof config !== "object") {
     return;
   }
   const configObj = config as Record<string, unknown>;
-  const {thinkingConfig} = configObj;
+  const { thinkingConfig } = configObj;
   if (!thinkingConfig || typeof thinkingConfig !== "object") {
     return;
   }
@@ -127,7 +127,7 @@ export function sanitizeGoogleThinkingPayload(params: {
     return;
   }
 
-  const {thinkingBudget} = thinkingConfigObj;
+  const { thinkingBudget } = thinkingConfigObj;
   if (typeof thinkingBudget !== "number" || thinkingBudget >= 0) {
     return;
   }
@@ -155,7 +155,8 @@ export function createGoogleThinkingPayloadWrapper(
   thinkingLevel?: ThinkLevel,
 ): StreamFn {
   const underlying = baseStreamFn ?? streamSimple;
-  return (model, context, options) => streamWithPayloadPatch(underlying, model, context, options, (payload) => {
+  return (model, context, options) =>
+    streamWithPayloadPatch(underlying, model, context, options, (payload) => {
       if (model.api === "google-generative-ai") {
         sanitizeGoogleThinkingPayload({
           modelId: model.id,

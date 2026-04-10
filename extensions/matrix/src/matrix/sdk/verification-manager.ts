@@ -235,7 +235,7 @@ export class MatrixVerificationManager {
   }
 
   private buildVerificationSummary(session: MatrixVerificationSession): MatrixVerificationSummary {
-    const {request} = session;
+    const { request } = session;
     const phase = this.readVerificationPhase(request, VerificationPhase.Requested);
     const accepting = this.readRequestValue(request, () => request.accepting, false);
     const declining = this.readRequestValue(request, () => request.declining, false);
@@ -313,7 +313,7 @@ export class MatrixVerificationManager {
     if (session.acceptRequested) {
       return;
     }
-    const {request} = session;
+    const { request } = session;
     const isSelfVerification = this.readRequestValue(
       request,
       () => request.isSelfVerification,

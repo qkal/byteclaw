@@ -13,7 +13,7 @@ function mockState(sessionKey: string): CachedRuntimeState {
       runtimeSessionName: `runtime:${sessionKey}`,
       sessionKey,
     })),
-    runTurn: vi.fn(async function*  runTurn() {
+    runTurn: vi.fn(async function* runTurn() {
       yield { type: "done" as const };
     }),
   } as unknown as AcpRuntime;

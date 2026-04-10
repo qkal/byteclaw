@@ -231,7 +231,7 @@ export async function startTlonGatewayAccount(
     NonNullable<NonNullable<ChannelPlugin<ResolvedTlonAccount>["gateway"]>["startAccount"]>
   >[0],
 ) {
-  const {account} = ctx;
+  const { account } = ctx;
   ctx.setStatus({
     accountId: account.accountId,
     ship: account.ship,

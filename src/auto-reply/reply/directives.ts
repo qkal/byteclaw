@@ -58,7 +58,7 @@ const extractLevelDirective = <T>(
   if (!match) {
     return { cleaned: body.trim(), hasDirective: false };
   }
-  const {rawLevel} = match;
+  const { rawLevel } = match;
   const level = normalize(rawLevel);
   const cleaned = body
     .slice(0, match.start)

@@ -48,9 +48,9 @@ function parseHexRgbToSignedArgbInt(hex: string): number | null {
     return null;
   }
   const rgb = Number.parseInt(cleaned, 16);
-  const argbUnsigned = (0xFF << 24) | rgb;
+  const argbUnsigned = (0xff << 24) | rgb;
   // Chrome stores colors as signed 32-bit ints (SkColor).
-  return argbUnsigned > 0x7F_FF_FF_FF ? argbUnsigned - 0x1_00_00_00_00 : argbUnsigned;
+  return argbUnsigned > 0x7f_ff_ff_ff ? argbUnsigned - 0x1_00_00_00_00 : argbUnsigned;
 }
 
 export function isProfileDecorated(

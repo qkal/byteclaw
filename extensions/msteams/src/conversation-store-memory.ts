@@ -20,7 +20,8 @@ export function createMSTeamsConversationStoreMemory(
 
   const findPreferredDmByUserId = async (
     id: string,
-  ): Promise<MSTeamsConversationStoreEntry | null> => findPreferredDmConversationByUserId(toConversationStoreEntries(map.entries()), id);
+  ): Promise<MSTeamsConversationStoreEntry | null> =>
+    findPreferredDmConversationByUserId(toConversationStoreEntries(map.entries()), id);
 
   return {
     findByUserId: findPreferredDmByUserId,

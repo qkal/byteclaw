@@ -90,7 +90,7 @@ function extractSherpaOnnxText(raw: string): string | null {
         return tryParse(parsed);
       }
       if (parsed && typeof parsed === "object") {
-        const {text} = (parsed as { text?: unknown });
+        const { text } = parsed as { text?: unknown };
         if (typeof text === "string" && text.trim()) {
           return text.trim();
         }
@@ -544,7 +544,7 @@ export async function runProviderEntry(params: {
     if (!provider.transcribeAudio) {
       throw new Error(`Audio transcription provider "${providerId}" not available.`);
     }
-    const {transcribeAudio} = provider;
+    const { transcribeAudio } = provider;
     const requestOverrides = resolveAudioRequestOverrides(params.config);
     const media = await params.cache.getBuffer({
       attachmentIndex: params.attachmentIndex,
@@ -608,7 +608,7 @@ export async function runProviderEntry(params: {
   if (!provider.describeVideo) {
     throw new Error(`Video understanding provider "${providerId}" not available.`);
   }
-  const {describeVideo} = provider;
+  const { describeVideo } = provider;
   const media = await params.cache.getBuffer({
     attachmentIndex: params.attachmentIndex,
     maxBytes,

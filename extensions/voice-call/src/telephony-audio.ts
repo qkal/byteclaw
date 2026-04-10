@@ -130,6 +130,6 @@ function linearToMulaw(sample: number): number {
     expMask >>= 1;
   }
 
-  const mantissa = (sample >> (exponent + 3)) & 0x0F;
-  return ~(sign | (exponent << 4) | mantissa) & 0xFF;
+  const mantissa = (sample >> (exponent + 3)) & 0x0f;
+  return ~(sign | (exponent << 4) | mantissa) & 0xff;
 }

@@ -24,8 +24,7 @@ import {
   truncateText,
 } from "./web-fetch-utils.js";
 import { fetchWithWebToolsNetworkGuard } from "./web-guarded-fetch.js";
-import type {
-  CacheEntry} from "./web-shared.js";
+import type { CacheEntry } from "./web-shared.js";
 import {
   DEFAULT_CACHE_TTL_MINUTES,
   DEFAULT_TIMEOUT_SECONDS,
@@ -262,7 +261,7 @@ function normalizeProviderFinalUrl(value: unknown): string | undefined {
   }
   for (const char of trimmed) {
     const code = char.charCodeAt(0);
-    if (code <= 0x20 || code === 0x7F) {
+    if (code <= 0x20 || code === 0x7f) {
       return undefined;
     }
   }

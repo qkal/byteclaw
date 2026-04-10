@@ -146,7 +146,7 @@ export class OpenClawChannelBridge {
       waiter.resolve(null);
     }
     this.pendingWaiters.clear();
-    const {gateway} = this;
+    const { gateway } = this;
     this.gateway = null;
     await gateway?.stopAndWait().catch(() => undefined);
   }
@@ -219,7 +219,9 @@ export class OpenClawChannelBridge {
   }
 
   listPendingApprovals(): PendingApproval[] {
-    return [...this.pendingApprovals.values()].toSorted((a, b) => (a.createdAtMs ?? 0) - (b.createdAtMs ?? 0));
+    return [...this.pendingApprovals.values()].toSorted(
+      (a, b) => (a.createdAtMs ?? 0) - (b.createdAtMs ?? 0),
+    );
   }
 
   async respondToApproval(params: {

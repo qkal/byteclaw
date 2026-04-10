@@ -456,7 +456,7 @@ describe("loadGatewayPlugins", () => {
       | { runtimeOptions?: { allowGatewaySubagentBinding?: boolean } }
       | undefined;
     expect(call?.runtimeOptions?.allowGatewaySubagentBinding).toBe(true);
-    const {subagent} = runtimeModule.createPluginRuntime({
+    const { subagent } = runtimeModule.createPluginRuntime({
       allowGatewaySubagentBinding: true,
     });
     expect(typeof subagent?.getSessionMessages).toBe("function");

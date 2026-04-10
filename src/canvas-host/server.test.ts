@@ -230,7 +230,7 @@ describe("canvas host", () => {
       }
       throw error;
     }
-    const {port} = (server.address() as AddressInfo);
+    const { port } = server.address() as AddressInfo;
 
     try {
       const res = await realFetch(`http://127.0.0.1:${port}${CANVAS_HOST_PATH}/`);

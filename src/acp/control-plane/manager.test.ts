@@ -109,7 +109,7 @@ function createRuntime(): {
       sessionKey: input.sessionKey,
     }),
   );
-  const runTurn = vi.fn(async function*  runTurn() {
+  const runTurn = vi.fn(async function* runTurn() {
     yield { type: "done" as const };
   });
   const prepareFreshSession = vi.fn(async () => {});
@@ -265,7 +265,7 @@ describe("AcpSessionManager", () => {
       runtime: runtimeState.runtime,
     });
     hoisted.readAcpSessionEntryMock.mockImplementation((paramsUnknown: unknown) => {
-      const {sessionKey} = (paramsUnknown as { sessionKey?: string });
+      const { sessionKey } = paramsUnknown as { sessionKey?: string };
       if (sessionKey !== "agent:main:main") {
         return null;
       }
@@ -325,7 +325,7 @@ describe("AcpSessionManager", () => {
         runtime: runtimeState.runtime,
       });
       hoisted.readAcpSessionEntryMock.mockImplementation((paramsUnknown: unknown) => {
-        const {sessionKey} = (paramsUnknown as { sessionKey?: string });
+        const { sessionKey } = paramsUnknown as { sessionKey?: string };
         if (sessionKey === "agent:codex:acp:child-1") {
           return {
             acp: readySessionMeta(),

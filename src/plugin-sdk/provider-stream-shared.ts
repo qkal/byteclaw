@@ -52,7 +52,7 @@ function decodeToolCallArgumentsHtmlEntitiesInMessage(message: unknown): void {
   if (!message || typeof message !== "object") {
     return;
   }
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (!Array.isArray(content)) {
     return;
   }

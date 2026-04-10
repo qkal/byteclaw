@@ -76,11 +76,11 @@ export function buildGuardedModelFetch(model: Model<Api>): typeof fetch {
       request?.url ??
       (input instanceof URL
         ? input.toString()
-        : (typeof input === "string"
+        : typeof input === "string"
           ? input
           : (() => {
               throw new Error("Unsupported fetch input for transport-aware model request");
-            })()));
+            })());
     const requestInit =
       request &&
       ({

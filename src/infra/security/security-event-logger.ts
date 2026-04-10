@@ -5,8 +5,8 @@
 
 export interface SecurityEvent {
   timestamp: Date;
-  level: 'info' | 'warning' | 'error' | 'critical';
-  category: 'auth' | 'authorization' | 'data-access' | 'configuration' | 'network' | 'system';
+  level: "info" | "warning" | "error" | "critical";
+  category: "auth" | "authorization" | "data-access" | "configuration" | "network" | "system";
   eventType: string;
   userId?: string;
   ipAddress?: string;
@@ -32,7 +32,7 @@ class SecurityEventLogger {
     this.options = {
       enableConsole: options.enableConsole ?? true,
       enableFile: options.enableFile ?? false,
-      filePath: options.filePath ?? './security-events.log',
+      filePath: options.filePath ?? "./security-events.log",
       maxFileSize: options.maxFileSize ?? 10 * 1024 * 1024, // 10MB
       retentionDays: options.retentionDays ?? 90,
     };
@@ -45,7 +45,7 @@ class SecurityEventLogger {
   /**
    * Log a security event
    */
-  log(event: Omit<SecurityEvent, 'timestamp'>): void {
+  log(event: Omit<SecurityEvent, "timestamp">): void {
     const securityEvent: SecurityEvent = {
       ...event,
       timestamp: new Date(),
@@ -67,8 +67,8 @@ class SecurityEventLogger {
    */
   logAuth(eventType: string, details: Record<string, unknown> = {}): void {
     this.log({
-      level: 'info',
-      category: 'auth',
+      level: "info",
+      category: "auth",
       eventType,
       details,
     });
@@ -79,8 +79,8 @@ class SecurityEventLogger {
    */
   logAuthorization(eventType: string, details: Record<string, unknown> = {}): void {
     this.log({
-      level: 'warning',
-      category: 'authorization',
+      level: "warning",
+      category: "authorization",
       eventType,
       details,
     });
@@ -91,8 +91,8 @@ class SecurityEventLogger {
    */
   logDataAccess(eventType: string, details: Record<string, unknown> = {}): void {
     this.log({
-      level: 'info',
-      category: 'data-access',
+      level: "info",
+      category: "data-access",
       eventType,
       details,
     });
@@ -103,8 +103,8 @@ class SecurityEventLogger {
    */
   logConfigurationChange(eventType: string, details: Record<string, unknown> = {}): void {
     this.log({
-      level: 'warning',
-      category: 'configuration',
+      level: "warning",
+      category: "configuration",
       eventType,
       details,
     });
@@ -115,8 +115,8 @@ class SecurityEventLogger {
    */
   logNetwork(eventType: string, details: Record<string, unknown> = {}): void {
     this.log({
-      level: 'warning',
-      category: 'network',
+      level: "warning",
+      category: "network",
       eventType,
       details,
     });
@@ -127,8 +127,8 @@ class SecurityEventLogger {
    */
   logCritical(eventType: string, details: Record<string, unknown> = {}): void {
     this.log({
-      level: 'critical',
-      category: 'system',
+      level: "critical",
+      category: "system",
       eventType,
       details,
     });
@@ -196,7 +196,9 @@ let globalLogger: SecurityEventLogger | null = null;
 /**
  * Initialize global security event logger
  */
-export function initializeSecurityLogger(options?: SecurityEventLoggerOptions): SecurityEventLogger {
+export function initializeSecurityLogger(
+  options?: SecurityEventLoggerOptions,
+): SecurityEventLogger {
   globalLogger = new SecurityEventLogger(options);
   return globalLogger;
 }
@@ -214,6 +216,6 @@ export function getSecurityLogger(): SecurityEventLogger {
 /**
  * Convenience function to log security events
  */
-export function logSecurityEvent(event: Omit<SecurityEvent, 'timestamp'>): void {
+export function logSecurityEvent(event: Omit<SecurityEvent, "timestamp">): void {
   getSecurityLogger().log(event);
 }

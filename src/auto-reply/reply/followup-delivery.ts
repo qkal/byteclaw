@@ -40,12 +40,12 @@ export function resolveFollowupDeliveryPayloads(params: {
     params.originatingChatType,
   );
   const sanitizedPayloads = params.payloads.flatMap((payload) => {
-    const {text} = payload;
+    const { text } = payload;
     if (!text || !text.includes("HEARTBEAT_OK")) {
       return [payload];
     }
     const stripped = stripHeartbeatToken(text, { mode: "message" });
-    const {hasMedia} = resolveSendableOutboundReplyParts(payload);
+    const { hasMedia } = resolveSendableOutboundReplyParts(payload);
     if (stripped.shouldSkip && !hasMedia) {
       return [];
     }

@@ -27,11 +27,11 @@ export function listSupportedVideoGenerationModes(
   provider: Pick<VideoGenerationProvider, "capabilities">,
 ): VideoGenerationMode[] {
   const modes: VideoGenerationMode[] = ["generate"];
-  const {imageToVideo} = provider.capabilities;
+  const { imageToVideo } = provider.capabilities;
   if (imageToVideo?.enabled) {
     modes.push("imageToVideo");
   }
-  const {videoToVideo} = provider.capabilities;
+  const { videoToVideo } = provider.capabilities;
   if (videoToVideo?.enabled) {
     modes.push("videoToVideo");
   }

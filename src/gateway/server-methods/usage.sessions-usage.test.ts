@@ -5,13 +5,13 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { withEnvAsync } from "../../test-utils/env.js";
 
 vi.mock("../../config/config.js", () => ({
-    loadConfig: vi.fn(() => ({
-      agents: {
-        list: [{ id: "main" }, { id: "opus" }],
-      },
-      session: {},
-    })),
-  }));
+  loadConfig: vi.fn(() => ({
+    agents: {
+      list: [{ id: "main" }, { id: "opus" }],
+    },
+    session: {},
+  })),
+}));
 
 vi.mock("../session-utils.js", async () => {
   const actual = await vi.importActual<typeof import("../session-utils.js")>("../session-utils.js");

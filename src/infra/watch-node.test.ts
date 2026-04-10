@@ -250,17 +250,17 @@ describe("watch-node script", () => {
 
   it("ignores test-only changes and restarts on non-test source changes", async () => {
     const childA = Object.assign(new EventEmitter(), {
-      kill: vi.fn(function  kill() {
+      kill: vi.fn(function kill() {
         queueMicrotask(() => childA.emit("exit", 0, null));
       }),
     });
     const childB = Object.assign(new EventEmitter(), {
-      kill: vi.fn(function  kill() {
+      kill: vi.fn(function kill() {
         queueMicrotask(() => childB.emit("exit", 0, null));
       }),
     });
     const childC = Object.assign(new EventEmitter(), {
-      kill: vi.fn(function  kill() {
+      kill: vi.fn(function kill() {
         queueMicrotask(() => childC.emit("exit", 0, null));
       }),
     });

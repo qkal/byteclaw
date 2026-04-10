@@ -7,7 +7,7 @@ export function formatTerminalLink(
   const safeLabel = label.replaceAll(esc, "");
   const safeUrl = url.replaceAll(esc, "");
   const allow =
-    opts?.force === true ? true : (opts?.force === false ? false : Boolean(process.stdout.isTTY));
+    opts?.force === true ? true : opts?.force === false ? false : Boolean(process.stdout.isTTY);
   if (!allow) {
     return opts?.fallback ?? `${safeLabel} (${safeUrl})`;
   }

@@ -429,7 +429,7 @@ export async function sendPhoto(
   if (!resolvedMediaPath.ok) {
     return { channel: "qqbot", error: resolvedMediaPath.error };
   }
-  const {mediaPath} = resolvedMediaPath;
+  const { mediaPath } = resolvedMediaPath;
   const isLocal = isLocalFilePath(mediaPath);
   const isHttp = mediaPath.startsWith("http://") || mediaPath.startsWith("https://");
   const isData = mediaPath.startsWith("data:");
@@ -566,7 +566,7 @@ export async function sendVoice(
   if (!resolvedMediaPath.ok) {
     return { channel: "qqbot", error: resolvedMediaPath.error };
   }
-  const {mediaPath} = resolvedMediaPath;
+  const { mediaPath } = resolvedMediaPath;
   const isHttp = mediaPath.startsWith("http://") || mediaPath.startsWith("https://");
 
   if (isHttp) {
@@ -716,7 +716,7 @@ export async function sendVideoMsg(
   if (!resolvedMediaPath.ok) {
     return { channel: "qqbot", error: resolvedMediaPath.error };
   }
-  const {mediaPath} = resolvedMediaPath;
+  const { mediaPath } = resolvedMediaPath;
   const isHttp = mediaPath.startsWith("http://") || mediaPath.startsWith("https://");
 
   if (isHttp && !shouldDirectUploadUrl(ctx.account)) {
@@ -847,7 +847,7 @@ export async function sendDocument(
   if (!resolvedMediaPath.ok) {
     return { channel: "qqbot", error: resolvedMediaPath.error };
   }
-  const {mediaPath} = resolvedMediaPath;
+  const { mediaPath } = resolvedMediaPath;
   const isHttp = mediaPath.startsWith("http://") || mediaPath.startsWith("https://");
   const fileName = sanitizeFileName(path.basename(mediaPath));
 
@@ -1087,12 +1087,14 @@ export async function sendText(ctx: OutboundContext): Promise<OutboundResult> {
         if (!isWinLocal && (hasOctal || hasNonASCII)) {
           debugLog(`[qqbot] sendText: Decoding path with mixed encoding: ${mediaPath}`);
 
-          const decoded = mediaPath.replace(/\\([0-7]{1,3})/g, (_: string, octal: string) => String.fromCharCode(parseInt(octal, 8)));
+          const decoded = mediaPath.replace(/\\([0-7]{1,3})/g, (_: string, octal: string) =>
+            String.fromCharCode(parseInt(octal, 8)),
+          );
 
           const bytes: number[] = [];
           for (let i = 0; i < decoded.length; i++) {
             const code = decoded.charCodeAt(i);
-            if (code <= 0xFF) {
+            if (code <= 0xff) {
               bytes.push(code);
             } else {
               const charBytes = Buffer.from(decoded[i], "utf8");
@@ -1624,7 +1626,7 @@ export async function sendCronMessage(
     }
 
     if (cronResult.payload) {
-      const {payload} = cronResult;
+      const { payload } = cronResult;
       debugLog(
         `[${timestamp}] [qqbot] sendCronMessage: decoded cron payload, targetType=${payload.targetType}, targetAddress=${payload.targetAddress}, content length=${payload.content.length}`,
       );

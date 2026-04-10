@@ -6,11 +6,11 @@ const {
   readAccessTokenMock,
   resolveMSTeamsCredentialsMock,
 } = vi.hoisted(() => ({
-    createMSTeamsTokenProviderMock: vi.fn(),
-    loadMSTeamsSdkWithAuthMock: vi.fn(),
-    readAccessTokenMock: vi.fn(),
-    resolveMSTeamsCredentialsMock: vi.fn(),
-  }));
+  createMSTeamsTokenProviderMock: vi.fn(),
+  loadMSTeamsSdkWithAuthMock: vi.fn(),
+  readAccessTokenMock: vi.fn(),
+  resolveMSTeamsCredentialsMock: vi.fn(),
+}));
 
 vi.mock("./sdk.js", () => ({
   createMSTeamsTokenProvider: createMSTeamsTokenProviderMock,
@@ -322,7 +322,7 @@ describe("msteams graph helpers", () => {
     });
     await expectSearchGraphUsers("carol", [], { token: "token-4" });
 
-    const {calls} = vi.mocked(globalThis.fetch).mock;
+    const { calls } = vi.mocked(globalThis.fetch).mock;
     expectFetchPathContains(
       0,
       "/users?$search=%22displayName%3Abob%22&$select=id,displayName,mail,userPrincipalName&$top=25",

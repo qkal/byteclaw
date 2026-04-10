@@ -208,9 +208,9 @@ function buildResolvedApprovalText(view: ResolvedApprovalView): string {
   const decisionLabel =
     view.decision === "allow-once"
       ? "Allowed once"
-      : (view.decision === "allow-always"
+      : view.decision === "allow-always"
         ? "Allowed always"
-        : "Denied");
+        : "Denied";
   return [
     `Exec approval: ${decisionLabel}`,
     "",
@@ -324,7 +324,13 @@ export const matrixApprovalNativeRuntime = createChannelApprovalNativeRuntimeAda
         client: resolved.context.client,
         threadId: preparedTarget.threadId,
       });
-      const messageIds = [...new Set((result.messageIds ?? [result.messageId]).map((messageId) => messageId.trim()).filter(Boolean))];
+      const messageIds = [
+        ...new Set(
+          (result.messageIds ?? [result.messageId])
+            .map((messageId) => messageId.trim())
+            .filter(Boolean),
+        ),
+      ];
       const reactionEventId =
         result.primaryMessageId?.trim() || messageIds[0] || result.messageId.trim();
       await Promise.allSettled(
@@ -344,7 +350,8 @@ export const matrixApprovalNativeRuntime = createChannelApprovalNativeRuntimeAda
         roomId: result.roomId,
       };
     },
-    prepareTarget: ({ cfg, accountId, context, plannedTarget }) => prepareTarget({
+    prepareTarget: ({ cfg, accountId, context, plannedTarget }) =>
+      prepareTarget({
         cfg,
         accountId,
         context,

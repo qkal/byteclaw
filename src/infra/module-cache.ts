@@ -115,7 +115,7 @@ class ModuleCache {
    * Evict least recently used entries to make space
    */
   private evictLRU(requiredSpace: number): void {
-    const entries = Array.from(this.cache.entries()).sort(
+    const entries = Array.from(this.cache.entries()).toSorted(
       (a, b) => a[1].lastAccessed - b[1].lastAccessed,
     );
 
@@ -132,10 +132,10 @@ class ModuleCache {
    */
   private estimateSize(obj: unknown): number {
     if (obj === null || obj === undefined) return 0;
-    if (typeof obj === 'boolean') return 4;
-    if (typeof obj === 'number') return 8;
-    if (typeof obj === 'string') return obj.length * 2;
-    if (typeof obj === 'object') {
+    if (typeof obj === "boolean") return 4;
+    if (typeof obj === "number") return 8;
+    if (typeof obj === "string") return obj.length * 2;
+    if (typeof obj === "object") {
       // Rough estimate for objects
       return 1024; // 1KB default for objects
     }

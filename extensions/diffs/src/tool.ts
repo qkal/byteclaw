@@ -1,5 +1,5 @@
 import fs from "node:fs/promises";
-import type { Static} from "@sinclair/typebox";
+import type { Static } from "@sinclair/typebox";
 import { Type } from "@sinclair/typebox";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/text-runtime";
@@ -442,8 +442,8 @@ function buildArtifactContext(
 
 function normalizeDiffInput(params: DiffsToolParams): DiffInput {
   const patch = params.patch?.trim();
-  const {before} = params;
-  const {after} = params;
+  const { before } = params;
+  const { after } = params;
 
   if (patch) {
     assertMaxBytes(patch, "patch", MAX_PATCH_BYTES);

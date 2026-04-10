@@ -283,7 +283,7 @@ function axValue(v: unknown): string {
   if (!v || typeof v !== "object") {
     return "";
   }
-  const {value} = (v as { value?: unknown });
+  const { value } = v as { value?: unknown };
   if (typeof value === "string") {
     return value;
   }
@@ -433,7 +433,7 @@ export async function snapshotDom(opts: {
   if (!value || typeof value !== "object") {
     return { nodes: [] };
   }
-  const {nodes} = (value as { nodes?: unknown });
+  const { nodes } = value as { nodes?: unknown };
   return { nodes: Array.isArray(nodes) ? (nodes as DomSnapshotNode[]) : [] };
 }
 
@@ -487,9 +487,9 @@ export async function getDomText(opts: {
   const text =
     typeof textValue === "string"
       ? textValue
-      : (typeof textValue === "number" || typeof textValue === "boolean"
+      : typeof textValue === "number" || typeof textValue === "boolean"
         ? String(textValue)
-        : "");
+        : "";
   return { text };
 }
 

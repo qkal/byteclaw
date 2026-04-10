@@ -160,7 +160,7 @@ function repairToolCallArgumentsInMessage(
   if (!message || typeof message !== "object") {
     return;
   }
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (!Array.isArray(content)) {
     return;
   }
@@ -179,7 +179,7 @@ function hasMeaningfulToolCallArgumentsInMessage(message: unknown, contentIndex:
   if (!message || typeof message !== "object") {
     return false;
   }
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (!Array.isArray(content)) {
     return false;
   }
@@ -203,7 +203,7 @@ function clearToolCallArgumentsInMessage(message: unknown, contentIndex: number)
   if (!message || typeof message !== "object") {
     return;
   }
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (!Array.isArray(content)) {
     return;
   }
@@ -225,7 +225,7 @@ function repairMalformedToolCallArgumentsInMessage(
   if (!message || typeof message !== "object") {
     return;
   }
-  const {content} = (message as { content?: unknown });
+  const { content } = message as { content?: unknown };
   if (!Array.isArray(content)) {
     return;
   }

@@ -25,7 +25,7 @@ function jsonResponse(value: unknown): Response {
 }
 
 function resolveFetchUrl(input: string | URL | Request): string {
-  return typeof input === "string" ? input : (input instanceof URL ? input.toString() : input.url);
+  return typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
 }
 
 describe("discord directory live lookups", () => {

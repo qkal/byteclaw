@@ -24,10 +24,10 @@ describe("bundled channel config runtime", () => {
 
   it("falls back to static channel schemas when bundled plugin access hits a TDZ-style ReferenceError", async () => {
     vi.doMock("../channels/plugins/bundled.js", () => ({
-        listBundledChannelPlugins() {
-          throw new ReferenceError("Cannot access 'bundledChannelPlugins' before initialization.");
-        },
-      }));
+      listBundledChannelPlugins() {
+        throw new ReferenceError("Cannot access 'bundledChannelPlugins' before initialization.");
+      },
+    }));
 
     const runtime = await importFreshModule<
       typeof import("../../test/helpers/config/bundled-channel-config-runtime.js")

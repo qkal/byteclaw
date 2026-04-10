@@ -133,7 +133,7 @@ export async function maybeSendBindingMessage(params: {
   if (!text) {
     return;
   }
-  const {record} = params;
+  const { record } = params;
   if (params.preferWebhook !== false && record.webhookId && record.webhookToken) {
     try {
       await sendWebhookMessageDiscord(text, {
@@ -166,7 +166,7 @@ export async function createWebhookForChannel(params: {
   channelId: string;
 }): Promise<{ webhookId?: string; webhookToken?: string }> {
   try {
-    const {rest} = createDiscordRestClient(
+    const { rest } = createDiscordRestClient(
       {
         accountId: params.accountId,
         token: params.token,
@@ -238,7 +238,7 @@ export async function resolveChannelIdForBinding(params: {
     return explicit;
   }
   try {
-    const {rest} = createDiscordRestClient(
+    const { rest } = createDiscordRestClient(
       {
         accountId: params.accountId,
         token: params.token,
@@ -256,9 +256,9 @@ export async function resolveChannelIdForBinding(params: {
     const parentId =
       typeof channel?.parent_id === "string"
         ? channel.parent_id.trim()
-        : (typeof channel?.parentId === "string"
+        : typeof channel?.parentId === "string"
           ? channel.parentId.trim()
-          : "");
+          : "";
     // Only thread channels should resolve to their parent channel.
     // Non-thread channels (text/forum/media) must keep their own ID.
     if (parentId && isThreadChannelType(type)) {

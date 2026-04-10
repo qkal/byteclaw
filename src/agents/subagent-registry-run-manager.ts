@@ -104,9 +104,9 @@ export function createSubagentRunManager(params: {
       const outcome: SubagentRunOutcome =
         wait.status === "error"
           ? { error: waitError, status: "error" }
-          : (wait.status === "timeout"
+          : wait.status === "timeout"
             ? { status: "timeout" }
-            : { status: "ok" });
+            : { status: "ok" };
       if (!runOutcomesEqual(entry.outcome, outcome)) {
         entry.outcome = outcome;
         mutated = true;
@@ -204,9 +204,9 @@ export function createSubagentRunManager(params: {
     const archiveAtMs =
       spawnMode === "session" || source.cleanup === "keep"
         ? undefined
-        : (archiveAfterMs
+        : archiveAfterMs
           ? now + archiveAfterMs
-          : undefined);
+          : undefined;
     const runTimeoutSeconds = replaceParams.runTimeoutSeconds ?? source.runTimeoutSeconds ?? 0;
     const waitTimeoutMs = params.resolveSubagentWaitTimeoutMs(cfg, runTimeoutSeconds);
     const preserveFrozenResultFallback = replaceParams.preserveFrozenResultFallback === true;
@@ -280,9 +280,9 @@ export function createSubagentRunManager(params: {
     const archiveAtMs =
       spawnMode === "session" || registerParams.cleanup === "keep"
         ? undefined
-        : (archiveAfterMs
+        : archiveAfterMs
           ? now + archiveAfterMs
-          : undefined);
+          : undefined;
     const runTimeoutSeconds = registerParams.runTimeoutSeconds ?? 0;
     const waitTimeoutMs = params.resolveSubagentWaitTimeoutMs(cfg, runTimeoutSeconds);
     const requesterOrigin = normalizeDeliveryContext(registerParams.requesterOrigin);

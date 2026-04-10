@@ -610,9 +610,9 @@ export const nodeHandlers: GatewayRequestHandlers = {
     const payloadJSON =
       typeof p.payloadJSON === "string"
         ? p.payloadJSON
-        : (p.payload !== undefined
+        : p.payload !== undefined
           ? JSON.stringify(p.payload)
-          : null);
+          : null;
     await respondUnavailableOnThrow(respond, async () => {
       const { handleNodeEvent } = await import("../server-node-events.js");
       const nodeId = client?.connect?.device?.id ?? client?.connect?.client?.id ?? "node";
@@ -1062,7 +1062,13 @@ export const nodeHandlers: GatewayRequestHandlers = {
       respond(false, undefined, errorShape(ErrorCodes.INVALID_REQUEST, "nodeId required"));
       return;
     }
-    const ackIds = [...new Set((params.ids ?? []).map((value) => normalizeOptionalString(String(value ?? '')) ?? '').filter(Boolean))];
+    const ackIds = [
+      ...new Set(
+        (params.ids ?? [])
+          .map((value) => normalizeOptionalString(String(value ?? "")) ?? "")
+          .filter(Boolean),
+      ),
+    ];
     const remaining = ackPendingNodeActions(trimmedNodeId, ackIds);
     respond(
       true,

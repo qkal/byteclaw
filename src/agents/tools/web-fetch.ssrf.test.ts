@@ -5,7 +5,7 @@ import { makeFetchHeaders } from "./web-fetch.test-harness.js";
 import "./web-fetch.test-mocks.js";
 
 const lookupMock = vi.fn();
-const {resolvePinnedHostname} = ssrf;
+const { resolvePinnedHostname } = ssrf;
 
 function redirectResponse(location: string): Response {
   return {

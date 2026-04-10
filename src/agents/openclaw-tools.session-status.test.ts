@@ -16,8 +16,7 @@ const resolveQueueSettingsMock = vi.hoisted(() =>
 );
 const listTasksForRelatedSessionKeyForOwnerMock = vi.hoisted(() =>
   vi.fn(
-    (_: { relatedSessionKey: string; callerOwnerKey: string }) =>
-      [] as Record<string, unknown>[],
+    (_: { relatedSessionKey: string; callerOwnerKey: string }) => [] as Record<string, unknown>[],
   ),
 );
 const resolveEnvApiKeyMock = vi.hoisted(() =>
@@ -211,9 +210,9 @@ function createCommandsStatusRuntimeModuleMock() {
         !customAuth && params.provider ? resolveEnvApiKeyMock(params.provider, process.env) : null;
       const modelAuth = customAuth
         ? `api-key (${customAuth.source})`
-        : (envAuth
+        : envAuth
           ? "api-key (env)"
-          : undefined);
+          : undefined;
       buildStatusMessageMock({
         agent: {
           model: { primary },
@@ -313,12 +312,13 @@ function resetSessionStore(store: Record<string, SessionEntry>) {
       }
       const spawnedBy =
         typeof request.params?.spawnedBy === "string" ? request.params.spawnedBy.trim() : "";
-      const matches = Object.entries(store).filter((entry): entry is [string, SessionEntry] => (
+      const matches = Object.entries(store).filter(
+        (entry): entry is [string, SessionEntry] =>
           entry[1].sessionId === sessionId &&
           (!spawnedBy ||
             entry[1].spawnedBy === spawnedBy ||
-            entry[1].parentSessionKey === spawnedBy)
-        ));
+            entry[1].parentSessionKey === spawnedBy),
+      );
       return { key: resolvePreferredSessionKeyForSessionIdMatches(matches, sessionId) };
     }
     if (request.method === "sessions.list") {

@@ -144,7 +144,7 @@ export async function sanitizeHtml(html: string): Promise<string> {
   }
 
   // Walk all elements and remove hidden ones (bottom-up to avoid re-walking removed subtrees)
-  const all = [...document.querySelectorAll('*')];
+  const all = [...document.querySelectorAll("*")];
   for (let i = all.length - 1; i >= 0; i--) {
     const el = all[i];
     if (shouldRemoveElement(el)) {

@@ -2,7 +2,9 @@ import { createPluginRuntimeStore } from "openclaw/plugin-sdk/runtime-store";
 import type { PluginRuntime } from "./runtime-api.js";
 
 const runtimeStore = createPluginRuntimeStore<PluginRuntime>("BlueBubbles runtime not initialized");
-interface LegacyRuntimeLogShape { log?: (message: string) => void }
+interface LegacyRuntimeLogShape {
+  log?: (message: string) => void;
+}
 export const setBlueBubblesRuntime = runtimeStore.setRuntime;
 
 export function clearBlueBubblesRuntime(): void {

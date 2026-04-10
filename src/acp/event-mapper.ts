@@ -73,8 +73,8 @@ function escapeInlineControlChars(value: string): string {
     }
 
     const isInlineControl =
-      codePoint <= 0x1F ||
-      (codePoint >= 0x7F && codePoint <= 0x9F) ||
+      codePoint <= 0x1f ||
+      (codePoint >= 0x7f && codePoint <= 0x9f) ||
       codePoint === 0x20_28 ||
       codePoint === 0x20_29;
     if (!isInlineControl) {
@@ -90,7 +90,7 @@ function escapeInlineControlChars(value: string): string {
 
     // Keep escaped control bytes readable and stable in logs/prompts.
     escaped +=
-      codePoint <= 0xFF
+      codePoint <= 0xff
         ? `\\x${codePoint.toString(16).padStart(2, "0")}`
         : `\\u${codePoint.toString(16).padStart(4, "0")}`;
   }

@@ -246,7 +246,7 @@ export function registerLineCardCommand(api: OpenClawPluginApi): void {
             const [title = "Receipt", itemsStr = ""] = args;
             const items = parseReceiptItems(itemsStr || flags.items || "");
             const total = flags.total ? { label: "Total", value: flags.total } : undefined;
-            const {footer} = flags;
+            const { footer } = flags;
 
             if (items.length === 0) {
               return {
@@ -302,7 +302,7 @@ export function registerLineCardCommand(api: OpenClawPluginApi): void {
               data?: string;
               uri?: string;
             }[] = actionParts.map((a) => {
-              const {action} = a;
+              const { action } = a;
               const label = action.label ?? a.label;
               if (action.type === "uri") {
                 return { label, type: "uri" as const, uri: (action as { uri: string }).uri };

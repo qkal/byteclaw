@@ -22,8 +22,8 @@ type PruneableRegistryEntry = Pick<
 >;
 
 function shouldPruneSandboxEntry(cfg: SandboxConfig, now: number, entry: PruneableRegistryEntry) {
-  const {idleHours} = cfg.prune;
-  const {maxAgeDays} = cfg.prune;
+  const { idleHours } = cfg.prune;
+  const { maxAgeDays } = cfg.prune;
   if (idleHours === 0 && maxAgeDays === 0) {
     return false;
   }
@@ -124,9 +124,9 @@ export async function maybePruneSandboxes(cfg: SandboxConfig) {
     const message =
       error instanceof Error
         ? error.message
-        : (typeof error === "string"
+        : typeof error === "string"
           ? error
-          : JSON.stringify(error));
+          : JSON.stringify(error);
     defaultRuntime.error?.(`Sandbox prune failed: ${message ?? "unknown error"}`);
   }
 }

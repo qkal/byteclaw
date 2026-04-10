@@ -59,7 +59,7 @@ function createUnknownArgsLogAdapter(
     return undefined;
   }
   const formatArg = (value: unknown): string =>
-    typeof value === "string" ? value : (value instanceof Error ? value.message : "");
+    typeof value === "string" ? value : value instanceof Error ? value.message : "";
   return {
     error: (...args) => log.error?.(formatArg(args[0])),
     info: (...args) => log.info?.(formatArg(args[0])),

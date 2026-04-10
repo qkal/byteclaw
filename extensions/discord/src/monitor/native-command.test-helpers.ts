@@ -32,7 +32,7 @@ interface CreateMockCommandInteractionParams {
 export function createMockCommandInteraction(
   params: CreateMockCommandInteractionParams = {},
 ): MockCommandInteraction {
-  const {guildId} = params;
+  const { guildId } = params;
   const guild =
     guildId === null || guildId === undefined ? null : { id: guildId, name: params.guildName };
   return {

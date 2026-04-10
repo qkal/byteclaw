@@ -482,7 +482,7 @@ export async function safeFetch(params: {
   resolveFn?: (hostname: string) => Promise<{ address: string }>;
 }): Promise<Response> {
   const fetchFn = params.fetchFn ?? fetch;
-  const {resolveFn} = params;
+  const { resolveFn } = params;
   const hasDispatcher = Boolean(
     params.requestInit &&
     typeof params.requestInit === "object" &&

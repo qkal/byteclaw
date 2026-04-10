@@ -56,9 +56,9 @@ export function upsertAuthProfile(params: {
             ? { key: normalizeSecretInput(params.credential.key) }
             : {}),
         }
-      : (params.credential.type === "token"
+      : params.credential.type === "token"
         ? { ...params.credential, token: normalizeSecretInput(params.credential.token) }
-        : params.credential);
+        : params.credential;
   const store = ensureAuthProfileStoreForLocalUpdate(params.agentDir);
   store.profiles[params.profileId] = credential;
   saveAuthProfileStore(store, params.agentDir, {

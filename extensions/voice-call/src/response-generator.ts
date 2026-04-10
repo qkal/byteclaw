@@ -212,7 +212,7 @@ export async function generateVoiceResponse(
     await agentRuntime.session.saveSessionStore(storePath, sessionStore);
   }
 
-  const {sessionId} = sessionEntry;
+  const { sessionId } = sessionEntry;
   const sessionFile = agentRuntime.session.resolveSessionFilePath(sessionId, sessionEntry, {
     agentId,
   });

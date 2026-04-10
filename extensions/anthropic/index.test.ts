@@ -10,9 +10,9 @@ const { readClaudeCliCredentialsForSetupMock, readClaudeCliCredentialsForRuntime
 );
 
 vi.mock("./cli-auth-seam.js", () => ({
-    readClaudeCliCredentialsForRuntime: readClaudeCliCredentialsForRuntimeMock,
-    readClaudeCliCredentialsForSetup: readClaudeCliCredentialsForSetupMock,
-  }));
+  readClaudeCliCredentialsForRuntime: readClaudeCliCredentialsForRuntimeMock,
+  readClaudeCliCredentialsForSetup: readClaudeCliCredentialsForSetupMock,
+}));
 
 import anthropicPlugin from "./index.js";
 

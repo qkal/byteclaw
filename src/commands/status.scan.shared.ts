@@ -55,16 +55,11 @@ export interface GatewayProbeSnapshot {
 }
 
 export function hasExplicitMemorySearchConfig(cfg: OpenClawConfig, agentId: string): boolean {
-  if (
-    cfg.agents?.defaults &&
-    Object.hasOwn(cfg.agents.defaults, "memorySearch")
-  ) {
+  if (cfg.agents?.defaults && Object.hasOwn(cfg.agents.defaults, "memorySearch")) {
     return true;
   }
   const agents = Array.isArray(cfg.agents?.list) ? cfg.agents.list : [];
-  return agents.some(
-    (agent) => agent?.id === agentId && Object.hasOwn(agent, "memorySearch"),
-  );
+  return agents.some((agent) => agent?.id === agentId && Object.hasOwn(agent, "memorySearch"));
 }
 
 export function resolveMemoryPluginStatus(cfg: OpenClawConfig): MemoryPluginStatus {

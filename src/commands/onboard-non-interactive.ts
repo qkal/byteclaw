@@ -21,9 +21,9 @@ export async function runNonInteractiveSetup(
   }
 
   const baseConfig: OpenClawConfig = snapshot.valid
-    ? (snapshot.exists
+    ? snapshot.exists
       ? (snapshot.sourceConfig ?? snapshot.config)
-      : {})
+      : {}
     : {};
   const mode = opts.mode ?? "local";
   if (mode !== "local" && mode !== "remote") {

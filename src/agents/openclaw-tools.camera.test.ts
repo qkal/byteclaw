@@ -40,7 +40,10 @@ const PHOTOS_LATEST_PAYLOAD = {
   ],
 } as const;
 
-interface GatewayCall { method: string; params?: unknown }
+interface GatewayCall {
+  method: string;
+  params?: unknown;
+}
 
 function unexpectedGatewayMethod(method: unknown): never {
   throw new Error(`unexpected method: ${String(method)}`);

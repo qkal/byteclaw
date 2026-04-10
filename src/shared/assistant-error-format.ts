@@ -134,9 +134,9 @@ export function parseApiErrorInfo(raw?: string): ApiErrorInfo | null {
   const requestId =
     typeof payload.request_id === "string"
       ? payload.request_id
-      : (typeof payload.requestId === "string"
+      : typeof payload.requestId === "string"
         ? payload.requestId
-        : undefined);
+        : undefined;
 
   const topType = typeof payload.type === "string" ? payload.type : undefined;
   const topMessage = typeof payload.message === "string" ? payload.message : undefined;

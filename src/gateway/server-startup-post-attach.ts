@@ -318,9 +318,11 @@ export async function startGatewayPostAttachRuntime(params: {
   if (!params.minimalTestGateway) {
     const hookRunner = getGlobalHookRunner();
     if (hookRunner?.hasHooks("gateway_start")) {
-      void hookRunner.runGatewayStart({ port: params.port }, { port: params.port }).catch((error) => {
-        params.log.warn(`gateway_start hook failed: ${String(error)}`);
-      });
+      void hookRunner
+        .runGatewayStart({ port: params.port }, { port: params.port })
+        .catch((error) => {
+          params.log.warn(`gateway_start hook failed: ${String(error)}`);
+        });
     }
   }
 

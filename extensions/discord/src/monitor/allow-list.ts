@@ -327,7 +327,7 @@ export function resolveDiscordGuildEntry(params: {
   guildId?: string | null;
   guildEntries?: Record<string, DiscordGuildEntryResolved>;
 }): DiscordGuildEntryResolved | null {
-  const {guild} = params;
+  const { guild } = params;
   const entries = params.guildEntries;
   const guildId = params.guildId?.trim() || guild?.id;
   if (!entries) {

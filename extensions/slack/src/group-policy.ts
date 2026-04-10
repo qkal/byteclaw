@@ -28,7 +28,7 @@ function resolveSlackChannelPolicyEntry(
     return undefined;
   }
   const channelId = params.groupId?.trim();
-  const {groupChannel} = params;
+  const { groupChannel } = params;
   const channelName = groupChannel?.replace(/^#/, "");
   const normalizedName = normalizeHyphenSlug(channelName);
   const candidates = [

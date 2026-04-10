@@ -274,7 +274,7 @@ describe("wrapFetchWithAbortSignal", () => {
   });
 
   it("keeps preconnect bound to the original fetch implementation", () => {
-    const preconnectSpy = vi.fn(function  preconnectSpy(this: unknown) {
+    const preconnectSpy = vi.fn(function preconnectSpy(this: unknown) {
       return this;
     });
     const fetchImpl = vi.fn(async () => ({ ok: true }) as Response) as unknown as typeof fetch & {

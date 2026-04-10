@@ -482,7 +482,7 @@ describe("resolveSlackMedia", () => {
 
     mockFetch.mockImplementation(async (input: RequestInfo | URL) => {
       const url =
-        typeof input === "string" ? input : (input instanceof URL ? input.toString() : input.url);
+        typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
       if (url.includes("/a.jpg")) {
         return new Response(Buffer.from("image a"), {
           headers: { "content-type": "image/jpeg" },
@@ -519,10 +519,13 @@ describe("resolveSlackMedia", () => {
       .spyOn(mediaStore, "saveMediaBuffer")
       .mockResolvedValue(createSavedMedia("/tmp/x.jpg", "image/jpeg"));
 
-    mockFetch.mockImplementation(async () => new Response(Buffer.from("image data"), {
-        headers: { "content-type": "image/jpeg" },
-        status: 200,
-      }));
+    mockFetch.mockImplementation(
+      async () =>
+        new Response(Buffer.from("image data"), {
+          headers: { "content-type": "image/jpeg" },
+          status: 200,
+        }),
+    );
 
     const files = Array.from({ length: 9 }, (_, idx) => ({
       mimetype: "image/jpeg",
@@ -549,12 +552,13 @@ describe("resolveSlackMedia", () => {
     globalThis.fetch = (async () => {
       throw new Error("global fetch should not receive dispatcher-backed Slack media requests");
     }) as typeof fetch;
-    const runtimeFetchSpy = vi
-      .spyOn(ssrf, "fetchWithRuntimeDispatcher")
-      .mockImplementation(async () => new Response(Buffer.from("image data"), {
+    const runtimeFetchSpy = vi.spyOn(ssrf, "fetchWithRuntimeDispatcher").mockImplementation(
+      async () =>
+        new Response(Buffer.from("image data"), {
           headers: { "content-type": "image/jpeg" },
           status: 200,
-        }));
+        }),
+    );
 
     const result = await resolveSlackMedia({
       files: [{ name: "test.jpg", url_private: "https://files.slack.com/test.jpg" }],

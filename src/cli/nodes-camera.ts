@@ -134,7 +134,7 @@ export async function writeUrlToFile(
       );
     }
 
-    const {body} = res;
+    const { body } = res;
     if (!body) {
       throw new Error(`failed to download ${url}: empty response body`);
     }

@@ -291,7 +291,9 @@ const CodexUserLocationSchema = z
     timezone: TrimmedOptionalConfigStringSchema,
   })
   .strict()
-  .transform((value) => value.country || value.region || value.city || value.timezone ? value : undefined)
+  .transform((value) =>
+    value.country || value.region || value.city || value.timezone ? value : undefined,
+  )
   .optional();
 
 export const ToolsWebSearchSchema = z

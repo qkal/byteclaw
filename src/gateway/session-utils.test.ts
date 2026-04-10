@@ -32,7 +32,7 @@ function createSymlinkOrSkip(targetPath: string, linkPath: string): boolean {
     fs.symlinkSync(targetPath, linkPath);
     return true;
   } catch (error) {
-    const {code} = (error as NodeJS.ErrnoException);
+    const { code } = error as NodeJS.ErrnoException;
     if (process.platform === "win32" && (code === "EPERM" || code === "EACCES")) {
       return false;
     }

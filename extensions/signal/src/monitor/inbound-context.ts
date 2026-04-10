@@ -39,9 +39,9 @@ export function resolveSignalQuoteContext(params: {
   const quoteSenderAllowed =
     !params.isGroup || params.effectiveGroupAllow.length === 0
       ? true
-      : (quoteSender
+      : quoteSender
         ? isSignalSenderAllowed(quoteSender, params.effectiveGroupAllow)
-        : false);
+        : false;
   const decision = evaluateSupplementalContextVisibility({
     kind: "quote",
     mode: contextVisibilityMode,

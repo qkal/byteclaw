@@ -81,7 +81,7 @@ export function createTeamsReplyStreamController(params: {
           return payload;
         }
 
-        const {streamedLength} = stream;
+        const { streamedLength } = stream;
         if (streamedLength <= 0) {
           return payload;
         }

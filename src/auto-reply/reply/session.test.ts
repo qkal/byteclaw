@@ -549,7 +549,7 @@ describe("initSessionState thread forking", () => {
       },
     });
 
-    const {sessionFile} = result.sessionEntry;
+    const { sessionFile } = result.sessionEntry;
     expect(sessionFile).toBeTruthy();
     expect(path.basename(sessionFile ?? "")).toBe(
       `${result.sessionEntry.sessionId}-topic-456.jsonl`,

@@ -47,11 +47,11 @@ export function resolveVideoGenerationOverrides(params: {
   });
   const ignoredOverrides: VideoGenerationIgnoredOverride[] = [];
   const normalization: VideoGenerationNormalization = {};
-  let {size} = params;
-  let {aspectRatio} = params;
-  let {resolution} = params;
-  let {audio} = params;
-  let {watermark} = params;
+  let { size } = params;
+  let { aspectRatio } = params;
+  let { resolution } = params;
+  let { audio } = params;
+  let { watermark } = params;
 
   if (caps) {
     if (size && (caps.sizes?.length ?? 0) > 0 && caps.supportsSize) {

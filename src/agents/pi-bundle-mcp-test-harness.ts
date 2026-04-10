@@ -51,8 +51,8 @@ export async function startSseProbeServer(
 
   const mcpServer = new McpServer({ name: "sse-probe", version: "1.0.0" });
   mcpServer.tool("sse_probe", "SSE MCP probe", async () => ({
-      content: [{ text: probeText, type: "text" }],
-    }));
+    content: [{ text: probeText, type: "text" }],
+  }));
 
   let sseTransport:
     | {

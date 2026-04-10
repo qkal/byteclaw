@@ -248,8 +248,8 @@ export function registerBrowserAgentActRoutes(
       req,
       res,
       run: async ({ profileCtx, cdpUrl, tab }) => {
-        const {evaluateEnabled} = ctx.state().resolved;
-        const {ssrfPolicy} = ctx.state().resolved;
+        const { evaluateEnabled } = ctx.state().resolved;
+        const { ssrfPolicy } = ctx.state().resolved;
         if (action.targetId && action.targetId !== tab.targetId) {
           return jsonActError(
             res,

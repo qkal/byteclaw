@@ -144,5 +144,5 @@ export function formatSessionFlagsCell(
     row.sessionId ? `id:${row.sessionId}` : null,
   ].filter(Boolean);
   const label = flags.join(" ");
-  return label.length === 0 ? "" : (rich ? theme.muted(label) : label);
+  return label.length === 0 ? "" : rich ? theme.muted(label) : label;
 }

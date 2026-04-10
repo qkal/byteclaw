@@ -79,7 +79,7 @@ export async function sendMessageIrc(
     throw new Error("Message must be non-empty for IRC sends");
   }
 
-  const {client} = opts;
+  const { client } = opts;
   if (client?.isReady()) {
     client.sendPrivmsg(target, payload);
   } else {

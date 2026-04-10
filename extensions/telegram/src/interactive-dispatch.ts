@@ -7,7 +7,11 @@ import {
   dispatchPluginInteractiveHandler,
 } from "openclaw/plugin-sdk/plugin-runtime";
 
-export type TelegramInteractiveButtons = { text: string; callback_data: string; style?: "danger" | "success" | "primary" }[][];
+export type TelegramInteractiveButtons = {
+  text: string;
+  callback_data: string;
+  style?: "danger" | "success" | "primary";
+}[][];
 
 export interface TelegramInteractiveHandlerContext {
   channel: "telegram";

@@ -157,7 +157,7 @@ export async function buildStatusAllReportData(params: {
   progress: StatusAllProgress;
   timeoutMs?: number;
 }) {
-  const {gatewaySnapshot} = params.overview;
+  const { gatewaySnapshot } = params.overview;
   const { configPath, health, diagnosis } = await resolveStatusAllLocalDiagnosis({
     gatewayCallOverrides: gatewaySnapshot.gatewayCallOverrides,
     gatewayProbe: gatewaySnapshot.gatewayProbe,

@@ -42,7 +42,7 @@ async function sanitizeManifestForNpmInstall(targetDir: string): Promise<void> {
     return;
   }
 
-  const {devDependencies} = manifest;
+  const { devDependencies } = manifest;
   if (!isObjectRecord(devDependencies)) {
     return;
   }

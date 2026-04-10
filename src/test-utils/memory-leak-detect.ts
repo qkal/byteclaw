@@ -3,8 +3,8 @@
  * Can be used in test suites to detect memory leaks during test execution.
  */
 
-import v8 from 'node:v8';
-import { performance } from 'node:perf_hooks';
+import v8 from "node:v8";
+import { performance } from "node:perf_hooks";
 
 const MB = 1024 * 1024;
 
@@ -65,15 +65,13 @@ export function detectMemoryLeak(
   options: MemoryLeakDetectorOptions = {},
 ): MemoryLeakResult {
   const thresholdMB = options.thresholdMB ?? 10;
-  const growthRateThresholdMBPerSec =
-    options.growthRateThresholdMBPerSec ?? 0.5;
+  const growthRateThresholdMBPerSec = options.growthRateThresholdMBPerSec ?? 0.5;
 
   const growthMB = final.heapUsedMB - initial.heapUsedMB;
   const growthRateMBPerSec = (growthMB / durationMs) * 1000;
 
   // Consider it a leak if growth exceeds threshold or growth rate exceeds threshold
-  const leaked =
-    growthMB > thresholdMB || growthRateMBPerSec > growthRateThresholdMBPerSec;
+  const leaked = growthMB > thresholdMB || growthRateMBPerSec > growthRateThresholdMBPerSec;
 
   return {
     leaked,
@@ -101,7 +99,7 @@ export function forceGC(): void {
  * Check if GC is available.
  */
 export function isGCAvailable(): boolean {
-  return typeof global.gc === 'function';
+  return typeof global.gc === "function";
 }
 
 /**
@@ -111,11 +109,7 @@ export async function withMemoryLeakDetection<T>(
   fn: () => Promise<T> | T,
   options: MemoryLeakDetectorOptions = {},
 ): Promise<{ result: T; leakResult: MemoryLeakResult }> {
-  const {
-    enableGC = true,
-    thresholdMB = 10,
-    growthRateThresholdMBPerSec = 0.5,
-  } = options;
+  const { enableGC = true, thresholdMB = 10, growthRateThresholdMBPerSec = 0.5 } = options;
 
   if (enableGC && isGCAvailable()) {
     forceGC();
@@ -144,10 +138,7 @@ export async function withMemoryLeakDetection<T>(
 /**
  * Assert that no memory leak occurred with detailed error message.
  */
-export function assertNoMemoryLeak(
-  result: MemoryLeakResult,
-  message?: string,
-): void {
+export function assertNoMemoryLeak(result: MemoryLeakResult, message?: string): void {
   if (result.leaked) {
     const details = [
       `Memory leak detected`,
@@ -156,7 +147,7 @@ export function assertNoMemoryLeak(
       `Initial heap: ${result.details.initialHeapMB.toFixed(2)}MB`,
       `Final heap: ${result.details.finalHeapMB.toFixed(2)}MB`,
       `Peak heap: ${result.details.peakHeapMB.toFixed(2)}MB`,
-    ].join('\n  ');
+    ].join("\n  ");
     throw new Error(message ? `${message}\n${details}` : details);
   }
 }

@@ -1,20 +1,20 @@
-import { rmSync } from "node:fs";
-import { type TextContent, completeSimple } from "@mariozechner/pi-ai";
-import { getApiKeyForModel, requireApiKey } from "../agents/model-auth.js";
+import { rmSync } from 'node:fs';
+import { type TextContent, completeSimple } from '@mariozechner/pi-ai';
+import { getApiKeyForModel, requireApiKey } from '../agents/model-auth.js';
 import {
   type ModelRef,
   buildModelAliasIndex,
   resolveDefaultModelForAgent,
   resolveModelRefFromString,
-} from "../agents/model-selection.js";
-import { resolveModelAsync } from "../agents/pi-embedded-runner/model.js";
-import { prepareModelForSimpleCompletion } from "../agents/simple-completion-transport.js";
-import type { OpenClawConfig } from "../config/config.js";
+} from '../agents/model-selection.js';
+import { resolveModelAsync } from '../agents/pi-embedded-runner/model.js';
+import { prepareModelForSimpleCompletion } from '../agents/simple-completion-transport.js';
+import type { OpenClawConfig } from '../config/config.js';
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
-} from "../shared/string-coerce.js";
-import type { ResolvedTtsConfig } from "./tts.js";
+} from '../shared/string-coerce.js';
+import type { ResolvedTtsConfig } from './tts.js';
 
 const TEMP_FILE_CLEANUP_DELAY_MS = 5 * 60 * 1000; // 5 minutes
 
@@ -36,7 +36,12 @@ function resolveDefaultSummarizeTextDeps(): SummarizeTextDeps {
   };
 }
 
-export function requireInRange(value: number, min: number, max: number, label: string): void {
+export function requireInRange(
+  value: number,
+  min: number,
+  max: number,
+  label: string,
+): void {
   if (!Number.isFinite(value) || value < min || value > max) {
     throw new Error(`${label} must be between ${min} and ${max}`);
   }
@@ -48,20 +53,24 @@ export function normalizeLanguageCode(code?: string): string | undefined {
     return undefined;
   }
   if (!/^[a-z]{2}$/.test(normalized)) {
-    throw new Error("languageCode must be a 2-letter ISO 639-1 code (e.g. en, de, fr)");
+    throw new Error(
+      'languageCode must be a 2-letter ISO 639-1 code (e.g. en, de, fr)',
+    );
   }
   return normalized;
 }
 
-export function normalizeApplyTextNormalization(mode?: string): "auto" | "on" | "off" | undefined {
+export function normalizeApplyTextNormalization(
+  mode?: string,
+): 'auto' | 'on' | 'off' | undefined {
   const normalized = normalizeOptionalLowercaseString(mode);
   if (!normalized) {
     return undefined;
   }
-  if (normalized === "auto" || normalized === "on" || normalized === "off") {
+  if (normalized === 'auto' || normalized === 'on' || normalized === 'off') {
     return normalized;
   }
-  throw new Error("applyTextNormalization must be one of: auto, on, off");
+  throw new Error('applyTextNormalization must be one of: auto, on, off');
 }
 
 export function normalizeSeed(seed?: number): number | undefined {
@@ -70,7 +79,7 @@ export function normalizeSeed(seed?: number): number | undefined {
   }
   const next = Math.floor(seed);
   if (!Number.isFinite(next) || next < 0 || next > 4_294_967_295) {
-    throw new Error("seed must be between 0 and 4294967295");
+    throw new Error('seed must be between 0 and 4294967295');
   }
   return next;
 }
@@ -84,7 +93,7 @@ interface SummarizeResult {
 
 interface SummaryModelSelection {
   ref: ModelRef;
-  source: "summaryModel" | "default";
+  source: 'summaryModel' | 'default';
 }
 
 function resolveSummaryModelRef(
@@ -94,23 +103,26 @@ function resolveSummaryModelRef(
   const defaultRef = resolveDefaultModelForAgent({ cfg });
   const override = normalizeOptionalString(config.summaryModel);
   if (!override) {
-    return { ref: defaultRef, source: "default" };
+    return { ref: defaultRef, source: 'default' };
   }
 
-  const aliasIndex = buildModelAliasIndex({ cfg, defaultProvider: defaultRef.provider });
+  const aliasIndex = buildModelAliasIndex({
+    cfg,
+    defaultProvider: defaultRef.provider,
+  });
   const resolved = resolveModelRefFromString({
     aliasIndex,
     defaultProvider: defaultRef.provider,
     raw: override,
   });
   if (!resolved) {
-    return { ref: defaultRef, source: "default" };
+    return { ref: defaultRef, source: 'default' };
   }
-  return { ref: resolved.ref, source: "summaryModel" };
+  return { ref: resolved.ref, source: 'summaryModel' };
 }
 
 function isTextContentBlock(block: { type: string }): block is TextContent {
-  return block.type === "text";
+  return block.type === 'text';
 }
 
 export async function summarizeText(
@@ -130,11 +142,21 @@ export async function summarizeText(
 
   const startTime = Date.now();
   const { ref } = resolveSummaryModelRef(cfg, config);
-  const resolved = await deps.resolveModelAsync(ref.provider, ref.model, undefined, cfg);
+  const resolved = await deps.resolveModelAsync(
+    ref.provider,
+    ref.model,
+    undefined,
+    cfg,
+  );
   if (!resolved.model) {
-    throw new Error(resolved.error ?? `Unknown summary model: ${ref.provider}/${ref.model}`);
+    throw new Error(
+      resolved.error ?? `Unknown summary model: ${ref.provider}/${ref.model}`,
+    );
   }
-  const completionModel = deps.prepareModelForSimpleCompletion({ cfg, model: resolved.model });
+  const completionModel = deps.prepareModelForSimpleCompletion({
+    cfg,
+    model: resolved.model,
+  });
   const apiKey = deps.requireApiKey(
     await deps.getApiKeyForModel({ cfg, model: completionModel }),
     ref.provider,
@@ -155,7 +177,7 @@ export async function summarizeText(
                 `Summarize the text to approximately ${targetLength} characters. Maintain the original tone and style. ` +
                 `Reply only with the summary, without additional explanations.\n\n` +
                 `<text_to_summarize>\n${text}\n</text_to_summarize>`,
-              role: "user",
+              role: 'user',
               timestamp: Date.now(),
             },
           ],
@@ -171,11 +193,11 @@ export async function summarizeText(
         .filter(isTextContentBlock)
         .map((block) => block.text.trim())
         .filter(Boolean)
-        .join(" ")
+        .join(' ')
         .trim();
 
       if (!summary) {
-        throw new Error("No summary returned");
+        throw new Error('No summary returned');
       }
 
       return {
@@ -188,9 +210,10 @@ export async function summarizeText(
       clearTimeout(timeout);
     }
   } catch (error) {
-    const error = error as Error;
-    if (error.name === "AbortError") {
-      throw new Error("Summarization timed out", { cause: error });
+    const ttsError = error as Error;
+    log.warn(`TTS request failed: ${ttsError.message}`);
+    if (ttsError.name === 'AbortError') {
+      throw new Error('Summarization timed out', { cause: error });
     }
     throw error;
   }

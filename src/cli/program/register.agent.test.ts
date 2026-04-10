@@ -20,17 +20,17 @@ const mocks = vi.hoisted(() => ({
   setVerboseMock: vi.fn(),
 }));
 
-const {agentCliCommandMock} = mocks;
-const {agentsAddCommandMock} = mocks;
-const {agentsBindingsCommandMock} = mocks;
-const {agentsBindCommandMock} = mocks;
-const {agentsDeleteCommandMock} = mocks;
-const {agentsListCommandMock} = mocks;
-const {agentsSetIdentityCommandMock} = mocks;
-const {agentsUnbindCommandMock} = mocks;
-const {setVerboseMock} = mocks;
-const {createDefaultDepsMock} = mocks;
-const {runtime} = mocks;
+const { agentCliCommandMock } = mocks;
+const { agentsAddCommandMock } = mocks;
+const { agentsBindingsCommandMock } = mocks;
+const { agentsBindCommandMock } = mocks;
+const { agentsDeleteCommandMock } = mocks;
+const { agentsListCommandMock } = mocks;
+const { agentsSetIdentityCommandMock } = mocks;
+const { agentsUnbindCommandMock } = mocks;
+const { setVerboseMock } = mocks;
+const { createDefaultDepsMock } = mocks;
+const { runtime } = mocks;
 
 vi.mock("../../commands/agent-via-gateway.js", () => ({
   agentCliCommand: mocks.agentCliCommandMock,

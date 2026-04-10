@@ -159,7 +159,7 @@ function parseNormalizedGatewayUrl(raw: string): string | null {
   try {
     const parsed = new URL(raw);
     const scheme = parsed.protocol.slice(0, -1);
-    const normalizedScheme = scheme === "http" ? "ws" : (scheme === "https" ? "wss" : scheme);
+    const normalizedScheme = scheme === "http" ? "ws" : scheme === "https" ? "wss" : scheme;
     if (!(normalizedScheme === "ws" || normalizedScheme === "wss")) {
       return null;
     }

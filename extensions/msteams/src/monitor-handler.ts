@@ -108,7 +108,7 @@ async function handleFileConsentInvoke(
 ): Promise<boolean> {
   const expiredUploadMessage =
     "The file upload request has expired. Please try sending the file again.";
-  const {activity} = context;
+  const { activity } = context;
   if (activity.type !== "invoke" || activity.name !== "fileConsent/invoke") {
     return false;
   }
@@ -201,7 +201,7 @@ async function handleFeedbackInvoke(
   context: MSTeamsTurnContext,
   deps: MSTeamsMessageHandlerDeps,
 ): Promise<boolean> {
-  const {activity} = context;
+  const { activity } = context;
   const value = activity.value as
     | {
         actionName?: string;
@@ -265,7 +265,7 @@ async function handleFeedbackInvoke(
     channel: "msteams",
     peer: {
       id: isDirectMessage ? senderId : conversationId,
-      kind: isDirectMessage ? "direct" : (isChannel ? "channel" : "group"),
+      kind: isDirectMessage ? "direct" : isChannel ? "channel" : "group",
     },
   });
 

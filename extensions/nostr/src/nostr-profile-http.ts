@@ -259,7 +259,7 @@ function enforceLoopbackMutationGuards(
   res: ServerResponse,
 ): boolean {
   // Mutation endpoints are local-control-plane only.
-  const {remoteAddress} = req.socket;
+  const { remoteAddress } = req.socket;
   if (!isLoopbackRemoteAddress(remoteAddress)) {
     ctx.log?.warn?.(`Rejected mutation from non-loopback remoteAddress=${String(remoteAddress)}`);
     sendJson(res, 403, { error: "Forbidden", ok: false });
@@ -466,7 +466,10 @@ async function handleUpdateProfile(
 
   // Publish with mutex to prevent concurrent publishes
   try {
-    const result = await withPublishLock(accountId, async () => await publishNostrProfile(accountId, mergedProfile));
+    const result = await withPublishLock(
+      accountId,
+      async () => await publishNostrProfile(accountId, mergedProfile),
+    );
 
     // Only persist if at least one relay succeeded
     if (result.successes.length > 0) {

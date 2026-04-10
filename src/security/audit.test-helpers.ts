@@ -5,10 +5,10 @@ import { runSecurityAudit } from "./audit.js";
 export const execDockerRawUnavailable: NonNullable<
   SecurityAuditOptions["execDockerRawFn"]
 > = async () => ({
-    code: 1,
-    stderr: Buffer.from("docker unavailable"),
-    stdout: Buffer.alloc(0),
-  });
+  code: 1,
+  stderr: Buffer.from("docker unavailable"),
+  stdout: Buffer.alloc(0),
+});
 
 export function successfulProbeResult(url: string) {
   return {

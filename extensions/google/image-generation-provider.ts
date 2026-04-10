@@ -72,7 +72,7 @@ function mapSizeToImageConfig(
   const width = Number.parseInt(widthRaw ?? "", 10);
   const height = Number.parseInt(heightRaw ?? "", 10);
   const longestEdge = Math.max(width, height);
-  const imageSize = longestEdge >= 3072 ? "4K" : (longestEdge >= 1536 ? "2K" : undefined);
+  const imageSize = longestEdge >= 3072 ? "4K" : longestEdge >= 1536 ? "2K" : undefined;
 
   if (!aspectRatio && !imageSize) {
     return undefined;

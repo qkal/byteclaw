@@ -59,9 +59,9 @@ function normalizeTimeoutMs(value: string | number | undefined): number {
   const raw =
     typeof value === "number"
       ? value
-      : (typeof value === "string"
+      : typeof value === "string"
         ? normalizeOptionalString(value)
-        : undefined);
+        : undefined;
   if (raw === undefined || raw === "") {
     return DEFAULT_APNS_RELAY_TIMEOUT_MS;
   }

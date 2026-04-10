@@ -4,7 +4,9 @@ import type { RuntimeEnv } from "../../runtime.js";
 import { applyDefaultModelPrimaryUpdate, updateConfig } from "./shared.js";
 
 export async function modelsSetImageCommand(modelRaw: string, runtime: RuntimeEnv) {
-  const updated = await updateConfig((cfg) => applyDefaultModelPrimaryUpdate({ cfg, field: "imageModel", modelRaw }));
+  const updated = await updateConfig((cfg) =>
+    applyDefaultModelPrimaryUpdate({ cfg, field: "imageModel", modelRaw }),
+  );
 
   logConfigUpdated(runtime);
   runtime.log(

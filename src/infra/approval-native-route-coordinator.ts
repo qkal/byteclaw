@@ -133,7 +133,7 @@ function resolveFallbackRouteNoticeTarget(report: ApprovalRouteReport): RouteNot
 }
 
 function didReportDeliverToOrigin(report: ApprovalRouteReport, originAccountId?: string): boolean {
-  const {originTarget} = report.deliveryPlan;
+  const { originTarget } = report.deliveryPlan;
   if (!originTarget) {
     return false;
   }

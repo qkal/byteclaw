@@ -3,15 +3,15 @@ import { describe, expect, it, vi } from "vitest";
 let writtenConfig: unknown = null;
 
 vi.mock("../../config/config.js", () => ({
-    loadConfig: () => ({
-      skills: {
-        entries: {},
-      },
-    }),
-    writeConfigFile: async (cfg: unknown) => {
-      writtenConfig = cfg;
+  loadConfig: () => ({
+    skills: {
+      entries: {},
     },
-  }));
+  }),
+  writeConfigFile: async (cfg: unknown) => {
+    writtenConfig = cfg;
+  },
+}));
 
 const { skillsHandlers } = await import("./skills.js");
 

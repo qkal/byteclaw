@@ -8,7 +8,7 @@ const SCP_REMOTE_PATH_UNSAFE_CHARS = new Set(["\\", "'", '"', "`", "$", ";", "|"
 function hasControlOrWhitespace(value: string): boolean {
   for (const char of value) {
     const code = char.charCodeAt(0);
-    if (code <= 0x1F || code === 0x7F || WHITESPACE.test(char)) {
+    if (code <= 0x1f || code === 0x7f || WHITESPACE.test(char)) {
       return true;
     }
   }
@@ -69,7 +69,7 @@ export function normalizeScpRemotePath(value: string | null | undefined): string
 
   for (const char of trimmed) {
     const code = char.charCodeAt(0);
-    if (code <= 0x1F || code === 0x7F || SCP_REMOTE_PATH_UNSAFE_CHARS.has(char)) {
+    if (code <= 0x1f || code === 0x7f || SCP_REMOTE_PATH_UNSAFE_CHARS.has(char)) {
       return undefined;
     }
   }

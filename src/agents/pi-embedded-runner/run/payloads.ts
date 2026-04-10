@@ -27,7 +27,10 @@ import {
 import { type ToolErrorSummary, isExecLikeToolName } from "../../tool-error-summary.js";
 import { isLikelyMutatingToolName } from "../../tool-mutation.js";
 
-interface ToolMetaEntry { toolName: string; meta?: string }
+interface ToolMetaEntry {
+  toolName: string;
+  meta?: string;
+}
 interface ToolErrorWarningPolicy {
   showWarning: boolean;
   includeDetails: boolean;
@@ -149,14 +152,14 @@ export function buildEmbeddedRunPayloads(params: {
   const lastAssistantErrored = params.lastAssistant?.stopReason === "error";
   const errorText =
     params.lastAssistant && lastAssistantErrored
-      ? (suppressAssistantArtifacts
+      ? suppressAssistantArtifacts
         ? undefined
         : formatAssistantErrorText(params.lastAssistant, {
             cfg: params.config,
             model: params.model,
             provider: params.provider,
             sessionKey: params.sessionKey,
-          }))
+          })
       : undefined;
   const rawErrorMessage = lastAssistantErrored
     ? normalizeOptionalString(params.lastAssistant?.errorMessage)
@@ -210,9 +213,9 @@ export function buildEmbeddedRunPayloads(params: {
 
   const reasoningText = suppressAssistantArtifacts
     ? ""
-    : (params.lastAssistant && params.reasoningLevel === "on"
+    : params.lastAssistant && params.reasoningLevel === "on"
       ? formatReasoningMessage(extractAssistantThinking(params.lastAssistant))
-      : "");
+      : "";
   if (reasoningText) {
     replyItems.push({ isReasoning: true, text: reasoningText });
   }
@@ -272,9 +275,9 @@ export function buildEmbeddedRunPayloads(params: {
     ? []
     : (params.assistantTexts.length
         ? params.assistantTexts
-        : (fallbackAnswerText
+        : fallbackAnswerText
           ? [fallbackAnswerText]
-          : [])
+          : []
       ).filter((text) => !shouldSuppressRawErrorText(text));
 
   let hasUserFacingAssistantReply = false;

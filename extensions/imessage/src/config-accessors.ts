@@ -12,7 +12,7 @@ export function resolveIMessageConfigDefaultTo(params: {
   cfg: OpenClawConfig;
   accountId?: string | null;
 }): string | undefined {
-  const {defaultTo} = resolveIMessageAccount(params).config;
+  const { defaultTo } = resolveIMessageAccount(params).config;
   if (defaultTo == null) {
     return undefined;
   }

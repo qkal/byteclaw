@@ -51,7 +51,7 @@ export function buildPluginApprovalRequestMessage(
 ): string {
   const lines: string[] = [];
   const severity = request.request.severity ?? "warning";
-  const icon = severity === "critical" ? "🚨" : (severity === "info" ? "ℹ️" : "🛡️");
+  const icon = severity === "critical" ? "🚨" : severity === "info" ? "ℹ️" : "🛡️";
   lines.push(`${icon} Plugin approval required`);
   lines.push(`Title: ${request.request.title}`);
   lines.push(`Description: ${request.request.description}`);

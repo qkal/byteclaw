@@ -86,7 +86,7 @@ export function resolveSandboxDockerConfig(params: {
   agentDocker?: Partial<SandboxDockerConfig>;
 }): SandboxDockerConfig {
   const agentDocker = params.scope === "shared" ? undefined : params.agentDocker;
-  const {globalDocker} = params;
+  const { globalDocker } = params;
 
   const env = agentDocker?.env
     ? { ...(globalDocker?.env ?? { LANG: "C.UTF-8" }), ...agentDocker.env }
@@ -132,7 +132,7 @@ export function resolveSandboxBrowserConfig(params: {
   agentBrowser?: Partial<SandboxBrowserConfig>;
 }): SandboxBrowserConfig {
   const agentBrowser = params.scope === "shared" ? undefined : params.agentBrowser;
-  const {globalBrowser} = params;
+  const { globalBrowser } = params;
   const binds = [...(globalBrowser?.binds ?? []), ...(agentBrowser?.binds ?? [])];
   // Treat `binds: []` as an explicit override, so it can disable `docker.binds` for the browser container.
   const bindsConfigured = globalBrowser?.binds !== undefined || agentBrowser?.binds !== undefined;
@@ -167,7 +167,7 @@ export function resolveSandboxPruneConfig(params: {
   agentPrune?: Partial<SandboxPruneConfig>;
 }): SandboxPruneConfig {
   const agentPrune = params.scope === "shared" ? undefined : params.agentPrune;
-  const {globalPrune} = params;
+  const { globalPrune } = params;
   return {
     idleHours: agentPrune?.idleHours ?? globalPrune?.idleHours ?? DEFAULT_SANDBOX_IDLE_HOURS,
     maxAgeDays: agentPrune?.maxAgeDays ?? globalPrune?.maxAgeDays ?? DEFAULT_SANDBOX_MAX_AGE_DAYS,
@@ -189,7 +189,7 @@ export function resolveSandboxSshConfig(params: {
   agentSsh?: Partial<SandboxSshSettings>;
 }): SandboxSshConfig {
   const agentSsh = params.scope === "shared" ? undefined : params.agentSsh;
-  const {globalSsh} = params;
+  const { globalSsh } = params;
   return {
     certificateData: normalizeSecretInputString(
       agentSsh?.certificateData ?? globalSsh?.certificateData,

@@ -36,7 +36,7 @@ function replaceControlChars(value: string): string {
     const codePoint = char.codePointAt(0);
     if (
       codePoint !== undefined &&
-      (codePoint <= 0x1F || (codePoint >= 0x7F && codePoint <= 0x9F))
+      (codePoint <= 0x1f || (codePoint >= 0x7f && codePoint <= 0x9f))
     ) {
       cleaned += " ";
       continue;

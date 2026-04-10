@@ -20,9 +20,9 @@ function extractEnumValues(schema: unknown): unknown[] | undefined {
   }
   const variants = Array.isArray(record.anyOf)
     ? record.anyOf
-    : (Array.isArray(record.oneOf)
+    : Array.isArray(record.oneOf)
       ? record.oneOf
-      : null);
+      : null;
   if (variants) {
     const values = variants.flatMap((variant) => {
       const extracted = extractEnumValues(variant);
@@ -44,7 +44,7 @@ function mergePropertySchemas(existing: unknown, incoming: unknown): unknown {
   const existingEnum = extractEnumValues(existing);
   const incomingEnum = extractEnumValues(incoming);
   if (existingEnum || incomingEnum) {
-    const values = [...new Set([...existingEnum ?? [], ...incomingEnum ?? []])];
+    const values = [...new Set([...(existingEnum ?? []), ...(incomingEnum ?? [])])];
     const merged: Record<string, unknown> = {};
     for (const source of [existing, incoming]) {
       if (!source || typeof source !== "object") {
@@ -227,11 +227,11 @@ export function normalizeToolParameterSchema(
   const mergedRequired =
     baseRequired && baseRequired.length > 0
       ? baseRequired
-      : (objectVariants > 0
+      : objectVariants > 0
         ? [...requiredCounts.entries()]
             .filter(([, count]) => count === objectVariants)
             .map(([key]) => key)
-        : undefined);
+        : undefined;
 
   const nextSchema: Record<string, unknown> = { ...schemaRecord };
   const flattenedSchema = {

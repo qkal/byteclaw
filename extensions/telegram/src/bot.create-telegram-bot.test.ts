@@ -559,7 +559,7 @@ describe("createTelegramBot", () => {
 
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockImplementation(
       async () =>
-        new Response(new Uint8Array([0xFF, 0xD8, 0xFF, 0x00]), {
+        new Response(new Uint8Array([0xff, 0xd8, 0xff, 0x00]), {
           headers: { "content-type": "image/jpeg" },
           status: 200,
         }),
@@ -638,7 +638,7 @@ describe("createTelegramBot", () => {
 
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockImplementation(
       async () =>
-        new Response(new Uint8Array([0xFF, 0xD8, 0xFF, 0x00]), {
+        new Response(new Uint8Array([0xff, 0xd8, 0xff, 0x00]), {
           headers: { "content-type": "image/jpeg" },
           status: 200,
         }),
@@ -684,7 +684,7 @@ describe("createTelegramBot", () => {
 
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockImplementation(
       async () =>
-        new Response(new Uint8Array([0xFF, 0xD8, 0xFF, 0x00]), {
+        new Response(new Uint8Array([0xff, 0xd8, 0xff, 0x00]), {
           headers: { "content-type": "image/jpeg" },
           status: 200,
         }),
@@ -727,7 +727,7 @@ describe("createTelegramBot", () => {
 
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockImplementation(
       async () =>
-        new Response(new Uint8Array([0xFF, 0xD8, 0xFF, 0x00]), {
+        new Response(new Uint8Array([0xff, 0xd8, 0xff, 0x00]), {
           headers: { "content-type": "image/jpeg" },
           status: 200,
         }),
@@ -1308,7 +1308,12 @@ describe("createTelegramBot", () => {
         getFile: async () => ({ download: async () => new Uint8Array() }),
         me: { username: "openclaw_bot" },
         message: {
-          chat: { id: -1_001_234_567_890, is_forum: true, title: "Forum Group", type: "supergroup" },
+          chat: {
+            id: -1_001_234_567_890,
+            is_forum: true,
+            title: "Forum Group",
+            type: "supergroup",
+          },
           date: 1_736_380_800 + messageId,
           from: { id: 12_345, username: "testuser" },
           message_id: messageId,

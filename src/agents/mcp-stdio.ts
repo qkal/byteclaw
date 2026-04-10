@@ -27,9 +27,9 @@ export function resolveStdioMcpServerLaunchConfig(raw: unknown): StdioMcpServerL
   const cwd =
     typeof raw.cwd === "string" && raw.cwd.trim().length > 0
       ? raw.cwd
-      : (typeof raw.workingDirectory === "string" && raw.workingDirectory.trim().length > 0
+      : typeof raw.workingDirectory === "string" && raw.workingDirectory.trim().length > 0
         ? raw.workingDirectory
-        : undefined);
+        : undefined;
   return {
     config: {
       args: toMcpStringArray(raw.args),

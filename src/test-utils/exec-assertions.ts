@@ -31,7 +31,7 @@ export function expectSingleNpmInstallIgnoreScriptsCall(params: {
   expect(argv).toEqual(["npm", "install", "--omit=dev", "--silent", "--ignore-scripts"]);
   expect(opts?.cwd).toBeTruthy();
   const cwd = String(opts?.cwd);
-  const {expectedTargetDir} = params;
+  const { expectedTargetDir } = params;
   expect(canonicalizeComparableDir(path.dirname(cwd))).toBe(
     canonicalizeComparableDir(path.dirname(expectedTargetDir)),
   );

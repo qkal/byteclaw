@@ -385,7 +385,7 @@ export const deviceHandlers: GatewayRequestHandlers = {
       );
       return;
     }
-    const {entry} = rotated;
+    const { entry } = rotated;
     context.logGateway.info(
       `device token rotated device=${deviceId} role=${entry.role} scopes=${entry.scopes.join(",")}`,
     );

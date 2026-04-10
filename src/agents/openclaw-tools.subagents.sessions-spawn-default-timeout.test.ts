@@ -12,9 +12,7 @@ function applySubagentTimeoutDefault(seconds: number) {
   });
 }
 
-function getSubagentTimeout(
-  calls: { method?: string; params?: unknown }[],
-): number | undefined {
+function getSubagentTimeout(calls: { method?: string; params?: unknown }[]): number | undefined {
   for (const call of calls) {
     if (call.method !== "agent") {
       continue;

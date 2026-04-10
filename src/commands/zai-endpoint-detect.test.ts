@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { detectZaiEndpoint } from "../plugins/provider-zai-endpoint.js";
 
-interface FetchResponse { status: number; body?: unknown }
+interface FetchResponse {
+  status: number;
+  body?: unknown;
+}
 
 function makeFetch(map: Record<string, FetchResponse>) {
   return (async (url: string, init?: RequestInit) => {

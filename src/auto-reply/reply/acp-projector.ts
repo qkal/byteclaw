@@ -410,7 +410,7 @@ export function createAcpReplyProjector(params: {
       if (!isAcpTagVisible(settings, event.tag)) {
         return;
       }
-      let {text} = event;
+      let { text } = event;
       if (!text) {
         return;
       }

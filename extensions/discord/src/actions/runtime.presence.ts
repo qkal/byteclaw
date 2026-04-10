@@ -104,7 +104,13 @@ export async function handleDiscordPresenceAction(
   gateway.updatePresence(presenceData);
 
   return jsonResult({
-    activities: activities.map((a) => (Object.assign({type:a.type,name:a.name}, a.url?{url:a.url}:{}, a.state?{state:a.state}:{}))),
+    activities: activities.map((a) =>
+      Object.assign(
+        { type: a.type, name: a.name },
+        a.url ? { url: a.url } : {},
+        a.state ? { state: a.state } : {},
+      ),
+    ),
     ok: true,
     status,
   });

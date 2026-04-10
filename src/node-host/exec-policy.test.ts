@@ -9,17 +9,17 @@ type EvaluatePolicyParams = Parameters<typeof evaluateSystemRunPolicy>[0];
 type EvaluatePolicyDecision = ReturnType<typeof evaluateSystemRunPolicy>;
 
 const buildPolicyParams = (overrides: Partial<EvaluatePolicyParams>): EvaluatePolicyParams => ({
-    allowlistSatisfied: true,
-    analysisOk: true,
-    approvalDecision: null,
-    approved: false,
-    ask: "off",
-    cmdInvocation: false,
-    isWindows: false,
-    security: "allowlist",
-    shellWrapperInvocation: false,
-    ...overrides,
-  });
+  allowlistSatisfied: true,
+  analysisOk: true,
+  approvalDecision: null,
+  approved: false,
+  ask: "off",
+  cmdInvocation: false,
+  isWindows: false,
+  security: "allowlist",
+  shellWrapperInvocation: false,
+  ...overrides,
+});
 
 const expectDeniedDecision = (decision: EvaluatePolicyDecision) => {
   expect(decision.allowed).toBe(false);

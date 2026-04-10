@@ -420,7 +420,7 @@ export async function cleanStaleLockFiles(params: {
   try {
     entries = await fs.readdir(sessionsDir, { withFileTypes: true });
   } catch (error) {
-    const {code} = (error as { code?: string });
+    const { code } = error as { code?: string };
     if (code === "ENOENT") {
       return { cleaned: [], locks: [] };
     }
@@ -534,7 +534,7 @@ export async function acquireSessionWriteLock(params: {
           // Ignore cleanup errors on failed lock initialization.
         }
       }
-      const {code} = (error as { code?: unknown });
+      const { code } = error as { code?: unknown };
       if (code !== "EEXIST") {
         throw error;
       }

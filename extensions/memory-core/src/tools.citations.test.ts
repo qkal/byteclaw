@@ -154,7 +154,10 @@ describe("memory tools", () => {
   });
 
   it("returns empty text without error when file does not exist (ENOENT)", async () => {
-    setMemoryReadFileImpl(async (_params: MemoryReadParams) => ({ path: "memory/2026-02-19.md", text: "" }));
+    setMemoryReadFileImpl(async (_params: MemoryReadParams) => ({
+      path: "memory/2026-02-19.md",
+      text: "",
+    }));
 
     const tool = createMemoryGetToolOrThrow();
 

@@ -81,9 +81,9 @@ export function collectRuntimeConfigAssignments(params: {
   const baseWebhookUrl = typeof zalo.webhookUrl === "string" ? zalo.webhookUrl.trim() : "";
   const accountWebhookUrl = (account: Record<string, unknown>) =>
     hasOwnProperty(account, "webhookUrl")
-      ? (typeof account.webhookUrl === "string"
+      ? typeof account.webhookUrl === "string"
         ? account.webhookUrl.trim()
-        : "")
+        : ""
       : baseWebhookUrl;
   collectConditionalChannelFieldAssignments({
     accountActive: ({ account, enabled }) => enabled && accountWebhookUrl(account).length > 0,

@@ -271,9 +271,9 @@ export function attachGatewayWsMessageHandler(params: {
   const reportedClientIp =
     isLocalClient || hasUntrustedProxyHeaders
       ? undefined
-      : (clientIp && !isLoopbackAddress(clientIp)
+      : clientIp && !isLoopbackAddress(clientIp)
         ? clientIp
-        : undefined);
+        : undefined;
 
   if (hasUntrustedProxyHeaders) {
     logWsControl.warn(
@@ -326,21 +326,21 @@ export function attachGatewayWsMessageHandler(params: {
       const parsed = JSON.parse(text);
       const frameType =
         parsed && typeof parsed === "object" && "type" in parsed
-          ? (typeof (parsed as { type?: unknown }).type === "string"
+          ? typeof (parsed as { type?: unknown }).type === "string"
             ? String((parsed as { type?: unknown }).type)
-            : undefined)
+            : undefined
           : undefined;
       const frameMethod =
         parsed && typeof parsed === "object" && "method" in parsed
-          ? (typeof (parsed as { method?: unknown }).method === "string"
+          ? typeof (parsed as { method?: unknown }).method === "string"
             ? String((parsed as { method?: unknown }).method)
-            : undefined)
+            : undefined
           : undefined;
       const frameId =
         parsed && typeof parsed === "object" && "id" in parsed
-          ? (typeof (parsed as { id?: unknown }).id === "string"
+          ? typeof (parsed as { id?: unknown }).id === "string"
             ? String((parsed as { id?: unknown }).id)
-            : undefined)
+            : undefined
           : undefined;
       if (frameType || frameMethod || frameId) {
         setLastFrameMeta({ id: frameId, method: frameMethod, type: frameType });
@@ -357,9 +357,9 @@ export function attachGatewayWsMessageHandler(params: {
           !validateConnectParams(parsed.params)
         ) {
           const handshakeError = isRequestFrame
-            ? (parsed.method === "connect"
+            ? parsed.method === "connect"
               ? `invalid connect params: ${formatValidationErrors(validateConnectParams.errors)}`
-              : "invalid handshake: first request must be connect")
+              : "invalid handshake: first request must be connect"
             : "invalid request frame";
           setHandshakeState("failed");
           setCloseCause("invalid-handshake", {
@@ -510,7 +510,7 @@ export function attachGatewayWsMessageHandler(params: {
           deviceRaw,
           isControlUi,
         });
-        const {device} = controlUiAuthPolicy;
+        const { device } = controlUiAuthPolicy;
 
         let {
           authResult,
@@ -673,7 +673,7 @@ export function attachGatewayWsMessageHandler(params: {
             rejectDeviceAuthInvalid("device-id-mismatch", "device identity mismatch");
             return;
           }
-          const {signedAt} = device;
+          const { signedAt } = device;
           if (
             typeof signedAt !== "number" ||
             Math.abs(Date.now() - signedAt) > DEVICE_SIGNATURE_SKEW_MS
@@ -857,9 +857,9 @@ export function attachGatewayWsMessageHandler(params: {
               }
               const pairedScopes = Array.isArray(pairedCandidate.approvedScopes)
                 ? pairedCandidate.approvedScopes
-                : (Array.isArray(pairedCandidate.scopes)
+                : Array.isArray(pairedCandidate.scopes)
                   ? pairedCandidate.scopes
-                  : []);
+                  : [];
               if (pairedScopes.length === 0) {
                 return false;
               }
@@ -1053,9 +1053,9 @@ export function attachGatewayWsMessageHandler(params: {
             const pairedRoles = listEffectivePairedDeviceRoles(paired);
             const pairedScopes = Array.isArray(paired.approvedScopes)
               ? paired.approvedScopes
-              : (Array.isArray(paired.scopes)
+              : Array.isArray(paired.scopes)
                 ? paired.scopes
-                : []);
+                : [];
             const allowedRoles = new Set(pairedRoles);
             if (allowedRoles.size === 0) {
               logUpgradeAudit("role-upgrade", pairedRoles, pairedScopes);
@@ -1166,7 +1166,7 @@ export function attachGatewayWsMessageHandler(params: {
 
         const shouldTrackPresence = !isGatewayCliClient(connectParams.client);
         const clientId = connectParams.client.id;
-        const {instanceId} = connectParams.client;
+        const { instanceId } = connectParams.client;
         const presenceKey = shouldTrackPresence ? (device?.id ?? instanceId ?? connId) : undefined;
 
         logWs("in", "connect", {
@@ -1280,7 +1280,9 @@ export function attachGatewayWsMessageHandler(params: {
             void updatePairedNodeMetadata(nodeId, {
               lastConnectedAtMs: nodeSession.connectedAtMs,
             }).catch((error) =>
-              logGateway.warn(`failed to record last connect for ${nodeId}: ${formatForLog(error)}`),
+              logGateway.warn(
+                `failed to record last connect for ${nodeId}: ${formatForLog(error)}`,
+              ),
             );
           }
           recordRemoteNodeInfo({

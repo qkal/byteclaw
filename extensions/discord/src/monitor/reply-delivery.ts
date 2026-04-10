@@ -298,8 +298,8 @@ async function sendDiscordChunkWithFallback(params: {
   if (!params.text.trim()) {
     return;
   }
-  const {text} = params;
-  const {binding} = params;
+  const { text } = params;
+  const { binding } = params;
   if (binding?.webhookId && binding?.webhookToken) {
     try {
       await sendWebhookMessageDiscord(text, {

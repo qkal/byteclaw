@@ -248,7 +248,7 @@ export function buildOpenAIVideoGenerationProvider(): VideoGenerationProvider {
       const referenceAsset = resolveReferenceAsset(req);
       const requestUrl = `${baseUrl}/videos`;
       const requestResult = referenceAsset
-        ? (inputImage?.buffer
+        ? inputImage?.buffer
           ? await (() => {
               const jsonHeaders = new Headers(headers);
               jsonHeaders.set("Content-Type", "application/json");
@@ -299,7 +299,7 @@ export function buildOpenAIVideoGenerationProvider(): VideoGenerationProvider {
                 response,
                 release: async () => {},
               }));
-            })())
+            })()
         : await (() => {
             const jsonHeaders = new Headers(headers);
             jsonHeaders.set("Content-Type", "application/json");

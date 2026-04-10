@@ -11,9 +11,9 @@ const CHAT_UPLOAD_BASE = "https://chat.googleapis.com/upload/v1";
 const headersToObject = (headers?: HeadersInit): Record<string, string> =>
   headers instanceof Headers
     ? Object.fromEntries(headers.entries())
-    : (Array.isArray(headers)
+    : Array.isArray(headers)
       ? Object.fromEntries(headers)
-      : headers || {});
+      : headers || {};
 
 async function withGoogleChatResponse<T>(params: {
   account: ResolvedGoogleChatAccount;
@@ -154,7 +154,12 @@ export async function sendGoogleChatMessage(params: {
     body.thread = { name: thread };
   }
   if (attachments && attachments.length > 0) {
-    body.attachment = attachments.map((item) => ((Object.assign({attachmentDataRef:{attachmentUploadToken:item.attachmentUploadToken}}, item.contentName?{contentName:item.contentName}:{}))));
+    body.attachment = attachments.map((item) =>
+      Object.assign(
+        { attachmentDataRef: { attachmentUploadToken: item.attachmentUploadToken } },
+        item.contentName ? { contentName: item.contentName } : {},
+      ),
+    );
   }
   const urlObj = new URL(`${CHAT_API_BASE}/${space}/messages`);
   if (thread) {

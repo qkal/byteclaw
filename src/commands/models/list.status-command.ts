@@ -81,7 +81,7 @@ export async function modelsStatusCommand(
   if (opts.plain && opts.probe) {
     throw new Error("--probe cannot be used with --plain output.");
   }
-  const {configPath} = createConfigIO();
+  const { configPath } = createConfigIO();
   const cfg = await loadModelsConfig({ commandName: "models status", runtime });
   const agentId = resolveKnownAgentId({ cfg, rawAgentId: opts.agent });
   const agentDir = agentId ? resolveAgentDir(cfg, agentId) : resolveOpenClawAgentDir();
@@ -154,12 +154,14 @@ export async function modelsStatusCommand(
     }
   }
 
-  const providers = [...new Set([
-	...providersFromStore,
-	...providersFromConfig,
-	...providersFromModels,
-	...providersFromEnv
-])]
+  const providers = [
+    ...new Set([
+      ...providersFromStore,
+      ...providersFromConfig,
+      ...providersFromModels,
+      ...providersFromEnv,
+    ]),
+  ]
     .map((p) => normalizeOptionalString(p) ?? "")
     .filter(Boolean)
     .toSorted((a, b) => a.localeCompare(b));
@@ -227,7 +229,8 @@ export async function modelsStatusCommand(
   if (opts.probe) {
     probeSummary = await withProgressTotals(
       { label: "Probing auth profiles…", total: 1 },
-      async (update) => await runAuthProbes({
+      async (update) =>
+        await runAuthProbes({
           cfg,
           modelCandidates,
           onProgress: update,
@@ -531,7 +534,13 @@ export async function modelsStatusCommand(
     runtime.log(colorize(rich, theme.muted, "- none"));
   } else {
     const usageByProvider = new Map<string, string>();
-    const usageProviders = [...new Set(oauthProfiles.map((profile) => resolveUsageProviderId(profile.provider)).filter((provider): provider is UsageProviderId => Boolean(provider)))];
+    const usageProviders = [
+      ...new Set(
+        oauthProfiles
+          .map((profile) => resolveUsageProviderId(profile.provider))
+          .filter((provider): provider is UsageProviderId => Boolean(provider)),
+      ),
+    ];
     if (usageProviders.length > 0) {
       try {
         const usageSummary = await loadProviderUsageSummary({
@@ -592,9 +601,9 @@ export async function modelsStatusCommand(
         const expiry =
           profile.status === "static"
             ? ""
-            : (profile.expiresAt
+            : profile.expiresAt
               ? ` expires in ${formatRemainingShort(profile.remainingMs)}`
-              : " expires unknown");
+              : " expires unknown";
         runtime.log(`  - ${label} ${status}${expiry}`);
       }
     }

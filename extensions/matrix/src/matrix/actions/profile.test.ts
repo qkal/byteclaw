@@ -41,9 +41,12 @@ describe("matrix profile actions", () => {
   });
 
   it("trims profile fields and persists through the action client wrapper", async () => {
-    withResolvedActionClientMock.mockImplementation(async (_opts, run) => await run({
-        getUserId: vi.fn(async () => "@bot:example.org"),
-      }));
+    withResolvedActionClientMock.mockImplementation(
+      async (_opts, run) =>
+        await run({
+          getUserId: vi.fn(async () => "@bot:example.org"),
+        }),
+    );
 
     await updateMatrixOwnProfile({
       accountId: "ops",
@@ -73,9 +76,12 @@ describe("matrix profile actions", () => {
   });
 
   it("bridges avatar loaders through Matrix runtime media helpers", async () => {
-    withResolvedActionClientMock.mockImplementation(async (_opts, run) => await run({
-        getUserId: vi.fn(async () => "@bot:example.org"),
-      }));
+    withResolvedActionClientMock.mockImplementation(
+      async (_opts, run) =>
+        await run({
+          getUserId: vi.fn(async () => "@bot:example.org"),
+        }),
+    );
 
     await updateMatrixOwnProfile({
       avatarPath: "/tmp/avatar.png",

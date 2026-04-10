@@ -22,9 +22,9 @@ export async function readServiceStatusSummary(
     const installed = managedByOpenClaw || externallyManaged;
     const loadedText = externallyManaged
       ? "running (externally managed)"
-      : (state.loaded
+      : state.loaded
         ? service.loadedText
-        : service.notLoadedText);
+        : service.notLoadedText;
     return {
       externallyManaged,
       installed,

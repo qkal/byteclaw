@@ -122,7 +122,9 @@ export function consumePendingToolMediaIntoReply(
   if (state.pendingToolMediaUrls.length === 0 && !state.pendingToolAudioAsVoice) {
     return payload;
   }
-  const mergedMediaUrls = [...new Set([...payload.mediaUrls ?? [], ...state.pendingToolMediaUrls])];
+  const mergedMediaUrls = [
+    ...new Set([...(payload.mediaUrls ?? []), ...state.pendingToolMediaUrls]),
+  ];
   const mergedPayload: BlockReplyPayload = {
     ...payload,
     audioAsVoice: payload.audioAsVoice || state.pendingToolAudioAsVoice || undefined,
@@ -164,7 +166,7 @@ export function buildAssistantStreamData(params: {
   mediaUrls?: string[];
   mediaUrl?: string;
 }): { text: string; delta: string; replace?: true; mediaUrls?: string[] } {
-  const {mediaUrls} = resolveSendableOutboundReplyParts(params);
+  const { mediaUrls } = resolveSendableOutboundReplyParts(params);
   return {
     delta: params.delta ?? "",
     mediaUrls: mediaUrls.length ? mediaUrls : undefined,
@@ -419,7 +421,7 @@ export function handleMessageUpdate(
     evtType === "text_end" &&
     ctx.state.blockReplyBreak === "text_end"
   ) {
-    const {assistantMessageIndex} = ctx.state;
+    const { assistantMessageIndex } = ctx.state;
     void Promise.resolve()
       .then(() => ctx.flushBlockReplyBuffer({ assistantMessageIndex }))
       .catch((error) => {
@@ -535,7 +537,7 @@ export function handleMessageEnd(
     text: finalAssistantText,
   });
 
-  const {onBlockReply} = ctx.params;
+  const { onBlockReply } = ctx.params;
   const shouldEmitReasoning = Boolean(
     !ctx.params.silentExpected &&
     !suppressDeterministicApprovalOutput &&

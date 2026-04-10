@@ -116,7 +116,7 @@ function resolveFallbackSession(
     channel: params.channel,
     peer,
   });
-  const chatType = peerKind === "direct" ? "direct" : (peerKind === "channel" ? "channel" : "group");
+  const chatType = peerKind === "direct" ? "direct" : peerKind === "channel" ? "channel" : "group";
   const from =
     peerKind === "direct"
       ? `${params.channel}:${peerId}`

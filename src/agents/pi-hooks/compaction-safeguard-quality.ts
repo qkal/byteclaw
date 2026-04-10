@@ -156,7 +156,14 @@ export function extractOpaqueIdentifiers(text: string): string[] {
     text.match(
       /([A-Fa-f0-9]{8,}|https?:\/\/\S+|\/[\w.-]{2,}(?:\/[\w.-]+)+|[A-Za-z]:\\[\w\\.-]+|[A-Za-z0-9._-]+\.[A-Za-z0-9._/-]+:\d{1,5}|\b\d{6,}\b)/g,
     ) ?? [];
-  return [...new Set(matches.map((value) => sanitizeExtractedIdentifier(value)).map((value) => normalizeOpaqueIdentifier(value)).filter((value) => value.length >= 4))].slice(0, MAX_EXTRACTED_IDENTIFIERS);
+  return [
+    ...new Set(
+      matches
+        .map((value) => sanitizeExtractedIdentifier(value))
+        .map((value) => normalizeOpaqueIdentifier(value))
+        .filter((value) => value.length >= 4),
+    ),
+  ].slice(0, MAX_EXTRACTED_IDENTIFIERS);
 }
 
 function tokenizeAskOverlapText(text: string): string[] {

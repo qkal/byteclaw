@@ -193,11 +193,11 @@ export function formatConfigWriteDeniedMessageShared<TChannelId extends string>(
   const blocked = params.result.blockedScope?.scope;
   const channelLabel = blocked?.channelId ?? params.fallbackChannelId ?? "this channel";
   const hint = blocked?.channelId
-    ? (blocked.accountId
+    ? blocked.accountId
       ? `channels.${blocked.channelId}.accounts.${blocked.accountId}.configWrites=true`
-      : `channels.${blocked.channelId}.configWrites=true`)
-    : (params.fallbackChannelId
+      : `channels.${blocked.channelId}.configWrites=true`
+    : params.fallbackChannelId
       ? `channels.${params.fallbackChannelId}.configWrites=true`
-      : "channels.<channel>.configWrites=true");
+      : "channels.<channel>.configWrites=true";
   return `⚠️ Config writes are disabled for ${channelLabel}. Set ${hint} to enable.`;
 }

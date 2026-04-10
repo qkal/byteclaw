@@ -21,7 +21,7 @@ export function createInteractiveConversationBindingHelpers(params: {
   conversation: PluginBindingConversation;
 }) {
   const { registration, senderId, conversation } = params;
-  const {pluginRoot} = registration;
+  const { pluginRoot } = registration;
 
   return {
     detachConversationBinding: async () => {

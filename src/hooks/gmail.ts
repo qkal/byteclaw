@@ -101,7 +101,7 @@ export function resolveGmailHookRuntimeConfig(
   cfg: OpenClawConfig,
   overrides: GmailHookOverrides,
 ): { ok: true; value: GmailHookRuntimeConfig } | { ok: false; error: string } {
-  const {hooks} = cfg;
+  const { hooks } = cfg;
   const gmail = hooks?.gmail;
   const hookToken = overrides.hookToken ?? hooks?.token ?? "";
   if (!hookToken) {

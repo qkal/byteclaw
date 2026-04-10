@@ -13,11 +13,11 @@ export async function execSchtasks(
   const timeoutDetail =
     result.termination === "timeout"
       ? `schtasks timed out after ${SCHTASKS_TIMEOUT_MS}ms`
-      : (result.termination === "no-output-timeout"
+      : result.termination === "no-output-timeout"
         ? `schtasks produced no output for ${SCHTASKS_NO_OUTPUT_TIMEOUT_MS}ms`
-        : "");
+        : "";
   return {
-    code: typeof result.code === "number" ? result.code : (result.killed ? 124 : 1),
+    code: typeof result.code === "number" ? result.code : result.killed ? 124 : 1,
     stderr: result.stderr || timeoutDetail,
     stdout: result.stdout,
   };

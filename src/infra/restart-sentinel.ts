@@ -128,8 +128,8 @@ export function formatRestartSentinelMessage(payload: RestartSentinelPayload): s
 }
 
 export function summarizeRestartSentinel(payload: RestartSentinelPayload): string {
-  const {kind} = payload;
-  const {status} = payload;
+  const { kind } = payload;
+  const { status } = payload;
   const mode = payload.stats?.mode ? ` (${payload.stats.mode})` : "";
   return `Gateway restart ${kind} ${status}${mode}`.trim();
 }

@@ -105,7 +105,9 @@ function wrapStreamHandleUnhandledStopReason(
             }
             return result;
           } catch (error) {
-            const normalizedMessage = normalizeUnhandledStopReasonMessage(formatErrorMessage(error));
+            const normalizedMessage = normalizeUnhandledStopReasonMessage(
+              formatErrorMessage(error),
+            );
             if (!normalizedMessage) {
               throw error;
             }
@@ -150,7 +152,9 @@ export function wrapStreamFnHandleSensitiveStopReason(baseFn: StreamFn): StreamF
         return Promise.resolve(maybeStream).then(
           (stream) => wrapStreamHandleUnhandledStopReason(model, stream),
           (error) => {
-            const normalizedMessage = normalizeUnhandledStopReasonMessage(formatErrorMessage(error));
+            const normalizedMessage = normalizeUnhandledStopReasonMessage(
+              formatErrorMessage(error),
+            );
             if (!normalizedMessage) {
               throw error;
             }

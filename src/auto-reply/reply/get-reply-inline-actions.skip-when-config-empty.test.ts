@@ -130,9 +130,9 @@ describe("handleInlineActions", () => {
     getChannelPluginMock.mockImplementation((channelId?: string) =>
       channelId === "whatsapp"
         ? { commands: { skipWhenConfigEmpty: true } }
-        : (channelId === "discord"
+        : channelId === "discord"
           ? { mentions: { stripPatterns: () => [String.raw`<@!?\d+>`] } }
-          : undefined),
+          : undefined,
     );
     await loadFreshInlineActionsModuleForTest();
   });

@@ -71,10 +71,7 @@ class LazyCache<T> {
     return {
       size: this.cache.size,
       maxSize: this.options.maxSize,
-      totalHits: Array.from(this.cache.values()).reduce(
-        (sum, e) => sum + e.hits,
-        0,
-      ),
+      totalHits: Array.from(this.cache.values()).reduce((sum, e) => sum + e.hits, 0),
     };
   }
 }
@@ -90,14 +87,12 @@ export function createLazyRuntimeSurface<TModule, TSurface>(
   select: (module: TModule) => TSurface,
   options?: LazyCacheOptions,
 ): () => Promise<TSurface> {
-  const cacheKey = `lazy-surface-${importer.name || 'anonymous'}`;
+  const cacheKey = `lazy-surface-${importer.name || "anonymous"}`;
   let cached: Promise<TSurface> | null = null;
 
   return () => {
     // Check global cache first
-    const cachedValue = globalCache.get(cacheKey) as
-      | Promise<TSurface>
-      | undefined;
+    const cachedValue = globalCache.get(cacheKey) as Promise<TSurface> | undefined;
     if (cachedValue) return cachedValue;
 
     cached ??= importer()
@@ -119,10 +114,7 @@ export function createLazyRuntimeModule<TModule>(
 }
 
 /** Cache a single named runtime export without repeating a custom selector closure per caller. */
-export function createLazyRuntimeNamedExport<
-  TModule,
-  const TKey extends keyof TModule,
->(
+export function createLazyRuntimeNamedExport<TModule, const TKey extends keyof TModule>(
   importer: () => Promise<TModule>,
   key: TKey,
   options?: LazyCacheOptions,
@@ -130,11 +122,7 @@ export function createLazyRuntimeNamedExport<
   return createLazyRuntimeSurface(importer, (module) => module[key], options);
 }
 
-export function createLazyRuntimeMethod<
-  TSurface,
-  TArgs extends unknown[],
-  TResult,
->(
+export function createLazyRuntimeMethod<TSurface, TArgs extends unknown[], TResult>(
   load: () => Promise<TSurface>,
   select: (surface: TSurface) => (...args: TArgs) => TResult,
 ): (...args: TArgs) => Promise<Awaited<TResult>> {
@@ -145,9 +133,7 @@ export function createLazyRuntimeMethod<
   return invoke;
 }
 
-export function createLazyRuntimeMethodBinder<TSurface>(
-  load: () => Promise<TSurface>,
-) {
+export function createLazyRuntimeMethodBinder<TSurface>(load: () => Promise<TSurface>) {
   return function <TArgs extends unknown[], TResult>(
     select: (surface: TSurface) => (...args: TArgs) => TResult,
   ): (...args: TArgs) => Promise<Awaited<TResult>> {

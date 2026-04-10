@@ -77,7 +77,7 @@ export function resolveMatrixAllowListMatch(params: {
   allowList: string[];
   userId?: string;
 }): MatrixAllowListMatch {
-  const {allowList} = params;
+  const { allowList } = params;
   if (allowList.length === 0) {
     return { allowed: false };
   }

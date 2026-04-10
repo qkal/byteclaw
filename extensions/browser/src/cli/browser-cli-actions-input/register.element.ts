@@ -68,7 +68,7 @@ export function registerBrowserElementCommands(
         },
         cmd,
         successMessage: (result) => {
-          const {url} = (result as { url?: unknown });
+          const { url } = result as { url?: unknown };
           const suffix = typeof url === "string" && url ? ` on ${url}` : "";
           return `clicked ref ${refValue}${suffix}`;
         },

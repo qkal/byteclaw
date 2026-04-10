@@ -88,9 +88,9 @@ export function collectWhatsAppStatusIssues(
         const stateLabel =
           healthState === "conflict"
             ? "session conflict"
-            : (healthState === "reconnecting"
+            : healthState === "reconnecting"
               ? "reconnecting"
-              : "stopped");
+              : "stopped";
         issues.push({
           accountId,
           channel: "whatsapp",

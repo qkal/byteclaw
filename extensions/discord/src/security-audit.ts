@@ -84,7 +84,7 @@ export async function collectDiscordSecurityAuditFindings(params: {
       target: discordNameBasedAllowEntries,
       values: guild.users,
     });
-    const {channels} = guild;
+    const { channels } = guild;
     if (!channels || typeof channels !== "object") {
       continue;
     }
@@ -154,7 +154,7 @@ export async function collectDiscordSecurityAuditFindings(params: {
     if (Array.isArray(record.users) && record.users.length > 0) {
       return true;
     }
-    const {channels} = record;
+    const { channels } = record;
     if (!channels || typeof channels !== "object") {
       return false;
     }

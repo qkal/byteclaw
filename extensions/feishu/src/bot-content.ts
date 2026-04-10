@@ -272,9 +272,9 @@ export function normalizeMentions(
     const replacement =
       botStripId && mentionId === botStripId
         ? ""
-        : (mentionId
+        : mentionId
           ? `<at user_id="${mentionId}">${escapeName(mention.name)}</at>`
-          : `@${mention.name}`);
+          : `@${mention.name}`;
     result = result.replace(new RegExp(escaped(mention.key), "g"), () => replacement).trim();
   }
   return result;

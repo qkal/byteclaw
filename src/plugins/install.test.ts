@@ -311,9 +311,9 @@ function setupBundleInstallFixture(params: {
     pluginDir,
     params.bundleFormat === "codex"
       ? ".codex-plugin"
-      : (params.bundleFormat === "cursor"
+      : params.bundleFormat === "cursor"
         ? ".cursor-plugin"
-        : ".claude-plugin"),
+        : ".claude-plugin",
   );
   fs.mkdirSync(manifestDir, { recursive: true });
   fs.writeFileSync(
@@ -534,11 +534,7 @@ beforeAll(async () => {
     }),
     "utf8",
   );
-  fs.writeFileSync(
-    path.join(manifestInstallTemplateDir, "dist", "index.js"),
-    "export {};",
-    "utf8",
-  );
+  fs.writeFileSync(path.join(manifestInstallTemplateDir, "dist", "index.js"), "export {};", "utf8");
   fs.writeFileSync(
     path.join(manifestInstallTemplateDir, "openclaw.plugin.json"),
     JSON.stringify({

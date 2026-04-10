@@ -412,7 +412,7 @@ export function createCommandHandlers(context: CommandHandlerContext) {
         const currentRaw = state.sessionInfo.responseUsage;
         const current = resolveResponseUsageMode(currentRaw);
         const next =
-          normalized ?? (current === "off" ? "tokens" : (current === "tokens" ? "full" : "off"));
+          normalized ?? (current === "off" ? "tokens" : current === "tokens" ? "full" : "off");
         try {
           const result = await client.patchSession({
             key: state.currentSessionKey,

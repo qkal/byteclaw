@@ -246,9 +246,9 @@ async function resolveSlackOutboundSessionRoute(params: {
     from:
       peerKind === "direct"
         ? `slack:${parsed.id}`
-        : (peerKind === "group"
+        : peerKind === "group"
           ? `slack:group:${parsed.id}`
-          : `slack:channel:${parsed.id}`),
+          : `slack:channel:${parsed.id}`,
     peer,
     sessionKey: threadKeys.sessionKey,
     threadId,
@@ -346,7 +346,7 @@ export const slackPlugin: ChannelPlugin<ResolvedSlackAccount, SlackProbe> = crea
     }),
     gateway: {
       startAccount: async (ctx) => {
-        const {account} = ctx;
+        const { account } = ctx;
         const botToken = account.botToken?.trim();
         const appToken = account.appToken?.trim();
         ctx.log?.info(`[${account.accountId}] starting provider`);

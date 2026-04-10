@@ -11,9 +11,9 @@ const formatKv = (line: string, rich: boolean) => {
   const valueColor =
     key === "Gateway target" || key === "Config"
       ? theme.command
-      : (key === "Source"
+      : key === "Source"
         ? theme.muted
-        : theme.info);
+        : theme.info;
 
   return `${colorize(rich, theme.muted, `${key}:`)} ${colorize(rich, valueColor, value)}`;
 };

@@ -60,7 +60,7 @@ export async function resolveSessionTranscriptFile(params: {
     storePath: params.storePath,
   });
   let sessionFile = resolveSessionFilePath(params.sessionId, params.sessionEntry, sessionPathOpts);
-  let {sessionEntry} = params;
+  let { sessionEntry } = params;
 
   if (params.sessionStore && params.storePath) {
     const threadIdFromSessionKey = parseSessionThreadInfo(params.sessionKey).threadId;

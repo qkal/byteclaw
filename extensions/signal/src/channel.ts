@@ -271,7 +271,7 @@ export const signalPlugin: ChannelPlugin<ResolvedSignalAccount, SignalProbe> =
       approvalCapability: signalApprovalAuth,
       gateway: {
         startAccount: async (ctx) => {
-          const {account} = ctx;
+          const { account } = ctx;
           ctx.setStatus({
             accountId: account.accountId,
             baseUrl: account.baseUrl,

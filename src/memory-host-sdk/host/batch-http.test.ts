@@ -28,7 +28,9 @@ describe("postJsonWithRetry", () => {
   });
 
   it("posts JSON and returns parsed response payload", async () => {
-    postJsonMock.mockImplementationOnce(async (params) => await params.parse({ ids: [1, 2], ok: true }));
+    postJsonMock.mockImplementationOnce(
+      async (params) => await params.parse({ ids: [1, 2], ok: true }),
+    );
 
     const result = await postJsonWithRetry<{ ok: boolean; ids: number[] }>({
       body: { chunks: ["a", "b"] },

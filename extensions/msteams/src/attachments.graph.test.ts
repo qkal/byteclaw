@@ -68,7 +68,9 @@ type DownloadGraphMediaOverrides = Partial<
   Omit<DownloadGraphMediaParams, "messageUrl" | "tokenProvider">
 >;
 type FetchFn = typeof fetch;
-interface LabeledCase { label: string }
+interface LabeledCase {
+  label: string;
+}
 interface GraphFetchMockOptions {
   hostedContents?: unknown[];
   attachments?: unknown[];
@@ -236,11 +238,11 @@ const GRAPH_MEDIA_SUCCESS_CASES: GraphMediaSuccessCase[] = [
   }),
   withLabel("merges SharePoint reference attachments with hosted content", {
     buildOptions: () => ({
-        hostedContents: createHostedImageContents("hosted-1"),
-        ...buildDefaultShareReferenceGraphFetchOptions({
-          onShareRequest: () => createPdfResponse(),
-        }),
+      hostedContents: createHostedImageContents("hosted-1"),
+      ...buildDefaultShareReferenceGraphFetchOptions({
+        onShareRequest: () => createPdfResponse(),
       }),
+    }),
     expectedLength: 2,
   }),
 ];

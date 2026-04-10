@@ -282,15 +282,15 @@ export function buildTemplateMessageFromPayload(
     case "confirm": {
       const confirmAction = payload.confirmData.startsWith("http")
         ? uriAction(payload.confirmLabel, payload.confirmData)
-        : (payload.confirmData.includes("=")
+        : payload.confirmData.includes("=")
           ? postbackAction(payload.confirmLabel, payload.confirmData, payload.confirmLabel)
-          : messageAction(payload.confirmLabel, payload.confirmData));
+          : messageAction(payload.confirmLabel, payload.confirmData);
 
       const cancelAction = payload.cancelData.startsWith("http")
         ? uriAction(payload.cancelLabel, payload.cancelData)
-        : (payload.cancelData.includes("=")
+        : payload.cancelData.includes("=")
           ? postbackAction(payload.cancelLabel, payload.cancelData, payload.cancelLabel)
-          : messageAction(payload.cancelLabel, payload.cancelData));
+          : messageAction(payload.cancelLabel, payload.cancelData);
 
       return createConfirmTemplate(payload.text, confirmAction, cancelAction, payload.altText);
     }

@@ -19,8 +19,7 @@ import {
 
 type SessionBindingServiceModule = typeof import("./session-binding-service.js");
 
-const sessionBindingServiceModuleUrl = new URL("session-binding-service.ts", import.meta.url)
-  .href;
+const sessionBindingServiceModuleUrl = new URL("session-binding-service.ts", import.meta.url).href;
 
 function setMinimalCurrentConversationRegistry(): void {
   setActivePluginRegistry(

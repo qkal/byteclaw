@@ -73,7 +73,7 @@ function resolveResolution(params: {
     return undefined;
   }
   const maxEdge = Math.max(parsedSize.width, parsedSize.height);
-  return maxEdge >= 1920 ? "1080p" : (maxEdge >= 1280 ? "720p" : undefined);
+  return maxEdge >= 1920 ? "1080p" : maxEdge >= 1280 ? "720p" : undefined;
 }
 
 function resolveDurationSeconds(durationSeconds: number | undefined): number | undefined {

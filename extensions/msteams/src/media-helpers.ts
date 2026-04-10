@@ -44,7 +44,7 @@ export async function extractFilename(url: string): Promise<string> {
 
   // Try to extract from URL pathname
   try {
-    const {pathname} = new URL(url);
+    const { pathname } = new URL(url);
     const basename = path.basename(pathname);
     const existingExt = getFileExtension(pathname);
     if (basename && existingExt) {

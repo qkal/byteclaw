@@ -304,7 +304,7 @@ describe("exec approvals", () => {
       interactive: true,
       nodeId: "node-1",
     });
-    const {approvalId} = details;
+    const { approvalId } = details;
 
     await expect
       .poll(() => (invokeParams as { params?: { runId?: string } } | undefined)?.params?.runId, {

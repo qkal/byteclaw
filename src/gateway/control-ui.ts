@@ -180,7 +180,7 @@ export function handleControlUiAvatarRequest(
 
   const url = new URL(urlRaw, "http://localhost");
   const basePath = normalizeControlUiBasePath(opts.basePath);
-  const {pathname} = url;
+  const { pathname } = url;
   const pathWithBase = basePath
     ? `${basePath}${CONTROL_UI_AVATAR_PREFIX}/`
     : `${CONTROL_UI_AVATAR_PREFIX}/`;
@@ -202,9 +202,9 @@ export function handleControlUiAvatarRequest(
     const avatarUrl =
       resolved.kind === "local"
         ? buildControlUiAvatarUrl(basePath, agentId)
-        : (resolved.kind === "remote" || resolved.kind === "data"
+        : resolved.kind === "remote" || resolved.kind === "data"
           ? resolved.url
-          : null);
+          : null;
     sendJson(res, 200, { avatarUrl } satisfies ControlUiAvatarMeta);
     return true;
   }
@@ -328,7 +328,7 @@ export function handleControlUiHttpRequest(
   }
   const url = new URL(urlRaw, "http://localhost");
   const basePath = normalizeControlUiBasePath(opts?.basePath);
-  const {pathname} = url;
+  const { pathname } = url;
   const route = classifyControlUiRequest({
     basePath,
     method: req.method,

@@ -50,7 +50,13 @@ function collectChannelsMissingDefaultAccount(
       continue;
     }
 
-    const normalizedAccountIds = [...new Set(Object.keys(accounts).map((accountId) => normalizeAccountId(accountId)).filter(Boolean))].toSorted((a, b) => a.localeCompare(b));
+    const normalizedAccountIds = [
+      ...new Set(
+        Object.keys(accounts)
+          .map((accountId) => normalizeAccountId(accountId))
+          .filter(Boolean),
+      ),
+    ].toSorted((a, b) => a.localeCompare(b));
     if (normalizedAccountIds.length === 0 || normalizedAccountIds.includes(DEFAULT_ACCOUNT_ID)) {
       continue;
     }

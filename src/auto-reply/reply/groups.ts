@@ -136,8 +136,7 @@ export function buildGroupIntro(params: {
       : undefined;
   const lurkLine =
     "Be a good group participant: mostly lurk and follow the conversation; reply only when directly addressed or you can add clear value. Emoji reactions are welcome when available.";
-  const styleLine =
-    String.raw`Write like a human. Avoid Markdown tables. Minimize empty lines and use normal chat conventions, not document-style spacing. Don't type literal \n sequences; use real line breaks sparingly.`;
+  const styleLine = String.raw`Write like a human. Avoid Markdown tables. Minimize empty lines and use normal chat conventions, not document-style spacing. Don't type literal \n sequences; use real line breaks sparingly.`;
   return [activationLine, silenceLine, cautionLine, lurkLine, styleLine]
     .filter(Boolean)
     .join(" ")

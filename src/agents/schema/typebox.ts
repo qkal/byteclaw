@@ -18,9 +18,9 @@ export function stringEnum<T extends readonly string[]>(
 ) {
   const enumValues = Array.isArray(values)
     ? values
-    : (values && typeof values === "object"
+    : values && typeof values === "object"
       ? Object.values(values).filter((value): value is T[number] => typeof value === "string")
-      : []);
+      : [];
   return Type.Unsafe<T[number]>({
     type: "string",
     ...(enumValues.length > 0 ? { enum: [...enumValues] } : {}),

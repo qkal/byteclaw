@@ -20,9 +20,9 @@ export function resolveGroupAllowFromSources(params: {
       : undefined;
   const scoped = explicitGroupAllowFrom
     ? explicitGroupAllowFrom
-    : (params.fallbackToAllowFrom === false
+    : params.fallbackToAllowFrom === false
       ? []
-      : (params.allowFrom ?? []));
+      : (params.allowFrom ?? []);
   return normalizeStringEntries(scoped);
 }
 

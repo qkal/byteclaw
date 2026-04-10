@@ -70,7 +70,7 @@ const PERMISSION_ERROR_COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
 // Resolve broadcast agent list for a given peer (group) ID.
 // Returns null if no broadcast config exists or the peer is not in the broadcast list.
 export function resolveBroadcastAgents(cfg: ClawdbotConfig, peerId: string): string[] | null {
-  const {broadcast} = (cfg as Record<string, unknown>);
+  const { broadcast } = cfg as Record<string, unknown>;
   if (!broadcast || typeof broadcast !== "object") {
     return null;
   }
@@ -382,9 +382,9 @@ export async function handleFeishuMessage(params: {
     ? resolveFeishuGroupConfig({ cfg: feishuCfg, groupId: ctx.chatId })
     : undefined;
   const effectiveGroupSenderAllowFrom = isGroup
-    ? ((groupConfig?.allowFrom?.length ?? 0) > 0
+    ? (groupConfig?.allowFrom?.length ?? 0) > 0
       ? (groupConfig?.allowFrom ?? [])
-      : (feishuCfg?.groupSenderAllowFrom ?? []))
+      : (feishuCfg?.groupSenderAllowFrom ?? [])
     : [];
   const groupSession = isGroup
     ? resolveFeishuGroupSession({
@@ -494,7 +494,8 @@ export async function handleFeishuMessage(params: {
       }
       return;
     }
-  } else {}
+  } else {
+  }
 
   try {
     const core = getFeishuRuntime();
@@ -696,7 +697,9 @@ export async function handleFeishuMessage(params: {
           text: `⚠️ Failed to initialize the configured ACP session for this Feishu conversation: ${ensured.error}`,
           to: `chat:${ctx.chatId}`,
         }).catch((error) => {
-          log(`feishu[${account.accountId}]: failed to send ACP init error reply: ${String(error)}`);
+          log(
+            `feishu[${account.accountId}]: failed to send ACP init error reply: ${String(error)}`,
+          );
         });
         return;
       }

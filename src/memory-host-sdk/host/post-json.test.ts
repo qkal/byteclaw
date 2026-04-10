@@ -21,9 +21,12 @@ describe("postJson", () => {
   });
 
   it("parses JSON payload on successful response", async () => {
-    remoteHttpMock.mockImplementationOnce(async (params) => await params.onResponse(
-        new Response(JSON.stringify({ data: [{ embedding: [1, 2] }] }), { status: 200 }),
-      ));
+    remoteHttpMock.mockImplementationOnce(
+      async (params) =>
+        await params.onResponse(
+          new Response(JSON.stringify({ data: [{ embedding: [1, 2] }] }), { status: 200 }),
+        ),
+    );
 
     const result = await postJson({
       body: { input: ["x"] },
@@ -37,7 +40,9 @@ describe("postJson", () => {
   });
 
   it("attaches status to thrown error when requested", async () => {
-    remoteHttpMock.mockImplementationOnce(async (params) => await params.onResponse(new Response("bad gateway", { status: 502 })));
+    remoteHttpMock.mockImplementationOnce(
+      async (params) => await params.onResponse(new Response("bad gateway", { status: 502 })),
+    );
 
     await expect(
       postJson({

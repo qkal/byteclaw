@@ -149,9 +149,9 @@ export function buildEmbeddedPiSettingsSnapshot(params: {
   const effectiveProjectSettings =
     params.policy === "ignore"
       ? {}
-      : (params.policy === "sanitize"
+      : params.policy === "sanitize"
         ? sanitizeProjectSettings(params.projectSettings)
-        : params.projectSettings);
+        : params.projectSettings;
   const withPluginSettings = applyMergePatch(
     params.globalSettings,
     sanitizePiSettingsSnapshot(params.pluginSettings ?? {}),

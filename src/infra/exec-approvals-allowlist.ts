@@ -81,7 +81,7 @@ export function isSafeBinUsage(params: {
   if (params.safeBins.size === 0) {
     return false;
   }
-  const {resolution} = params;
+  const { resolution } = params;
   const execName = normalizeOptionalLowercaseString(resolution?.executableName);
   if (!execName) {
     return false;
@@ -198,7 +198,7 @@ function isSkillAutoAllowedSegment(params: {
   if (!params.allowSkills) {
     return false;
   }
-  const {resolution} = params.segment;
+  const { resolution } = params.segment;
   const execution = resolveExecutionTargetResolution(resolution);
   if (!execution?.resolvedPath) {
     return false;
@@ -750,7 +750,7 @@ function resolveShellWrapperScriptCandidatePath(params: {
     return undefined;
   }
 
-  const {argv} = params.segment;
+  const { argv } = params.segment;
   if (!Array.isArray(argv) || argv.length < 2) {
     return undefined;
   }
@@ -818,7 +818,7 @@ function resolveShellWrapperPositionalArgvCandidatePath(params: {
     return undefined;
   }
 
-  const {argv} = params.segment;
+  const { argv } = params.segment;
   if (!Array.isArray(argv) || argv.length < 4) {
     return undefined;
   }

@@ -57,7 +57,10 @@ function buildExecApprovalRequestToolParams(
   };
 }
 
-interface ParsedDecision { present: boolean; value: string | null }
+interface ParsedDecision {
+  present: boolean;
+  value: string | null;
+}
 
 function parseDecision(value: unknown): ParsedDecision {
   if (!value || typeof value !== "object") {
@@ -68,7 +71,7 @@ function parseDecision(value: unknown): ParsedDecision {
   if (!Object.hasOwn(value, "decision")) {
     return { present: false, value: null };
   }
-  const {decision} = (value as { decision?: unknown });
+  const { decision } = value as { decision?: unknown };
   return { present: true, value: typeof decision === "string" ? decision : null };
 }
 

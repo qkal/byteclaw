@@ -49,7 +49,7 @@ export function registerNodesCanvasCommands(nodes: Command) {
             normalizeOptionalString(opts.format) ?? "jpg",
           );
           const formatForParams =
-            formatOpt === "jpg" ? "jpeg" : (formatOpt === "jpeg" ? "jpeg" : "png");
+            formatOpt === "jpg" ? "jpeg" : formatOpt === "jpeg" ? "jpeg" : "png";
           if (formatForParams !== "png" && formatForParams !== "jpeg") {
             throw new Error(`invalid format: ${String(opts.format)} (expected png|jpg|jpeg)`);
           }

@@ -99,7 +99,7 @@ describe("Matrix auth/config live surfaces", () => {
       MATRIX_PASSWORD: "env-pass",
       MATRIX_USER_ID: "@env:example.org",
     } as NodeJS.ProcessEnv;
-    const {resolved} = resolveDefaultMatrixAuthContext(cfg, env);
+    const { resolved } = resolveDefaultMatrixAuthContext(cfg, env);
     expect(resolved).toEqual({
       accessToken: "cfg-token",
       deviceId: undefined,
@@ -122,7 +122,7 @@ describe("Matrix auth/config live surfaces", () => {
       MATRIX_PASSWORD: "env-pass",
       MATRIX_USER_ID: "@env:example.org",
     } as NodeJS.ProcessEnv;
-    const {resolved} = resolveDefaultMatrixAuthContext(cfg, env);
+    const { resolved } = resolveDefaultMatrixAuthContext(cfg, env);
     expect(resolved.homeserver).toBe("https://env.example.org");
     expect(resolved.userId).toBe("@env:example.org");
     expect(resolved.accessToken).toBe("env-token");
@@ -151,7 +151,7 @@ describe("Matrix auth/config live surfaces", () => {
       MATRIX_ACCESS_TOKEN: "env-token",
     } as NodeJS.ProcessEnv;
 
-    const {resolved} = resolveDefaultMatrixAuthContext(cfg, env);
+    const { resolved } = resolveDefaultMatrixAuthContext(cfg, env);
     expect(resolved.accessToken).toBe("env-token");
   });
 
@@ -174,7 +174,7 @@ describe("Matrix auth/config live surfaces", () => {
       MATRIX_PASSWORD: "env-pass",
     } as NodeJS.ProcessEnv;
 
-    const {resolved} = resolveDefaultMatrixAuthContext(cfg, env);
+    const { resolved } = resolveDefaultMatrixAuthContext(cfg, env);
     expect(resolved.password).toBe("env-pass");
   });
 
@@ -684,7 +684,7 @@ describe("Matrix auth/config live surfaces", () => {
       },
     } as CoreConfig;
 
-    const {resolved} = resolveDefaultMatrixAuthContext(cfg, {} as NodeJS.ProcessEnv);
+    const { resolved } = resolveDefaultMatrixAuthContext(cfg, {} as NodeJS.ProcessEnv);
 
     expect(resolved.dispatcherPolicy).toEqual({
       mode: "explicit-proxy",

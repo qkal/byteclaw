@@ -22,8 +22,7 @@ const mockQuit = vi.fn();
 const mockUnbind = vi.fn();
 
 // Event handler storage for testing
-const messageHandlers: ((channel: string, user: string, message: string, msg: any) => void)[] =
-  [];
+const messageHandlers: ((channel: string, user: string, message: string, msg: any) => void)[] = [];
 
 // Mock functions that track handlers and return unbind objects
 const mockOnMessage = vi.fn((handler: any) => {
