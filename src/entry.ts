@@ -3,6 +3,10 @@ import { spawn } from 'node:child_process';
 import { enableCompileCache } from 'node:module';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import {
+  logRuntimeInfo,
+  getEffectiveRuntime,
+} from './shared/runtime-detection.js';
 import { isRootHelpInvocation, isRootVersionInvocation } from './cli/argv.js';
 import {
   parseCliContainerArgs,
@@ -16,6 +20,9 @@ import { isMainModule } from './infra/is-main.js';
 import { ensureOpenClawExecMarkerOnProcess } from './infra/openclaw-exec-env.js';
 import { installProcessWarningFilter } from './infra/warning-filter.js';
 import { attachChildProcessBridge } from './process/child-process-bridge.js';
+
+// Log runtime information for migration tracking
+logRuntimeInfo();
 
 const ENTRY_WRAPPER_PAIRS = [
   { entryBasename: 'entry.js', wrapperBasename: 'openclaw.mjs' },
