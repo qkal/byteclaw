@@ -47,7 +47,10 @@ async function runWithFallback(args) {
   console.log(`[run-with-fallback] Using runtime: ${runtime}`);
 
   // Execute the command
-  const spawnArgs = runtime === 'bun' ? ['bun', command, ...commandArgs] : ['node', command, ...commandArgs];
+  const spawnArgs =
+    runtime === 'bun'
+      ? ['bun', command, ...commandArgs]
+      : ['node', command, ...commandArgs];
 
   const proc = spawn(spawnArgs[0], spawnArgs.slice(1), {
     stdio: 'inherit',
@@ -59,12 +62,56 @@ async function runWithFallback(args) {
       if (code === 0) {
         resolve(0);
       } else {
-        reject(new Error(`Process exited with code ${code}`));
+        // If Bun failed and not forced, try Node as fallback
+        if (runtime === 'bun' && !forceBun) {
+          console.log('[run-with-fallback] Bun failed, falling back to Node');
+          const nodeProc = spawn('node', [command, ...commandArgs], {
+            stdio: 'inherit',
+            shell: process.platform === 'win32',
+          });
+
+          nodeProc.on('exit', (nodeCode) => {
+            if (nodeCode === 0) {
+              resolve(0);
+            } else {
+              reject(new Error(`Process exited with code ${nodeCode}`));
+            }
+          });
+
+          nodeProc.on('error', (err) => {
+            reject(err);
+          });
+        } else {
+          reject(new Error(`Process exited with code ${code}`));
+        }
       }
     });
 
     proc.on('error', (err) => {
-      reject(err);
+      // If Bun failed to start and not forced, try Node as fallback
+      if (runtime === 'bun' && !forceBun) {
+        console.log(
+          '[run-with-fallback] Bun failed to start, falling back to Node',
+        );
+        const nodeProc = spawn('node', [command, ...commandArgs], {
+          stdio: 'inherit',
+          shell: process.platform === 'win32',
+        });
+
+        nodeProc.on('exit', (nodeCode) => {
+          if (nodeCode === 0) {
+            resolve(0);
+          } else {
+            reject(new Error(`Process exited with code ${nodeCode}`));
+          }
+        });
+
+        nodeProc.on('error', (nodeErr) => {
+          reject(nodeErr);
+        });
+      } else {
+        reject(err);
+      }
     });
   });
 }
