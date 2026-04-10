@@ -1,0 +1,66 @@
+/**
+ * Subprocess abstraction interface for cross-runtime compatibility.
+ * Provides a unified API for spawning child processes across Bun and Node.js.
+ */
+
+export interface SubprocessOptions {
+  /** Working directory for the subprocess */
+  cwd?: string;
+  /** Environment variables for the subprocess */
+  env?: Record<string, string>;
+  /** Standard input/output/error handling */
+  stdio?: 'inherit' | 'pipe' | 'ignore' | Array<'inherit' | 'pipe' | 'ignore'>;
+  /** Detach the subprocess from parent */
+  detached?: boolean;
+  /** Shell mode - run command through shell */
+  shell?: boolean | string;
+}
+
+export interface SubprocessResult {
+  /** Exit code */
+  exitCode: number | null;
+  /** Standard output */
+  stdout: string;
+  /** Standard error */
+  stderr: string;
+  /** Whether the process was signaled */
+  signal?: NodeJS.Signals;
+}
+
+export interface SubprocessSpawnResult {
+  /** Child process handle */
+  process: unknown;
+  /** Promise that resolves when process exits */
+  exitPromise: Promise<SubprocessResult>;
+  /** Kill the subprocess */
+  kill: (signal?: NodeJS.Signals) => void;
+  /** Write to stdin */
+  writeStdin: (data: string | Buffer) => void;
+  /** Close stdin */
+  closeStdin: () => void;
+}
+
+export interface SubprocessAbstraction {
+  /**
+   * Execute a command and wait for completion.
+   */
+  exec(
+    command: string,
+    args: string[],
+    options?: SubprocessOptions,
+  ): Promise<SubprocessResult>;
+
+  /**
+   * Spawn a command and return a handle for interaction.
+   */
+  spawn(
+    command: string,
+    args: string[],
+    options?: SubprocessOptions,
+  ): SubprocessSpawnResult;
+
+  /**
+   * Check if this abstraction is available for the current runtime.
+   */
+  isAvailable(): boolean;
+}
