@@ -1,7 +1,7 @@
-import { Command } from "commander";
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { runRegisteredCli } from "../test-utils/command-runner.js";
-import { registerModelsCli } from "./models-cli.js";
+import { Command } from 'commander';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { runRegisteredCli } from '../test-utils/command-runner.js';
+import { registerModelsCli } from './models-cli.js';
 
 const mocks = vi.hoisted(() => ({
   modelsAuthLoginCommand: vi.fn().mockResolvedValue(undefined),
@@ -11,7 +11,7 @@ const mocks = vi.hoisted(() => ({
 
 const { modelsStatusCommand, modelsAuthLoginCommand } = mocks;
 
-vi.mock("../commands/models.js", () => ({
+vi.mock('../commands/models.js', () => ({
   modelsAliasesAddCommand: mocks.noopAsync,
   modelsAliasesListCommand: mocks.noopAsync,
   modelsAliasesRemoveCommand: mocks.noopAsync,
@@ -37,7 +37,7 @@ vi.mock("../commands/models.js", () => ({
   modelsStatusCommand: mocks.modelsStatusCommand,
 }));
 
-describe("models cli", () => {
+describe('models cli', () => {
   beforeEach(() => {
     modelsAuthLoginCommand.mockClear();
     modelsStatusCommand.mockClear();
@@ -56,26 +56,31 @@ describe("models cli", () => {
     });
   }
 
-  it("registers github-copilot login command", async () => {
+  it('registers github-copilot login command', async () => {
     const program = createProgram();
-    const models = program.commands.find((cmd) => cmd.name() === "models");
+    const models = program.commands.find((cmd) => cmd.name() === 'models');
     expect(models).toBeTruthy();
 
-    const auth = models?.commands.find((cmd) => cmd.name() === "auth");
+    const auth = models?.commands.find((cmd) => cmd.name() === 'auth');
     expect(auth).toBeTruthy();
 
-    const login = auth?.commands.find((cmd) => cmd.name() === "login-github-copilot");
+    const login = auth?.commands.find(
+      (cmd) => cmd.name() === 'login-github-copilot',
+    );
     expect(login).toBeTruthy();
 
-    await program.parseAsync(["models", "auth", "login-github-copilot", "--yes"], {
-      from: "user",
-    });
+    await program.parseAsync(
+      ['models', 'auth', 'login-github-copilot', '--yes'],
+      {
+        from: 'user',
+      },
+    );
 
     expect(modelsAuthLoginCommand).toHaveBeenCalledTimes(1);
     expect(modelsAuthLoginCommand).toHaveBeenCalledWith(
       expect.objectContaining({
-        method: "device",
-        provider: "github-copilot",
+        method: 'device',
+        provider: 'github-copilot',
         yes: true,
       }),
       expect.any(Object),
@@ -83,17 +88,17 @@ describe("models cli", () => {
   });
 
   it.each([
-    { args: ["models", "status", "--agent", "poe"], label: "status flag" },
-    { args: ["models", "--agent", "poe", "status"], label: "parent flag" },
-  ])("passes --agent to models status ($label)", async ({ args }) => {
+    { args: ['models', 'status', '--agent', 'poe'], label: 'status flag' },
+    { args: ['models', '--agent', 'poe', 'status'], label: 'parent flag' },
+  ])('passes --agent to models status ($label)', async ({ args }) => {
     await runModelsCommand(args);
     expect(modelsStatusCommand).toHaveBeenCalledWith(
-      expect.objectContaining({ agent: "poe" }),
+      expect.objectContaining({ agent: 'poe' }),
       expect.any(Object),
     );
   });
 
-  it("shows help for models auth without error exit", async () => {
+  it('shows help for models auth without error exit', async () => {
     const program = new Command();
     program.exitOverride();
     program.configureOutput({
@@ -103,11 +108,11 @@ describe("models cli", () => {
     registerModelsCli(program);
 
     try {
-      await program.parseAsync(["models", "auth"], { from: "user" });
-      expect.fail("expected help to exit");
+      await program.parseAsync(['models', 'auth'], { from: 'user' });
+      expect.fail('expected help to exit');
     } catch (error) {
-      const error = error as { exitCode?: number };
-      expect(error.exitCode).toBe(0);
+      const exitError = error as { exitCode?: number };
+      expect(exitError.exitCode).toBe(0);
     }
   });
 });
