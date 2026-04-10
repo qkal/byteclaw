@@ -1,0 +1,196 @@
+import type { ModelDefinitionConfig } from "openclaw/plugin-sdk/provider-model-shared";
+
+export const SYNTHETIC_BASE_URL = "https://api.synthetic.new/anthropic";
+export const SYNTHETIC_DEFAULT_MODEL_ID = "hf:MiniMaxAI/MiniMax-M2.5";
+export const SYNTHETIC_DEFAULT_MODEL_REF = `synthetic/${SYNTHETIC_DEFAULT_MODEL_ID}`;
+export const SYNTHETIC_DEFAULT_COST = {
+  cacheRead: 0,
+  cacheWrite: 0,
+  input: 0,
+  output: 0,
+};
+
+export const SYNTHETIC_MODEL_CATALOG = [
+  {
+    contextWindow: 192_000,
+    id: SYNTHETIC_DEFAULT_MODEL_ID,
+    input: ["text"],
+    maxTokens: 65_536,
+    name: "MiniMax M2.5",
+    reasoning: false,
+  },
+  {
+    contextWindow: 256_000,
+    id: "hf:moonshotai/Kimi-K2-Thinking",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "Kimi K2 Thinking",
+    reasoning: true,
+  },
+  {
+    contextWindow: 198_000,
+    id: "hf:zai-org/GLM-4.7",
+    input: ["text"],
+    maxTokens: 128_000,
+    name: "GLM-4.7",
+    reasoning: false,
+  },
+  {
+    contextWindow: 128_000,
+    id: "hf:deepseek-ai/DeepSeek-R1-0528",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "DeepSeek R1 0528",
+    reasoning: false,
+  },
+  {
+    contextWindow: 128_000,
+    id: "hf:deepseek-ai/DeepSeek-V3-0324",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "DeepSeek V3 0324",
+    reasoning: false,
+  },
+  {
+    contextWindow: 128_000,
+    id: "hf:deepseek-ai/DeepSeek-V3.1",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "DeepSeek V3.1",
+    reasoning: false,
+  },
+  {
+    contextWindow: 128_000,
+    id: "hf:deepseek-ai/DeepSeek-V3.1-Terminus",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "DeepSeek V3.1 Terminus",
+    reasoning: false,
+  },
+  {
+    contextWindow: 159_000,
+    id: "hf:deepseek-ai/DeepSeek-V3.2",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "DeepSeek V3.2",
+    reasoning: false,
+  },
+  {
+    contextWindow: 128_000,
+    id: "hf:meta-llama/Llama-3.3-70B-Instruct",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "Llama 3.3 70B Instruct",
+    reasoning: false,
+  },
+  {
+    contextWindow: 524_000,
+    id: "hf:meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "Llama 4 Maverick 17B 128E Instruct FP8",
+    reasoning: false,
+  },
+  {
+    contextWindow: 256_000,
+    id: "hf:moonshotai/Kimi-K2-Instruct-0905",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "Kimi K2 Instruct 0905",
+    reasoning: false,
+  },
+  {
+    contextWindow: 256_000,
+    id: "hf:moonshotai/Kimi-K2.5",
+    input: ["text", "image"],
+    maxTokens: 8192,
+    name: "Kimi K2.5",
+    reasoning: true,
+  },
+  {
+    contextWindow: 128_000,
+    id: "hf:openai/gpt-oss-120b",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "GPT OSS 120B",
+    reasoning: false,
+  },
+  {
+    contextWindow: 256_000,
+    id: "hf:Qwen/Qwen3-235B-A22B-Instruct-2507",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "Qwen3 235B A22B Instruct 2507",
+    reasoning: false,
+  },
+  {
+    contextWindow: 256_000,
+    id: "hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "Qwen3 Coder 480B A35B Instruct",
+    reasoning: false,
+  },
+  {
+    contextWindow: 250_000,
+    id: "hf:Qwen/Qwen3-VL-235B-A22B-Instruct",
+    input: ["text", "image"],
+    maxTokens: 8192,
+    name: "Qwen3 VL 235B A22B Instruct",
+    reasoning: false,
+  },
+  {
+    contextWindow: 128_000,
+    id: "hf:zai-org/GLM-4.5",
+    input: ["text"],
+    maxTokens: 128_000,
+    name: "GLM-4.5",
+    reasoning: false,
+  },
+  {
+    contextWindow: 198_000,
+    id: "hf:zai-org/GLM-4.6",
+    input: ["text"],
+    maxTokens: 128_000,
+    name: "GLM-4.6",
+    reasoning: false,
+  },
+  {
+    contextWindow: 256_000,
+    id: "hf:zai-org/GLM-5",
+    input: ["text", "image"],
+    maxTokens: 128_000,
+    name: "GLM-5",
+    reasoning: true,
+  },
+  {
+    contextWindow: 128_000,
+    id: "hf:deepseek-ai/DeepSeek-V3",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "DeepSeek V3",
+    reasoning: false,
+  },
+  {
+    contextWindow: 256_000,
+    id: "hf:Qwen/Qwen3-235B-A22B-Thinking-2507",
+    input: ["text"],
+    maxTokens: 8192,
+    name: "Qwen3 235B A22B Thinking 2507",
+    reasoning: true,
+  },
+] as const;
+
+export type SyntheticCatalogEntry = (typeof SYNTHETIC_MODEL_CATALOG)[number];
+
+export function buildSyntheticModelDefinition(entry: SyntheticCatalogEntry): ModelDefinitionConfig {
+  return {
+    contextWindow: entry.contextWindow,
+    cost: SYNTHETIC_DEFAULT_COST,
+    id: entry.id,
+    input: [...entry.input],
+    maxTokens: entry.maxTokens,
+    name: entry.name,
+    reasoning: entry.reasoning,
+  };
+}

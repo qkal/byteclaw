@@ -1,0 +1,81 @@
+import { describe, expect, it } from "vitest";
+import {
+  type FilterableSelectItem,
+  FilterableSelectList,
+  type FilterableSelectListTheme,
+} from "./filterable-select-list.js";
+
+const mockTheme: FilterableSelectListTheme = {
+  description: (t) => `(${t})`,
+  filterLabel: (t) => `>${t}<`,
+  noMatch: (t) => `!${t}!`,
+  scrollInfo: (t) => `~${t}~`,
+  selectedPrefix: (t) => `[${t}]`,
+  selectedText: (t) => `**${t}**`,
+};
+
+const testItems: FilterableSelectItem[] = [
+  {
+    description: "Oldest",
+    label: "first session",
+    searchText: "alpha",
+    value: "session-1",
+  },
+  {
+    description: "Newest",
+    label: "second session",
+    searchText: "beta",
+    value: "session-2",
+  },
+];
+
+describe("FilterableSelectList", () => {
+  function typeInput(list: FilterableSelectList, text: string) {
+    for (const ch of text) {
+      list.handleInput(ch);
+    }
+  }
+
+  it("clears the active filter before cancelling", () => {
+    const list = new FilterableSelectList(testItems, 5, mockTheme);
+    let cancelled = false;
+    list.onCancel = () => {
+      cancelled = true;
+    };
+
+    typeInput(list, "beta");
+    expect(list.getFilterText()).toBe("beta");
+    expect(list.getSelectedItem()?.value).toBe("session-2");
+
+    list.handleInput("\x1b");
+
+    expect(cancelled).toBe(false);
+    expect(list.getFilterText()).toBe("");
+    expect(list.render(80).join("\n")).toContain("first session");
+    expect(list.render(80).join("\n")).toContain("second session");
+  });
+
+  it("calls onCancel when escape is pressed with an empty filter", () => {
+    const list = new FilterableSelectList(testItems, 5, mockTheme);
+    let cancelled = false;
+    list.onCancel = () => {
+      cancelled = true;
+    };
+
+    list.handleInput("\x1b");
+
+    expect(cancelled).toBe(true);
+  });
+
+  it("calls onCancel when ctrl+c is pressed with an empty filter", () => {
+    const list = new FilterableSelectList(testItems, 5, mockTheme);
+    let cancelled = false;
+    list.onCancel = () => {
+      cancelled = true;
+    };
+
+    list.handleInput("\u0003");
+
+    expect(cancelled).toBe(true);
+  });
+});

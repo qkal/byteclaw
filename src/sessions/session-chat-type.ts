@@ -1,0 +1,24 @@
+import { iterateBootstrapChannelPlugins } from "../channels/plugins/bootstrap-registry.js";
+import {
+  type SessionKeyChatType,
+  deriveSessionChatTypeFromKey,
+} from "./session-chat-type-shared.js";
+
+export {
+  deriveSessionChatTypeFromKey,
+  type SessionKeyChatType,
+} from "./session-chat-type-shared.js";
+
+export function deriveSessionChatType(sessionKey: string | undefined | null): SessionKeyChatType {
+  return deriveSessionChatTypeFromKey(
+    sessionKey,
+    [...iterateBootstrapChannelPlugins()]
+      .map((plugin) => plugin.messaging?.deriveLegacySessionChatType)
+      .filter(
+        (
+          deriveLegacySessionChatType,
+        ): deriveLegacySessionChatType is NonNullable<typeof deriveLegacySessionChatType> =>
+          Boolean(deriveLegacySessionChatType),
+      ),
+  );
+}

@@ -1,0 +1,35 @@
+import type { PluginRegistry } from "./registry-types.js";
+
+export function createEmptyPluginRegistry(): PluginRegistry {
+  return {
+    channelSetups: [],
+    channels: [],
+    cliBackends: [],
+    cliRegistrars: [],
+    commands: [],
+    conversationBindingResolvedHandlers: [],
+    diagnostics: [],
+    gatewayHandlers: {},
+    gatewayMethodScopes: {},
+    hooks: [],
+    httpRoutes: [],
+    imageGenerationProviders: [],
+    mediaUnderstandingProviders: [],
+    memoryEmbeddingProviders: [],
+    musicGenerationProviders: [],
+    nodeHostCommands: [],
+    plugins: [],
+    providers: [],
+    realtimeTranscriptionProviders: [],
+    realtimeVoiceProviders: [],
+    reloads: [],
+    securityAuditCollectors: [],
+    services: [],
+    speechProviders: [],
+    tools: [],
+    typedHooks: [],
+    videoGenerationProviders: [],
+    webFetchProviders: [],
+    webSearchProviders: [],
+  };
+}

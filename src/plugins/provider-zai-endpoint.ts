@@ -1,0 +1,183 @@
+import { fetchWithTimeout } from "../utils/fetch-timeout.js";
+
+const ZAI_CODING_GLOBAL_BASE_URL = "https://api.z.ai/api/coding/paas/v4";
+const ZAI_CODING_CN_BASE_URL = "https://open.bigmodel.cn/api/coding/paas/v4";
+const ZAI_GLOBAL_BASE_URL = "https://api.z.ai/api/paas/v4";
+const ZAI_CN_BASE_URL = "https://open.bigmodel.cn/api/paas/v4";
+
+export type ZaiEndpointId = "global" | "cn" | "coding-global" | "coding-cn";
+
+export interface ZaiDetectedEndpoint {
+  endpoint: ZaiEndpointId;
+  /** Provider baseUrl to store in config. */
+  baseUrl: string;
+  /** Recommended default model id for that endpoint. */
+  modelId: string;
+  /** Human-readable note explaining the choice. */
+  note: string;
+}
+
+type ProbeResult =
+  | { ok: true }
+  | {
+      ok: false;
+      status?: number;
+      errorCode?: string;
+      errorMessage?: string;
+    };
+
+async function probeZaiChatCompletions(params: {
+  baseUrl: string;
+  apiKey: string;
+  modelId: string;
+  timeoutMs: number;
+  fetchFn?: typeof fetch;
+}): Promise<ProbeResult> {
+  try {
+    const res = await fetchWithTimeout(
+      `${params.baseUrl}/chat/completions`,
+      {
+        body: JSON.stringify({
+          max_tokens: 1,
+          messages: [{ role: "user", content: "ping" }],
+          model: params.modelId,
+          stream: false,
+        }),
+        headers: {
+          authorization: `Bearer ${params.apiKey}`,
+          "content-type": "application/json",
+        },
+        method: "POST",
+      },
+      params.timeoutMs,
+      params.fetchFn,
+    );
+
+    if (res.ok) {
+      return { ok: true };
+    }
+
+    let errorCode: string | undefined;
+    let errorMessage: string | undefined;
+    try {
+      const json = (await res.json()) as {
+        error?: { code?: unknown; message?: unknown };
+        msg?: unknown;
+        message?: unknown;
+      };
+      const code = json?.error?.code;
+      const msg = json?.error?.message ?? json?.msg ?? json?.message;
+      if (typeof code === "string") {
+        errorCode = code;
+      } else if (typeof code === "number") {
+        errorCode = String(code);
+      }
+      if (typeof msg === "string") {
+        errorMessage = msg;
+      }
+    } catch {
+      // Ignore
+    }
+
+    return { errorCode, errorMessage, ok: false, status: res.status };
+  } catch {
+    return { ok: false };
+  }
+}
+
+export async function detectZaiEndpoint(params: {
+  apiKey: string;
+  endpoint?: ZaiEndpointId;
+  timeoutMs?: number;
+  fetchFn?: typeof fetch;
+}): Promise<ZaiDetectedEndpoint | null> {
+  // Never auto-probe in vitest; it would create flaky network behavior.
+  if (process.env.VITEST && !params.fetchFn) {
+    return null;
+  }
+
+  const timeoutMs = params.timeoutMs ?? 5000;
+  const probeCandidates = (() => {
+    const general = [
+      {
+        baseUrl: ZAI_GLOBAL_BASE_URL,
+        endpoint: "global" as const,
+        modelId: "glm-5.1",
+        note: "Verified GLM-5.1 on global endpoint.",
+      },
+      {
+        baseUrl: ZAI_CN_BASE_URL,
+        endpoint: "cn" as const,
+        modelId: "glm-5.1",
+        note: "Verified GLM-5.1 on cn endpoint.",
+      },
+    ];
+    const codingGlm51 = [
+      {
+        baseUrl: ZAI_CODING_GLOBAL_BASE_URL,
+        endpoint: "coding-global" as const,
+        modelId: "glm-5.1",
+        note: "Verified GLM-5.1 on coding-global endpoint.",
+      },
+      {
+        baseUrl: ZAI_CODING_CN_BASE_URL,
+        endpoint: "coding-cn" as const,
+        modelId: "glm-5.1",
+        note: "Verified GLM-5.1 on coding-cn endpoint.",
+      },
+    ];
+    const codingFallback = [
+      {
+        baseUrl: ZAI_CODING_GLOBAL_BASE_URL,
+        endpoint: "coding-global" as const,
+        modelId: "glm-4.7",
+        note: "Coding Plan endpoint verified, but this key/plan does not expose GLM-5.1 there. Defaulting to GLM-4.7.",
+      },
+      {
+        baseUrl: ZAI_CODING_CN_BASE_URL,
+        endpoint: "coding-cn" as const,
+        modelId: "glm-4.7",
+        note: "Coding Plan CN endpoint verified, but this key/plan does not expose GLM-5.1 there. Defaulting to GLM-4.7.",
+      },
+    ];
+
+    switch (params.endpoint) {
+      case "global": {
+        return general.filter((candidate) => candidate.endpoint === "global");
+      }
+      case "cn": {
+        return general.filter((candidate) => candidate.endpoint === "cn");
+      }
+      case "coding-global": {
+        return [
+          ...codingGlm51.filter((candidate) => candidate.endpoint === "coding-global"),
+          ...codingFallback.filter((candidate) => candidate.endpoint === "coding-global"),
+        ];
+      }
+      case "coding-cn": {
+        return [
+          ...codingGlm51.filter((candidate) => candidate.endpoint === "coding-cn"),
+          ...codingFallback.filter((candidate) => candidate.endpoint === "coding-cn"),
+        ];
+      }
+      default: {
+        return [...general, ...codingGlm51, ...codingFallback];
+      }
+    }
+  })();
+
+  for (const candidate of probeCandidates) {
+    const result = await probeZaiChatCompletions({
+      apiKey: params.apiKey,
+      baseUrl: candidate.baseUrl,
+      fetchFn: params.fetchFn,
+      modelId: candidate.modelId,
+      timeoutMs,
+    });
+    if (result.ok) {
+      return candidate;
+    }
+  }
+
+  return null;
+}

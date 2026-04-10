@@ -1,0 +1,253 @@
+import type { Model } from "@mariozechner/pi-ai";
+import { getModel, streamSimple } from "@mariozechner/pi-ai";
+import { describe, expect, it } from "vitest";
+import type { OpenClawConfig } from "../config/config.js";
+import { isLiveTestEnabled } from "./live-test-helpers.js";
+import { applyExtraParamsToAgent } from "./pi-embedded-runner.js";
+
+const OPENAI_KEY = process.env.OPENAI_API_KEY ?? "";
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? "";
+const GEMINI_KEY = process.env.GEMINI_API_KEY ?? "";
+const LIVE = isLiveTestEnabled(["OPENAI_LIVE_TEST"]);
+const ANTHROPIC_LIVE = isLiveTestEnabled(["ANTHROPIC_LIVE_TEST"]);
+const GEMINI_LIVE = isLiveTestEnabled(["GEMINI_LIVE_TEST"]);
+
+const describeLive = LIVE && OPENAI_KEY ? describe : describe.skip;
+const describeAnthropicLive = ANTHROPIC_LIVE && ANTHROPIC_KEY ? describe : describe.skip;
+const describeGeminiLive = GEMINI_LIVE && GEMINI_KEY ? describe : describe.skip;
+
+describeLive("pi embedded extra params (live)", () => {
+  it("applies config maxTokens to openai streamFn", async () => {
+    const model = getModel("openai", "gpt-5.4") as unknown as Model<"openai-completions">;
+
+    const cfg: OpenClawConfig = {
+      agents: {
+        defaults: {
+          models: {
+            "openai/gpt-5.4": {
+              // OpenAI Responses enforces a minimum max_output_tokens of 16.
+              params: {
+                maxTokens: 16,
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const agent = { streamFn: streamSimple };
+
+    applyExtraParamsToAgent(agent, cfg, "openai", model.id);
+
+    const stream = agent.streamFn(
+      model,
+      {
+        messages: [
+          {
+            content: "Write the alphabet letters A through Z as words separated by commas.",
+            role: "user",
+            timestamp: Date.now(),
+          },
+        ],
+      },
+      { apiKey: OPENAI_KEY },
+    );
+
+    let stopReason: string | undefined;
+    let outputTokens: number | undefined;
+    for await (const event of stream) {
+      if (event.type === "done") {
+        stopReason = event.reason;
+        outputTokens = event.message.usage.output;
+      }
+    }
+
+    expect(stopReason).toBeDefined();
+    expect(outputTokens).toBeDefined();
+    // Should respect maxTokens from config (16) — allow a small buffer for provider rounding.
+    expect(outputTokens ?? 0).toBeLessThanOrEqual(20);
+  }, 30_000);
+
+  it("verifies OpenAI fast-mode service_tier semantics against the live API", async () => {
+    const headers = {
+      authorization: `Bearer ${OPENAI_KEY}`,
+      "content-type": "application/json",
+    };
+
+    const runProbe = async (serviceTier: "default" | "priority") => {
+      const res = await fetch("https://api.openai.com/v1/responses", {
+        body: JSON.stringify({
+          input: "Reply with OK.",
+          max_output_tokens: 32,
+          model: "gpt-5.4",
+          service_tier: serviceTier,
+        }),
+        headers,
+        method: "POST",
+      });
+      const json = (await res.json()) as {
+        error?: { message?: string };
+        service_tier?: string;
+        status?: string;
+      };
+      expect(res.ok, json.error?.message ?? `HTTP ${res.status}`).toBe(true);
+      return json;
+    };
+
+    const standard = await runProbe("default");
+    expect(standard.service_tier).toBe("default");
+    expect(standard.status).toBe("completed");
+
+    const fast = await runProbe("priority");
+    expect(fast.service_tier).toBe("priority");
+    expect(fast.status).toBe("completed");
+  }, 45_000);
+});
+
+describeAnthropicLive("pi embedded extra params (anthropic live)", () => {
+  it("verifies Anthropic fast-mode service_tier semantics against the live API", async () => {
+    const headers = {
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+      "x-api-key": ANTHROPIC_KEY,
+    };
+
+    const runProbe = async (serviceTier: "auto" | "standard_only") => {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        body: JSON.stringify({
+          max_tokens: 32,
+          messages: [{ role: "user", content: "Reply with OK." }],
+          model: "claude-sonnet-4-6",
+          service_tier: serviceTier,
+        }),
+        headers,
+        method: "POST",
+      });
+      const json = (await res.json()) as {
+        error?: { message?: string };
+        stop_reason?: string;
+        usage?: { service_tier?: string };
+      };
+      expect(res.ok, json.error?.message ?? `HTTP ${res.status}`).toBe(true);
+      return json;
+    };
+
+    const standard = await runProbe("standard_only");
+    expect(standard.usage?.service_tier).toBe("standard");
+    expect(standard.stop_reason).toBe("end_turn");
+
+    const fast = await runProbe("auto");
+    expect(["standard", "priority"]).toContain(fast.usage?.service_tier);
+    expect(fast.stop_reason).toBe("end_turn");
+  }, 45_000);
+});
+
+describeGeminiLive("pi embedded extra params (gemini live)", () => {
+  function buildGeminiPayloadThroughWrapper(params: {
+    model: Model<"google-generative-ai">;
+    oneByOneRedPngBase64: string;
+    includeImage?: boolean;
+    prompt: string;
+  }): Record<string, unknown> {
+    const userContent: ({ type: "text"; text: string } | { type: "image"; mimeType: string; data: string })[] = [{ text: params.prompt, type: "text" }];
+    if (params.includeImage ?? true) {
+      userContent.push({
+        data: params.oneByOneRedPngBase64,
+        mimeType: "image/png",
+        type: "image",
+      });
+    }
+
+    const payload: Record<string, unknown> = {
+      config: {
+        maxOutputTokens: 64,
+        thinkingConfig: {
+          includeThoughts: true,
+          thinkingBudget: 32_768,
+        },
+      },
+      contents: [{ parts: userContent.map(mapGeminiContentPart), role: "user" }],
+      model: params.model.id,
+    };
+
+    const baseStreamFn = (
+      _model: Model<"google-generative-ai">,
+      _context: unknown,
+      options?: {
+        onPayload?: (payload: unknown) => unknown;
+      },
+    ) => {
+      options?.onPayload?.(payload);
+      return {} as ReturnType<typeof streamSimple>;
+    };
+    const agent = { streamFn: baseStreamFn as typeof streamSimple };
+    applyExtraParamsToAgent(agent, undefined, "google", params.model.id, undefined, "high");
+    void agent.streamFn(
+      params.model,
+      { messages: [] },
+      {
+        maxTokens: 64,
+        reasoning: "high",
+      },
+    );
+    return payload;
+  }
+
+  function mapGeminiContentPart(
+    part: { type: "text"; text: string } | { type: "image"; mimeType: string; data: string },
+  ): { text: string } | { inlineData: { mimeType: string; data: string } } {
+    if (part.type === "text") {
+      return { text: part.text };
+    }
+    return {
+      inlineData: {
+        data: part.data,
+        mimeType: part.mimeType,
+      },
+    };
+  }
+
+  // Payload mutation is covered by extra-params.google.test.ts, and Gemini
+  // Roundtrips are exercised by the dedicated live gateway/model suites. This
+  // Direct live test currently flakes on Vitest timeout teardown without
+  // Providing unique signal.
+  it.skip("sanitizes Gemini thinking payload and keeps image parts with reasoning enabled", async () => {
+    const model = getModel("google", "gemini-2.5-pro") as unknown as Model<"google-generative-ai">;
+
+    const oneByOneRedPngBase64 =
+      "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP4zwAAAgIBAJBzWgkAAAAASUVORK5CYII=";
+
+    const capturedPayload = buildGeminiPayloadThroughWrapper({
+      includeImage: true,
+      model,
+      oneByOneRedPngBase64,
+      prompt: "What color is this image? Reply with one word.",
+    });
+
+    expect(capturedPayload).toBeDefined();
+    const thinkingConfig = (
+      capturedPayload?.config as { thinkingConfig?: Record<string, unknown> } | undefined
+    )?.thinkingConfig;
+    const thinkingBudget = thinkingConfig?.thinkingBudget;
+    if (thinkingBudget !== undefined) {
+      expect(typeof thinkingBudget).toBe("number");
+      expect(thinkingBudget).toBeGreaterThanOrEqual(0);
+    }
+    // Gemini 3.1-specific thinkingLevel fill is covered by
+    // Extra-params.google.test.ts. The live probe uses the stable 2.5 model and
+    // Only verifies that we never forward an invalid negative budget.
+
+    const imagePart = (
+      capturedPayload?.contents as
+        | { parts?: { inlineData?: { mimeType?: string; data?: string } }[] }[]
+        | undefined
+    )?.[0]?.parts?.find((part) => part.inlineData !== undefined)?.inlineData;
+    expect(imagePart).toEqual({
+      data: oneByOneRedPngBase64,
+      mimeType: "image/png",
+    });
+
+    // End-to-end Gemini roundtrips are already covered elsewhere. This live
+    // Check stays focused on the request payload we generate for those suites.
+  }, 60_000);
+});

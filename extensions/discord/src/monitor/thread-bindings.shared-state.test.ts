@@ -1,0 +1,34 @@
+import { beforeEach, describe, expect, it } from "vitest";
+import {
+  createThreadBindingManager,
+  getThreadBindingManager,
+  __testing as threadBindingsTesting,
+} from "./thread-bindings.js";
+
+interface ThreadBindingsModule {
+  getThreadBindingManager: typeof getThreadBindingManager;
+}
+
+async function loadThreadBindingsViaAlternateLoader(): Promise<ThreadBindingsModule> {
+  const fallbackPath = "./thread-bindings.ts?vitest-loader-fallback";
+  return (await import(/* @vite-ignore */ fallbackPath)) as ThreadBindingsModule;
+}
+
+describe("thread binding manager state", () => {
+  beforeEach(() => {
+    threadBindingsTesting.resetThreadBindingsForTests();
+  });
+
+  it("shares managers between ESM and alternate-loaded module instances", async () => {
+    const viaJiti = await loadThreadBindingsViaAlternateLoader();
+
+    createThreadBindingManager({
+      accountId: "work",
+      enableSweeper: false,
+      persist: false,
+    });
+
+    expect(getThreadBindingManager("work")).not.toBeNull();
+    expect(viaJiti.getThreadBindingManager("work")).not.toBeNull();
+  });
+});

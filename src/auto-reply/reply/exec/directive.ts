@@ -1,0 +1,208 @@
+import {
+  type ExecAsk,
+  type ExecSecurity,
+  type ExecTarget,
+  normalizeExecTarget,
+} from "../../../infra/exec-approvals.js";
+import { normalizeOptionalLowercaseString } from "../../../shared/string-coerce.js";
+import { skipDirectiveArgPrefix, takeDirectiveToken } from "../directive-parsing.js";
+
+interface ExecDirectiveParse {
+  cleaned: string;
+  hasDirective: boolean;
+  execHost?: ExecTarget;
+  execSecurity?: ExecSecurity;
+  execAsk?: ExecAsk;
+  execNode?: string;
+  rawExecHost?: string;
+  rawExecSecurity?: string;
+  rawExecAsk?: string;
+  rawExecNode?: string;
+  hasExecOptions: boolean;
+  invalidHost: boolean;
+  invalidSecurity: boolean;
+  invalidAsk: boolean;
+  invalidNode: boolean;
+}
+
+function normalizeExecSecurity(value?: string): ExecSecurity | undefined {
+  const normalized = normalizeOptionalLowercaseString(value);
+  if (normalized === "deny" || normalized === "allowlist" || normalized === "full") {
+    return normalized;
+  }
+  return undefined;
+}
+
+function normalizeExecAsk(value?: string): ExecAsk | undefined {
+  const normalized = normalizeOptionalLowercaseString(value);
+  if (normalized === "off" || normalized === "on-miss" || normalized === "always") {
+    return normalized as ExecAsk;
+  }
+  return undefined;
+}
+
+function parseExecDirectiveArgs(raw: string): Omit<
+  ExecDirectiveParse,
+  "cleaned" | "hasDirective"
+> & {
+  consumed: number;
+} {
+  const len = raw.length;
+  let i = skipDirectiveArgPrefix(raw);
+  let consumed = i;
+  let execHost: ExecTarget | undefined;
+  let execSecurity: ExecSecurity | undefined;
+  let execAsk: ExecAsk | undefined;
+  let execNode: string | undefined;
+  let rawExecHost: string | undefined;
+  let rawExecSecurity: string | undefined;
+  let rawExecAsk: string | undefined;
+  let rawExecNode: string | undefined;
+  let hasExecOptions = false;
+  let invalidHost = false;
+  let invalidSecurity = false;
+  let invalidAsk = false;
+  let invalidNode = false;
+
+  const takeToken = (): string | null => {
+    const res = takeDirectiveToken(raw, i);
+    i = res.nextIndex;
+    return res.token;
+  };
+
+  const splitToken = (token: string): { key: string; value: string } | null => {
+    const eq = token.indexOf("=");
+    const colon = token.indexOf(":");
+    const idx = eq === -1 ? colon : (colon === -1 ? eq : Math.min(eq, colon));
+    if (idx === -1) {
+      return null;
+    }
+    const key = normalizeOptionalLowercaseString(token.slice(0, idx));
+    const value = token.slice(idx + 1).trim();
+    if (!key) {
+      return null;
+    }
+    return { key, value };
+  };
+
+  while (i < len) {
+    const token = takeToken();
+    if (!token) {
+      break;
+    }
+    const parsed = splitToken(token);
+    if (!parsed) {
+      break;
+    }
+    const { key, value } = parsed;
+    if (key === "host") {
+      rawExecHost = value;
+      execHost = normalizeExecTarget(value) ?? undefined;
+      if (!execHost) {
+        invalidHost = true;
+      }
+      hasExecOptions = true;
+      consumed = i;
+      continue;
+    }
+    if (key === "security") {
+      rawExecSecurity = value;
+      execSecurity = normalizeExecSecurity(value);
+      if (!execSecurity) {
+        invalidSecurity = true;
+      }
+      hasExecOptions = true;
+      consumed = i;
+      continue;
+    }
+    if (key === "ask") {
+      rawExecAsk = value;
+      execAsk = normalizeExecAsk(value);
+      if (!execAsk) {
+        invalidAsk = true;
+      }
+      hasExecOptions = true;
+      consumed = i;
+      continue;
+    }
+    if (key === "node") {
+      rawExecNode = value;
+      const trimmed = value.trim();
+      if (!trimmed) {
+        invalidNode = true;
+      } else {
+        execNode = trimmed;
+      }
+      hasExecOptions = true;
+      consumed = i;
+      continue;
+    }
+    break;
+  }
+
+  return {
+    consumed,
+    execAsk,
+    execHost,
+    execNode,
+    execSecurity,
+    hasExecOptions,
+    invalidAsk,
+    invalidHost,
+    invalidNode,
+    invalidSecurity,
+    rawExecAsk,
+    rawExecHost,
+    rawExecNode,
+    rawExecSecurity,
+  };
+}
+
+export function extractExecDirective(body?: string): ExecDirectiveParse {
+  if (!body) {
+    return {
+      cleaned: "",
+      hasDirective: false,
+      hasExecOptions: false,
+      invalidAsk: false,
+      invalidHost: false,
+      invalidNode: false,
+      invalidSecurity: false,
+    };
+  }
+  const re = /(?:^|\s)\/exec(?=$|\s|:)/i;
+  const match = re.exec(body);
+  if (!match) {
+    return {
+      cleaned: body.trim(),
+      hasDirective: false,
+      hasExecOptions: false,
+      invalidAsk: false,
+      invalidHost: false,
+      invalidNode: false,
+      invalidSecurity: false,
+    };
+  }
+  const start = match.index + match[0].indexOf("/exec");
+  const argsStart = start + "/exec".length;
+  const parsed = parseExecDirectiveArgs(body.slice(argsStart));
+  const cleanedRaw = `${body.slice(0, start)} ${body.slice(argsStart + parsed.consumed)}`;
+  const cleaned = cleanedRaw.replace(/\s+/g, " ").trim();
+  return {
+    cleaned,
+    execAsk: parsed.execAsk,
+    execHost: parsed.execHost,
+    execNode: parsed.execNode,
+    execSecurity: parsed.execSecurity,
+    hasDirective: true,
+    hasExecOptions: parsed.hasExecOptions,
+    invalidAsk: parsed.invalidAsk,
+    invalidHost: parsed.invalidHost,
+    invalidNode: parsed.invalidNode,
+    invalidSecurity: parsed.invalidSecurity,
+    rawExecAsk: parsed.rawExecAsk,
+    rawExecHost: parsed.rawExecHost,
+    rawExecNode: parsed.rawExecNode,
+    rawExecSecurity: parsed.rawExecSecurity,
+  };
+}

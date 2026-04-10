@@ -1,0 +1,83 @@
+import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
+import type { OpenClawConfig } from "../../config/config.js";
+import { loadConfig } from "../../config/config.js";
+import { applyPluginAutoEnable } from "../../config/plugin-auto-enable.js";
+import { createSubsystemLogger } from "../../logging.js";
+import type { PluginLoadOptions } from "../loader.js";
+import type { PluginLogger } from "../types.js";
+
+const log = createSubsystemLogger("plugins");
+
+export interface PluginRuntimeLoadContext {
+  rawConfig: OpenClawConfig;
+  config: OpenClawConfig;
+  activationSourceConfig: OpenClawConfig;
+  autoEnabledReasons: Readonly<Record<string, string[]>>;
+  workspaceDir: string | undefined;
+  env: NodeJS.ProcessEnv;
+  logger: PluginLogger;
+}
+
+export type PluginRuntimeResolvedLoadValues = Pick<
+  PluginLoadOptions,
+  "config" | "activationSourceConfig" | "autoEnabledReasons" | "workspaceDir" | "env" | "logger"
+>;
+
+export interface PluginRuntimeLoadContextOptions {
+  config?: OpenClawConfig;
+  activationSourceConfig?: OpenClawConfig;
+  env?: NodeJS.ProcessEnv;
+  workspaceDir?: string;
+  logger?: PluginLogger;
+}
+
+export function createPluginRuntimeLoaderLogger(): PluginLogger {
+  return {
+    debug: (message) => log.debug(message),
+    error: (message) => log.error(message),
+    info: (message) => log.info(message),
+    warn: (message) => log.warn(message),
+  };
+}
+
+export function resolvePluginRuntimeLoadContext(
+  options?: PluginRuntimeLoadContextOptions,
+): PluginRuntimeLoadContext {
+  const env = options?.env ?? process.env;
+  const rawConfig = options?.config ?? loadConfig();
+  const autoEnabled = applyPluginAutoEnable({ config: rawConfig, env });
+  const {config} = autoEnabled;
+  const workspaceDir =
+    options?.workspaceDir ?? resolveAgentWorkspaceDir(config, resolveDefaultAgentId(config));
+  return {
+    activationSourceConfig: options?.activationSourceConfig ?? rawConfig,
+    autoEnabledReasons: autoEnabled.autoEnabledReasons,
+    config,
+    env,
+    logger: options?.logger ?? createPluginRuntimeLoaderLogger(),
+    rawConfig,
+    workspaceDir,
+  };
+}
+
+export function buildPluginRuntimeLoadOptions(
+  context: PluginRuntimeLoadContext,
+  overrides?: Partial<PluginLoadOptions>,
+): PluginLoadOptions {
+  return buildPluginRuntimeLoadOptionsFromValues(context, overrides);
+}
+
+export function buildPluginRuntimeLoadOptionsFromValues(
+  values: PluginRuntimeResolvedLoadValues,
+  overrides?: Partial<PluginLoadOptions>,
+): PluginLoadOptions {
+  return {
+    activationSourceConfig: values.activationSourceConfig,
+    autoEnabledReasons: values.autoEnabledReasons,
+    config: values.config,
+    env: values.env,
+    logger: values.logger,
+    workspaceDir: values.workspaceDir,
+    ...overrides,
+  };
+}

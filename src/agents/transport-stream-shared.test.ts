@@ -1,0 +1,75 @@
+import { describe, expect, it, vi } from "vitest";
+import {
+  failTransportStream,
+  finalizeTransportStream,
+  mergeTransportHeaders,
+  sanitizeTransportPayloadText,
+} from "./transport-stream-shared.js";
+
+describe("transport stream shared helpers", () => {
+  it("sanitizes unpaired surrogate code units", () => {
+    const high = String.fromCharCode(0xD8_3D);
+    const low = String.fromCharCode(0xDC_00);
+
+    expect(sanitizeTransportPayloadText(`left${high}right`)).toBe("leftright");
+    expect(sanitizeTransportPayloadText(`left${low}right`)).toBe("leftright");
+    expect(sanitizeTransportPayloadText("emoji 🙈 ok")).toBe("emoji 🙈 ok");
+  });
+
+  it("merges transport headers in source order", () => {
+    expect(
+      mergeTransportHeaders(
+        { accept: "text/event-stream", "x-base": "one" },
+        { authorization: "Bearer token" },
+        { "x-base": "two" },
+      ),
+    ).toEqual({
+      accept: "text/event-stream",
+      authorization: "Bearer token",
+      "x-base": "two",
+    });
+    expect(mergeTransportHeaders(undefined, undefined)).toBeUndefined();
+  });
+
+  it("finalizes successful transport streams", () => {
+    const push = vi.fn();
+    const end = vi.fn();
+    const output = { stopReason: "stop" };
+
+    finalizeTransportStream({
+      output,
+      stream: { end, push },
+    });
+
+    expect(push).toHaveBeenCalledWith({
+      message: output,
+      reason: "stop",
+      type: "done",
+    });
+    expect(end).toHaveBeenCalledTimes(1);
+  });
+
+  it("marks transport stream failures and runs cleanup", () => {
+    const push = vi.fn();
+    const end = vi.fn();
+    const cleanup = vi.fn();
+    const output: { stopReason: string; errorMessage?: string } = { stopReason: "stop" };
+
+    failTransportStream({
+      cleanup,
+      error: new Error("boom"),
+      output,
+      stream: { end, push },
+    });
+
+    expect(cleanup).toHaveBeenCalledTimes(1);
+    expect(output.stopReason).toBe("error");
+    expect(output.errorMessage).toBe("boom");
+    expect(push).toHaveBeenCalledWith({
+      error: output,
+      reason: "error",
+      type: "error",
+    });
+    expect(end).toHaveBeenCalledTimes(1);
+  });
+});

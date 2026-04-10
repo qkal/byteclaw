@@ -1,0 +1,10 @@
+import { type PluginRegistry, createEmptyPluginRegistry } from "../../../plugins/registry.js";
+
+export const createTestRegistry = (overrides: Partial<PluginRegistry> = {}): PluginRegistry => {
+  const merged = { ...createEmptyPluginRegistry(), ...overrides };
+  return {
+    ...merged,
+    gatewayHandlers: merged.gatewayHandlers ?? {},
+    httpRoutes: merged.httpRoutes ?? [],
+  };
+};
