@@ -107,7 +107,7 @@
 ### Phase 2: Script Migration (Build and Tooling)
 
 **Status:** Not Started  
-**Blocked By:** Phase 1 completion, resolution of missing postinstall script
+**Blocked By:** Resolution of missing postinstall script (scripts/postinstall-bundled-plugins.mjs)
 
 #### Planned Tasks
 
@@ -422,6 +422,14 @@ Each phase has defined rollback triggers in the migration plan. This section tra
 ---
 
 ## References
+
+- Migration Plan: `docs/bun-first-migration-plan.md`
+- Phase 0 Audit: `docs/bun-migration-phase0-audit.md`
+- Git Workflow: `docs/git-workflow.md`
+
+---
+
+**Last Updated:** 2026-04-10
 
 - Migration Plan: `docs/bun-first-migration-plan.md`
 - Phase 0 Audit: `docs/bun-migration-phase0-audit.md`
