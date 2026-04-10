@@ -42,7 +42,9 @@ class BunSubprocessStream implements SubprocessStream {
     const read = async () => {
       try {
         while (true) {
-          const { done, value } = await this.#reader.read();
+          const result = await this.#reader.read();
+          if (!result) break;
+          const { done, value } = result;
           if (done) {
             this.#closed = true;
             this.#emitter.emit('end');
@@ -122,7 +124,7 @@ export class BunChildProcessWrapper
   extends EventEmitter
   implements ChildProcessWrapper
 {
-  #process: ReturnType<typeof Bun.spawn>;
+  #process: ReturnType<typeof Bun.spawn> | null;
   #exitCode: number | null = null;
   #signalCode: NodeJS.Signals | null = null;
   #killed = false;
