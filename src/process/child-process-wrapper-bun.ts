@@ -3,12 +3,12 @@
  * Emulates ChildProcess behavior using Bun's subprocess API.
  */
 
-import { EventEmitter } from "node:events";
+import { EventEmitter } from 'node:events';
 import type {
   ChildProcessWrapper,
   SubprocessStream,
   SubprocessWrapperOptions,
-} from "./child-process-wrapper.js";
+} from './child-process-wrapper.js';
 
 /**
  * Simple stream wrapper for Bun subprocess streams
@@ -20,15 +20,18 @@ class BunSubprocessStream implements SubprocessStream {
   #closed = false;
 
   constructor(
-    public stream: ReadableStream<Uint8Array> | WritableStream<Uint8Array> | null,
+    public stream:
+      | ReadableStream<Uint8Array>
+      | WritableStream<Uint8Array>
+      | null,
     private isReadable: boolean,
   ) {
     if (stream) {
       if (isReadable) {
-        this.#reader = stream.getReader();
+        this.#reader = (stream as ReadableStream<Uint8Array>).getReader();
         this.#startReading();
       } else {
-        this.#writer = stream.getWriter();
+        this.#writer = (stream as WritableStream<Uint8Array>).getWriter();
       }
     }
   }
@@ -42,15 +45,15 @@ class BunSubprocessStream implements SubprocessStream {
           const { done, value } = await this.#reader.read();
           if (done) {
             this.#closed = true;
-            this.#emitter.emit("end");
-            this.#emitter.emit("close");
+            this.#emitter.emit('end');
+            this.#emitter.emit('close');
             break;
           }
-          this.#emitter.emit("data", Buffer.from(value));
+          this.#emitter.emit('data', Buffer.from(value));
         }
       } catch (error) {
         if (!this.#closed) {
-          this.#emitter.emit("error", error);
+          this.#emitter.emit('error', error);
         }
       }
     };
@@ -60,7 +63,7 @@ class BunSubprocessStream implements SubprocessStream {
   write(data: string | Buffer): boolean {
     if (!this.#writer || this.#closed) return false;
     const encoder = new TextEncoder();
-    const buffer = typeof data === "string" ? encoder.encode(data) : data;
+    const buffer = typeof data === 'string' ? encoder.encode(data) : data;
     this.#writer.write(buffer);
     return true;
   }
@@ -90,14 +93,14 @@ class BunSubprocessStream implements SubprocessStream {
 
   pipe(destination: unknown): unknown {
     // Basic pipe implementation
-    this.on("data", (chunk) => {
+    this.on('data', (chunk) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if ((destination as any).write) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (destination as any).write(chunk);
       }
     });
-    this.on("end", () => {
+    this.on('end', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if ((destination as any).end) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -115,7 +118,10 @@ class BunSubprocessStream implements SubprocessStream {
 /**
  * Bun ChildProcess wrapper that emulates Node.js ChildProcess using Bun.spawn
  */
-export class BunChildProcessWrapper extends EventEmitter implements ChildProcessWrapper {
+export class BunChildProcessWrapper
+  extends EventEmitter
+  implements ChildProcessWrapper
+{
   #process: ReturnType<typeof Bun.spawn>;
   #exitCode: number | null = null;
   #signalCode: NodeJS.Signals | null = null;
@@ -125,29 +131,38 @@ export class BunChildProcessWrapper extends EventEmitter implements ChildProcess
   #stdoutStream: SubprocessStream | null;
   #stderrStream: SubprocessStream | null;
 
-  constructor(process: ReturnType<typeof Bun.spawn>, stdio: SubprocessWrapperOptions["stdio"]) {
+  constructor(
+    process: ReturnType<typeof Bun.spawn>,
+    stdio: SubprocessWrapperOptions['stdio'],
+  ) {
     super();
     this.#process = process;
 
     // Create stream wrappers
-    const usePipe = stdio === "pipe" || stdio === undefined;
+    const usePipe = stdio === 'pipe' || stdio === undefined;
     this.#stdinStream =
-      process.stdin && usePipe ? new BunSubprocessStream(process.stdin, false) : null;
+      process.stdin && usePipe
+        ? new BunSubprocessStream(process.stdin, false)
+        : null;
     this.#stdoutStream =
-      process.stdout && usePipe ? new BunSubprocessStream(process.stdout, true) : null;
+      process.stdout && usePipe
+        ? new BunSubprocessStream(process.stdout, true)
+        : null;
     this.#stderrStream =
-      process.stderr && usePipe ? new BunSubprocessStream(process.stderr, true) : null;
+      process.stderr && usePipe
+        ? new BunSubprocessStream(process.stderr, true)
+        : null;
 
     // Handle exit
     process.exited.then((exitCode) => {
       this.#exitCode = exitCode;
-      this.emit("exit", exitCode, null);
-      this.emit("close", exitCode, null);
+      this.emit('exit', exitCode, null);
+      this.emit('close', exitCode, null);
     });
 
     // Emit spawn event
     setImmediate(() => {
-      this.emit("spawn");
+      this.emit('spawn');
     });
   }
 
@@ -193,7 +208,11 @@ export class BunChildProcessWrapper extends EventEmitter implements ChildProcess
   }
 
   kill(signal?: NodeJS.Signals): boolean {
-    const signalNum = signal ? (typeof signal === "number" ? signal : undefined) : undefined;
+    const signalNum = signal
+      ? typeof signal === 'number'
+        ? signal
+        : undefined
+      : undefined;
     this.#killed = true;
     this.#process.kill(signalNum as number | undefined);
     return true;
@@ -258,18 +277,20 @@ export function createBunChildProcessWrapper(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Bun = (globalThis as any).Bun;
 
-  const cmd = options.shell ? ["sh", "-c", command + " " + args.join(" ")] : [command, ...args];
+  const cmd = options.shell
+    ? ['sh', '-c', command + ' ' + args.join(' ')]
+    : [command, ...args];
 
-  const usePipe = options.stdio === "pipe" || options.stdio === undefined;
-  const useInherit = options.stdio === "inherit";
+  const usePipe = options.stdio === 'pipe' || options.stdio === undefined;
+  const useInherit = options.stdio === 'inherit';
 
   const process = Bun.spawn({
     cmd,
     cwd: options.cwd,
     env: options.env,
-    stdout: usePipe ? "pipe" : useInherit ? "inherit" : "ignore",
-    stderr: usePipe ? "pipe" : useInherit ? "inherit" : "ignore",
-    stdin: usePipe ? "pipe" : useInherit ? "inherit" : "ignore",
+    stdout: usePipe ? 'pipe' : useInherit ? 'inherit' : 'ignore',
+    stderr: usePipe ? 'pipe' : useInherit ? 'inherit' : 'ignore',
+    stdin: usePipe ? 'pipe' : useInherit ? 'inherit' : 'ignore',
   });
 
   return new BunChildProcessWrapper(process, options.stdio);

@@ -211,7 +211,6 @@ export async function summarizeText(
     }
   } catch (error) {
     const ttsError = error as Error;
-    log.warn(`TTS request failed: ${ttsError.message}`);
     if (ttsError.name === 'AbortError') {
       throw new Error('Summarization timed out', { cause: error });
     }
