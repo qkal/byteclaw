@@ -106,8 +106,31 @@
 
 ### Phase 2: Script Migration (Build and Tooling)
 
-**Status:** Not Started  
-**Blocked By:** Resolution of missing postinstall script (scripts/postinstall-bundled-plugins.mjs)
+**Status:** Partially Completed  
+**Started:** 2026-04-10
+
+#### Completed Tasks
+
+- [x] Create stub postinstall script (scripts/postinstall-bundled-plugins.mjs) - TODO: Replace with actual implementation
+- [x] Create fallback wrapper script (scripts/run-with-fallback.mjs)
+- [x] Migrate build scripts (build, build:watch, build:docker, build:strict-smoke)
+
+#### Pending Tasks
+
+- [ ] Migrate lint scripts
+- [ ] Migrate code generation scripts
+- [ ] Validate each migration
+
+#### Exit Criteria
+
+- [x] All build scripts Bun-first with Node fallback
+- [ ] All lint scripts Bun-first with fallback
+- [ ] All code generation scripts Bun-first with fallback
+- [ ] All scripts validated to produce identical output under both runtimes
+
+#### Notes
+
+Created stub postinstall script to unblock Phase 2. The actual implementation needs to be replaced. Build scripts now use the fallback wrapper for Bun-first execution with Node fallback.
 
 #### Planned Tasks
 
