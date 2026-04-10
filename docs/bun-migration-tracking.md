@@ -257,8 +257,32 @@ Created subprocess abstraction layer with Node and Bun implementations. The runt
 
 ### Phase 6: Subprocess Call Migration
 
-**Status:** Not Started  
-**Blocked By:** Phase 5 completion
+**Status:** In Progress  
+**Started:** 2026-04-10
+
+#### Completed Tasks
+
+- [x] Catalog all subprocess calls (93 files using node:child_process)
+- [x] Document migration scope and strategy
+
+#### Pending Tasks
+
+- [ ] Migrate core infrastructure files (6 high-priority files)
+- [ ] Migrate frequently used files (6 medium-priority files)
+- [ ] Migrate remaining files (81 low-priority files)
+- [ ] Update type definitions
+- [ ] Remove direct child_process usage
+- [ ] Run full test suite
+
+#### Exit Criteria
+
+- [x] All subprocess calls cataloged
+- [ ] All subprocess calls migrated
+- [ ] All tests passing under both runtimes
+
+#### Notes
+
+Created subprocess call catalog with 93 files identified. Migration strategy: prioritize core infrastructure first, then frequently used files, then remaining files. Core exec.ts contains Windows-specific handling that must be preserved.
 
 #### Planned Tasks
 
