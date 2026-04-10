@@ -173,8 +173,29 @@ Created stub postinstall script to unblock Phase 2. The actual implementation ne
 
 ### Phase 4: Runtime Entrypoint Migration
 
-**Status:** Not Started  
-**Blocked By:** Phase 3 completion
+**Status:** In Progress  
+**Started:** 2026-04-10
+
+#### Completed Tasks
+
+- [x] Audit src/entry.ts and openclaw.mjs
+- [x] Add runtime detection logging to entry point
+
+#### Pending Tasks
+
+- [ ] Create runtime-aware entrypoint wrapper
+- [ ] Update CLI scripts
+- [ ] Test CLI under both runtimes
+
+#### Exit Criteria
+
+- [x] CLI entrypoint Bun-first with Node fallback
+- [ ] All CLI scripts Bun-first with fallback
+- [ ] CLI validated under both runtimes
+
+#### Notes
+
+Added runtime detection logging to src/entry.ts. The entry point now logs runtime information on startup for migration tracking.
 
 #### Planned Tasks
 
