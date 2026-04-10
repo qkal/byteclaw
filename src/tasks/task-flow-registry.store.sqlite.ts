@@ -1,13 +1,17 @@
-import { chmodSync, existsSync, mkdirSync } from "node:fs";
-import type { DatabaseSync, StatementSync } from "node:sqlite";
-import { requireNodeSqlite } from "../infra/node-sqlite.js";
-import type { DeliveryContext } from "../utils/delivery-context.js";
+import { chmodSync, existsSync, mkdirSync } from 'node:fs';
+import type { DatabaseSync, StatementSync } from 'node:sqlite';
+import { requireNodeSqlite } from '../infra/node-sqlite.js';
+import type { DeliveryContext } from '../utils/delivery-context.js';
 import {
   resolveTaskFlowRegistryDir,
   resolveTaskFlowRegistrySqlitePath,
-} from "./task-flow-registry.paths.js";
-import type { TaskFlowRegistryStoreSnapshot } from "./task-flow-registry.store.js";
-import type { JsonValue, TaskFlowRecord, TaskFlowSyncMode } from "./task-flow-registry.types.js";
+} from './task-flow-registry.paths.js';
+import type { TaskFlowRegistryStoreSnapshot } from './task-flow-registry.store.js';
+import type {
+  JsonValue,
+  TaskFlowRecord,
+  TaskFlowSyncMode,
+} from './task-flow-registry.types.js';
 
 interface FlowRegistryRow {
   flow_id: string;
@@ -17,8 +21,8 @@ interface FlowRegistryRow {
   requester_origin_json: string | null;
   controller_id: string | null;
   revision: number | bigint | null;
-  status: TaskFlowRecord["status"];
-  notify_policy: TaskFlowRecord["notifyPolicy"];
+  status: TaskFlowRecord['status'];
+  notify_policy: TaskFlowRecord['notifyPolicy'];
   goal: string;
   current_step: string | null;
   blocked_task_id: string | null;
@@ -47,13 +51,13 @@ interface FlowRegistryDatabase {
 let cachedDatabase: FlowRegistryDatabase | null = null;
 const FLOW_REGISTRY_DIR_MODE = 0o700;
 const FLOW_REGISTRY_FILE_MODE = 0o600;
-const FLOW_REGISTRY_SIDECAR_SUFFIXES = ["", "-shm", "-wal"] as const;
+const FLOW_REGISTRY_SIDECAR_SUFFIXES = ['', '-shm', '-wal'] as const;
 
 function normalizeNumber(value: number | bigint | null): number | undefined {
-  if (typeof value === "bigint") {
+  if (typeof value === 'bigint') {
     return Number(value);
   }
-  return typeof value === "number" ? value : undefined;
+  return typeof value === 'number' ? value : undefined;
 }
 
 function serializeJson(value: unknown): string | null {
@@ -72,16 +76,18 @@ function parseJsonValue<T>(raw: string | null): T | undefined {
 }
 
 function rowToSyncMode(row: FlowRegistryRow): TaskFlowSyncMode {
-  if (row.sync_mode === "task_mirrored" || row.sync_mode === "managed") {
+  if (row.sync_mode === 'task_mirrored' || row.sync_mode === 'managed') {
     return row.sync_mode;
   }
-  return row.shape === "single_task" ? "task_mirrored" : "managed";
+  return row.shape === 'single_task' ? 'task_mirrored' : 'managed';
 }
 
 function rowToFlowRecord(row: FlowRegistryRow): TaskFlowRecord {
   const endedAt = normalizeNumber(row.ended_at);
   const cancelRequestedAt = normalizeNumber(row.cancel_requested_at);
-  const requesterOrigin = parseJsonValue<DeliveryContext>(row.requester_origin_json);
+  const requesterOrigin = parseJsonValue<DeliveryContext>(
+    row.requester_origin_json,
+  );
   const stateJson = parseJsonValue<JsonValue>(row.state_json);
   const waitJson = parseJsonValue<JsonValue>(row.wait_json);
   return {
@@ -220,7 +226,9 @@ function createStatements(db: DatabaseSync): FlowRegistryStatements {
 }
 
 function hasFlowRunsColumn(db: DatabaseSync, columnName: string): boolean {
-  const rows = db.prepare(`PRAGMA table_info(flow_runs)`).all() as { name?: string }[];
+  const rows = db.prepare(`PRAGMA table_info(flow_runs)`).all() as {
+    name?: string;
+  }[];
   return rows.some((row) => row.name === columnName);
 }
 
@@ -248,7 +256,10 @@ function ensureSchema(db: DatabaseSync) {
       ended_at INTEGER
     );
   `);
-  if (!hasFlowRunsColumn(db, "owner_key") && hasFlowRunsColumn(db, "owner_session_key")) {
+  if (
+    !hasFlowRunsColumn(db, 'owner_key') &&
+    hasFlowRunsColumn(db, 'owner_session_key')
+  ) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN owner_key TEXT;`);
     db.exec(`
       UPDATE flow_runs
@@ -256,12 +267,12 @@ function ensureSchema(db: DatabaseSync) {
       WHERE owner_key IS NULL
     `);
   }
-  if (!hasFlowRunsColumn(db, "shape")) {
+  if (!hasFlowRunsColumn(db, 'shape')) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN shape TEXT;`);
   }
-  if (!hasFlowRunsColumn(db, "sync_mode")) {
+  if (!hasFlowRunsColumn(db, 'sync_mode')) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN sync_mode TEXT;`);
-    if (hasFlowRunsColumn(db, "shape")) {
+    if (hasFlowRunsColumn(db, 'shape')) {
       db.exec(`
         UPDATE flow_runs
         SET sync_mode = CASE
@@ -278,7 +289,7 @@ function ensureSchema(db: DatabaseSync) {
       `);
     }
   }
-  if (!hasFlowRunsColumn(db, "controller_id")) {
+  if (!hasFlowRunsColumn(db, 'controller_id')) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN controller_id TEXT;`);
   }
   db.exec(`
@@ -287,7 +298,7 @@ function ensureSchema(db: DatabaseSync) {
     WHERE sync_mode = 'managed'
       AND (controller_id IS NULL OR trim(controller_id) = '')
   `);
-  if (!hasFlowRunsColumn(db, "revision")) {
+  if (!hasFlowRunsColumn(db, 'revision')) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN revision INTEGER;`);
     db.exec(`
       UPDATE flow_runs
@@ -295,24 +306,30 @@ function ensureSchema(db: DatabaseSync) {
       WHERE revision IS NULL
     `);
   }
-  if (!hasFlowRunsColumn(db, "blocked_task_id")) {
+  if (!hasFlowRunsColumn(db, 'blocked_task_id')) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN blocked_task_id TEXT;`);
   }
-  if (!hasFlowRunsColumn(db, "blocked_summary")) {
+  if (!hasFlowRunsColumn(db, 'blocked_summary')) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN blocked_summary TEXT;`);
   }
-  if (!hasFlowRunsColumn(db, "state_json")) {
+  if (!hasFlowRunsColumn(db, 'state_json')) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN state_json TEXT;`);
   }
-  if (!hasFlowRunsColumn(db, "wait_json")) {
+  if (!hasFlowRunsColumn(db, 'wait_json')) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN wait_json TEXT;`);
   }
-  if (!hasFlowRunsColumn(db, "cancel_requested_at")) {
+  if (!hasFlowRunsColumn(db, 'cancel_requested_at')) {
     db.exec(`ALTER TABLE flow_runs ADD COLUMN cancel_requested_at INTEGER;`);
   }
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_flow_runs_status ON flow_runs(status);`);
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_flow_runs_owner_key ON flow_runs(owner_key);`);
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_flow_runs_updated_at ON flow_runs(updated_at);`);
+  db.exec(
+    `CREATE INDEX IF NOT EXISTS idx_flow_runs_status ON flow_runs(status);`,
+  );
+  db.exec(
+    `CREATE INDEX IF NOT EXISTS idx_flow_runs_owner_key ON flow_runs(owner_key);`,
+  );
+  db.exec(
+    `CREATE INDEX IF NOT EXISTS idx_flow_runs_updated_at ON flow_runs(updated_at);`,
+  );
 }
 
 function ensureFlowRegistryPermissions(pathname: string) {
@@ -353,28 +370,32 @@ function openFlowRegistryDatabase(): FlowRegistryDatabase {
   return cachedDatabase;
 }
 
-function withWriteTransaction(write: (statements: FlowRegistryStatements) => void) {
+function withWriteTransaction(
+  write: (statements: FlowRegistryStatements) => void,
+) {
   const { db, path, statements } = openFlowRegistryDatabase();
-  db.exec("BEGIN IMMEDIATE");
+  db.exec('BEGIN IMMEDIATE');
   try {
     write(statements);
-    db.exec("COMMIT");
+    db.exec('COMMIT');
     ensureFlowRegistryPermissions(path);
   } catch (error) {
-    db.exec("ROLLBACK");
+    db.exec('ROLLBACK');
     throw error;
   }
 }
 
 export function loadTaskFlowRegistryStateFromSqlite(): TaskFlowRegistryStoreSnapshot {
   const { statements } = openFlowRegistryDatabase();
-  const rows = statements.selectAll.all() as FlowRegistryRow[];
+  const rows = statements.selectAll.all() as unknown as FlowRegistryRow[];
   return {
     flows: new Map(rows.map((row) => [row.flow_id, rowToFlowRecord(row)])),
   };
 }
 
-export function saveTaskFlowRegistryStateToSqlite(snapshot: TaskFlowRegistryStoreSnapshot) {
+export function saveTaskFlowRegistryStateToSqlite(
+  snapshot: TaskFlowRegistryStoreSnapshot,
+) {
   withWriteTransaction((statements) => {
     statements.clearRows.run();
     for (const flow of snapshot.flows.values()) {
