@@ -284,7 +284,9 @@ Package.json has extensive `test:docker:*` scripts:
 - `test:docker:plugins` - Plugin tests
 - And many more
 
-**Note**:### Missing Scripts Referenced
+**Note**: These scripts reference bash scripts (e.g., `bash scripts/e2e/*.sh`) but no `.sh` files found in repository.
+
+### Missing Scripts Referenced
 
 The Docker test also references:
 
