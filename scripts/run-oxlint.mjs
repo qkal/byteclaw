@@ -12,9 +12,9 @@ const args = process.argv.slice(2);
 const fixFlag = args.includes('--fix') ? '--fix' : '';
 
 try {
-  // Run oxlint with TypeScript plugin disabled and only on source files
-  // This avoids parsing errors in test files and allows the project's existing patterns
-  const command = `npx oxlint ${fixFlag} --disable-typescript-plugin src extensions/*/src packages/*/src --quiet`;
+  // Run oxlint with security-focused rules and only on source files
+  // Enable security categories while keeping TypeScript plugin disabled to avoid parsing errors
+  const command = `npx oxlint ${fixFlag} --disable-typescript-plugin -D suspicious -D correctness src extensions/*/src packages/*/src --quiet`;
   console.log(`Running: ${command}`);
   execSync(command, {
     cwd: rootDir,
