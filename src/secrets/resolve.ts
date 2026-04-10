@@ -885,7 +885,7 @@ async function resolveProviderRefs(params: {
     });
   } catch (error) {
     throwUnknownProviderResolutionError({
-      error,
+      err: error,
       provider: params.providerName,
       source: params.source,
     });
