@@ -1098,6 +1098,9 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
   const deps = normalizeDeps(overrides);
   const configPath = resolveConfigPathForDeps(deps);
 
+  let configReadCache: ConfigFileSnapshot | null = null;
+  let configReadCachePath: string | null = null;
+
   function observeLoadConfigSnapshot(
     snapshot: ConfigFileSnapshot,
   ): ConfigFileSnapshot {
@@ -1482,7 +1485,13 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
   }
 
   async function readConfigFileSnapshot(): Promise<ConfigFileSnapshot> {
+    // Return cached snapshot to avoid repeated config loading attempts
+    if (configReadCache && configReadCachePath === configPath) {
+      return configReadCache;
+    }
     const result = await readConfigFileSnapshotInternal();
+    configReadCache = result.snapshot;
+    configReadCachePath = configPath;
     return result.snapshot;
   }
 

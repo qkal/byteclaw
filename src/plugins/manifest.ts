@@ -1,15 +1,18 @@
-import fs from "node:fs";
-import path from "node:path";
-import JSON5 from "json5";
-import type { ChannelConfigRuntimeSchema } from "../channels/plugins/types.plugin.js";
-import { MANIFEST_KEY } from "../compat/legacy-names.js";
-import { matchBoundaryFileOpenFailure, openBoundaryFileSync } from "../infra/boundary-file-read.js";
-import { normalizeOptionalString } from "../shared/string-coerce.js";
-import { normalizeTrimmedStringList } from "../shared/string-normalization.js";
-import { isRecord } from "../utils.js";
-import type { PluginConfigUiHint, PluginKind } from "./types.js";
+import fs from 'node:fs';
+import path from 'node:path';
+import JSON5 from 'json5';
+import type { ChannelConfigRuntimeSchema } from '../channels/plugins/types.plugin.js';
+import { MANIFEST_KEY } from '../compat/legacy-names.js';
+import {
+  matchBoundaryFileOpenFailure,
+  openBoundaryFileSync,
+} from '../infra/boundary-file-read.js';
+import { normalizeOptionalString } from '../shared/string-coerce.js';
+import { normalizeTrimmedStringList } from '../shared/string-normalization.js';
+import { isRecord } from '../utils.js';
+import type { PluginConfigUiHint, PluginKind } from './types.js';
 
-export const PLUGIN_MANIFEST_FILENAME = "openclaw.plugin.json";
+export const PLUGIN_MANIFEST_FILENAME = 'openclaw.plugin.json';
 export const PLUGIN_MANIFEST_FILENAMES = [PLUGIN_MANIFEST_FILENAME] as const;
 
 export interface PluginManifestChannelConfig {
@@ -53,7 +56,7 @@ export interface PluginManifestSecretInputPath {
    */
   path: string;
   /** Expected resolved type for SecretRef materialization. */
-  expected?: "string";
+  expected?: 'string';
 }
 
 export interface PluginManifestSecretInputContracts {
@@ -161,7 +164,7 @@ export interface PluginManifestProviderAuthChoice {
   /** Lower values sort earlier in interactive assistant pickers. */
   assistantPriority?: number;
   /** Keep the choice out of interactive assistant pickers while preserving manual CLI support. */
-  assistantVisibility?: "visible" | "manual-only";
+  assistantVisibility?: 'visible' | 'manual-only';
   /** Legacy choice ids that should point users at this replacement choice. */
   deprecatedChoiceIds?: string[];
   /** Optional grouping metadata for auth-choice pickers. */
@@ -180,19 +183,23 @@ export interface PluginManifestProviderAuthChoice {
   onboardingScopes?: PluginManifestOnboardingScope[];
 }
 
-export type PluginManifestOnboardingScope = "text-inference" | "image-generation";
+export type PluginManifestOnboardingScope =
+  | 'text-inference'
+  | 'image-generation';
 
 export type PluginManifestLoadResult =
   | { ok: true; manifest: PluginManifest; manifestPath: string }
   | { ok: false; error: string; manifestPath: string };
 
-function normalizeStringListRecord(value: unknown): Record<string, string[]> | undefined {
+function normalizeStringListRecord(
+  value: unknown,
+): Record<string, string[]> | undefined {
   if (!isRecord(value)) {
     return undefined;
   }
   const normalized: Record<string, string[]> = {};
   for (const [key, rawValues] of Object.entries(value)) {
-    const providerId = normalizeOptionalString(key) ?? "";
+    const providerId = normalizeOptionalString(key) ?? '';
     if (!providerId) {
       continue;
     }
@@ -205,14 +212,16 @@ function normalizeStringListRecord(value: unknown): Record<string, string[]> | u
   return Object.keys(normalized).length > 0 ? normalized : undefined;
 }
 
-function normalizeStringRecord(value: unknown): Record<string, string> | undefined {
+function normalizeStringRecord(
+  value: unknown,
+): Record<string, string> | undefined {
   if (!isRecord(value)) {
     return undefined;
   }
   const normalized: Record<string, string> = {};
   for (const [rawKey, rawValue] of Object.entries(value)) {
-    const key = normalizeOptionalString(rawKey) ?? "";
-    const value = normalizeOptionalString(rawValue) ?? "";
+    const key = normalizeOptionalString(rawKey) ?? '';
+    const value = normalizeOptionalString(rawValue) ?? '';
     if (!key || !value) {
       continue;
     }
@@ -221,33 +230,61 @@ function normalizeStringRecord(value: unknown): Record<string, string> | undefin
   return Object.keys(normalized).length > 0 ? normalized : undefined;
 }
 
-function normalizeManifestContracts(value: unknown): PluginManifestContracts | undefined {
+function normalizeManifestContracts(
+  value: unknown,
+): PluginManifestContracts | undefined {
   if (!isRecord(value)) {
     return undefined;
   }
 
-  const memoryEmbeddingProviders = normalizeTrimmedStringList(value.memoryEmbeddingProviders);
+  const memoryEmbeddingProviders = normalizeTrimmedStringList(
+    value.memoryEmbeddingProviders,
+  );
   const speechProviders = normalizeTrimmedStringList(value.speechProviders);
   const realtimeTranscriptionProviders = normalizeTrimmedStringList(
     value.realtimeTranscriptionProviders,
   );
-  const realtimeVoiceProviders = normalizeTrimmedStringList(value.realtimeVoiceProviders);
-  const mediaUnderstandingProviders = normalizeTrimmedStringList(value.mediaUnderstandingProviders);
-  const imageGenerationProviders = normalizeTrimmedStringList(value.imageGenerationProviders);
-  const videoGenerationProviders = normalizeTrimmedStringList(value.videoGenerationProviders);
-  const musicGenerationProviders = normalizeTrimmedStringList(value.musicGenerationProviders);
+  const realtimeVoiceProviders = normalizeTrimmedStringList(
+    value.realtimeVoiceProviders,
+  );
+  const mediaUnderstandingProviders = normalizeTrimmedStringList(
+    value.mediaUnderstandingProviders,
+  );
+  const imageGenerationProviders = normalizeTrimmedStringList(
+    value.imageGenerationProviders,
+  );
+  const videoGenerationProviders = normalizeTrimmedStringList(
+    value.videoGenerationProviders,
+  );
+  const musicGenerationProviders = normalizeTrimmedStringList(
+    value.musicGenerationProviders,
+  );
   const webFetchProviders = normalizeTrimmedStringList(value.webFetchProviders);
-  const webSearchProviders = normalizeTrimmedStringList(value.webSearchProviders);
+  const webSearchProviders = normalizeTrimmedStringList(
+    value.webSearchProviders,
+  );
   const tools = normalizeTrimmedStringList(value.tools);
   const contracts = {
-    ...(memoryEmbeddingProviders.length > 0 ? { memoryEmbeddingProviders } : {}),
+    ...(memoryEmbeddingProviders.length > 0
+      ? { memoryEmbeddingProviders }
+      : {}),
     ...(speechProviders.length > 0 ? { speechProviders } : {}),
-    ...(realtimeTranscriptionProviders.length > 0 ? { realtimeTranscriptionProviders } : {}),
+    ...(realtimeTranscriptionProviders.length > 0
+      ? { realtimeTranscriptionProviders }
+      : {}),
     ...(realtimeVoiceProviders.length > 0 ? { realtimeVoiceProviders } : {}),
-    ...(mediaUnderstandingProviders.length > 0 ? { mediaUnderstandingProviders } : {}),
-    ...(imageGenerationProviders.length > 0 ? { imageGenerationProviders } : {}),
-    ...(videoGenerationProviders.length > 0 ? { videoGenerationProviders } : {}),
-    ...(musicGenerationProviders.length > 0 ? { musicGenerationProviders } : {}),
+    ...(mediaUnderstandingProviders.length > 0
+      ? { mediaUnderstandingProviders }
+      : {}),
+    ...(imageGenerationProviders.length > 0
+      ? { imageGenerationProviders }
+      : {}),
+    ...(videoGenerationProviders.length > 0
+      ? { videoGenerationProviders }
+      : {}),
+    ...(musicGenerationProviders.length > 0
+      ? { musicGenerationProviders }
+      : {}),
     ...(webFetchProviders.length > 0 ? { webFetchProviders } : {}),
     ...(webSearchProviders.length > 0 ? { webSearchProviders } : {}),
     ...(tools.length > 0 ? { tools } : {}),
@@ -256,12 +293,14 @@ function normalizeManifestContracts(value: unknown): PluginManifestContracts | u
   return Object.keys(contracts).length > 0 ? contracts : undefined;
 }
 
-function isManifestConfigLiteral(value: unknown): value is PluginManifestConfigLiteral {
+function isManifestConfigLiteral(
+  value: unknown,
+): value is PluginManifestConfigLiteral {
   return (
     value === null ||
-    typeof value === "string" ||
-    typeof value === "number" ||
-    typeof value === "boolean"
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean'
   );
 }
 
@@ -276,7 +315,7 @@ function normalizeManifestDangerousConfigFlags(
     if (!isRecord(entry)) {
       continue;
     }
-    const path = normalizeOptionalString(entry.path) ?? "";
+    const path = normalizeOptionalString(entry.path) ?? '';
     if (!path || !isManifestConfigLiteral(entry.equals)) {
       continue;
     }
@@ -296,11 +335,11 @@ function normalizeManifestSecretInputPaths(
     if (!isRecord(entry)) {
       continue;
     }
-    const path = normalizeOptionalString(entry.path) ?? "";
+    const path = normalizeOptionalString(entry.path) ?? '';
     if (!path) {
       continue;
     }
-    const expected = entry.expected === "string" ? entry.expected : undefined;
+    const expected = entry.expected === 'string' ? entry.expected : undefined;
     normalized.push({
       path,
       ...(expected ? { expected } : {}),
@@ -315,10 +354,18 @@ function normalizeManifestConfigContracts(
   if (!isRecord(value)) {
     return undefined;
   }
-  const compatibilityMigrationPaths = normalizeTrimmedStringList(value.compatibilityMigrationPaths);
-  const compatibilityRuntimePaths = normalizeTrimmedStringList(value.compatibilityRuntimePaths);
-  const rawSecretInputs = isRecord(value.secretInputs) ? value.secretInputs : undefined;
-  const dangerousFlags = normalizeManifestDangerousConfigFlags(value.dangerousFlags);
+  const compatibilityMigrationPaths = normalizeTrimmedStringList(
+    value.compatibilityMigrationPaths,
+  );
+  const compatibilityRuntimePaths = normalizeTrimmedStringList(
+    value.compatibilityRuntimePaths,
+  );
+  const rawSecretInputs = isRecord(value.secretInputs)
+    ? value.secretInputs
+    : undefined;
+  const dangerousFlags = normalizeManifestDangerousConfigFlags(
+    value.dangerousFlags,
+  );
   const secretInputPaths = rawSecretInputs
     ? normalizeManifestSecretInputPaths(rawSecretInputs.paths)
     : undefined;
@@ -334,15 +381,21 @@ function normalizeManifestConfigContracts(
         } satisfies PluginManifestSecretInputContracts)
       : undefined;
   const configContracts = {
-    ...(compatibilityMigrationPaths.length > 0 ? { compatibilityMigrationPaths } : {}),
-    ...(compatibilityRuntimePaths.length > 0 ? { compatibilityRuntimePaths } : {}),
+    ...(compatibilityMigrationPaths.length > 0
+      ? { compatibilityMigrationPaths }
+      : {}),
+    ...(compatibilityRuntimePaths.length > 0
+      ? { compatibilityRuntimePaths }
+      : {}),
     ...(dangerousFlags ? { dangerousFlags } : {}),
     ...(secretInputs ? { secretInputs } : {}),
   } satisfies PluginManifestConfigContracts;
   return Object.keys(configContracts).length > 0 ? configContracts : undefined;
 }
 
-function normalizeManifestModelSupport(value: unknown): PluginManifestModelSupport | undefined {
+function normalizeManifestModelSupport(
+  value: unknown,
+): PluginManifestModelSupport | undefined {
   if (!isRecord(value)) {
     return undefined;
   }
@@ -368,33 +421,39 @@ function normalizeProviderAuthChoices(
     if (!isRecord(entry)) {
       continue;
     }
-    const provider = normalizeOptionalString(entry.provider) ?? "";
-    const method = normalizeOptionalString(entry.method) ?? "";
-    const choiceId = normalizeOptionalString(entry.choiceId) ?? "";
+    const provider = normalizeOptionalString(entry.provider) ?? '';
+    const method = normalizeOptionalString(entry.method) ?? '';
+    const choiceId = normalizeOptionalString(entry.choiceId) ?? '';
     if (!provider || !method || !choiceId) {
       continue;
     }
-    const choiceLabel = normalizeOptionalString(entry.choiceLabel) ?? "";
-    const choiceHint = normalizeOptionalString(entry.choiceHint) ?? "";
+    const choiceLabel = normalizeOptionalString(entry.choiceLabel) ?? '';
+    const choiceHint = normalizeOptionalString(entry.choiceHint) ?? '';
     const assistantPriority =
-      typeof entry.assistantPriority === "number" && Number.isFinite(entry.assistantPriority)
+      typeof entry.assistantPriority === 'number' &&
+      Number.isFinite(entry.assistantPriority)
         ? entry.assistantPriority
         : undefined;
     const assistantVisibility =
-      entry.assistantVisibility === "manual-only" || entry.assistantVisibility === "visible"
+      entry.assistantVisibility === 'manual-only' ||
+      entry.assistantVisibility === 'visible'
         ? entry.assistantVisibility
         : undefined;
-    const deprecatedChoiceIds = normalizeTrimmedStringList(entry.deprecatedChoiceIds);
-    const groupId = normalizeOptionalString(entry.groupId) ?? "";
-    const groupLabel = normalizeOptionalString(entry.groupLabel) ?? "";
-    const groupHint = normalizeOptionalString(entry.groupHint) ?? "";
-    const optionKey = normalizeOptionalString(entry.optionKey) ?? "";
-    const cliFlag = normalizeOptionalString(entry.cliFlag) ?? "";
-    const cliOption = normalizeOptionalString(entry.cliOption) ?? "";
-    const cliDescription = normalizeOptionalString(entry.cliDescription) ?? "";
-    const onboardingScopes = normalizeTrimmedStringList(entry.onboardingScopes).filter(
+    const deprecatedChoiceIds = normalizeTrimmedStringList(
+      entry.deprecatedChoiceIds,
+    );
+    const groupId = normalizeOptionalString(entry.groupId) ?? '';
+    const groupLabel = normalizeOptionalString(entry.groupLabel) ?? '';
+    const groupHint = normalizeOptionalString(entry.groupHint) ?? '';
+    const optionKey = normalizeOptionalString(entry.optionKey) ?? '';
+    const cliFlag = normalizeOptionalString(entry.cliFlag) ?? '';
+    const cliOption = normalizeOptionalString(entry.cliOption) ?? '';
+    const cliDescription = normalizeOptionalString(entry.cliDescription) ?? '';
+    const onboardingScopes = normalizeTrimmedStringList(
+      entry.onboardingScopes,
+    ).filter(
       (scope): scope is PluginManifestOnboardingScope =>
-        scope === "text-inference" || scope === "image-generation",
+        scope === 'text-inference' || scope === 'image-generation',
     );
     normalized.push({
       choiceId,
@@ -426,7 +485,7 @@ function normalizeChannelConfigs(
   }
   const normalized: Record<string, PluginManifestChannelConfig> = {};
   for (const [key, rawEntry] of Object.entries(value)) {
-    const channelId = normalizeOptionalString(key) ?? "";
+    const channelId = normalizeOptionalString(key) ?? '';
     if (!channelId || !isRecord(rawEntry)) {
       continue;
     }
@@ -438,11 +497,12 @@ function normalizeChannelConfigs(
       ? (rawEntry.uiHints as Record<string, PluginConfigUiHint>)
       : undefined;
     const runtime =
-      isRecord(rawEntry.runtime) && typeof rawEntry.runtime.safeParse === "function"
-        ? (rawEntry.runtime as ChannelConfigRuntimeSchema)
+      isRecord(rawEntry.runtime) &&
+      typeof rawEntry.runtime.safeParse === 'function'
+        ? (rawEntry.runtime as unknown as ChannelConfigRuntimeSchema)
         : undefined;
-    const label = normalizeOptionalString(rawEntry.label) ?? "";
-    const description = normalizeOptionalString(rawEntry.description) ?? "";
+    const label = normalizeOptionalString(rawEntry.label) ?? '';
+    const description = normalizeOptionalString(rawEntry.description) ?? '';
     const preferOver = normalizeTrimmedStringList(rawEntry.preferOver);
     normalized[channelId] = {
       schema,
@@ -467,10 +527,14 @@ export function resolvePluginManifestPath(rootDir: string): string {
 }
 
 function parsePluginKind(raw: unknown): PluginKind | PluginKind[] | undefined {
-  if (typeof raw === "string") {
+  if (typeof raw === 'string') {
     return raw as PluginKind;
   }
-  if (Array.isArray(raw) && raw.length > 0 && raw.every((k) => typeof k === "string")) {
+  if (
+    Array.isArray(raw) &&
+    raw.length > 0 &&
+    raw.every((k) => typeof k === 'string')
+  ) {
     return raw.length === 1 ? (raw[0] as PluginKind) : (raw as PluginKind[]);
   }
   return undefined;
@@ -483,7 +547,7 @@ export function loadPluginManifest(
   const manifestPath = resolvePluginManifestPath(rootDir);
   const opened = openBoundaryFileSync({
     absolutePath: manifestPath,
-    boundaryLabel: "plugin root",
+    boundaryLabel: 'plugin root',
     rejectHardlinks,
     rootPath: rootDir,
   });
@@ -503,7 +567,7 @@ export function loadPluginManifest(
   }
   let raw: unknown;
   try {
-    raw = JSON5.parse(fs.readFileSync(opened.fd, "utf8"));
+    raw = JSON5.parse(fs.readFileSync(opened.fd, 'utf8'));
   } catch (error) {
     return {
       error: `failed to parse plugin manifest: ${String(error)}`,
@@ -514,15 +578,23 @@ export function loadPluginManifest(
     fs.closeSync(opened.fd);
   }
   if (!isRecord(raw)) {
-    return { error: "plugin manifest must be an object", manifestPath, ok: false };
+    return {
+      error: 'plugin manifest must be an object',
+      manifestPath,
+      ok: false,
+    };
   }
-  const id = normalizeOptionalString(raw.id) ?? "";
+  const id = normalizeOptionalString(raw.id) ?? '';
   if (!id) {
-    return { error: "plugin manifest requires id", manifestPath, ok: false };
+    return { error: 'plugin manifest requires id', manifestPath, ok: false };
   }
   const configSchema = isRecord(raw.configSchema) ? raw.configSchema : null;
   if (!configSchema) {
-    return { error: "plugin manifest requires configSchema", manifestPath, ok: false };
+    return {
+      error: 'plugin manifest requires configSchema',
+      manifestPath,
+      ok: false,
+    };
   }
 
   const kind = parsePluginKind(raw.kind);
@@ -536,13 +608,19 @@ export function loadPluginManifest(
   const version = normalizeOptionalString(raw.version);
   const channels = normalizeTrimmedStringList(raw.channels);
   const providers = normalizeTrimmedStringList(raw.providers);
-  const providerDiscoveryEntry = normalizeOptionalString(raw.providerDiscoveryEntry);
+  const providerDiscoveryEntry = normalizeOptionalString(
+    raw.providerDiscoveryEntry,
+  );
   const modelSupport = normalizeManifestModelSupport(raw.modelSupport);
   const cliBackends = normalizeTrimmedStringList(raw.cliBackends);
-  const providerAuthEnvVars = normalizeStringListRecord(raw.providerAuthEnvVars);
+  const providerAuthEnvVars = normalizeStringListRecord(
+    raw.providerAuthEnvVars,
+  );
   const providerAuthAliases = normalizeStringRecord(raw.providerAuthAliases);
   const channelEnvVars = normalizeStringListRecord(raw.channelEnvVars);
-  const providerAuthChoices = normalizeProviderAuthChoices(raw.providerAuthChoices);
+  const providerAuthChoices = normalizeProviderAuthChoices(
+    raw.providerAuthChoices,
+  );
   const skills = normalizeTrimmedStringList(raw.skills);
   const contracts = normalizeManifestContracts(raw.contracts);
   const configContracts = normalizeManifestConfigContracts(raw.configContracts);
@@ -626,7 +704,7 @@ export interface PluginPackageChannel {
 export interface PluginPackageInstall {
   npmSpec?: string;
   localPath?: string;
-  defaultChoice?: "npm" | "local";
+  defaultChoice?: 'npm' | 'local';
   minHostVersion?: string;
   allowInvalidConfigRecovery?: boolean;
 }
@@ -648,16 +726,16 @@ export interface OpenClawPackageManifest {
 }
 
 export const DEFAULT_PLUGIN_ENTRY_CANDIDATES = [
-  "index.ts",
-  "index.js",
-  "index.mjs",
-  "index.cjs",
+  'index.ts',
+  'index.js',
+  'index.mjs',
+  'index.cjs',
 ] as const;
 
 export type PackageExtensionResolution =
-  | { status: "ok"; entries: string[] }
-  | { status: "missing"; entries: [] }
-  | { status: "empty"; entries: [] };
+  | { status: 'ok'; entries: string[] }
+  | { status: 'missing'; entries: [] }
+  | { status: 'empty'; entries: [] };
 
 export type ManifestKey = typeof MANIFEST_KEY;
 
@@ -681,11 +759,13 @@ export function resolvePackageExtensionEntries(
 ): PackageExtensionResolution {
   const raw = getPackageManifestMetadata(manifest)?.extensions;
   if (!Array.isArray(raw)) {
-    return { entries: [], status: "missing" };
+    return { entries: [], status: 'missing' };
   }
-  const entries = raw.map((entry) => normalizeOptionalString(entry) ?? "").filter(Boolean);
+  const entries = raw
+    .map((entry) => normalizeOptionalString(entry) ?? '')
+    .filter(Boolean);
   if (entries.length === 0) {
-    return { entries: [], status: "empty" };
+    return { entries: [], status: 'empty' };
   }
-  return { entries, status: "ok" };
+  return { entries, status: 'ok' };
 }
