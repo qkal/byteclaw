@@ -30,7 +30,11 @@ export class NodeSubprocessAbstraction implements SubprocessAbstraction {
       const { stdout, stderr } = await execAsync(fullCommand, {
         cwd: options?.cwd,
         env: options?.env,
-        shell: options?.shell === true ? true : (options?.shell ?? true),
+        shell:
+          options?.shell === true
+            ? undefined
+            : (options?.shell as string | undefined),
+        windowsHide: options?.windowsHide,
       });
 
       return {
@@ -103,6 +107,20 @@ export class NodeSubprocessAbstraction implements SubprocessAbstraction {
         if (child.stdin) {
           child.stdin.end();
         }
+      },
+      pid: child.pid,
+      unref: () => child.unref(),
+      on: (event: string, listener: (...args: unknown[]) => void) => {
+        child.on(event, listener);
+        return child;
+      },
+      off: (event: string, listener: (...args: unknown[]) => void) => {
+        child.off(event, listener);
+        return child;
+      },
+      once: (event: string, listener: (...args: unknown[]) => void) => {
+        child.once(event, listener);
+        return child;
       },
     };
   }

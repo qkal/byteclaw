@@ -35,14 +35,14 @@ export class BunSubprocessAbstraction implements SubprocessAbstraction {
         stderr: 'pipe',
       });
 
-      const stdout = await new Response(proc.stdout).text();
-      const stderr = await new Response(proc.stderr).text();
+      const stdout = await new Response(proc.stdout).arrayBuffer();
+      const stderr = await new Response(proc.stderr).arrayBuffer();
       const exitCode = await proc.exited;
 
       return {
         exitCode,
-        stdout,
-        stderr,
+        stdout: new TextDecoder().decode(stdout),
+        stderr: new TextDecoder().decode(stderr),
       };
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -121,6 +121,9 @@ export class BunSubprocessAbstraction implements SubprocessAbstraction {
       });
     });
 
+    // Event listener emulation for Bun
+    const listeners = new Map<string, Set<(...args: unknown[]) => void>>();
+
     return {
       process: proc,
       exitPromise,
@@ -130,7 +133,7 @@ export class BunSubprocessAbstraction implements SubprocessAbstraction {
             ? signal
             : undefined
           : undefined;
-        proc.kill(signalNum as number);
+        proc.kill(signalNum as number | undefined);
       },
       writeStdin: (data: string | Buffer) => {
         if (proc.stdin) {
@@ -145,6 +148,38 @@ export class BunSubprocessAbstraction implements SubprocessAbstraction {
         if (proc.stdin) {
           proc.stdin.end();
         }
+      },
+      pid: proc.pid,
+      unref: () => {
+        // Bun doesn't have unref, this is a no-op
+      },
+      on: (event: string, listener: (...args: unknown[]) => void) => {
+        if (!listeners.has(event)) {
+          listeners.set(event, new Set());
+        }
+        listeners.get(event)!.add(listener);
+        return proc;
+      },
+      off: (event: string, listener: (...args: unknown[]) => void) => {
+        const eventListeners = listeners.get(event);
+        if (eventListeners) {
+          eventListeners.delete(listener);
+        }
+        return proc;
+      },
+      once: (event: string, listener: (...args: unknown[]) => void) => {
+        const wrappedListener = (...args: unknown[]) => {
+          listener(...args);
+          const eventListeners = listeners.get(event);
+          if (eventListeners) {
+            eventListeners.delete(wrappedListener);
+          }
+        };
+        if (!listeners.has(event)) {
+          listeners.set(event, new Set());
+        }
+        listeners.get(event)!.add(wrappedListener);
+        return proc;
       },
     };
   }

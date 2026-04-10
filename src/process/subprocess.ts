@@ -13,6 +13,8 @@ import type {
   SubprocessSpawnResult,
 } from './subprocess-abstraction.js';
 
+export type { SubprocessOptions, SubprocessResult, SubprocessSpawnResult };
+
 let subprocessAbstraction: SubprocessAbstraction | null = null;
 
 function getAbstraction(): SubprocessAbstraction {

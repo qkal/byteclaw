@@ -14,6 +14,10 @@ export interface SubprocessOptions {
   detached?: boolean;
   /** Shell mode - run command through shell */
   shell?: boolean | string;
+  /** Windows-specific: hide the subprocess window */
+  windowsHide?: boolean;
+  /** Windows-specific: use verbatim arguments */
+  windowsVerbatimArguments?: boolean;
 }
 
 export interface SubprocessResult {
@@ -38,6 +42,16 @@ export interface SubprocessSpawnResult {
   writeStdin: (data: string | Buffer) => void;
   /** Close stdin */
   closeStdin: () => void;
+  /** Process ID (if available) */
+  pid?: number;
+  /** Unref the process (allow parent to exit independently) */
+  unref?: () => void;
+  /** Add event listener */
+  on?: (event: string, listener: (...args: unknown[]) => void) => void;
+  /** Remove event listener */
+  off?: (event: string, listener: (...args: unknown[]) => void) => void;
+  /** Add one-time event listener */
+  once?: (event: string, listener: (...args: unknown[]) => void) => void;
 }
 
 export interface SubprocessAbstraction {
