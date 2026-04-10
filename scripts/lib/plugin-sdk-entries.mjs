@@ -1,0 +1,12 @@
+export const pluginSdkEntrypoints = [
+  "index",
+  "core",
+  "provider-setup",
+  "sandbox",
+  "self-hosted-provider-setup",
+  "routing",
+  "runtime",
+  "runtime-doctor",
+  "runtime-env",
+  "runtime-secret-resolution",
+];
