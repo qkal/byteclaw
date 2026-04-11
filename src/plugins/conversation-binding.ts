@@ -633,7 +633,7 @@ async function bindConversationNow(params: {
       pluginName: params.identity.pluginName,
       pluginRoot: params.identity.pluginRoot,
       summary: params.summary,
-    }) as Record<string, unknown>,
+    }) as unknown as Record<string, unknown>,
     placement: 'current',
     targetKind: 'session',
     targetSessionKey,
