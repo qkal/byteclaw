@@ -1,8 +1,8 @@
-import { finalizeInboundContext } from "../auto-reply/reply/inbound-context.js";
-import type { MsgContext } from "../auto-reply/templating.js";
-import type { OpenClawConfig } from "../config/config.js";
-import { formatLinkUnderstandingBody } from "./format.js";
-import { runLinkUnderstanding } from "./runner.js";
+import { finalizeInboundContext } from '../auto-reply/reply/inbound-context.js';
+import type { MsgContext } from '../auto-reply/templating.js';
+import type { OpenClawConfig } from '../config/config.js';
+import { formatLinkUnderstandingBody } from './format.js';
+import { runLinkUnderstanding } from './runner.js';
 
 export interface ApplyLinkUnderstandingResult {
   outputs: string[];
@@ -22,13 +22,16 @@ export async function applyLinkUnderstanding(params: {
     return result;
   }
 
-  params.ctx.LinkUnderstanding = [...(params.ctx.LinkUnderstanding ?? []), ...result.outputs];
+  params.ctx.LinkUnderstanding = [
+    ...(params.ctx.LinkUnderstanding ?? []),
+    ...result.outputs,
+  ];
   params.ctx.Body = formatLinkUnderstandingBody({
     body: params.ctx.Body,
     outputs: result.outputs,
   });
 
-  finalizeInboundContext(params.ctx, {
+  finalizeInboundContext(params.ctx as unknown as Record<string, unknown>, {
     forceBodyForAgent: true,
     forceBodyForCommands: true,
   });

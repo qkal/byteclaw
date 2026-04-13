@@ -1,6 +1,6 @@
-import { asFiniteNumber } from "../shared/number-coercion.js";
-import { sleep } from "../utils.js";
-import { generateSecureFraction } from "./secure-random.js";
+import { asFiniteNumber } from '../shared/number-coercion.js';
+import { sleep } from '../utils.js';
+import { generateSecureFraction } from './secure-random.js';
 
 export interface RetryConfig {
   attempts?: number;
@@ -31,13 +31,18 @@ const DEFAULT_RETRY_CONFIG = {
   minDelayMs: 300,
 };
 
-const clampNumber = (value: unknown, fallback: number, min?: number, max?: number) => {
+const clampNumber = (
+  value: unknown,
+  fallback: number,
+  min?: number,
+  max?: number,
+) => {
   const next = asFiniteNumber(value);
   if (next === undefined) {
     return fallback;
   }
-  const floor = typeof min === "number" ? min : Number.NEGATIVE_INFINITY;
-  const ceiling = typeof max === "number" ? max : Number.POSITIVE_INFINITY;
+  const floor = typeof min === 'number' ? min : Number.NEGATIVE_INFINITY;
+  const ceiling = typeof max === 'number' ? max : Number.POSITIVE_INFINITY;
   return Math.min(Math.max(next, floor), ceiling);
 };
 
@@ -45,7 +50,10 @@ export function resolveRetryConfig(
   defaults: Required<RetryConfig> = DEFAULT_RETRY_CONFIG,
   overrides?: RetryConfig,
 ): Required<RetryConfig> {
-  const attempts = Math.max(1, Math.round(clampNumber(overrides?.attempts, defaults.attempts, 1)));
+  const attempts = Math.max(
+    1,
+    Math.round(clampNumber(overrides?.attempts, defaults.attempts, 1)),
+  );
   const minDelayMs = Math.max(
     0,
     Math.round(clampNumber(overrides?.minDelayMs, defaults.minDelayMs, 0)),
@@ -71,7 +79,7 @@ export async function retryAsync<T>(
   attemptsOrOptions: number | RetryOptions = 3,
   initialDelayMs = 300,
 ): Promise<T> {
-  if (typeof attemptsOrOptions === "number") {
+  if (typeof attemptsOrOptions === 'number') {
     const attempts = Math.max(1, Math.round(attemptsOrOptions));
     let lastErr: unknown;
     for (let i = 0; i < attempts; i += 1) {
@@ -86,7 +94,7 @@ export async function retryAsync<T>(
         await sleep(delay);
       }
     }
-    throw lastErr ?? new Error("Retry failed");
+    throw lastErr ?? new Error('Retry failed');
   }
 
   const options = attemptsOrOptions;
@@ -112,7 +120,8 @@ export async function retryAsync<T>(
       }
 
       const retryAfterMs = options.retryAfterMs?.(error);
-      const hasRetryAfter = typeof retryAfterMs === "number" && Number.isFinite(retryAfterMs);
+      const hasRetryAfter =
+        typeof retryAfterMs === 'number' && Number.isFinite(retryAfterMs);
       const baseDelay = hasRetryAfter
         ? Math.max(retryAfterMs, minDelayMs)
         : minDelayMs * 2 ** (attempt - 1);
@@ -123,7 +132,7 @@ export async function retryAsync<T>(
       options.onRetry?.({
         attempt,
         delayMs: delay,
-        error,
+        err: lastErr,
         label: options.label,
         maxAttempts,
       });
@@ -133,5 +142,5 @@ export async function retryAsync<T>(
     }
   }
 
-  throw lastErr ?? new Error("Retry failed");
+  throw lastErr ?? new Error('Retry failed');
 }

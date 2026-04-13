@@ -1,26 +1,27 @@
-import { createHash } from "node:crypto";
-import fs from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import ts from "typescript";
+import { createHash } from 'node:crypto';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import ts from 'typescript';
 import {
   type PluginSdkDocCategory,
   type PluginSdkDocEntrypoint,
   pluginSdkDocMetadata,
   resolvePluginSdkDocImportSpecifier,
-} from "../../scripts/lib/plugin-sdk-doc-metadata.ts";
-import { pluginSdkEntrypoints } from "../../scripts/lib/plugin-sdk-entries.mjs";
+} from '../../scripts/lib/plugin-sdk-doc-metadata.ts';
+import { pluginSdkEntrypoints } from '../../scripts/lib/plugin-sdk-entries.mjs';
+// @ts-expect-error - Generated file without type declarations
 
 export type PluginSdkApiExportKind =
-  | "class"
-  | "const"
-  | "enum"
-  | "function"
-  | "interface"
-  | "namespace"
-  | "type"
-  | "unknown"
-  | "variable";
+  | 'class'
+  | 'const'
+  | 'enum'
+  | 'function'
+  | 'interface'
+  | 'namespace'
+  | 'type'
+  | 'unknown'
+  | 'variable';
 
 export interface PluginSdkApiSourceLink {
   line: number;
@@ -43,7 +44,7 @@ export interface PluginSdkApiModule {
 }
 
 export interface PluginSdkApiBaseline {
-  generatedBy: "scripts/generate-plugin-sdk-api-baseline.ts";
+  generatedBy: 'scripts/generate-plugin-sdk-api-baseline.ts';
   modules: PluginSdkApiModule[];
 }
 
@@ -61,10 +62,11 @@ export interface PluginSdkApiBaselineWriteResult {
   hashPath: string;
 }
 
-const GENERATED_BY = "scripts/generate-plugin-sdk-api-baseline.ts" as const;
-const DEFAULT_JSON_OUTPUT = "docs/.generated/plugin-sdk-api-baseline.json";
-const DEFAULT_STATEFILE_OUTPUT = "docs/.generated/plugin-sdk-api-baseline.jsonl";
-const DEFAULT_HASH_OUTPUT = "docs/.generated/plugin-sdk-api-baseline.sha256";
+const GENERATED_BY = 'scripts/generate-plugin-sdk-api-baseline.ts' as const;
+const DEFAULT_JSON_OUTPUT = 'docs/.generated/plugin-sdk-api-baseline.json';
+const DEFAULT_STATEFILE_OUTPUT =
+  'docs/.generated/plugin-sdk-api-baseline.jsonl';
+const DEFAULT_HASH_OUTPUT = 'docs/.generated/plugin-sdk-api-baseline.sha256';
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) {
@@ -73,7 +75,7 @@ function assert(condition: unknown, message: string): asserts condition {
 }
 
 function resolveRepoRoot(): string {
-  return path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+  return path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 }
 
 function relativePath(repoRoot: string, filePath: string): string {
@@ -84,39 +86,59 @@ function isAbsoluteImportPath(value: string): boolean {
   return path.isAbsolute(value) || /^[A-Za-z]:[\\/]/.test(value);
 }
 
-function normalizeDeclarationImportSpecifier(repoRoot: string, value: string): string {
+function normalizeDeclarationImportSpecifier(
+  repoRoot: string,
+  value: string,
+): string {
   if (!isAbsoluteImportPath(value)) {
     return value;
   }
 
   const resolvedPath = path.resolve(value);
   const relative = path.relative(repoRoot, resolvedPath);
-  if (relative.startsWith("..") || path.isAbsolute(relative)) {
+  if (relative.startsWith('..') || path.isAbsolute(relative)) {
     return value;
   }
   return relative.split(path.sep).join(path.posix.sep);
 }
 
 function normalizeDeclarationText(repoRoot: string, value: string): string {
-  return value.replaceAll(/import\("([^"]+)"\)/g, (match, specifier: string) => {
-    const normalized = normalizeDeclarationImportSpecifier(repoRoot, specifier);
-    return normalized === specifier ? match : `import("${normalized}")`;
-  });
+  return value.replaceAll(
+    /import\("([^"]+)"\)/g,
+    (match, specifier: string) => {
+      const normalized = normalizeDeclarationImportSpecifier(
+        repoRoot,
+        specifier,
+      );
+      return normalized === specifier ? match : `import("${normalized}")`;
+    },
+  );
 }
 
 function createCompilerContext(repoRoot: string) {
   const configPath = ts.findConfigFile(
     repoRoot,
     (filePath) => ts.sys.fileExists(filePath),
-    "tsconfig.json",
+    'tsconfig.json',
   );
-  assert(configPath, "Could not find tsconfig.json");
-  const configFile = ts.readConfigFile(configPath, (filePath) => ts.sys.readFile(filePath));
+  assert(configPath, 'Could not find tsconfig.json');
+  const configFile = ts.readConfigFile(configPath, (filePath) =>
+    ts.sys.readFile(filePath),
+  );
   if (configFile.error) {
-    throw new Error(ts.flattenDiagnosticMessageText(configFile.error.messageText, "\n"));
+    throw new Error(
+      ts.flattenDiagnosticMessageText(configFile.error.messageText, '\n'),
+    );
   }
-  const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, repoRoot);
-  const program = ts.createProgram(parsedConfig.fileNames, parsedConfig.options);
+  const parsedConfig = ts.parseJsonConfigFileContent(
+    configFile.config,
+    ts.sys,
+    repoRoot,
+  );
+  const program = ts.createProgram(
+    parsedConfig.fileNames,
+    parsedConfig.options,
+  );
   return {
     checker: program.getTypeChecker(),
     printer: ts.createPrinter({ newLine: ts.NewLineKind.LineFeed }),
@@ -131,7 +153,10 @@ function buildSourceLink(
   start: number,
 ): PluginSdkApiSourceLink {
   const sourceFile = program.getSourceFile(filePath);
-  assert(sourceFile, `Unable to read source file for ${relativePath(repoRoot, filePath)}`);
+  assert(
+    sourceFile,
+    `Unable to read source file for ${relativePath(repoRoot, filePath)}`,
+  );
   const line = sourceFile.getLineAndCharacterOfPosition(start).line + 1;
   return {
     line,
@@ -146,33 +171,35 @@ function inferExportKind(
   if (declaration) {
     switch (declaration.kind) {
       case ts.SyntaxKind.ClassDeclaration: {
-        return "class";
+        return 'class';
       }
       case ts.SyntaxKind.EnumDeclaration: {
-        return "enum";
+        return 'enum';
       }
       case ts.SyntaxKind.FunctionDeclaration: {
-        return "function";
+        return 'function';
       }
       case ts.SyntaxKind.InterfaceDeclaration: {
-        return "interface";
+        return 'interface';
       }
       case ts.SyntaxKind.ModuleDeclaration: {
-        return "namespace";
+        return 'namespace';
       }
       case ts.SyntaxKind.TypeAliasDeclaration: {
-        return "type";
+        return 'type';
       }
       case ts.SyntaxKind.VariableDeclaration: {
         const variableStatement = declaration.parent?.parent;
         if (
           variableStatement &&
           ts.isVariableStatement(variableStatement) &&
-          (ts.getCombinedNodeFlags(variableStatement.declarationList) & ts.NodeFlags.Const) !== 0
+          (ts.getCombinedNodeFlags(variableStatement.declarationList) &
+            ts.NodeFlags.Const) !==
+            0
         ) {
-          return "const";
+          return 'const';
         }
-        return "variable";
+        return 'variable';
       }
       default: {
         break;
@@ -181,27 +208,33 @@ function inferExportKind(
   }
 
   if (symbol.flags & ts.SymbolFlags.Function) {
-    return "function";
+    return 'function';
   }
   if (symbol.flags & ts.SymbolFlags.Class) {
-    return "class";
+    return 'class';
   }
   if (symbol.flags & ts.SymbolFlags.Interface) {
-    return "interface";
+    return 'interface';
   }
   if (symbol.flags & ts.SymbolFlags.TypeAlias) {
-    return "type";
+    return 'type';
   }
-  if (symbol.flags & ts.SymbolFlags.ConstEnum || symbol.flags & ts.SymbolFlags.RegularEnum) {
-    return "enum";
+  if (
+    symbol.flags & ts.SymbolFlags.ConstEnum ||
+    symbol.flags & ts.SymbolFlags.RegularEnum
+  ) {
+    return 'enum';
   }
   if (symbol.flags & ts.SymbolFlags.Variable) {
-    return "variable";
+    return 'variable';
   }
-  if (symbol.flags & ts.SymbolFlags.NamespaceModule || symbol.flags & ts.SymbolFlags.ValueModule) {
-    return "namespace";
+  if (
+    symbol.flags & ts.SymbolFlags.NamespaceModule ||
+    symbol.flags & ts.SymbolFlags.ValueModule
+  ) {
+    return 'namespace';
   }
-  return "unknown";
+  return 'unknown';
 }
 
 function resolveSymbolAndDeclaration(
@@ -212,9 +245,14 @@ function resolveSymbolAndDeclaration(
   resolvedSymbol: ts.Symbol;
 } {
   const resolvedSymbol =
-    symbol.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(symbol) : symbol;
-  const declarations = resolvedSymbol.getDeclarations() ?? symbol.getDeclarations() ?? [];
-  const declaration = declarations.find((candidate) => candidate.kind !== ts.SyntaxKind.SourceFile);
+    symbol.flags & ts.SymbolFlags.Alias
+      ? checker.getAliasedSymbol(symbol)
+      : symbol;
+  const declarations =
+    resolvedSymbol.getDeclarations() ?? symbol.getDeclarations() ?? [];
+  const declaration = declarations.find(
+    (candidate) => candidate.kind !== ts.SyntaxKind.SourceFile,
+  );
   return { declaration, resolvedSymbol };
 }
 
@@ -225,18 +263,20 @@ function printNode(
   declaration: ts.Declaration,
 ): string | null {
   if (ts.isFunctionDeclaration(declaration)) {
-    const signatures = checker.getTypeAtLocation(declaration).getCallSignatures();
+    const signatures = checker
+      .getTypeAtLocation(declaration)
+      .getCallSignatures();
     if (signatures.length === 0) {
-      return `export function ${declaration.name?.text ?? "anonymous"}();`;
+      return `export function ${declaration.name?.text ?? 'anonymous'}();`;
     }
     return normalizeDeclarationText(
       repoRoot,
       signatures
         .map(
           (signature) =>
-            `export function ${declaration.name?.text ?? "anonymous"}${checker.signatureToString(signature)};`,
+            `export function ${declaration.name?.text ?? 'anonymous'}${checker.signatureToString(signature)};`,
         )
-        .join("\n"),
+        .join('\n'),
     );
   }
 
@@ -244,9 +284,10 @@ function printNode(
     const name = declaration.name.getText();
     const type = checker.getTypeAtLocation(declaration);
     const prefix =
-      declaration.parent && (ts.getCombinedNodeFlags(declaration.parent) & ts.NodeFlags.Const) !== 0
-        ? "const"
-        : "let";
+      declaration.parent &&
+      (ts.getCombinedNodeFlags(declaration.parent) & ts.NodeFlags.Const) !== 0
+        ? 'const'
+        : 'let';
     return normalizeDeclarationText(
       repoRoot,
       `export ${prefix} ${name}: ${checker.typeToString(type, declaration, ts.TypeFormatFlags.NoTruncation)};`,
@@ -258,7 +299,7 @@ function printNode(
   }
 
   if (ts.isClassDeclaration(declaration)) {
-    return `export class ${declaration.name?.text ?? "AnonymousClass"}`;
+    return `export class ${declaration.name?.text ?? 'AnonymousClass'}`;
   }
 
   if (ts.isEnumDeclaration(declaration)) {
@@ -276,7 +317,8 @@ function printNode(
       `export type ${declaration.name.text} = ${checker.typeToString(
         type,
         declaration,
-        ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.MultilineObjectLiterals,
+        ts.TypeFormatFlags.NoTruncation |
+          ts.TypeFormatFlags.MultilineObjectLiterals,
       )};`,
     );
     if (rendered.length > 1200) {
@@ -286,7 +328,11 @@ function printNode(
   }
 
   const text = printer
-    .printNode(ts.EmitHint.Unspecified, declaration, declaration.getSourceFile())
+    .printNode(
+      ts.EmitHint.Unspecified,
+      declaration,
+      declaration.getSourceFile(),
+    )
     .trim();
   if (!text) {
     return null;
@@ -305,9 +351,14 @@ function buildExportSurface(params: {
   symbol: ts.Symbol;
 }): PluginSdkApiExport {
   const { checker, printer, program, repoRoot, symbol } = params;
-  const { declaration, resolvedSymbol } = resolveSymbolAndDeclaration(checker, symbol);
+  const { declaration, resolvedSymbol } = resolveSymbolAndDeclaration(
+    checker,
+    symbol,
+  );
   return {
-    declaration: declaration ? printNode(repoRoot, checker, printer, declaration) : null,
+    declaration: declaration
+      ? printNode(repoRoot, checker, printer, declaration)
+      : null,
     exportName: symbol.getName(),
     kind: inferExportKind(resolvedSymbol, declaration),
     source: declaration
@@ -321,7 +372,10 @@ function buildExportSurface(params: {
   };
 }
 
-function sortExports(left: PluginSdkApiExport, right: PluginSdkApiExport): number {
+function sortExports(
+  left: PluginSdkApiExport,
+  right: PluginSdkApiExport,
+): number {
   const kindRank: Record<PluginSdkApiExportKind, number> = {
     class: 5,
     const: 1,
@@ -351,16 +405,24 @@ function buildModuleSurface(params: {
   const { checker, printer, program, repoRoot, entrypoint } = params;
   const metadata = pluginSdkDocMetadata[entrypoint];
   const importSpecifier = resolvePluginSdkDocImportSpecifier(entrypoint);
-  const moduleSourcePath = path.join(repoRoot, "src", "plugin-sdk", `${entrypoint}.ts`);
+  const moduleSourcePath = path.join(
+    repoRoot,
+    'src',
+    'plugin-sdk',
+    `${entrypoint}.ts`,
+  );
   const sourceFile = program.getSourceFile(moduleSourcePath);
   assert(sourceFile, `Missing source file for ${importSpecifier}`);
 
   const moduleSymbol = checker.getSymbolAtLocation(sourceFile);
-  assert(moduleSymbol, `Unable to resolve module symbol for ${importSpecifier}`);
+  assert(
+    moduleSymbol,
+    `Unable to resolve module symbol for ${importSpecifier}`,
+  );
 
   const exports = checker
     .getExportsOfModule(moduleSymbol)
-    .filter((symbol) => symbol.getName() !== "__esModule")
+    .filter((symbol) => symbol.getName() !== '__esModule')
     .map((symbol) =>
       buildExportSurface({
         checker,
@@ -390,7 +452,7 @@ function buildJsonlLines(baseline: PluginSdkApiBaseline): string[] {
         category: moduleSurface.category,
         entrypoint: moduleSurface.entrypoint,
         importSpecifier: moduleSurface.importSpecifier,
-        recordType: "module",
+        recordType: 'module',
         sourceLine: moduleSurface.source.line,
         sourcePath: moduleSurface.source.path,
       }),
@@ -404,7 +466,7 @@ function buildJsonlLines(baseline: PluginSdkApiBaseline): string[] {
           exportName: exportSurface.exportName,
           importSpecifier: moduleSurface.importSpecifier,
           kind: exportSurface.kind,
-          recordType: "export",
+          recordType: 'export',
           sourceLine: exportSurface.source?.line ?? null,
           sourcePath: exportSurface.source?.path ?? null,
         }),
@@ -421,7 +483,9 @@ export async function renderPluginSdkApiBaseline(params?: {
   const repoRoot = params?.repoRoot ?? resolveRepoRoot();
   validateMetadata();
   const { checker, printer, program } = createCompilerContext(repoRoot);
-  const modules = (Object.keys(pluginSdkDocMetadata) as PluginSdkDocEntrypoint[])
+  const modules = (
+    Object.keys(pluginSdkDocMetadata) as PluginSdkDocEntrypoint[]
+  )
     .map((entrypoint) =>
       buildModuleSurface({
         checker,
@@ -431,7 +495,9 @@ export async function renderPluginSdkApiBaseline(params?: {
         repoRoot,
       }),
     )
-    .toSorted((left, right) => left.importSpecifier.localeCompare(right.importSpecifier));
+    .toSorted((left, right) =>
+      left.importSpecifier.localeCompare(right.importSpecifier),
+    );
 
   const baseline: PluginSdkApiBaseline = {
     generatedBy: GENERATED_BY,
@@ -441,15 +507,15 @@ export async function renderPluginSdkApiBaseline(params?: {
   return {
     baseline,
     json: `${JSON.stringify(baseline, null, 2)}\n`,
-    jsonl: `${buildJsonlLines(baseline).join("\n")}\n`,
+    jsonl: `${buildJsonlLines(baseline).join('\n')}\n`,
   };
 }
 
 async function loadCurrentFile(filePath: string): Promise<string | null> {
   try {
-    return await fs.readFile(filePath, "utf8");
+    return await fs.readFile(filePath, 'utf8');
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
       return null;
     }
     throw error;
@@ -457,7 +523,7 @@ async function loadCurrentFile(filePath: string): Promise<string | null> {
 }
 
 function sha256(content: string): string {
-  return createHash("sha256").update(content, "utf8").digest("hex");
+  return createHash('sha256').update(content, 'utf8').digest('hex');
 }
 
 /** Build the sha256 hash file content for plugin SDK API baseline artifacts. */
@@ -468,12 +534,14 @@ export function computePluginSdkApiBaselineHashFileContent(
     `${sha256(rendered.json)}  plugin-sdk-api-baseline.json`,
     `${sha256(rendered.jsonl)}  plugin-sdk-api-baseline.jsonl`,
   ];
-  return `${lines.join("\n")}\n`;
+  return `${lines.join('\n')}\n`;
 }
 
 function validateMetadata(): void {
   const canonicalEntrypoints = new Set<string>(pluginSdkEntrypoints);
-  const metadataEntrypoints = new Set<string>(Object.keys(pluginSdkDocMetadata));
+  const metadataEntrypoints = new Set<string>(
+    Object.keys(pluginSdkDocMetadata),
+  );
 
   for (const entrypoint of metadataEntrypoints) {
     assert(
@@ -491,9 +559,18 @@ export async function writePluginSdkApiBaselineStatefile(params?: {
   hashPath?: string;
 }): Promise<PluginSdkApiBaselineWriteResult> {
   const repoRoot = params?.repoRoot ?? resolveRepoRoot();
-  const jsonPath = path.resolve(repoRoot, params?.jsonPath ?? DEFAULT_JSON_OUTPUT);
-  const statefilePath = path.resolve(repoRoot, params?.statefilePath ?? DEFAULT_STATEFILE_OUTPUT);
-  const hashPath = path.resolve(repoRoot, params?.hashPath ?? DEFAULT_HASH_OUTPUT);
+  const jsonPath = path.resolve(
+    repoRoot,
+    params?.jsonPath ?? DEFAULT_JSON_OUTPUT,
+  );
+  const statefilePath = path.resolve(
+    repoRoot,
+    params?.statefilePath ?? DEFAULT_STATEFILE_OUTPUT,
+  );
+  const hashPath = path.resolve(
+    repoRoot,
+    params?.hashPath ?? DEFAULT_HASH_OUTPUT,
+  );
   const rendered = await renderPluginSdkApiBaseline({ repoRoot });
 
   const nextHashContent = computePluginSdkApiBaselineHashFileContent(rendered);
@@ -512,12 +589,12 @@ export async function writePluginSdkApiBaselineStatefile(params?: {
 
   // Write the hash file (tracked in git)
   await fs.mkdir(path.dirname(hashPath), { recursive: true });
-  await fs.writeFile(hashPath, nextHashContent, "utf8");
+  await fs.writeFile(hashPath, nextHashContent, 'utf8');
 
   // Write full JSON/JSONL artifacts locally (gitignored, useful for inspection)
   await fs.mkdir(path.dirname(jsonPath), { recursive: true });
-  await fs.writeFile(jsonPath, rendered.json, "utf8");
-  await fs.writeFile(statefilePath, rendered.jsonl, "utf8");
+  await fs.writeFile(jsonPath, rendered.json, 'utf8');
+  await fs.writeFile(statefilePath, rendered.jsonl, 'utf8');
 
   return {
     changed,

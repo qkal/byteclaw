@@ -1,28 +1,31 @@
-import path from "node:path";
-import { finalizeInboundContext } from "../auto-reply/reply/inbound-context.js";
-import type { MsgContext } from "../auto-reply/templating.js";
-import type { OpenClawConfig } from "../config/config.js";
-import { logVerbose, shouldLogVerbose } from "../globals.js";
-import { renderFileContextBlock } from "../media/file-context.js";
+import path from 'node:path';
+import { finalizeInboundContext } from '../auto-reply/reply/inbound-context.js';
+import type { MsgContext } from '../auto-reply/templating.js';
+import type { OpenClawConfig } from '../config/config.js';
+import { logVerbose, shouldLogVerbose } from '../globals.js';
+import { renderFileContextBlock } from '../media/file-context.js';
 import {
   extractFileContentFromSource,
   normalizeMimeType,
   resolveInputFileLimits,
-} from "../media/input-files.js";
-import { wrapExternalContent } from "../security/external-content.js";
+} from '../media/input-files.js';
+import { wrapExternalContent } from '../security/external-content.js';
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
-} from "../shared/string-coerce.js";
-import { resolveAttachmentKind } from "./attachments.js";
-import { runWithConcurrency } from "./concurrency.js";
-import { DEFAULT_ECHO_TRANSCRIPT_FORMAT, sendTranscriptEcho } from "./echo-transcript.js";
+} from '../shared/string-coerce.js';
+import { resolveAttachmentKind } from './attachments.js';
+import { runWithConcurrency } from './concurrency.js';
+import {
+  DEFAULT_ECHO_TRANSCRIPT_FORMAT,
+  sendTranscriptEcho,
+} from './echo-transcript.js';
 import {
   extractMediaUserText,
   formatAudioTranscripts,
   formatMediaUnderstandingBody,
-} from "./format.js";
-import { resolveConcurrency } from "./resolve.js";
+} from './format.js';
+import { resolveConcurrency } from './resolve.js';
 import {
   type ActiveMediaModel,
   buildProviderRegistry,
@@ -30,13 +33,13 @@ import {
   normalizeMediaAttachments,
   resolveMediaAttachmentLocalRoots,
   runCapability,
-} from "./runner.js";
+} from './runner.js';
 import type {
   MediaUnderstandingCapability,
   MediaUnderstandingDecision,
   MediaUnderstandingOutput,
   MediaUnderstandingProvider,
-} from "./types.js";
+} from './types.js';
 
 export interface ApplyMediaUnderstandingResult {
   outputs: MediaUnderstandingOutput[];
@@ -47,31 +50,35 @@ export interface ApplyMediaUnderstandingResult {
   appliedFile: boolean;
 }
 
-const CAPABILITY_ORDER: MediaUnderstandingCapability[] = ["image", "audio", "video"];
+const CAPABILITY_ORDER: MediaUnderstandingCapability[] = [
+  'image',
+  'audio',
+  'video',
+];
 const EXTRA_TEXT_MIMES = [
-  "application/xml",
-  "text/xml",
-  "application/x-yaml",
-  "text/yaml",
-  "application/yaml",
-  "application/javascript",
-  "text/javascript",
-  "text/tab-separated-values",
+  'application/xml',
+  'text/xml',
+  'application/x-yaml',
+  'text/yaml',
+  'application/yaml',
+  'application/javascript',
+  'text/javascript',
+  'text/tab-separated-values',
 ];
 const TEXT_EXT_MIME = new Map<string, string>([
-  [".csv", "text/csv"],
-  [".tsv", "text/tab-separated-values"],
-  [".txt", "text/plain"],
-  [".md", "text/markdown"],
-  [".log", "text/plain"],
-  [".ini", "text/plain"],
-  [".cfg", "text/plain"],
-  [".conf", "text/plain"],
-  [".env", "text/plain"],
-  [".json", "application/json"],
-  [".yaml", "text/yaml"],
-  [".yml", "text/yaml"],
-  [".xml", "application/xml"],
+  ['.csv', 'text/csv'],
+  ['.tsv', 'text/tab-separated-values'],
+  ['.txt', 'text/plain'],
+  ['.md', 'text/markdown'],
+  ['.log', 'text/plain'],
+  ['.ini', 'text/plain'],
+  ['.cfg', 'text/plain'],
+  ['.conf', 'text/plain'],
+  ['.env', 'text/plain'],
+  ['.json', 'application/json'],
+  ['.yaml', 'text/yaml'],
+  ['.yml', 'text/yaml'],
+  ['.xml', 'application/xml'],
 ]);
 
 function sanitizeMimeType(value?: string): string | undefined {
@@ -94,10 +101,10 @@ function resolveFileLimits(cfg: OpenClawConfig) {
 
 function appendFileBlocks(body: string | undefined, blocks: string[]): string {
   if (!blocks || blocks.length === 0) {
-    return body ?? "";
+    return body ?? '';
   }
-  const base = typeof body === "string" ? body.trim() : "";
-  const suffix = blocks.join("\n\n").trim();
+  const base = typeof body === 'string' ? body.trim() : '';
+  const suffix = blocks.join('\n\n').trim();
   if (!base) {
     return suffix;
   }
@@ -107,21 +114,23 @@ function appendFileBlocks(body: string | undefined, blocks: string[]): string {
 function wrapUntrustedAttachmentContent(content: string): string {
   return wrapExternalContent(content, {
     includeWarning: false,
-    source: "unknown",
+    source: 'unknown',
   });
 }
 
-function resolveUtf16Charset(buffer?: Buffer): "utf-16le" | "utf-16be" | undefined {
+function resolveUtf16Charset(
+  buffer?: Buffer,
+): 'utf-16le' | 'utf-16be' | undefined {
   if (!buffer || buffer.length < 2) {
     return undefined;
   }
   const b0 = buffer[0];
   const b1 = buffer[1];
   if (b0 === 0xff && b1 === 0xfe) {
-    return "utf-16le";
+    return 'utf-16le';
   }
   if (b0 === 0xfe && b1 === 0xff) {
-    return "utf-16be";
+    return 'utf-16be';
   }
   const sampleLen = Math.min(buffer.length, 2048);
   let zeroEven = 0;
@@ -138,49 +147,49 @@ function resolveUtf16Charset(buffer?: Buffer): "utf-16le" | "utf-16be" | undefin
   }
   const zeroCount = zeroEven + zeroOdd;
   if (zeroCount / sampleLen > 0.2) {
-    return zeroOdd >= zeroEven ? "utf-16le" : "utf-16be";
+    return zeroOdd >= zeroEven ? 'utf-16le' : 'utf-16be';
   }
   return undefined;
 }
 
 const WORDISH_CHAR = /[\p{L}\p{N}]/u;
 const CP1252_MAP: (string | undefined)[] = [
-  "\u20ac",
+  '\u20ac',
   undefined,
-  "\u201a",
-  "\u0192",
-  "\u201e",
-  "\u2026",
-  "\u2020",
-  "\u2021",
-  "\u02c6",
-  "\u2030",
-  "\u0160",
-  "\u2039",
-  "\u0152",
+  '\u201a',
+  '\u0192',
+  '\u201e',
+  '\u2026',
+  '\u2020',
+  '\u2021',
+  '\u02c6',
+  '\u2030',
+  '\u0160',
+  '\u2039',
+  '\u0152',
   undefined,
-  "\u017d",
+  '\u017d',
   undefined,
   undefined,
-  "\u2018",
-  "\u2019",
-  "\u201c",
-  "\u201d",
-  "\u2022",
-  "\u2013",
-  "\u2014",
-  "\u02dc",
-  "\u2122",
-  "\u0161",
-  "\u203a",
-  "\u0153",
+  '\u2018',
+  '\u2019',
+  '\u201c',
+  '\u201d',
+  '\u2022',
+  '\u2013',
+  '\u2014',
+  '\u02dc',
+  '\u2122',
+  '\u0161',
+  '\u203a',
+  '\u0153',
   undefined,
-  "\u017e",
-  "\u0178",
+  '\u017e',
+  '\u0178',
 ];
 
 function decodeLegacyText(buffer: Buffer): string {
-  let output = "";
+  let output = '';
   for (const byte of buffer) {
     if (byte >= 0x80 && byte <= 0x9f) {
       const mapped = CP1252_MAP[byte - 0x80];
@@ -192,7 +201,10 @@ function decodeLegacyText(buffer: Buffer): string {
   return output;
 }
 
-function getTextStats(text: string): { printableRatio: number; wordishRatio: number } {
+function getTextStats(text: string): {
+  printableRatio: number;
+  wordishRatio: number;
+} {
   if (!text) {
     return { printableRatio: 0, wordishRatio: 0 };
   }
@@ -241,7 +253,7 @@ function looksLikeUtf8Text(buffer?: Buffer): boolean {
   }
   const sample = buffer.subarray(0, Math.min(buffer.length, 4096));
   try {
-    const text = new TextDecoder("utf-8", { fatal: true }).decode(sample);
+    const text = new TextDecoder('utf-8', { fatal: true }).decode(sample);
     return isMostlyPrintable(text);
   } catch {
     return looksLikeLegacyTextBytes(sample);
@@ -250,36 +262,36 @@ function looksLikeUtf8Text(buffer?: Buffer): boolean {
 
 function decodeTextSample(buffer?: Buffer): string {
   if (!buffer || buffer.length === 0) {
-    return "";
+    return '';
   }
   const sample = buffer.subarray(0, Math.min(buffer.length, 8192));
   const utf16Charset = resolveUtf16Charset(sample);
-  if (utf16Charset === "utf-16be") {
+  if (utf16Charset === 'utf-16be') {
     const swapped = Buffer.alloc(sample.length);
     for (let i = 0; i + 1 < sample.length; i += 2) {
       swapped[i] = sample[i + 1];
       swapped[i + 1] = sample[i];
     }
-    return new TextDecoder("utf-16le").decode(swapped);
+    return new TextDecoder('utf-16le').decode(swapped);
   }
-  if (utf16Charset === "utf-16le") {
-    return new TextDecoder("utf-16le").decode(sample);
+  if (utf16Charset === 'utf-16le') {
+    return new TextDecoder('utf-16le').decode(sample);
   }
-  return new TextDecoder("utf-8").decode(sample);
+  return new TextDecoder('utf-8').decode(sample);
 }
 
 function guessDelimitedMime(text: string): string | undefined {
   if (!text) {
     return undefined;
   }
-  const line = text.split(/\r?\n/)[0] ?? "";
+  const line = text.split(/\r?\n/)[0] ?? '';
   const tabs = (line.match(/\t/g) ?? []).length;
   const commas = (line.match(/,/g) ?? []).length;
   if (commas > 0) {
-    return "text/csv";
+    return 'text/csv';
   }
   if (tabs > 0) {
-    return "text/tab-separated-values";
+    return 'text/tab-separated-values';
   }
   return undefined;
 }
@@ -296,26 +308,30 @@ function isBinaryMediaMime(mime?: string): boolean {
   if (!mime) {
     return false;
   }
-  if (mime.startsWith("image/") || mime.startsWith("audio/") || mime.startsWith("video/")) {
-    return true;
-  }
-  if (mime === "application/octet-stream") {
-    return true;
-  }
   if (
-    mime === "application/zip" ||
-    mime === "application/x-zip-compressed" ||
-    mime === "application/gzip" ||
-    mime === "application/x-gzip" ||
-    mime === "application/x-rar-compressed" ||
-    mime === "application/x-7z-compressed"
+    mime.startsWith('image/') ||
+    mime.startsWith('audio/') ||
+    mime.startsWith('video/')
   ) {
     return true;
   }
-  if (mime.startsWith("application/vnd.")) {
+  if (mime === 'application/octet-stream') {
+    return true;
+  }
+  if (
+    mime === 'application/zip' ||
+    mime === 'application/x-zip-compressed' ||
+    mime === 'application/gzip' ||
+    mime === 'application/x-gzip' ||
+    mime === 'application/x-rar-compressed' ||
+    mime === 'application/x-7z-compressed'
+  ) {
+    return true;
+  }
+  if (mime.startsWith('application/vnd.')) {
     // Keep vendor +json/+xml payloads eligible for text extraction while
     // Treating the common binary vendor family (Office, archives, etc.) as binary.
-    if (mime.endsWith("+json") || mime.endsWith("+xml")) {
+    if (mime.endsWith('+json') || mime.endsWith('+xml')) {
       return false;
     }
     return true;
@@ -341,14 +357,23 @@ async function extractFileBlocks(params: {
     if (skipAttachmentIndexes?.has(attachment.index)) {
       continue;
     }
-    const forcedTextMime = resolveTextMimeFromName(attachment.path ?? attachment.url ?? "");
-    const kind = forcedTextMime ? "document" : resolveAttachmentKind(attachment);
-    if (!forcedTextMime && (kind === "image" || kind === "video" || kind === "audio")) {
+    const forcedTextMime = resolveTextMimeFromName(
+      attachment.path ?? attachment.url ?? '',
+    );
+    const kind = forcedTextMime
+      ? 'document'
+      : resolveAttachmentKind(attachment);
+    if (
+      !forcedTextMime &&
+      (kind === 'image' || kind === 'video' || kind === 'audio')
+    ) {
       continue;
     }
     if (!limits.allowUrl && attachment.url && !attachment.path) {
       if (shouldLogVerbose()) {
-        logVerbose(`media: file attachment skipped (url disabled) index=${attachment.index}`);
+        logVerbose(
+          `media: file attachment skipped (url disabled) index=${attachment.index}`,
+        );
       }
       continue;
     }
@@ -365,8 +390,10 @@ async function extractFileBlocks(params: {
       }
       continue;
     }
-    const nameHint = bufferResult?.fileName ?? attachment.path ?? attachment.url;
-    const forcedTextMimeResolved = forcedTextMime ?? resolveTextMimeFromName(nameHint ?? "");
+    const nameHint =
+      bufferResult?.fileName ?? attachment.path ?? attachment.url;
+    const forcedTextMimeResolved =
+      forcedTextMime ?? resolveTextMimeFromName(nameHint ?? '');
     const rawMime = bufferResult?.mime ?? attachment.mime;
     const normalizedRawMime = normalizeMimeType(rawMime);
     if (!forcedTextMimeResolved && isBinaryMediaMime(normalizedRawMime)) {
@@ -376,22 +403,29 @@ async function extractFileBlocks(params: {
     const textSample = decodeTextSample(bufferResult?.buffer);
     // Do not coerce real PDFs into text/plain via printable-byte heuristics.
     // PDFs have a dedicated extraction path in extractFileContentFromSource.
-    const allowTextHeuristic = normalizedRawMime !== "application/pdf";
+    const allowTextHeuristic = normalizedRawMime !== 'application/pdf';
     const textLike =
-      allowTextHeuristic && (Boolean(utf16Charset) || looksLikeUtf8Text(bufferResult?.buffer));
-    const guessedDelimited = textLike ? guessDelimitedMime(textSample) : undefined;
+      allowTextHeuristic &&
+      (Boolean(utf16Charset) || looksLikeUtf8Text(bufferResult?.buffer));
+    const guessedDelimited = textLike
+      ? guessDelimitedMime(textSample)
+      : undefined;
     const textHint =
-      forcedTextMimeResolved ?? guessedDelimited ?? (textLike ? "text/plain" : undefined);
+      forcedTextMimeResolved ??
+      guessedDelimited ??
+      (textLike ? 'text/plain' : undefined);
     const mimeType = sanitizeMimeType(textHint ?? normalizeMimeType(rawMime));
     // Log when MIME type is overridden from non-text to text for auditability
-    if (textHint && rawMime && !rawMime.startsWith("text/")) {
+    if (textHint && rawMime && !rawMime.startsWith('text/')) {
       logVerbose(
         `media: MIME override from "${rawMime}" to "${textHint}" for index=${attachment.index}`,
       );
     }
     if (!mimeType) {
       if (shouldLogVerbose()) {
-        logVerbose(`media: file attachment skipped (unknown mime) index=${attachment.index}`);
+        logVerbose(
+          `media: file attachment skipped (unknown mime) index=${attachment.index}`,
+        );
       }
       continue;
     }
@@ -400,7 +434,7 @@ async function extractFileBlocks(params: {
       for (const extra of EXTRA_TEXT_MIMES) {
         allowedMimes.add(extra);
       }
-      if (mimeType.startsWith("text/")) {
+      if (mimeType.startsWith('text/')) {
         allowedMimes.add(mimeType);
       }
     }
@@ -414,33 +448,39 @@ async function extractFileBlocks(params: {
     }
     let extracted: Awaited<ReturnType<typeof extractFileContentFromSource>>;
     try {
-      const mediaType = utf16Charset ? `${mimeType}; charset=${utf16Charset}` : mimeType;
-      const { allowedMimesConfigured: _allowedMimesConfigured, ...baseLimits } = limits;
+      const mediaType = utf16Charset
+        ? `${mimeType}; charset=${utf16Charset}`
+        : mimeType;
+      const { allowedMimesConfigured: _allowedMimesConfigured, ...baseLimits } =
+        limits;
       extracted = await extractFileContentFromSource({
         limits: {
           ...baseLimits,
           allowedMimes,
         },
         source: {
-          data: bufferResult.buffer.toString("base64"),
+          data: bufferResult.buffer.toString('base64'),
           filename: bufferResult.fileName,
           mediaType,
-          type: "base64",
+          type: 'base64',
         },
       });
     } catch (error) {
       if (shouldLogVerbose()) {
-        logVerbose(`media: file attachment skipped (extract): ${String(error)}`);
+        logVerbose(
+          `media: file attachment skipped (extract): ${String(error)}`,
+        );
       }
       continue;
     }
-    const text = extracted?.text?.trim() ?? "";
-    let blockText = text ? wrapUntrustedAttachmentContent(text) : "";
+    const text = extracted?.text?.trim() ?? '';
+    let blockText = text ? wrapUntrustedAttachmentContent(text) : '';
     if (!blockText) {
       if (extracted?.images && extracted.images.length > 0) {
-        blockText = "[PDF content rendered to images; images not forwarded to model]";
+        blockText =
+          '[PDF content rendered to images; images not forwarded to model]';
       } else {
-        blockText = "[No extractable text]";
+        blockText = '[No extractable text]';
       }
     }
     blocks.push(
@@ -505,12 +545,17 @@ export async function applyMediaUnderstanding(params: {
     }
 
     if (decisions.length > 0) {
-      ctx.MediaUnderstandingDecisions = [...(ctx.MediaUnderstandingDecisions ?? []), ...decisions];
+      ctx.MediaUnderstandingDecisions = [
+        ...(ctx.MediaUnderstandingDecisions ?? []),
+        ...decisions,
+      ];
     }
 
     if (outputs.length > 0) {
       ctx.Body = formatMediaUnderstandingBody({ body: ctx.Body, outputs });
-      const audioOutputs = outputs.filter((output) => output.kind === "audio.transcription");
+      const audioOutputs = outputs.filter(
+        (output) => output.kind === 'audio.transcription',
+      );
       if (audioOutputs.length > 0) {
         const transcript = formatAudioTranscripts(audioOutputs);
         ctx.Transcript = transcript;
@@ -539,30 +584,37 @@ export async function applyMediaUnderstanding(params: {
     }
     const audioAttachmentIndexes = new Set(
       outputs
-        .filter((output) => output.kind === "audio.transcription")
+        .filter((output) => output.kind === 'audio.transcription')
         .map((output) => output.attachmentIndex),
     );
     const fileBlocks = await extractFileBlocks({
       attachments,
       cache,
       limits: resolveFileLimits(cfg),
-      skipAttachmentIndexes: audioAttachmentIndexes.size > 0 ? audioAttachmentIndexes : undefined,
+      skipAttachmentIndexes:
+        audioAttachmentIndexes.size > 0 ? audioAttachmentIndexes : undefined,
     });
     if (fileBlocks.length > 0) {
       ctx.Body = appendFileBlocks(ctx.Body, fileBlocks);
     }
     if (outputs.length > 0 || fileBlocks.length > 0) {
-      finalizeInboundContext(ctx, {
+      finalizeInboundContext(ctx as unknown as Record<string, unknown>, {
         forceBodyForAgent: true,
         forceBodyForCommands: outputs.length > 0 || fileBlocks.length > 0,
       });
     }
 
     return {
-      appliedAudio: outputs.some((output) => output.kind === "audio.transcription"),
+      appliedAudio: outputs.some(
+        (output) => output.kind === 'audio.transcription',
+      ),
       appliedFile: fileBlocks.length > 0,
-      appliedImage: outputs.some((output) => output.kind === "image.description"),
-      appliedVideo: outputs.some((output) => output.kind === "video.description"),
+      appliedImage: outputs.some(
+        (output) => output.kind === 'image.description',
+      ),
+      appliedVideo: outputs.some(
+        (output) => output.kind === 'video.description',
+      ),
       decisions,
       outputs,
     };
