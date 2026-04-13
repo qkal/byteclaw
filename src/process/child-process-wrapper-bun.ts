@@ -43,10 +43,9 @@ class BunSubprocessStream implements SubprocessStream {
       try {
         while (true) {
           const result = await this.#reader.read();
-          if (result === null) {
+          if (!result || result.done) {
             break;
           }
-          if (!result) break;
           const { done, value } = result;
           if (done) {
             this.#closed = true;
